@@ -1,0 +1,24 @@
+@theme inline {
+  /* 브레이크포인트 정의: 기본 반응형 브레이크 포인트를 디자인 요구사항에 따라 변경가능. /
+  / className="text-sm md:text-2xl" 면 화면너비 기본 text-sm, 768px부터 text-2xl 의미 /
+  --breakpoint-sm: 744px;
+  --breakpoint-md: 1200px;
+
+  / 색상 정의: 디자인 내용에 따라 정의. 실사용 시 className="text-primary-50" /
+  --color-gray-100: #eeeeee;
+  --color-gray-200: #dddddd;
+  --color-gray-300: #a4a4a4;
+  --color-gray-400: #5a5a5a;
+  --color-gray-500: #161616;
+  --color-black: #0f0f0f;
+  --color-white: #ffffff;
+  --color-red: #ff483d;
+  --color-blue: #29c9f9;
+  --color-purple: #a77eff;
+  --color-pink: #ff2a6a;
+  --color-main: #efff04;
+
+  / 폰트 정의 */
+  --font-baskinRabins: var(--font-baskinRabins);
+  --font-notoSans: var(--font-notoSans);
+}
