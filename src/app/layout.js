@@ -1,4 +1,6 @@
 import "./globals.css";
+import Provider from "./provider";
+import localFont from "next/font/local";
 const baskinRobbins = localFont({
   src: "../assets/fonts/br-font-bold.woff2",
   weight: "100 900",
@@ -22,7 +24,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${baskinRobbins.variable} ${notoSans.variable} min-h-screen flex flex-col bg-black text-white`}
       >
-        <main className="relative flex-1 font-notoSans">{children}</main>
+        <Provider>
+          <main className="relative flex-1 font-notoSans">{children}</main>
+        </Provider>
       </body>
     </html>
   );
