@@ -6,16 +6,10 @@ const baskinRabins = localFont({
 });
 
 const notoSans = localFont({
-  src: "../assets/fonts/noto-sans-kr.woff",
+  src: "../assets/fonts/noto-sans-kr.woff2",
   weight: "100 800",
   variable: "--font-notoSans",
 });
-
-// const notoSansWoff2 = localFont({
-//   src: "../assets/fonts/noto-sans-kr.woff2",
-//   weight: "100 800",
-//   variable: "--font-notoSansWoff2",
-// });
 
 export const metadata = {
   title: "최애의 포토",
