@@ -1,8 +1,8 @@
 import "./globals.css";
-const baskinRabins = localFont({
-  src: "../assets/fonts/br-font-bold.ttf",
+const baskinRobbins = localFont({
+  src: "../assets/fonts/br-font-bold.woff2",
   weight: "100 900",
-  variable: "--font-baskinRabins",
+  variable: "--font-baskinRobbins",
 });
 
 const notoSans = localFont({
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body
-        className={`${baskinRabins.variable} ${notoSans.variable} min-h-screen flex flex-col`}
+        className={`${baskinRobbins.variable} ${notoSans.variable} min-h-screen flex flex-col bg-black text-white`}
       >
         <main className="relative flex-1 font-notoSans">{children}</main>
       </body>
