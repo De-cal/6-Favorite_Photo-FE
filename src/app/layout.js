@@ -1,3 +1,4 @@
+import HeaderLayout from "@/components/common/HeaderLayout";
 import "./globals.css";
 import localFont from "next/font/local";
 const baskinRobbins = localFont({
@@ -23,7 +24,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${baskinRobbins.variable} ${notoSans.variable} min-h-screen flex flex-col bg-black text-white`}
       >
-        <main className="relative flex-1 font-notoSans">{children}</main>
+        <HeaderLayout>
+          <main className="relative flex-1 font-notoSans">{children}</main>
+        </HeaderLayout>
       </body>
     </html>
   );
