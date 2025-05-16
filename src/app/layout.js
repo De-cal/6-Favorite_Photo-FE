@@ -1,4 +1,5 @@
 import "./globals.css";
+import localFont from "next/font/local";
 const baskinRobbins = localFont({
   src: "../assets/fonts/br-font-bold.woff2",
   weight: "100 900",
