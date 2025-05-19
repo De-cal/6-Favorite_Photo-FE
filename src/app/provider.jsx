@@ -1,5 +1,5 @@
-import React from "react";
+import ModalProvider from "../providers/ModalProvider";
 
-export default function provider() {
-  return <div>provider</div>;
+export default function Providers({ children }) {
+  return <ModalProvider>{children}</ModalProvider>;
 }
