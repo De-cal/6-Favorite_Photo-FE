@@ -14,17 +14,17 @@ function Filter() {
             <Image
               alt="deleteIcon"
               src={deleteIcon}
-              className="absolute right-[15px] top-[13px] text-gray-400"
+              className="cursor-pointer absolute right-[15px] top-[13px] text-gray-400"
             />
           </div>
           <div className="flex w-full px-[24px] h-[49px] items-center gap-[24px]">
-            <p className="pl-[16px] w-[64px] font-noto font-medium text-[14px] leading-[100%] tracking-[0%]">
+            <p className="cursor-pointer pl-[16px] w-[64px] font-noto font-medium text-[14px] leading-[100%] tracking-[0%]">
               등급
             </p>
-            <p className="text-gray-400 text-center w-[58px] font-noto font-medium text-[14px] leading-[100%] tracking-[0%]">
+            <p className="cursor-pointer text-gray-400 text-center w-[58px] font-noto font-medium text-[14px] leading-[100%] tracking-[0%]">
               장르
             </p>
-            <p className="text-gray-400 text-center w-[87px] font-noto font-medium text-[14px] leading-[100%] tracking-[0%]">
+            <p className="cursor-pointer text-gray-400 text-center w-[87px] font-noto font-medium text-[14px] leading-[100%] tracking-[0%]">
               매진여부
             </p>
           </div>
@@ -63,10 +63,10 @@ function Filter() {
             </div>
           </div>
           <div className="gap-[11px] flex justify-between mt-[76px] w-full px-[15px]">
-            <div className="w-[54px] h-[55px] flex items-center justify-center">
+            <div className="cursor-pointer w-[54px] h-[55px] flex items-center justify-center">
               <Image alt="exchangeIcon" src={exchange} width={24} height={24} />
             </div>
-            <button className="w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] leading-[100%] tracking-[0] text-center">
+            <button className="cursor-pointer w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] leading-[100%] tracking-[0] text-center">
               52개 포토보기
             </button>
           </div>
