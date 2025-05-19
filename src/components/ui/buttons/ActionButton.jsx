@@ -6,14 +6,14 @@ export default function ActionButton({
   variant = "primary",
   onClick,
   disabled = false,
-  className,
-  children, // 텍스트는 children으로 받음
+  className = "",
+  children,
   ...rest
 }) {
   const baseStyles =
     "inline-flex items-center justify-center rounded-[2px] cursor-pointer";
 
-  // children (버튼 텍스트)에 따른 크기 (width, height) 그리고 폰트사이즈 반응형으로 지정하는 부분
+  // children (버튼 텍스트)에 따른 기본 크기 (width, height, font-size)
   const sizeStyles = (() => {
     switch (children) {
       case "포토카드 구매하기":
@@ -25,10 +25,11 @@ export default function ActionButton({
       case "거절":
         return "w-[150px] h-[40px] text-xs";
       default:
-        return "w-auto h-auto text-base";
+        return "";
     }
   })();
 
+  // variant 스타일 지정
   const variantStyles = {
     primary: clsx(
       disabled
@@ -45,9 +46,9 @@ export default function ActionButton({
       disabled={disabled}
       className={clsx(
         baseStyles,
+        sizeStyles, // 기본 사이즈 (버튼 텍스트에 따라 미리 지정되있음)
         variantStyles[variant],
-        sizeStyles,
-        className
+        className // 기본 사이즈에 없는 케이스는 부모에서 직접 className에 사이즈 반응형으로 css값 내려줘야함
       )}
       {...rest}
     >
