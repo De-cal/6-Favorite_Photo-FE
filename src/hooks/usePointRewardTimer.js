@@ -1,25 +1,36 @@
 import { useState, useEffect } from 'react';
+import { encryptData, decryptData } from '../utils/encryption'; 
 
 const REWARD_DURATION = 60 * 60 * 1000 - 1000; // 59분 59초
-const TIMER_START_TIME_KEY = 'rewardTimerStart';
+const TIMER_START_TIME_KEY = process.env.NEXT_PUBLIC_TIMER_START_TIME_KEY
 
 function usePointRewardTimer(onRewardReady, isModalOpen) {
   const [remainingTime, setRemainingTime] = useState(REWARD_DURATION);
 
+  const startTimer = () => {
+    const startTime = Date.now().toString();
+    const encryptedStartTime = encryptData(startTime);
+    localStorage.setItem(TIMER_START_TIME_KEY, encryptedStartTime);
+    setRemainingTime(REWARD_DURATION);
+  };
+
   useEffect(() => {
     if (!isModalOpen) {
-      const storedStartTime = localStorage.getItem(TIMER_START_TIME_KEY);
-      if (storedStartTime) {
-        const startTime = parseInt(storedStartTime, 10);
-        const elapsedTime = Date.now() - startTime;
-        if (elapsedTime < REWARD_DURATION) {
-          setRemainingTime(REWARD_DURATION - elapsedTime);
-        } else {
-          onRewardReady();
-          localStorage.removeItem(TIMER_START_TIME_KEY);
+      const encryptedStartTime = localStorage.getItem(TIMER_START_TIME_KEY);
+      if (encryptedStartTime) {
+        const decryptedStartTime = decryptData(encryptedStartTime);
+        if (decryptedStartTime) {
+          const startTime = parseInt(decryptedStartTime, 10);
+          const elapsedTime = Date.now() - startTime;
+          if (elapsedTime < REWARD_DURATION) {
+            setRemainingTime(REWARD_DURATION - elapsedTime);
+          } else {
+            onRewardReady();
+            localStorage.removeItem(TIMER_START_TIME_KEY);
+          }
         }
       }
-    } 
+    }
   }, [isModalOpen, onRewardReady]);
 
   useEffect(() => {
@@ -27,16 +38,19 @@ function usePointRewardTimer(onRewardReady, isModalOpen) {
 
     if (!isModalOpen && localStorage.getItem(TIMER_START_TIME_KEY)) {
       intervalId = setInterval(() => {
-        const storedStartTime = localStorage.getItem(TIMER_START_TIME_KEY);
-        if (storedStartTime) {
-          const startTime = parseInt(storedStartTime, 10);
-          const elapsedTime = Date.now() - startTime;
-          if (elapsedTime < REWARD_DURATION) {
-            setRemainingTime(REWARD_DURATION - elapsedTime);
-          } else {
-            clearInterval(intervalId);
-            onRewardReady();
-            localStorage.removeItem(TIMER_START_TIME_KEY);
+        const encryptedStartTime = localStorage.getItem(TIMER_START_TIME_KEY);
+        if (encryptedStartTime) {
+          const decryptedStartTime = decryptData(encryptedStartTime);
+          if (decryptedStartTime) {
+            const startTime = parseInt(decryptedStartTime, 10);
+            const elapsedTime = Date.now() - startTime;
+            if (elapsedTime < REWARD_DURATION) {
+              setRemainingTime(REWARD_DURATION - elapsedTime);
+            } else {
+              clearInterval(intervalId);
+              onRewardReady();
+              localStorage.removeItem(TIMER_START_TIME_KEY);
+            }
           }
         } else {
           clearInterval(intervalId);
@@ -49,11 +63,6 @@ function usePointRewardTimer(onRewardReady, isModalOpen) {
     return () => clearInterval(intervalId);
   }, [isModalOpen, onRewardReady]);
 
-  const startTimer = () => {
-    localStorage.setItem(TIMER_START_TIME_KEY, Date.now());
-    setRemainingTime(REWARD_DURATION);
-  };
-
   const clearTimer = () => {
     localStorage.removeItem(TIMER_START_TIME_KEY);
     setRemainingTime(REWARD_DURATION);
@@ -65,7 +74,6 @@ function usePointRewardTimer(onRewardReady, isModalOpen) {
     const seconds = totalSeconds % 60;
     return `${minutes.toString().padStart(2, '0')}분 ${seconds.toString().padStart(2, '0')}초`;
   };
-  
 
   return { remainingTime, startTimer, clearTimer, formatTime };
 }

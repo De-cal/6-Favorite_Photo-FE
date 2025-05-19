@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const INACTIVE_THRESHOLD = 20 * 60 * 1000; // 20분
-const LAST_ACTIVE_TIME_KEY = 'lastActiveTime';
+const LAST_ACTIVE_TIME_KEY = process.env.NEXT_PUBLIC_LAST_ACTIVE_TIME_KEY
 
 // 최대 20분까지 움직임이 없는 사용자는 포인트 시간 초기화.
 function useInactiveTimer(onInactive) {
