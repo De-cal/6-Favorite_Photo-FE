@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function MarketplacePage() {
-  return <div></div>;
+  return <div>MarketplacePage</div>;
 }
