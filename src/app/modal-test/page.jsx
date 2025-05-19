@@ -1,5 +1,5 @@
 "use client";
-import CommonModal from "@/components/ui/CommonModal";
+import CommonModal from "@/components/common/CommonModal";
 import { useModal } from "@/providers/ModalProvider";
 import React from "react";
 
