@@ -6,7 +6,7 @@ import React from "react";
 function page() {
   const { openModal } = useModal();
 
-  const data = { rank: "SuperRare", title: "테스트사진", quantity: 2 };
+  const data = { rank: "SuperRare", title: "스페인풍경", quantity: 2 };
 
   return (
     <div className="flex flex-col items-center justify-center">
