@@ -5,13 +5,12 @@ import filterIcon from "../../assets/icons/ic-filter.svg";
 import Card from "@/components/common/Card";
 import Filter from "./_components/Filter";
 import Search from "./_components/Search";
-import Sort from "./_components/Sort";
-
+import Sort from "./_components/SortDropdown";
+import marketplace from "../../assets/images/img-marketplace.svg";
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
   return (
     // w-375px
-
     <div className="relative">
       {showFilter && (
         <div
@@ -24,12 +23,19 @@ export default function MarketplacePage() {
           showFilter ? "pointer-events-none" : ""
         }`}
       >
-        <div className="w-full px-[15px] flex flex-col items-center">
-          <div className="w-full max-w-[1480px]">
-            <Search />
+        <div className="flex justify-between">
+          <Image src={marketplace} width={248} height={49} />
+        </div>
+        <div className="w-full px-[15px] sm:px-[20px] mt-[15px] hidden sm:block">
+          <div className="w-full h-[1px] border-b border-gray-400 sm:border-gray-100 sm:h-[2px]" />
+        </div>
 
-            <div className="w-full h-[1px] border-b border-gray-400 mt-[15px]" />
-          </div>
+        <div className="flex flex-col items-center mt-[20px]">
+          <Search />
+        </div>
+
+        <div className="w-full px-[15px] sm:px-[20px] mt-[15px] block sm:hidden">
+          <div className="w-full h-[1px] border-b border-gray-400 sm:border-gray-100 sm:h-[2px]" />
         </div>
 
         <div className="px-[15px] mb-[20px] flex justify-between w-full mt-[15px]">
