@@ -18,9 +18,9 @@ export default function ActionButton({
     switch (children) {
       case "포토카드 구매하기":
       case "판매 내리기":
-        return "w-[345px] h-[75px] text-lg md:text-xl md:w-[440px] md:h-[80px]";
+        return "w-[345px] h-[75px] sm:w-[342px] text-lg md:max-w-[440px] md:h-[80px] md:text-xl";
       case "포토카드 교환하기":
-        return "w-[345px] h-[55px] text-base md:text-lg md:w-[520px] md:h-[60px]";
+        return "w-[345px] h-[55px] sm:w-[342px] sm:h-[60px] text-base md:text-lg md:w-[520px]";
       case "승인":
       case "거절":
         return "w-[150px] h-[40px] text-xs";
