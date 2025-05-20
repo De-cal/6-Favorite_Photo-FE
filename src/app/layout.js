@@ -27,9 +27,8 @@ export default function RootLayout({ children }) {
         className={`${baskinRobbins.variable} ${notoSans.variable} min-h-screen flex flex-col bg-black text-white`}
       >
         <Providers>
-          <HeaderLayout>
-            <main className="relative flex-1 font-notoSans">{children}</main>
-          </HeaderLayout>
+          <HeaderLayout />
+          <main className="relative flex-1 font-notoSans">{children}</main>
         </Providers>
       </body>
     </html>

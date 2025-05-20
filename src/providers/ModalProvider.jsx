@@ -53,7 +53,7 @@ export const ModalProvider = ({ children }) => {
       {children}
 
       {modalContent && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center">
           <div ref={modalRef} className="w-full h-full">
             {typeof modalContent === "function" ? modalContent() : modalContent}
           </div>
