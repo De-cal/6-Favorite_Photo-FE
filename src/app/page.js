@@ -9,7 +9,7 @@ import featImg1 from "@/assets/images/img-landing-page-feature-1.svg";
 export default function LandingPage() {
   return (
     <>
-      {/* <div className="flex justify-center items-center flex-wrap">
+      <div className="flex justify-center items-center flex-wrap">
         <div className="flex flex-wrap justify-center items-center gap-[8px] gap-y-[16px] md:grid md:grid-cols-3">
           <Link
             href="/login"
@@ -66,7 +66,7 @@ export default function LandingPage() {
             나의 판매 포토카드
           </Link>
         </div>
-      </div> */}
+      </div>
 
       {/* 랜딩페이지 전체 파트 */}
       <div className="flex flex-col items-center justify-center w-full">
@@ -154,7 +154,6 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      
     </>
   );
 }
