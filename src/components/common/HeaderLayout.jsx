@@ -4,7 +4,7 @@ import Header from "./Header";
 export default function HeaderLayout({ children }) {
   return (
     <>
-      <Header className="font-notoSans" />
+      <Header />
       {children}
     </>
   );

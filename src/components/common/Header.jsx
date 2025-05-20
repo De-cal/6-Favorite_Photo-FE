@@ -1,18 +1,46 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import ic_menu from "@/assets/icons/ic-menu.svg";
 import img_logo from "@/assets/images/img-logo.svg";
+import ic_alarm_default from "@/assets/icons/ic-alarm-default.svg";
+import MobileProfileModal from "./MobileProfileModal";
+import TabletAndDesktopProfileModal from "./TabletAndDesktopProfileModal";
+import { useModal } from "@/providers/ModalProvider";
+
 export default function Header() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { openModal } = useModal();
+
+  // 모바일 모달 열기
+  const handleMobileModalOpen = () => {
+    openModal(<MobileProfileModal />);
+  };
+
+  // 태블릿, PC 프로필 모달 열기
+  const handleTabletAndDesktopModalOpen = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  // 태블릿, PC 프로필 모달 닫기
+  const handleTabletAndDesktopModalClose = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center font-notoSans">
       <div className="flex justify-between items-center w-full max-w-[1920px] h-[60px] px-[20px] sm:h-[70px] sm:px-[40px] md:h-[80px] md:px-[220px]">
-        <div className="relative w-[22px] h-[22px] sm:hidden">
+        <button
+          onClick={handleMobileModalOpen}
+          className="relative w-[22px] h-[22px] cursor-pointer sm:hidden"
+        >
           <Image src={ic_menu} alt="메뉴" fill className="object-cover" />
-        </div>
+        </button>
         <Link
           href="/"
-          className="absolute left-[50%] translate-x-[-50%] w-[83.37px] h-[15.12px] sm:static sm:left-auto sm:translate-x-0"
+          className="absolute left-[50%] translate-x-[-50%] w-[83.37px] h-[15.12px] sm:relative sm:left-auto sm:translate-x-0"
         >
           <Image
             src={img_logo}
@@ -21,20 +49,58 @@ export default function Header() {
             className="object-cover"
           />
         </Link>
-        <div className="flex justify-center items-center gap-[30px]">
-          <Link
-            href="/login"
-            className="font-medium text-[14px]/[17px] text-gray-200"
-          >
-            로그인
-          </Link>
-          <Link
-            href="/signup"
-            className="font-medium text-[14px]/[17px] text-gray-200 hidden sm:block"
-          >
-            회원가입
-          </Link>
-        </div>
+        {true ? (
+          <div className="flex justify-center items-center gap-[30px]">
+            <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
+              1,540 P
+            </p>
+            <button className="relative w-[22px] h-[22px] sm:w-[24px] sm:h-[24px] cursor-pointer">
+              <Image
+                src={ic_alarm_default}
+                alt="알림"
+                fill
+                className="object-cover"
+              />
+            </button>
+            <div className="relative hidden sm:block">
+              <button
+                onClick={handleTabletAndDesktopModalOpen}
+                className="font-baskinRobbins font-normal text-[18px]/[18px] tracking-[-3%] text-gray-200 cursor-pointer"
+              >
+                유디
+              </button>
+              {isModalVisible && (
+                <TabletAndDesktopProfileModal
+                  handleTabletAndDesktopModalClose={
+                    handleTabletAndDesktopModalClose
+                  }
+                />
+              )}
+            </div>
+            <div className="border-l-[1.5px] border-gray-400 h-[17px] hidden sm:block"></div>
+            <Link
+              href="/"
+              className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 hidden sm:block"
+            >
+              로그아웃
+            </Link>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center gap-[30px]">
+            <Link
+              href="/login"
+              className="font-medium text-[14px]/[17px] text-gray-200"
+            >
+              로그인
+            </Link>
+            <Link
+              href="/signup"
+              className="font-medium text-[14px]/[17px] text-gray-200 hidden sm:block"
+            >
+              회원가입
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
