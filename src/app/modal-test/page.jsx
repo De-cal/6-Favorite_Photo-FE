@@ -1,5 +1,6 @@
 "use client";
 import CommonModal from "@/components/common/CommonModal";
+import MobileHeader from "@/components/common/MobileHeader";
 import { useModal } from "@/providers/ModalProvider";
 import React from "react";
 
@@ -22,6 +23,7 @@ function modalTestPage() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-15">
+      <MobileHeader title="나의 포토카드 판매 상세 페이지" />
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-3xl ">판매 등록 성공 실패</h1>
         <div className="flex flex-row justify-between items-center gap-10">
