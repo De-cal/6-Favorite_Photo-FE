@@ -31,17 +31,30 @@ export default function MobileProfileModal() {
         </div>
         <div className="flex flex-col flex-1 justify-between items-start pt-[20px] px-[20px] pb-[40px]">
           <div className="flex flex-col justify-center items-start gap-[15px]">
-            <Link href="/marketplace" className="font-bold text-[14px]/[17px]">
+            <Link
+              onClick={handleMobileModalClose}
+              href="/marketplace"
+              className="font-bold text-[14px]/[17px]"
+            >
               마켓플레이스
             </Link>
-            <Link href="/my-gallery" className="font-bold text-[14px]/[17px]">
+            <Link
+              onClick={handleMobileModalClose}
+              href="/my-gallery"
+              className="font-bold text-[14px]/[17px]"
+            >
               마이갤러리
             </Link>
-            <Link href="/my-sell" className="font-bold text-[14px]/[17px]">
+            <Link
+              onClick={handleMobileModalClose}
+              href="/my-sell"
+              className="font-bold text-[14px]/[17px]"
+            >
               판매 중인 포토카드
             </Link>
           </div>
           <Link
+            onClick={handleMobileModalClose}
             href="/"
             className="font-notoSans font-normal text-[14px]/[17px] text-gray-400"
           >

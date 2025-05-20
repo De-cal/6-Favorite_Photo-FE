@@ -22,13 +22,25 @@ export default function TabletAndDesktopProfileModal({
         </div>
         <div className="flex flex-col justify-start items-start px-[20px] pt-[20px] pb-[27px]">
           <div className="flex flex-col justify-center items-start gap-[15px]">
-            <Link href="/marketplace" className="font-bold text-[14px]/[17px]">
+            <Link
+              onClick={handleTabletAndDesktopModalClose}
+              href="/marketplace"
+              className="font-bold text-[14px]/[17px]"
+            >
               마켓플레이스
             </Link>
-            <Link href="/my-gallery" className="font-bold text-[14px]/[17px]">
+            <Link
+              onClick={handleTabletAndDesktopModalClose}
+              href="/my-gallery"
+              className="font-bold text-[14px]/[17px]"
+            >
               마이갤러리
             </Link>
-            <Link href="/my-sell" className="font-bold text-[14px]/[17px]">
+            <Link
+              onClick={handleTabletAndDesktopModalClose}
+              href="/my-sell"
+              className="font-bold text-[14px]/[17px]"
+            >
               판매 중인 포토카드
             </Link>
           </div>
