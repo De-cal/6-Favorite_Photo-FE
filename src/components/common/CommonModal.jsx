@@ -46,7 +46,7 @@ function CommonModal({ type, result, data }) {
         <div className="relative w-full h-[60px] bg-black rounded-xl  flex flex-col items-center justify-center gap-6 mb-60 sm:mb-0 md:mb-0">
           {/* 모바일: 왼쪽 상단 < 닫기버튼*/}
           <button
-            className="absolute left-5 top-1/2 -translate-y-1/2 sm:hidden"
+            className="absolute left-5 top-1/2 -translate-y-1/2 sm:hidden cursor-pointer"
             onClick={closeModal}
           >
             <Image
@@ -59,7 +59,7 @@ function CommonModal({ type, result, data }) {
 
           {/* 태블릿/pc: X 버튼*/}
           <div className="hidden sm:flex justify-end items-start w-[90%] md:w-full mb-20 ">
-            <button onClick={closeModal}>
+            <button onClick={closeModal} className="cursor-pointer">
               <Image src={closebt} width={36} height={36} alt="PC 닫기" />
             </button>
           </div>
@@ -106,7 +106,7 @@ function CommonModal({ type, result, data }) {
 
           {/* 버튼 */}
           <button
-            className="w-full max-w-[440px] h-[55px] sm:h-[60px] border border-white  text-white px-3 mt-5 sm:mt-6.5"
+            className="w-full max-w-[440px] h-[55px] sm:h-[60px] border border-white  text-white px-3 mt-5 sm:mt-6.5 cursor-pointer"
             onClick={() => {
               closeModal();
               if (type === "포토카드 생성") router.push("/my-gallery");
