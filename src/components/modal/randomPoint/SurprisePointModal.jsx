@@ -6,6 +6,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import CommonModal from "./CommonModal";
 import RewardPoint from "./RewardPoint";
 
+const TIMER_START_TIME_KEY = process.env.NEXT_PUBLIC_TIMER_START_TIME_KEY;
+
 function SurprisePointModal() {
   const [isSurpriseModalOpen, setIsSurpriseModalOpen] = useState(false);
 
@@ -25,14 +27,8 @@ function SurprisePointModal() {
     setIsSurpriseModalOpen(false);
   });
 
-  // TODO: 로그인 해서 로컬스토리지에 담겨있는 시작 시간으로 변경 예정.
-  // useEffect(() => {
-  //   startTimer(); // 컴포넌트 마운트 시 타이머 시작
-  // }, [startTimer]);
-
-  // TODO: 로그인 해서 로컬스토리지에 담겨있는 시작 시간으로 변경 예정. 로그인 하면 이 부분 삭제.
   useEffect(() => {
-    const storedStartTime = localStorage.getItem("rewardTimerStart");
+    const storedStartTime = localStorage.getItem(TIMER_START_TIME_KEY);
     if (!storedStartTime) {
       startTimer();
     }
