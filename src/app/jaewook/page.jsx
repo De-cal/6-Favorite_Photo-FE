@@ -1,5 +1,9 @@
-import React from "react";
+import SurprisePointModal from "@/components/modal/randomPoint/SurprisePointModal";
 
-export default function page() {
-  return <div>page</div>;
+export default function PointPage() {
+  return (
+    <div>
+      <SurprisePointModal />
+    </div>
+  );
 }
