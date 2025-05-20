@@ -1,11 +1,13 @@
-import ActionButton from "@/components/ui/buttons/ActionButton";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import ActionButton from "@/components/ui/buttons/ActionButton";
+import heroImg from "@/assets/images/img-landing-hero.svg";
 
 export default function LandingPage() {
   return (
     <>
-      <div className="flex justify-center items-center flex-wrap">
+      {/* <div className="flex justify-center items-center flex-wrap">
         <div className="flex flex-wrap justify-center items-center gap-[8px] gap-y-[16px] md:grid md:grid-cols-3">
           <Link
             href="/login"
@@ -62,20 +64,43 @@ export default function LandingPage() {
             나의 판매 포토카드
           </Link>
         </div>
-      </div>
+      </div> */}
 
-      <h1>공용 컴포넌트 한눈에 보기</h1>
-      <div className="bg-black flex flex-col gap-6">
-        <h1>Landing Page</h1>
-        <ActionButton variant="primary" label="포토카드 구매하기" />
-        <ActionButton variant="primary" label="포토카드 교환하기" />
-        <ActionButton variant="primary" label="포토카드 교환하기" disabled />
-        <ActionButton variant="primary" label="승인" />
+      {/* 랜딩페이지 시작 */}
+      <div className="flex flex-col items-center justify-center">
+        {/* 랜딩 히어로*/}
+        <div className="">
+          <Image
+            src={heroImg}
+            alt="히어로 이미지"
+            fill
+            className="object-cover"
+          />
+        </div>
 
-        <ActionButton variant="secondary" label="판매 내리기" />
-        <ActionButton variant="secondary" label="포토카드 교환하기" />
-        <ActionButton variant="secondary" label="거절" />
+        <div className="flex flex-col justify-center items-center">
+          {/* <Image src={} alt="" fill className="object-cover"/> */}
+          <h1 className="text-white">구하기 어려웠던 나의 최애가 여기에!</h1>
+          <ActionButton variant="primary" className="w-[150px] h-[40px]">
+            최애 찾으러 가기
+          </ActionButton>
+          <ActionButton variant="primary" className="w-[150px] h-[40px]">
+            포토카드 구매하기
+          </ActionButton>
+        </div>
+
+        {/* feature - 1 */}
+        <h1>포인트로 안전하게 거래하세요</h1>
       </div>
+      {/* <div className="relative w-[] h-[] sm:w-[] sm:h-[] md:w-[] md:h-[]">
+        <Image src={} alt="" fill className="object-cover" />
+      </div>
+      <div className="relative w-[] h-[] sm:w-[] sm:h-[] md:w-[] md:h-[]">
+        <Image src={} alt="" fill className="object-cover" />
+      </div>
+      <div className="relative w-[] h-[] sm:w-[] sm:h-[] md:w-[] md:h-[]">
+        <Image src={} alt="" fill className="object-cover" />
+      </div> */}
     </>
   );
 }
