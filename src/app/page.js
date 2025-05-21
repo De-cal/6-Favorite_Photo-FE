@@ -11,7 +11,9 @@ import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.svg";
 import featImg2 from "@/assets/images/img-landing-feature-2.svg";
 import grayComment from "@/assets/images/img-comment-gray.svg";
 import blueComment from "@/assets/images/img-comment-blue.svg";
-
+import blueBox from "@/assets/images/img-landing-feature-3-blue-box.svg";
+import redBox from "@/assets/images/img-landing-feature-3-red-box.svg";
+import boxesImg from "@/assets/images/img-landing-feature-3.svg";
 export default function LandingPage() {
   return (
     <>
@@ -145,7 +147,7 @@ export default function LandingPage() {
           </div>
 
           {/* 텍스트 */}
-          <div className="absolute top-[67px] sm:top-[110px] md:top-[138px] left-[32px] sm:left-[61px] md:left-[428px] flex flex-col items-start justify-center w-full  gap-3 sm:gap-[14px] z-10">
+          <div className="absolute top-[67px] sm:top-[110px] md:top-[138px] left-[32px] sm:left-[61px] md:left-[428px] flex flex-col items-start justify-center w-full  gap-3 sm:gap-[14px] z-15">
             <h1 className="text-white font-bold text-[20px] sm:text-4xl">
               포인트로 <span className="text-main">안전하게 거래</span>하세요
             </h1>
@@ -195,9 +197,6 @@ export default function LandingPage() {
               포인트로 안전하게 교환하세요
             </p>
           </div>
-
-          {/* 데스크탑용 알림 이미지, 코멘트 wrapper
-          <div className="relative w-full md:h-[518px] md:w-[1068px] md:top-[231px] md:left-[427px]"> */}
           {/* 알림 이미지 */}
           <div
             className="absolute top-[283px] left-[38x] sm:top-[353px] sm:left-[96px] md:top-[231px] md:left-[427px] w-full h-[226px] sm:h-[383px] md:h-[518px]
@@ -233,25 +232,64 @@ export default function LandingPage() {
               className="object-contain"
             />
           </div>
-          {/* </div> */}
         </section>
 
         {/*  ▶ Feature 3 Section */}
-        <section className="relative flex flex-col items-center justify-center w-full h-[390px] sm:h-[667px] md:h-[900px]">
-          <div className="absolute top-[181px] w-full h-[337px] sm:h-[486px] md:h-[594px] bg-[linear-gradient(180deg,_#0F0F0F_0%,_#252800_100%)]">
-            {/* Your section content here */}
-          </div>
-          {/* <div className="w-[200px] h-[200px]">
+        <section className="relative flex flex-col items-center justify-center w-full h-[390px] sm:h-[667px] md:h-[900px] overflow-hidden">
+          {/* 노란색 gradient background */}
+          <div className="absolute top-[181px] w-full h-[337px] sm:h-[486px] md:h-[594px] bg-[linear-gradient(180deg,_#0F0F0F_0%,_#252800_100%)] z-0"></div>
+          {/* 선물상자 background */}
+          <div
+            className="absolute -rotate-4 w-[69px] h-[54px] top-[194px] left-[313px]
+          sm:w-[129px] sm:h-[100px] sm:top-[361px] sm:left-[640px]
+          md:w-[280px] md:h-[216px] md:top-[384px] md:left-[1366px]
+          z-10"
+          >
             <Image
-              src={test}
-              alt="test arrow ic"
+              src={redBox}
+              alt="빨간 선물상자 배경"
               fill
               className="object-cover"
             />
-          </div> */}
-          {/* 배경 이미지 */}
+          </div>
+          {/* 선물상자 background  2*/}
+          <div
+            className="absolute -rotate-12 w-[200px] h-[162px] top-[326px] left-[-75px]
+          sm:w-[352px] sm:h-[273px] sm:top-[538px] sm:left-[-80px]
+          md:w-[685px] md:h-[530px] md:top-[714px] md:left-[26px]
+          z-10"
+          >
+            <Image
+              src={blueBox}
+              alt="파란 선물상자 배경"
+              fill
+              className="object-cover"
+            />
+          </div>
           {/* 텍스트 */}
+          <div className="absolute top-[67px] sm:top-[110px] md:top-[133px] left-[32px] sm:left-[61px] md:left-[428px] flex flex-col items-start justify-center w-full gap-3 sm:gap-[14px] z-15">
+            <h1 className="text-white text-center text-[20px] h-12 font-bold sm:h-[96px] sm:text-[40px]">
+              랜덤 상자로 <span className="text-main">포인트 받자!</span>
+              🎉
+            </h1>
+            <p className="text-left text-sm sm:text-lg text-[#9f9f9f] font-normal">
+              한 시간마다 주어지는 랜덤 상자를 열고,
+              <br /> 포인트를 획득하세요
+            </p>
+          </div>
+
           {/* 랜덤 상자 이미지 */}
+          <div
+            className="absolute top-[166px] left-[38px] sm:top-[257px] sm:left-[94px] md:top-[274px] md:left-[515px] overflow-hidden
+                       w-full max-w-[1068px] h-[198px] sm:h-[357px] md:h-[570px] z-20"
+          >
+            <Image
+              src={boxesImg}
+              alt="랜덤 상자 이미지 기능 페이지"
+              fill
+              className="object-contain"
+            />
+          </div>
         </section>
 
         {/*  ▶ Call to Action Section */}
