@@ -9,9 +9,11 @@ import Sort from "./_components/SortDropdown";
 import marketplace from "../../assets/images/img-marketplace.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import FilterDropdown from "./_components/FilerDropdown";
+import SellPhotoCardsModal from "./_components/SellPhotoCardsModal";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     // w-375px
     <div className="relative">
@@ -34,7 +36,12 @@ export default function MarketplacePage() {
               height={49}
               alt="marketplace"
             />
-            <ActionButton variant="primary">포토카드 교환하기</ActionButton>
+            <ActionButton
+              variant="primary"
+              onClick={() => setIsModalOpen(true)}
+            >
+              포토카드 교환하기
+            </ActionButton>
           </div>
         </div>
 
@@ -58,7 +65,7 @@ export default function MarketplacePage() {
         <div className="px-[15px] mb-[20px] flex justify-between w-full mt-[15px]">
           <button
             onClick={() => setShowFilter(true)}
-            className="sm:hidden sm:hidden cursor-pointer
+            className="sm:hidden cursor-pointer
 rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
           >
             <Image alt="filerIcon" src={filterIcon} width={20} height={20} />
@@ -79,6 +86,7 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
           <Filter />
         </div>
       )}
+      {isModalOpen && <SellPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }
