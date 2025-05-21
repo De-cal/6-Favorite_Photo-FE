@@ -10,6 +10,7 @@ import MobileProfileModal from "./MobileProfileModal";
 import TabletAndDesktopProfileModal from "./TabletAndDesktopProfileModal";
 import { useModal } from "@/providers/ModalProvider";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export default function HeaderLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,8 +35,14 @@ export default function HeaderLayout() {
 
   return (
     <>
-      {["/marketplace", "/"].includes(path) && (
-        <div className="flex justify-center items-center font-notoSans">
+      {!["/login", "/signup"].includes(path) && (
+        <div
+          className={clsx(
+            !["/marketplace", "/"].includes(path)
+              ? "hidden sm:block"
+              : "flex justify-center items-center font-notoSans"
+          )}
+        >
           <div className="flex justify-between items-center w-full max-w-[1920px] h-[60px] px-[20px] sm:h-[70px] sm:px-[40px] md:h-[80px] md:px-[220px]">
             <button
               onClick={handleMobileModalOpen}
