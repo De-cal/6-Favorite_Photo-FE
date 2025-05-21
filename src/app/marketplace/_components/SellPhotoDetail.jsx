@@ -1,0 +1,75 @@
+import React, { useState } from "react";
+import plus from "@/assets/icons/ic-plus.svg";
+import minus from "@/assets/icons/ic-minus.svg";
+import Image from "next/image";
+import GradeDetail from "@/components/common/GradeDetail";
+import { GenreChange } from "@/utils/GenreChange";
+
+function SellPhotoDetail({
+  card = {
+    title: "우리집 앞마당",
+    rank: "LEGENDARY",
+    genre: "PORTRAIT",
+    owner: "유디",
+    totalQuantity: 3,
+  },
+}) {
+  const [quantity, setQuantity] = useState(0);
+
+  return (
+    <div className="flex flex-col w-[345px] sm:flex-1 ">
+      <div className="flex flex-row justify-between w-full mt-[5px] sm:mt-0 text-[18px]">
+        <div className="flex gap-[5px] items-center">
+          <GradeDetail grade={card.rank} />
+          <div className="border-l border-gray-400 h-6 mx-[15px] "></div>
+          <p className=" text-gray-300 font-bold">{GenreChange(card.genre)}</p>
+        </div>
+        <p className="text-white underline font-bold">{card.owner}</p>
+      </div>
+      <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]">
+        {" "}
+      </div>
+      <div className="flex flex-col gap-[20px]">
+        <div className="flex justify-between items-center">
+          <p>총 판매 수량</p>
+          <div className="flex gap-[15px] w-[202px] md:w-[245px]">
+            <div className="border-gray-200 border-1 flex w-[144px] h-[45px] justify-evenly items-center">
+              <button
+                onClick={() => setQuantity((prev) => prev - 1)}
+                disabled={quantity === 0}
+              >
+                <Image alt="minus" src={minus} />
+              </button>
+              <p>{quantity}</p>
+              <button
+                onClick={() => setQuantity((prev) => prev + 1)}
+                disabled={quantity === card.totalQuantity}
+              >
+                <Image alt="plus" src={plus} />
+              </button>
+            </div>
+            <div>
+              <p>/ {card.totalQuantity}</p>
+              <p className="text-gray-200 text-[12px] md:text-[14px] w-[54px]">
+                최대 {card.totalQuantity}장
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <p>장당 가격</p>
+          <div className="border-gray-200 border-1 w-[202px] h-[45px] md:w-[245px] md:h-[50px] relative flex justify-center">
+            <input
+              placeholder="숫자만 입력"
+              className="absolute left-5 top-2 w-35"
+              type="number"
+            />
+            <p className="absolute top-2 right-3">P</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SellPhotoDetail;

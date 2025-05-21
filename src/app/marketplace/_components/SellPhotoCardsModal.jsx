@@ -4,19 +4,24 @@ import React, { useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import Card from "@/components/common/Card";
 import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
+import Search from "./Search";
+import filter from "@/assets/icons/ic-filter.svg";
+import Filter from "./Filter";
+import FilterDropdown from "./FilerDropdown";
 
-function SellPhotoCardsModal({ isModalOpen }) {
+function SellPhotoCardsModal({ setIsModalOpen }) {
   const [DetailModal, setDetailModal] = useState(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [cards, setCards] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px">
       <div className="max-w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px]">
         <div className="flex justify-end w-full mr-[30px] mt-[30px]">
-          <button>
+          <button onClick={() => setIsModalOpen(false)}>
             <Image src={close} alt="close" className="h-[32px]" />
           </button>
         </div>
-        <div className="max-w-[920px] w-full">
+        <div className=" w-[345px] sm:w-[704px] md:w-[920px]">
           <div className="text-gray-300 font-baskinRobbins text-[14px] sm:text-[16px] md:text-[24px]">
             마이갤러리
           </div>
@@ -26,9 +31,23 @@ function SellPhotoCardsModal({ isModalOpen }) {
           <div className="hidden sm:block border-b-2 border-white mt-[20px]">
             {" "}
           </div>
-          <div className="grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center">
+          <div className="flex gap-[10px] w-full mt-[20px] sm:flex-row-reverse">
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="border-1 border-gray-200 w-[45px] h-[45px] flex justify-center items-center sm:hidden"
+            >
+              <Image alt="filter" src={filter} className="w-[20px]" />
+            </button>
+            <FilterDropdown />
+            <Search />
+          </div>
+          <div className="grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]">
             {cards.map((card) => (
-              <Card key={card.id} onClick={() => setDetailModal(card)} />
+              <Card
+                key={card.id}
+                onClick={() => setDetailModal(card)}
+                type="for_sale_soldout"
+              />
             ))}
           </div>
         </div>
@@ -39,6 +58,7 @@ function SellPhotoCardsModal({ isModalOpen }) {
           card={DetailModal}
         />
       )}
+      {isFilterOpen && <Filter />}
     </div>
   );
 }

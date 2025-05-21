@@ -9,9 +9,11 @@ import Sort from "./_components/SortDropdown";
 import marketplace from "../../assets/images/img-marketplace.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import FilterDropdown from "./_components/FilerDropdown";
+import SellPhotoCardsModal from "./_components/SellPhotoCardsModal";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     //mockdata 넣을 건지 확인 하기
     <div className="relative">
@@ -35,6 +37,7 @@ export default function MarketplacePage() {
               alt="marketplace"
               className="md:hidden"
             />
+
             <Image
               src={marketplace}
               width={320}
@@ -42,7 +45,8 @@ export default function MarketplacePage() {
               alt="marketplace"
               className="hidden md:block"
             />
-            <ActionButton className="w-[342px] h-[60px] md:w-[440px]">
+            <ActionButton className="w-[342px] h-[60px] md:w-[440px]" onClick={() => setIsModalOpen(true)}>
+
               포토카드 교환하기
             </ActionButton>
           </div>
@@ -68,12 +72,12 @@ export default function MarketplacePage() {
             <div className="w-full h-[1px] border-b border-gray-400 sm:border-gray-100 sm:h-[2px]" />
           </div>
         </div>
-
         <div className="w-[347px]">
           <div className="w-full px-[10px] mb-[20px] flex justify-between w-full mt-[15px]">
             <button
               onClick={() => setShowFilter(true)}
               className="sm:hidden sm:hidden cursor-pointer
+
 rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
             >
               <Image alt="filerIcon" src={filterIcon} width={20} height={20} />
@@ -99,6 +103,7 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
           <Filter />
         </div>
       )}
+      {isModalOpen && <SellPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }
