@@ -12,8 +12,8 @@ export default function RankSection({ data }) {
       <div className="flex flex-row gap-2.5">
         <span className="text-[14px]">
           {data.user
-            ? `${data.user}님이 보유한 포토카드`
-            : "???님이 보유한 포토카드"}
+            ? `${data.user}님이 판매중인 포토카드`
+            : "???님이 판매중인 포토카드"}
         </span>
         <span className="text-[14px] text-gray-300">
           {totalAmount ? `총 ${totalAmount}장` : "(총 ???장)"}

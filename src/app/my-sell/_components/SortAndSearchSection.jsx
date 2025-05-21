@@ -1,12 +1,14 @@
 "use client";
 import search from "../../../assets/icons/ic-search.svg";
 import Image from "next/image";
-import Dropdown from "@/app/my-gallery/_components/Dropdown";
+import Dropdown from "@/app/my-sell/_components/Dropdown";
 import { useState } from "react";
 // props: onSearch (부모에게 검색 조건 전달)
 export default function SortAndSearchSection({ onSearch }) {
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [selectedSellingType, setSelectedSellingType] = useState(null);
+  const [selectedSoldout, setSelectedSoldout] = useState(null);
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
@@ -15,6 +17,8 @@ export default function SortAndSearchSection({ onSearch }) {
       keyword,
       grade: selectedGrade,
       genre: selectedGenre,
+      sellingType: selectedSellingType,
+      soldout: selectedSoldout,
     });
   };
 
@@ -39,6 +43,8 @@ export default function SortAndSearchSection({ onSearch }) {
       <div className="flex flex-row gap-[25px]">
         <Dropdown type="등급" onSelect={setSelectedGrade} />
         <Dropdown type="장르" onSelect={setSelectedGenre} />
+        <Dropdown type="판매방법" onSelect={setSelectedSellingType} />
+        <Dropdown type="매진여부" onSelect={setSelectedSoldout} />
       </div>
     </section>
   );

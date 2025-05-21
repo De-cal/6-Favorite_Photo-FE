@@ -4,14 +4,14 @@ import MobileHeader from "@/components/common/MobileHeader";
 
 export default function TopSection() {
   return (
-    <div className="w-full h-[60px] sm:h-[80px] md:h-[85px] sm:border-b-2 border-b-gray-100 flex justify-center items-center sm:justify-between relative sm:pb-[20px] md:pb-[21.5px]">
+    <section className="w-full h-[60px] sm:h-[80px] md:h-[85px] sm:border-b-2 border-b-gray-100 flex justify-center items-center sm:justify-between relative sm:pb-[20px] md:pb-[21.5px] md:max-w-[1480px]">
       <MobileHeader title={"마이갤러리"} src="/" />
 
       {/* 하단 고정 버튼 (모바일 전용) */}
-      <div className="fixed bottom-0 left-0 w-full px-[15px] py-4 z-50 sm:hidden bg-black">
+      <div className="fixed bottom-0 left-0 w-full px-[15px] z-50 sm:hidden bg-black flex justify-center">
         <Link href="/my-gallery/create">
-          <ActionButton variant="primary" className="w-full h-15">
-            포토카드 생성하기 (0/3)
+          <ActionButton variant="primary" className="w-[356px]  h-15">
+            포토카드 생성하기 (3/3)
           </ActionButton>
         </Link>
       </div>
@@ -29,7 +29,7 @@ export default function TopSection() {
           </ActionButton>
         </Link>
       </div>
-    </div>
+    </section>
   );
 }
 
