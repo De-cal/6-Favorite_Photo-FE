@@ -1,54 +1,45 @@
+"use client";
 import search from "../../../assets/icons/ic-search.svg";
-import dropdown from "../../../assets/icons/ic-down.svg";
-import dropup from "../../../assets/icons/ic-up.svg";
-import filter from "../../../assets/icons/ic-filter.svg";
 import Image from "next/image";
-export default function SortAndSearchSection() {
-  return (
-    <div>
-      <section className="flex flex-row gap-2.5 pt-[15px] sm:hidden">
-        {/* 모바일 검색 */}
-        <div className="w-[45px] h-[45px] border-1 border-gray-200 ">
-          <Image src={filter} width={45} height={45} alt="필터버튼" />
-        </div>
-        <div className="flex items-center border border-gray-200 w-full sm:w-[250px] h-[45px] px-5 ">
-          <input
-            type="text"
-            placeholder="검색"
-            className="bg-transparent outline-none flex-grow text-sm text-white"
-          />
-          <button type="submit" className="cursor-pointer">
-            <Image src={search} width={17} height={17} alt="검색버튼" />
-          </button>
-        </div>
-      </section>
+import Dropdown from "@/app/my-gallery/_components/Dropdown";
+import { useState } from "react";
+// props: onSearch (부모에게 검색 조건 전달)
+export default function SortAndSearchSection({ onSearch }) {
+  const [selectedGrade, setSelectedGrade] = useState(null);
+  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [keyword, setKeyword] = useState("");
 
-      <section className="pt-[15px] hidden sm:flex sm:flex-row gap-[30px] items-center">
-        <div className="flex items-center border border-gray-200 w-full sm:max-w-[250px] h-[45px]  md:max-w-[320px] md:h-[50px] px-5 ">
-          <input
-            type="text"
-            placeholder="검색"
-            className="bg-transparent outline-none flex-grow text-sm text-white"
-          />
-          <button type="submit" className="cursor-pointer">
-            <Image src={search} width={17} height={17} alt="검색버튼" />
-          </button>
-        </div>
-        <div className="flex flex-row gap-[25px]">
-          <div className="flex flex-row gap-2.5">
-            등급
-            <button className="cursor-pointer">
-              <Image src={dropdown} width={16} height={16} alt="드롭다운" />
-            </button>
-          </div>
-          <div className="flex flex-row gap-2.5">
-            장르
-            <button className="cursor-pointer">
-              <Image src={dropdown} width={16} height={16} alt="드롭다운" />
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch?.({
+      keyword,
+      grade: selectedGrade,
+      genre: selectedGenre,
+    });
+  };
+
+  return (
+    <section className="pt-[15px] hidden sm:flex sm:flex-row gap-[30px] items-center md:max-w-[1480px] justify-start w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-center border border-gray-200 w-full sm:max-w-[250px] h-[45px] md:max-w-[320px] md:h-[50px] px-5"
+      >
+        <input
+          type="text"
+          placeholder="검색"
+          className="bg-transparent outline-none flex-grow text-sm text-white"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+        <button type="submit" className="cursor-pointer">
+          <Image src={search} width={17} height={17} alt="검색버튼" />
+        </button>
+      </form>
+
+      <div className="flex flex-row gap-[25px]">
+        <Dropdown type="등급" onSelect={setSelectedGrade} />
+        <Dropdown type="장르" onSelect={setSelectedGenre} />
+      </div>
+    </section>
   );
 }

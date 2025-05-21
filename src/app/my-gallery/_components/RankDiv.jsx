@@ -12,7 +12,7 @@ export default function RankDiv({ rank, amount }) {
   return (
     <div
       className={clsx(
-        "h-7.5 sm:h-8 md:h-10 w-30 sm:w-32 md:w-35 border flex justify-center items-center font-light text-[12px] sm:text-[14px] md:text-[16px] px-2.5",
+        "h-7.5 sm:h-8 md:h-10 w-auto border flex justify-center items-center font-light text-[12px] sm:text-[14px] md:text-[16px] px-2.5",
         rankStyles[rank] || "border-gray-300 text-gray-500"
       )}
     >
