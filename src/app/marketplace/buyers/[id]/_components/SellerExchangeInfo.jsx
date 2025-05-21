@@ -32,31 +32,38 @@ export default function SellerExchangeInfo() {
   };
 
   return (
-    <>
-      <h2 className="font-bold text-[24px]/[29px] w-full pb-[10px] border-b-[2px] border-gray-100 sm:text-[32px]/[38px] sm:pb-[20px] md:text-[40px]/[48px]">
+    <div className="relative">
+      <h2 className="font-bold text-[24px]/[29px] w-full border-b-[2px] border-gray-100 mt-[120px] pb-[10px] sm:text-[32px]/[38px] sm:pb-[42px] md:text-[40px]/[48px]">
         교환 희망 정보
       </h2>
-      <p className="font-bold text-[18px]/[26px] md:text-[24px]/[35px]">
+      <p className="font-bold text-[18px]/[26px] mt-[46px] sm:mt-[40px] md:mt-[60px] md:text-[24px]/[35px]">
         {cardArticle.exchangeText}
       </p>
-      <p
-        className={clsx(
-          {
-            "text-pink": cardArticle.exchangeRank === "LEGENDARY",
-            "text-purple": cardArticle.exchangeRank === "SUPER RARE",
-            "text-blue": cardArticle.exchangeRank === "RARE",
-            "text-main": cardArticle.exchangeRank === "COMMON",
-          },
-          "font-bold text-[18px]/[22px] text-blue md:text-[24px]/[29px]"
-        )}
+      <div className="flex justify-start items-center gap-[15px] mt-[20px]">
+        <p
+          className={clsx(
+            {
+              "text-pink": cardArticle.exchangeRank === "LEGENDARY",
+              "text-purple": cardArticle.exchangeRank === "SUPER RARE",
+              "text-blue": cardArticle.exchangeRank === "RARE",
+              "text-main": cardArticle.exchangeRank === "COMMON",
+            },
+            "font-bold text-[18px]/[22px] text-blue md:text-[24px]/[29px]"
+          )}
+        >
+          {cardArticle.exchangeRank}
+        </p>
+        <div className="border-l-[1.5px] border-gray-400 h-[17px]"></div>
+        <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">
+          {cardArticle.exchangeGenre}
+        </p>
+      </div>
+      <ActionButton
+        className="mt-[40px] sm:mt-0 sm:absolute sm:top-0 sm:right-0"
+        onClick={handleClick}
       >
-        {cardArticle.exchangeRank}
-      </p>
-      <div className="border-l-[1.5px] border-gray-400 h-[17px]"></div>
-      <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">
-        {cardArticle.exchangeGenre}
-      </p>
-      <ActionButton onClick={handleClick}>포토카드 교환하기</ActionButton>
-    </>
+        포토카드 교환하기
+      </ActionButton>
+    </div>
   );
 }
