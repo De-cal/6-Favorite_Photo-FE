@@ -26,7 +26,7 @@ export default function ActionButton({
       case "거절":
         return "w-[150px] h-[40px] text-xs";
       default:
-        return "w-auto h-auto text-base";
+        return "";
     }
   })();
 
