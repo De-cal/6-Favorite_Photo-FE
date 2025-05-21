@@ -6,30 +6,30 @@ export default function ActionButton({
   variant = "primary",
   onClick,
   disabled = false,
-  className = "",
-  children,
+  className,
+  children, // 버튼 텍스트를 children으로 받음
   ...rest
 }) {
   const baseStyles =
     "inline-flex items-center justify-center rounded-[2px] cursor-pointer";
 
-  // children (버튼 텍스트)에 따른 기본 크기 (width, height, font-size)
+  // children (버튼 텍스트)마다 반응형 크기 적용
   const sizeStyles = (() => {
     switch (children) {
+      // 여기에 추가할 case마다 지정해주어야 하는 tailwind css: width, height, font 사이즈 (모두 다 sm, md일때 고려)
       case "포토카드 구매하기":
       case "판매 내리기":
-        return "w-[345px] h-[75px] sm:w-[342px] text-lg md:max-w-[440px] md:h-[80px] md:text-xl";
+        return "w-[345px] h-[75px] text-lg md:text-xl md:w-[440px] md:h-[80px]";
       case "포토카드 교환하기":
-        return "w-[345px] h-[55px] sm:w-[342px] sm:h-[60px] text-base md:text-lg md:w-[520px]";
+        return "w-[345px] h-[55px] text-base md:text-lg md:w-[520px] md:h-[60px]";
       case "승인":
       case "거절":
         return "w-[150px] h-[40px] text-xs";
       default:
-        return "";
+        return "w-auto h-auto text-base";
     }
   })();
 
-  // variant 스타일 지정
   const variantStyles = {
     primary: clsx(
       disabled
@@ -46,9 +46,9 @@ export default function ActionButton({
       disabled={disabled}
       className={clsx(
         baseStyles,
-        sizeStyles, // 기본 사이즈 (버튼 텍스트에 따라 미리 지정되있음)
         variantStyles[variant],
-        className // 기본 사이즈에 없는 케이스는 부모에서 직접 className에 사이즈 반응형으로 css값 내려줘야함
+        sizeStyles,
+        className
       )}
       {...rest}
     >
