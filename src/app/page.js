@@ -96,7 +96,7 @@ export default function LandingPage() {
           </div>
 
           {/* 텍스트 & CTA 버튼 */}
-          <div className="absolute top-[70px] left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center z-10">
+          <div className="absolute top-[70px] left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center z-30">
             <div className="relative overflow-hidden hidden sm:block sm:w-[138px] sm:h-[25px] sm:mb-[23px]">
               <Image
                 src={logoImg}
@@ -293,8 +293,21 @@ export default function LandingPage() {
         </section>
 
         {/*  ▶ Call to Action Section */}
-        <section>
-          {/* 텍스트 & 버튼 */}
+        <section className="relative flex flex-col items-center justify-center w-full h-[390px] sm:h-[667px] md:h-[900px]">
+          <div className="flex flex-col items-center justify-center">
+            {/* 텍스트 & 버튼 */}
+            <h1 className="text-white text-center text-[20px] h-12 font-bold sm:h-[96px] sm:text-[40px]">
+              나의 최애를 지금 찾아보세요!
+            </h1>
+            <Link href="/marketplace">
+              <ActionButton
+                variant="primary"
+                className="w-[150px] h-[40px] sm:w-[226px] sm:h-[55px] text-xs sm:text-base"
+              >
+                최애 찾으러 가기
+              </ActionButton>
+            </Link>
+          </div>
           {/* 포토 카드 이미지 */}
         </section>
       </div>
