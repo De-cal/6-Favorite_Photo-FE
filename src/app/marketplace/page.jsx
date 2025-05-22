@@ -89,17 +89,10 @@ export default function MarketplacePage() {
           </div>
         </div>
         <div className="w-[347px]">
-<<<<<<< HEAD
-          <div className="w-full px-[10px] mb-[20px] flex justify-between  mt-[15px]">
-            <button
-              onClick={() => setShowFilter(true)}
-              className="sm:hidden cursor-pointer
-=======
           <div className=" px-[10px] mb-[20px] flex justify-between w-full mt-[15px]">
             <button
               onClick={() => setShowFilter(true)}
               className=" sm:hidden cursor-pointer
->>>>>>> 6be10e0f825d000c7241e3d8f65a42760980cbc0
 
 rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
             >

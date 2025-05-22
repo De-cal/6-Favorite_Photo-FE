@@ -15,7 +15,7 @@ export default function SortAndSearchSection({ onSearch }) {
     e.preventDefault();
     onSearch?.({
       keyword,
-      grade: selectedGrade,
+      rank: selectedGrade,
       genre: selectedGenre,
       sellingType: selectedSellingType,
       soldout: selectedSoldout,

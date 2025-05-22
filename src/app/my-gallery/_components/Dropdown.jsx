@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react"; // ✅ 이 줄 반드시 있어야 함!
+import React, { useState } from "react";
 import down from "@/assets/icons/ic-down.svg";
 import up from "@/assets/icons/ic-up.svg";
 import Image from "next/image";
-
 
 export default function Dropdown({ type, value, setValue }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

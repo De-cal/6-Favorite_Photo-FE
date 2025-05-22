@@ -13,7 +13,7 @@ export default function PhotoCardSection({ dataLists }) {
         if (i % 3 === 1) mdJustify = "md:justify-center";
         else if (i % 3 === 2) mdJustify = "md:justify-end";
 
-        const cardType = dataList.quantity === 0 ? "soldout" : "";
+        const cardType = dataList.quantity === 0 ? "soldout" : "for_sale";
 
         return (
           <div
