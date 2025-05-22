@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logo from "@/assets/images/img-logo.svg";
+import logo from "@/assets/images/img-logo.avif";
 import soldout from "@/assets/icons/ic-soldout.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
