@@ -8,13 +8,13 @@ export default function MobileHeader({ title, src, onClick }) {
       {/* 왼쪽 뒤로가기 버튼 */}
       {src ? (
         <Link href={src}>
-          <button className="absolute left-[20px] top-1/2 -translate-y-1/2 cursor-pointer">
+          <button className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer">
             <Image src={back} width={22} height={22} alt="뒤로가기" />
           </button>
         </Link>
       ) : (
         <button
-          className="absolute left-[20px] top-1/2 -translate-y-1/2 cursor-pointer"
+          className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer"
           onClick={onClick}
         >
           <Image src={back} width={22} height={22} alt="뒤로가기" />
