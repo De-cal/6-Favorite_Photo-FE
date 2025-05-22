@@ -8,7 +8,7 @@ import Search from "./Search";
 import filter from "@/assets/icons/ic-filter.svg";
 import Filter from "./Filter";
 import FilterDropdown from "./FilerDropdown";
-import { getAllCards } from "@/lib/card";
+import { getAllCards } from "@/api/card";
 
 function SellPhotoCardsModal({ type = "판매", setIsModalOpen }) {
   const [DetailModal, setDetailModal] = useState(null);

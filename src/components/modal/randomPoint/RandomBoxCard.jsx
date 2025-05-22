@@ -1,7 +1,7 @@
 import React from "react";
-import blueBox from "@/assets/images/img-box-blue-ribbon.svg";
-import purpleBox from "@/assets/images/img-box-purple-ribbon.svg";
-import redBox from "@/assets/images/img-box-red-ribbon.svg";
+import blueBox from "@/assets/images/img-box-blue-ribbon.avif";
+import purpleBox from "@/assets/images/img-box-purple-ribbon.avif";
+import redBox from "@/assets/images/img-box-red-ribbon.avif";
 import Image from "next/image";
 
 function RandomBoxCard({ boxColor, selectedOption, handleSelectOption }) {

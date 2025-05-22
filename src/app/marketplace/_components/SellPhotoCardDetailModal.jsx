@@ -6,7 +6,7 @@ import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
 import SellPhotoDetail from "./SellPhotoDetail";
 import MobileHeader from "@/components/common/MobileHeader";
-import { postArticle } from "@/lib/article";
+import { postArticle } from "@/api/article";
 import CommonModal from "@/components/common/CommonModal";
 
 function SellPhotoCardDetailModal({

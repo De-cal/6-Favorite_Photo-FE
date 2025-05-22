@@ -52,7 +52,7 @@ export default function PhotoCardBuyerDetail() {
             className="object-cover"
           />
         </div>
-        <div className="max-w-[440px] sm:min-w-[342px] sm:mt-[48px] md:mt-[70px]">
+        <div className="max-w-[440px] sm:min-w-[342px] sm:mt-[48px] md:mt-[70px] w-full">
           <div className="flex justify-between items-center pb-[30px] border-b-[1px] border-gray-400">
             <div className="flex justify-center items-center gap-[10px] md:gap-[30px]">
               <GradeDetail
@@ -99,7 +99,7 @@ export default function PhotoCardBuyerDetail() {
               <p className="font-normal text-[18px]/[22px] md:text-[20px]/[24px]">
                 구매수량
               </p>
-              <div className="flex justify-center items-center max-w-[176px] py-[10px] px-[12px] border-[1px] border-gray-200 rounded-[2px] gap-[33px] md:gap-[46px]">
+              <div className="flex justify-center items-center max-w-[176px] py-[10px] px-[12px] border border-gray-200 rounded-[2px] gap-[33px] md:gap-[46px]">
                 <button className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
                   <Image
                     src={ic_minus}
@@ -136,7 +136,7 @@ export default function PhotoCardBuyerDetail() {
             </div>
           </div>
           <ActionButton
-            className="mt-[40px] md:mt-[80px] w-full"
+            className="mt-[40px] md:mt-[80px] max-w-[440px] min-w[342px] w-full"
             onClick={handleClick}
           >
             포토카드 구매하기
