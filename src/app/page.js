@@ -87,7 +87,7 @@ export default function LandingPage() {
           {/* 배경 이미지 */}
           <div
             className="absolute top-[33px] left-[16px] right-[16px] bottom-[12px]
-            sm:left-[33px] sm:right-[33px] sm:top-[23px] sm:bottom-0
+            sm:left-[33px] sm:right-[32px] sm:top-[23px] sm:bottom-0
             md:left-[58px] md:right-[61px] md:top-[13px]
             flex items-center justify-center w-auto rounded-2xl overflow-hidden z-0"
           >
@@ -126,14 +126,14 @@ export default function LandingPage() {
 
           {/* 히어로 메인 이미지 */}
           <div
-            className="absolute top-[100px] sm:top-[180px] md:top-[250px] left-1/2 transform -translate-x-1/2
-                       w-full h-[457px] sm:h-[745px] md:h-[765px] z-20"
+            className="absolute top-[187px] sm:top-[364px] md:top-[319px] 
+                       w-full min-h-[199px] sm:h-[352px] max-h-[765px] z-20"
           >
             <Image
               src={heroImg}
               alt="히어로 이미지"
               fill
-              className="object-contain"
+              className="object-cover"
             />
           </div>
         </section>
