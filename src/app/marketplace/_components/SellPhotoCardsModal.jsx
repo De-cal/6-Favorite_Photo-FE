@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import Card from "@/components/common/Card";
 import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
@@ -8,11 +8,22 @@ import Search from "./Search";
 import filter from "@/assets/icons/ic-filter.svg";
 import Filter from "./Filter";
 import FilterDropdown from "./FilerDropdown";
+import { getAllCards } from "@/lib/card";
 
 function SellPhotoCardsModal({ setIsModalOpen }) {
   const [DetailModal, setDetailModal] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [cards, setCards] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    const fetchAllCards = async () => {
+      const fetchCards = await getAllCards();
+      console.log("cards", fetchCards);
+      setCards(fetchCards);
+    };
+    fetchAllCards();
+  }, []);
+
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px">
       <div className="max-w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px]">
@@ -46,7 +57,8 @@ function SellPhotoCardsModal({ setIsModalOpen }) {
               <Card
                 key={card.id}
                 onClick={() => setDetailModal(card)}
-                type="for_sale_soldout"
+                type="my_card"
+                card={card}
               />
             ))}
           </div>

@@ -11,39 +11,53 @@ function Card({
   onClick,
   type = "original",
   card = {
-    name: "How Far I'll Go",
-    rank: "RARE",
-    genre: "PORTRAIT",
-    owner: "프로여행러",
+    photoCard: {
+      title: "How Far I'll Go",
+      rank: "RARE",
+      genre: "PORTRAIT",
+      imgURL: "",
+      creator: {
+        nickname: "프로여행러",
+      },
+    },
     price: 4,
     quantity: 1,
-    image: "",
+
     status: "SELLING",
     totalQuantity: 5,
   },
 }) {
   const StatusChange = (status) => {
-    if (status === "SELLING") {
-      return "판매 중";
-    } else if (status === "WAITING_EXCHANGE") {
-      return "교환 제시 대기 중";
-    }
-    return;
+    if (status === "SELLING") return "판매 중";
+    if (status === "WAITING_EXCHANGE") return "교환 제시 대기 중";
   };
 
   const isSoldout = type.endsWith("soldout");
   const isTotalQuantity = type === "original" || type === "soldout";
+  const isExchange = type === "exchange";
 
   return (
     <div
-      className="w-[170px] h-[234px] sm:w-[342px] sm:h-[517px] md:w-[440px] md:h-[600px] bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-center px-[10px] sm:px-[20px] md:px-[40px] font-light"
+      className={clsx(
+        "bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-center font-light",
+        "md:w-[440px] md:h-[600px] md:px-[40px]",
+        isExchange
+          ? "w-[342px] h-[517px] px-[20px] text-[16px]"
+          : "w-[170px] h-[234px] px-[10px] text-[10px] sm:w-[342px] sm:h-[517px] sm:px-[20px] sm:text-[16px]"
+      )}
       onClick={onClick}
     >
-      <div className="relative mb-[10px] sm:mb-[25px] mt-[30px] sm:mt-0">
+      <div
+        className={clsx(
+          "relative mt-[30px] sm:mt-0",
+          isExchange ? "mb-[25px]" : "mb-[10px] sm:mb-[25px]"
+        )}
+      >
         {type === "for_sale" && (
           <div
             className={clsx(
-              "bg-black/50 absolute top-[5px] left-[5px] py-[5px] px-2 rounded-[2px] text-[10px] sm:text-[14px] md:text-[16px]",
+              "bg-black/50 absolute top-[5px] left-[5px] py-[5px] px-2 rounded-[2px]",
+              isExchange ? "text-[14px]" : "text-[10px] sm:text-[14px]",
               {
                 "text-white": card.status === "SELLING",
                 "text-main": card.status === "WAITING_EXCHANGE",
@@ -58,54 +72,91 @@ function Card({
             alt="soldout"
             src={soldout}
             priority
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[112px] h-auto sm:w-[200px] md:w-[230px] z-10 "
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[112px] h-auto sm:w-[200px] md:w-[230px] z-10"
           />
         )}
         <Image
-          src={example} //card.image로 수정
+          src={example}
           alt="photocard"
-          className={`w-[150px] h-[112px]  sm:w-[302px] sm:h-[226px] md:w-[360px] md:h-[270px] ${
-            isSoldout && "brightness-50"
-          }`}
+          className={clsx(
+            isSoldout && "brightness-50",
+            "md:w-[360px] md:h-[270px]",
+            isExchange
+              ? "w-[302px] h-[226px]"
+              : "w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]"
+          )}
         />
       </div>
 
-      <div className=" text-[10px] sm:text-[16px] w-full flex flex-col">
-        <p className="text-white text-sm sm:text-[22px] truncate overflow-hidden whitespace-nowrap w-full font-bold">
-          {card.name}
+      <div
+        className={clsx(
+          "w-full flex flex-col",
+          isExchange ? "text-[16px]" : "text-[10px] sm:text-[16px]"
+        )}
+      >
+        <p
+          className={clsx(
+            "text-white truncate overflow-hidden whitespace-nowrap w-full font-bold",
+            isExchange ? "text-[22px]" : "text-sm sm:text-[22px]"
+          )}
+        >
+          {card.photoCard.title}
         </p>
-        <div className="flex flex-row justify-between w-full mt-[5px] sm:mt-[10px]">
+        <div
+          className={clsx(
+            "flex justify-between w-full",
+            isExchange ? "mt-[10px]" : "mt-[5px] sm:mt-[10px]"
+          )}
+        >
           <div className="flex gap-[4px] items-center">
             <GradeDetail
-              grade={card.rank}
-              className="text-[10px] sm:text-[16px]"
+              grade={card.photoCard.rank}
+              className={clsx(
+                isExchange ? "text-[16px]" : "text-[10px] sm:text-[16px]"
+              )}
             />
-            <div className="border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px]"></div>
-            <p className=" text-gray-300">{GenreChange(card.genre)}</p>
+            <div
+              className={clsx(
+                "border-l border-gray-400 h-3",
+                isExchange ? "mx-[10px]" : "mx-[5px] sm:mx-[10px]"
+              )}
+            />
+            <p className="text-gray-300">{GenreChange(card.photoCard.genre)}</p>
           </div>
-          <p className="text-white underline font-normal">{card.owner}</p>
+          <p className="text-white underline font-normal">
+            {card.photoCard.creator.nickname}
+          </p>
         </div>
 
-        <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]">
-          {" "}
-        </div>
+        <div
+          className={clsx(
+            "border-b border-gray-400 h-[1px] w-full",
+            isExchange ? "my-[20px]" : "my-[10px] sm:my-[20px]"
+          )}
+        />
 
         <div className="flex justify-between w-full">
-          <p className=" text-gray-300">가격</p>
-          <p className=" text-white font-normal">{card.price} P</p>
+          <p className="text-gray-300">가격</p>
+          <p className="text-white font-normal">{card.photoCard.price} P</p>
         </div>
-        <div className="flex justify-between w-full mt-[5px] sm:mt-[10px]">
-          <p className=" text-gray-300">
+        <div
+          className={clsx(
+            "flex justify-between w-full",
+            isExchange ? "mt-[10px]" : "mt-[5px] sm:mt-[10px]"
+          )}
+        >
+          <p className="text-gray-300">
             {type === "my_card" ? "수량" : "잔여"}
           </p>
           <div className="flex gap-[2px]">
-            <p className=" text-white font-normal">{card.quantity}</p>
+            <p className="text-white font-normal">{card.quantity}</p>
             {isTotalQuantity && (
-              <p className=" text-gray-300">/ {card.totalQuantity}</p>
+              <p className="text-gray-300">/ {card.totalQuantity}</p>
             )}
           </div>
         </div>
       </div>
+
       <div className="flex justify-center mt-[30px] md:mt-[40px]">
         <Image
           src={logo}
