@@ -45,8 +45,10 @@ export default function MarketplacePage() {
               alt="marketplace"
               className="hidden md:block"
             />
-            <ActionButton className="w-[342px] h-[60px] md:w-[440px]" onClick={() => setIsModalOpen(true)}>
-
+            <ActionButton
+              className="w-[342px] h-[60px] md:w-[440px]"
+              onClick={() => setIsModalOpen(true)}
+            >
               포토카드 교환하기
             </ActionButton>
           </div>

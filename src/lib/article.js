@@ -11,7 +11,7 @@ export const getAllArticles = async () => {
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/arciles`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/articles`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

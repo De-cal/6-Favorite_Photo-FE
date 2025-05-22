@@ -72,7 +72,7 @@ function SellPhotoDetail({
               className="absolute left-5 top-2 w-35"
               type="number"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => setPrice(Number(e.target.value))}
             />
             <p className="absolute top-2 right-3">P</p>
           </div>

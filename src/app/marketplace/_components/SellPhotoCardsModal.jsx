@@ -10,7 +10,7 @@ import Filter from "./Filter";
 import FilterDropdown from "./FilerDropdown";
 import { getAllCards } from "@/lib/card";
 
-function SellPhotoCardsModal({ setIsModalOpen }) {
+function SellPhotoCardsModal({ type = "판매", setIsModalOpen }) {
   const [DetailModal, setDetailModal] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [cards, setCards] = useState([]);
@@ -37,7 +37,7 @@ function SellPhotoCardsModal({ setIsModalOpen }) {
             마이갤러리
           </div>
           <div className="font-baskinRobbins text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px]">
-            나의 포토카드 판매하기
+            {type === "판매" ? "나의 포토카드 판매하기" : "포토카드 교환하기"}
           </div>
           <div className="hidden sm:block border-b-2 border-white mt-[20px]">
             {" "}
@@ -70,7 +70,11 @@ function SellPhotoCardsModal({ setIsModalOpen }) {
           card={DetailModal}
         />
       )}
-      {isFilterOpen && <Filter />}
+      {isFilterOpen && (
+        <div className="fixed inset-0 z-[60] bg-black/50 flex justify-center items-end">
+          <Filter />
+        </div>
+      )}
     </div>
   );
 }

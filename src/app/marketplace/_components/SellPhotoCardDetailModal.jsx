@@ -51,7 +51,7 @@ function SellPhotoCardDetailModal({
       const newArticle = await postArticle({
         exchangeGenre: genre,
         exchangeRank: rank,
-        exchangeDescription: description,
+        exchangeText: description,
         totalQuantity: sellQuantity,
         userPhotoCardId: card.id,
         price,
