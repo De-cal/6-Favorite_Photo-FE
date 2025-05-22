@@ -9,11 +9,12 @@ import featImg1 from "@/assets/images/img-landing-feature-1.svg";
 import featImg1Bg from "@/assets/images/img-landing-feature-1-bg.svg";
 import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.svg";
 import featImg2 from "@/assets/images/img-landing-feature-2.svg";
-import grayComment from "@/assets/images/img-comment-gray.svg";
-import blueComment from "@/assets/images/img-comment-blue.svg";
+import grayComment from "@/assets/images/img-comment-gray.png";
+import blueComment from "@/assets/images/img-comment-blue.png";
 import blueBox from "@/assets/images/img-landing-feature-3-blue-box.svg";
 import redBox from "@/assets/images/img-landing-feature-3-red-box.svg";
 import boxesImg from "@/assets/images/img-landing-feature-3.svg";
+
 export default function LandingPage() {
   return (
     <>
@@ -77,7 +78,7 @@ export default function LandingPage() {
       </div>
 
       {/* 랜딩페이지 전체 */}
-      <div className="flex flex-col items-center justify-center w-full">
+      <div className="flex flex-col items-center justify-center w-full overflow-x-hidden">
         {/* ▶ 랜딩 히어로 */}
         <section
           className="relative flex flex-col items-center justify-center w-full
@@ -137,7 +138,7 @@ export default function LandingPage() {
         {/* ▶ Feature 1 Section */}
         <section className="relative flex flex-col items-center justify-center w-full h-[440px] sm:h-[744px] md:h-[800px] overflow-hidden">
           {/* 배경 이미지 */}
-          <div className="absolute top-[319px] sm:top-[459px] md:top-[438px] left-[131px] sm:left-[193px] flex items-center justify-center w-full h-[140px] sm:h-[300px] md:h-[740px] overflow-x-hidden z-0">
+          <div className="absolute top-[319px] sm:top-[459px] md:top-[438px] left-[131px] sm:left-[193px] flex items-center justify-center w-[calc(100%-262px)] sm:w-[calc(100%-386px)] md:w-[calc(100%-856px)] h-[140px] sm:h-[300px] md:h-[740px] overflow-x-hidden z-0">
             <Image
               src={featImg1Bg}
               alt="배경 이미지"
@@ -177,7 +178,7 @@ export default function LandingPage() {
           {/* 배경 이미지 */}
           <div
             className="
-          absolute top-[334px] sm:top-[548px] md:top-[407px] left-[-55px] md:left-[83px] w-full h-[135px] sm:h-[260px] md:h-[400px] overflow-hidden z-0"
+          absolute top-[334px] sm:top-[548px] md:top-[407px] left-[-55px] md:left-[83px] w-[calc(100%+55px)] md:w-[calc(100%-166px)] h-[135px] sm:h-[260px] md:h-[400px] overflow-hidden z-0"
           >
             <Image
               src={featImg2Bg}
@@ -240,9 +241,9 @@ export default function LandingPage() {
           <div className="absolute top-[181px] w-full h-[337px] sm:h-[486px] md:h-[594px] bg-[linear-gradient(180deg,_#0F0F0F_0%,_#252800_100%)] z-0"></div>
           {/* 선물상자 background */}
           <div
-            className="absolute -rotate-4 w-[69px] h-[54px] top-[194px] left-[313px]
-          sm:w-[129px] sm:h-[100px] sm:top-[361px] sm:left-[640px]
-          md:w-[280px] md:h-[216px] md:top-[384px] md:left-[1366px]
+            className="absolute -rotate-4 w-[69px] h-[54px] top-[194px] right-[313px]
+          sm:w-[129px] sm:h-[100px] sm:top-[361px] sm:right-[640px]
+          md:w-[280px] md:h-[216px] md:top-[384px] md:right-[1366px]
           z-10"
           >
             <Image
