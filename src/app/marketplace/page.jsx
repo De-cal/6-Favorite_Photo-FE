@@ -45,8 +45,10 @@ export default function MarketplacePage() {
               alt="marketplace"
               className="hidden md:block"
             />
-            <ActionButton className="w-[342px] h-[60px] md:w-[440px]" onClick={() => setIsModalOpen(true)}>
-
+            <ActionButton
+              className="w-[342px] h-[60px] md:w-[440px]"
+              onClick={() => setIsModalOpen(true)}
+            >
               포토카드 교환하기
             </ActionButton>
           </div>
@@ -73,10 +75,10 @@ export default function MarketplacePage() {
           </div>
         </div>
         <div className="w-[347px]">
-          <div className="w-full px-[10px] mb-[20px] flex justify-between w-full mt-[15px]">
+          <div className="w-full px-[10px] mb-[20px] flex justify-between  mt-[15px]">
             <button
               onClick={() => setShowFilter(true)}
-              className="sm:hidden sm:hidden cursor-pointer
+              className="sm:hidden cursor-pointer
 
 rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
             >
