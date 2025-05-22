@@ -2,18 +2,20 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import heroImg from "@/assets/images/img-landing-hero.svg";
-import heroBgImg from "@/assets/images/img-landing-hero-bg.svg";
-import logoImg from "@/assets/images/img-logo.svg";
-import featImg1 from "@/assets/images/img-landing-feature-1.svg";
-import featImg1Bg from "@/assets/images/img-landing-feature-1-bg.svg";
-import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.svg";
-import featImg2 from "@/assets/images/img-landing-feature-2.svg";
-import grayComment from "@/assets/images/img-comment-gray.svg";
-import blueComment from "@/assets/images/img-comment-blue.svg";
-import blueBox from "@/assets/images/img-landing-feature-3-blue-box.svg";
-import redBox from "@/assets/images/img-landing-feature-3-red-box.svg";
-import boxesImg from "@/assets/images/img-landing-feature-3.svg";
+import heroImg from "@/assets/images/img-landing-hero.avif";
+import heroBgImg from "@/assets/images/img-landing-hero-bg.avif";
+import logoImg from "@/assets/images/img-logo.avif";
+import featImg1 from "@/assets/images/img-landing-feature-1.avif";
+import featImg1Bg from "@/assets/images/img-landing-feature-1-bg.avif";
+import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.avif";
+import featImg2 from "@/assets/images/img-landing-feature-2.avif";
+import grayComment from "@/assets/images/img-comment-gray.avif";
+import blueComment from "@/assets/images/img-comment-blue.avif";
+import blueBox from "@/assets/images/img-landing-feature-3-blue-box.avif";
+import redBox from "@/assets/images/img-landing-feature-3-red-box.avif";
+import featImg3 from "@/assets/images/img-landing-feature-3.avif";
+import ctaImg from "@/assets/images/img-landing-cta.avif";
+
 export default function LandingPage() {
   return (
     <>
@@ -77,16 +79,19 @@ export default function LandingPage() {
       </div>
 
       {/* 랜딩페이지 전체 */}
-      <div className="flex flex-col items-center justify-center w-full">
+      <div className="flex flex-col items-center justify-center w-full max-w-[1920px] overflow-x-hidden">
         {/* ▶ 랜딩 히어로 */}
         <section
-          className="relative flex flex-col items-center justify-center w-full
-                     px-[16px] pt-[33px] pb-[12px]
-                     sm:px-[33px] sm:pt-[23px]
-                     md:px-[61px] md:pt-[13px]"
+          className="relative flex flex-col items-center justify-center
+          w-full h-[457px] sm:h-[745px] md:h-[1101px]"
         >
           {/* 배경 이미지 */}
-          <div className="relative flex items-center justify-center w-full h-[412px] sm:h-[722px] md:h-[1088px] rounded-2xl overflow-hidden z-0">
+          <div
+            className="absolute top-[33px] left-[16px] right-[16px] bottom-[12px]
+            sm:left-[33px] sm:right-[32px] sm:top-[23px] sm:bottom-0
+            md:left-[58px] md:right-[61px] md:top-[13px]
+            flex items-center justify-center w-auto rounded-2xl overflow-hidden z-0"
+          >
             <Image
               src={heroBgImg}
               alt="히어로 백그라운드 이미지"
@@ -122,14 +127,14 @@ export default function LandingPage() {
 
           {/* 히어로 메인 이미지 */}
           <div
-            className="absolute top-[100px] sm:top-[180px] md:top-[250px] left-1/2 transform -translate-x-1/2
-                       w-full h-[457px] sm:h-[745px] md:h-[765px] z-20"
+            className="absolute top-[187px] sm:top-[364px] md:top-[319px] 
+                       w-full min-h-[199px] sm:h-[352px] max-h-[765px] z-20"
           >
             <Image
               src={heroImg}
               alt="히어로 이미지"
               fill
-              className="object-contain"
+              className="object-cover"
             />
           </div>
         </section>
@@ -197,9 +202,11 @@ export default function LandingPage() {
               포인트로 안전하게 교환하세요
             </p>
           </div>
+
           {/* 알림 이미지 */}
           <div
-            className="absolute top-[283px] left-[38x] sm:top-[353px] sm:left-[96px] md:top-[231px] md:left-[427px] w-full h-[226px] sm:h-[383px] md:h-[518px]
+            className="absolute top-[283px] left-[38x] sm:top-[353px] sm:left-[96px]
+            md:top-[237px] md:left-[427px] w-full h-[226px] sm:h-[383px] md:h-[518px]
               z-20"
           >
             <Image
@@ -211,7 +218,9 @@ export default function LandingPage() {
           </div>
           {/* comments */}
           <div
-            className="absolute top-[223px] left-[118px] w-[180px] h-[36px] sm:top-[339px] sm:left-[139px] sm:w-[218px] sm:h-[54px] md:top-[219px] md:left-[106px] md:w-[284px] md:h-[70px]
+            className="absolute top-[223px] left-[118px] w-[180px] h-[36px]
+            sm:top-[339px] sm:left-[139px] sm:w-[218px] sm:h-[54px]
+            md:top-[450px] md:left-[533px] md:w-[284px] md:h-[70px]
               z-20"
           >
             <Image
@@ -222,7 +231,9 @@ export default function LandingPage() {
             />
           </div>
           <div
-            className="absolute top-[174px] left-[61px] w-[135px] h-[36px] sm:top-[270px] sm:left-[70px] sm:w-[164px] sm:h-[53px] md:top-[129px] md:left-[16px] md:w-[214px] md:h-[70px]
+            className="absolute top-[174px] left-[61px] w-[135px] h-[36px]
+            sm:top-[270px] sm:left-[70px] sm:w-[164px] sm:h-[53px]
+            md:top-[359px] md:left-[443px] md:w-[214px] md:h-[70px]
               z-20"
           >
             <Image
@@ -284,7 +295,7 @@ export default function LandingPage() {
                        w-full max-w-[1068px] h-[198px] sm:h-[357px] md:h-[570px] z-20"
           >
             <Image
-              src={boxesImg}
+              src={featImg3}
               alt="랜덤 상자 이미지 기능 페이지"
               fill
               className="object-contain"
@@ -295,6 +306,15 @@ export default function LandingPage() {
         {/*  ▶ Call to Action Section */}
         <section className="relative flex flex-col items-center justify-center w-full h-[390px] sm:h-[667px] md:h-[900px]">
           <div className="flex flex-col items-center justify-center">
+            {/* 이미지 */}
+            <div className="relative w-[78px] h-[114px] sm:w-[130px] sm:h-[150px]">
+              <Image
+                src={ctaImg}
+                alt="포토카드"
+                fill
+                className="object-contain"
+              />
+            </div>
             {/* 텍스트 & 버튼 */}
             <h1 className="text-white text-center text-[20px] h-12 font-bold sm:h-[96px] sm:text-[40px]">
               나의 최애를 지금 찾아보세요!

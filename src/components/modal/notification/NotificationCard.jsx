@@ -1,0 +1,20 @@
+function NotificationCard({ notification }) {
+  return (
+    <div
+      className={`flex flex-col border-b-1  bg-gray-500 p-5 gap-y-2 ${
+        notification.isRead ? "brightness-50 " : "border-gray-400"
+      } `}
+    >
+      <p className="text-sm">{notification.message}</p>
+      <p
+        className={`text-xs font-light ${
+          notification.isRead ? "" : "text-gray-300"
+        } `}
+      >
+        {notification.createdAt}
+      </p>
+    </div>
+  );
+}
+
+export default NotificationCard;

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import RandomBoxCard from "./RandomBoxCard";
-import pointImage from "@/assets/images/img-point.svg";
+import pointImage from "@/assets/images/img-point.avif";
 import Image from "next/image";
 
 function RewardPoint({ clearTimer, formatTime, remainingTime }) {
