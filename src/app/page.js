@@ -9,10 +9,10 @@ import featImg1 from "@/assets/images/img-landing-feature-1.svg";
 import featImg1Bg from "@/assets/images/img-landing-feature-1-bg.svg";
 import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.svg";
 import featImg2 from "@/assets/images/img-landing-feature-2.svg";
-import grayComment from "@/assets/images/img-comment-gray.png";
-import blueComment from "@/assets/images/img-comment-blue.png";
-import blueBox from "@/assets/images/img-landing-feature-3-blue-box.svg";
-import redBox from "@/assets/images/img-landing-feature-3-red-box.svg";
+import grayComment from "@/assets/images/img-comment-gray.avif";
+import blueComment from "@/assets/images/img-comment-blue.avif";
+// import blueBox from "@/assets/images/img-landing-feature-3-blue-box.svg";
+// import redBox from "@/assets/images/img-landing-feature-3-red-box.svg";
 import boxesImg from "@/assets/images/img-landing-feature-3.svg";
 
 export default function LandingPage() {
