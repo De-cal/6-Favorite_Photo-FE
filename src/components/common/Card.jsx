@@ -65,7 +65,7 @@ function Card({
           src={example} //card.image로 수정
           alt="photocard"
           className={`w-[150px] h-[112px]  sm:w-[302px] sm:h-[226px] md:w-[360px] md:h-[270px] ${
-            isSoldout && "brightness-50"
+            isSoldout ? "brightness-50" : ""
           }`}
         />
       </div>
