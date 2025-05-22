@@ -78,16 +78,19 @@ export default function LandingPage() {
       </div>
 
       {/* 랜딩페이지 전체 */}
-      <div className="flex flex-col items-center justify-center w-full overflow-x-hidden">
+      <div className="flex flex-col items-center justify-center w-full max-w-[1920px] overflow-x-hidden">
         {/* ▶ 랜딩 히어로 */}
         <section
-          className="relative flex flex-col items-center justify-center w-full
-                     px-[16px] pt-[33px] pb-[12px]
-                     sm:px-[33px] sm:pt-[23px]
-                     md:px-[61px] md:pt-[13px]"
+          className="relative flex flex-col items-center justify-center
+          w-full h-[457px] sm:h-[745px] md:h-[1101px]"
         >
           {/* 배경 이미지 */}
-          <div className="relative flex items-center justify-center w-full h-[412px] sm:h-[722px] md:h-[1088px] rounded-2xl overflow-hidden z-0">
+          <div
+            className="absolute top-[33px] left-[16px] right-[16px] bottom-[12px]
+            sm:left-[33px] sm:right-[33px] sm:top-[23px] sm:bottom-0
+            md:left-[58px] md:right-[61px] md:top-[13px]
+            flex items-center justify-center w-auto rounded-2xl overflow-hidden z-0"
+          >
             <Image
               src={heroBgImg}
               alt="히어로 백그라운드 이미지"
@@ -138,7 +141,7 @@ export default function LandingPage() {
         {/* ▶ Feature 1 Section */}
         <section className="relative flex flex-col items-center justify-center w-full h-[440px] sm:h-[744px] md:h-[800px] overflow-hidden">
           {/* 배경 이미지 */}
-          <div className="absolute top-[319px] sm:top-[459px] md:top-[438px] left-[131px] sm:left-[193px] flex items-center justify-center w-[calc(100%-262px)] sm:w-[calc(100%-386px)] md:w-[calc(100%-856px)] h-[140px] sm:h-[300px] md:h-[740px] overflow-x-hidden z-0">
+          <div className="absolute top-[319px] sm:top-[459px] md:top-[438px] left-[131px] sm:left-[193px] flex items-center justify-center w-full h-[140px] sm:h-[300px] md:h-[740px] overflow-x-hidden z-0">
             <Image
               src={featImg1Bg}
               alt="배경 이미지"
@@ -178,7 +181,7 @@ export default function LandingPage() {
           {/* 배경 이미지 */}
           <div
             className="
-          absolute top-[334px] sm:top-[548px] md:top-[407px] left-[-55px] md:left-[83px] w-[calc(100%+55px)] md:w-[calc(100%-166px)] h-[135px] sm:h-[260px] md:h-[400px] overflow-hidden z-0"
+          absolute top-[334px] sm:top-[548px] md:top-[407px] left-[-55px] md:left-[83px] w-full h-[135px] sm:h-[260px] md:h-[400px] overflow-hidden z-0"
           >
             <Image
               src={featImg2Bg}
@@ -241,9 +244,9 @@ export default function LandingPage() {
           <div className="absolute top-[181px] w-full h-[337px] sm:h-[486px] md:h-[594px] bg-[linear-gradient(180deg,_#0F0F0F_0%,_#252800_100%)] z-0"></div>
           {/* 선물상자 background */}
           <div
-            className="absolute -rotate-4 w-[69px] h-[54px] top-[194px] right-[313px]
-          sm:w-[129px] sm:h-[100px] sm:top-[361px] sm:right-[640px]
-          md:w-[280px] md:h-[216px] md:top-[384px] md:right-[1366px]
+            className="absolute -rotate-4 w-[69px] h-[54px] top-[194px] left-[313px]
+          sm:w-[129px] sm:h-[100px] sm:top-[361px] sm:left-[640px]
+          md:w-[280px] md:h-[216px] md:top-[384px] md:left-[1366px]
           z-10"
           >
             <Image
