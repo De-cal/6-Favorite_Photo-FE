@@ -5,12 +5,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 import ic_menu from "@/assets/icons/ic-menu.svg";
 import img_logo from "@/assets/images/img-logo.svg";
-import ic_alarm_default from "@/assets/icons/ic-alarm-default.svg";
 import MobileProfileModal from "./MobileProfileModal";
 import TabletAndDesktopProfileModal from "./TabletAndDesktopProfileModal";
 import { useModal } from "@/providers/ModalProvider";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import Notification from "../modal/notification/Notification";
 
 export default function HeaderLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -66,14 +66,9 @@ export default function HeaderLayout() {
                 <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
                   1,540 P
                 </p>
-                <button className="relative w-[22px] h-[22px] sm:w-[24px] sm:h-[24px] cursor-pointer">
-                  <Image
-                    src={ic_alarm_default}
-                    alt="알림"
-                    fill
-                    className="object-cover"
-                  />
-                </button>
+                <div>
+                  <Notification />
+                </div>
                 <div className="relative hidden sm:block">
                   <button
                     onClick={handleTabletAndDesktopModalOpen}
