@@ -10,12 +10,25 @@ import marketplace from "../../assets/images/img-marketplace.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import FilterDropdown from "./_components/FilerDropdown";
 import SellPhotoCardsModal from "./_components/SellPhotoCardsModal";
+import { getAllArticles } from "@/api/marketplace";
+import { useEffect } from "react";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [articles, setArticles] = useState([]);
+
+  async function getArticles() {
+    const data = await getAllArticles();
+    setArticles(data);
+  }
+  useEffect(() => {
+    getArticles();
+  }, []);
+  useEffect(() => {
+    console.log("articles updated", articles);
+  }, [articles]);
   return (
-    //mockdata 넣을 건지 확인 하기
     <div className="relative">
       {showFilter && (
         <div
@@ -45,8 +58,10 @@ export default function MarketplacePage() {
               alt="marketplace"
               className="hidden md:block"
             />
-            <ActionButton className="w-[342px] h-[60px] md:w-[440px]" onClick={() => setIsModalOpen(true)}>
-
+            <ActionButton
+              className="w-[342px] h-[60px] md:w-[440px]"
+              onClick={() => setIsModalOpen(true)}
+            >
               포토카드 교환하기
             </ActionButton>
           </div>
@@ -85,17 +100,23 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
             <Sort className="flex sm:hidden md:hidden" />
           </div>
         </div>
-        <div
-          className="grid grid-cols-2 sm:grid-cols-2 
-        md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px]
-         justify-items-center"
-        >
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
+          {articles.map((article) => (
+            <Card
+              key={article.id}
+              type="for_sale"
+              card={{
+                name: article.exchangeText,
+                rank: article.exchangeRank,
+                genre: article.exchangeGenre,
+                price: article.price,
+                quantity: article.remainingQuantity,
+                totalQuantity: article.totalQuantity,
+                status: "SELLING",
+                // image, owner 값 추가도 고려
+              }}
+            />
+          ))}
         </div>
       </div>
       {showFilter && (
