@@ -7,6 +7,7 @@ import ic_plus from "@/assets/icons/ic-plus.svg";
 import ic_minus from "@/assets/icons/ic-minus.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import clsx from "clsx";
+import GradeDetail from "@/components/common/GradeDetail";
 
 export default function PhotoCardBuyerDetail() {
   const cardArticle = {
@@ -54,19 +55,10 @@ export default function PhotoCardBuyerDetail() {
         <div className="max-w-[440px] sm:min-w-[342px] sm:mt-[48px] md:mt-[70px]">
           <div className="flex justify-between items-center pb-[30px] border-b-[1px] border-gray-400">
             <div className="flex justify-center items-center gap-[10px] md:gap-[30px]">
-              <p
-                className={clsx(
-                  {
-                    "text-pink": cardArticle.photoCard.rank === "LEGENDARY",
-                    "text-purple": cardArticle.photoCard.rank === "SUPER RARE",
-                    "text-blue": cardArticle.photoCard.rank === "RARE",
-                    "text-main": cardArticle.photoCard.rank === "COMMON",
-                  },
-                  "font-bold text-[18px]/[22px] md:text-[24px]/[29px]"
-                )}
-              >
-                {cardArticle.photoCard.rank}
-              </p>
+              <GradeDetail
+                grade={cardArticle.photoCard.rank}
+                className="text-[18px]/[22px] md:text-[24px]/[29px]"
+              />
               <div className="border-l-[1.5px] border-gray-400 h-[17px]"></div>
               <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">
                 {cardArticle.photoCard.genre}
