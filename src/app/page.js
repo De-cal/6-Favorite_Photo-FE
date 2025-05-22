@@ -14,6 +14,7 @@ import blueComment from "@/assets/images/img-comment-blue.avif";
 import blueBox from "@/assets/images/img-landing-feature-3-blue-box.avif";
 import redBox from "@/assets/images/img-landing-feature-3-red-box.avif";
 import featImg3 from "@/assets/images/img-landing-feature-3.avif";
+import ctaImg from "@/assets/images/img-landing-cta.avif";
 
 export default function LandingPage() {
   return (
@@ -201,9 +202,11 @@ export default function LandingPage() {
               포인트로 안전하게 교환하세요
             </p>
           </div>
+
           {/* 알림 이미지 */}
           <div
-            className="absolute top-[283px] left-[38x] sm:top-[353px] sm:left-[96px] md:top-[231px] md:left-[427px] w-full h-[226px] sm:h-[383px] md:h-[518px]
+            className="absolute top-[283px] left-[38x] sm:top-[353px] sm:left-[96px]
+            md:top-[237px] md:left-[427px] w-full h-[226px] sm:h-[383px] md:h-[518px]
               z-20"
           >
             <Image
@@ -215,7 +218,9 @@ export default function LandingPage() {
           </div>
           {/* comments */}
           <div
-            className="absolute top-[223px] left-[118px] w-[180px] h-[36px] sm:top-[339px] sm:left-[139px] sm:w-[218px] sm:h-[54px] md:top-[219px] md:left-[106px] md:w-[284px] md:h-[70px]
+            className="absolute top-[223px] left-[118px] w-[180px] h-[36px]
+            sm:top-[339px] sm:left-[139px] sm:w-[218px] sm:h-[54px]
+            md:top-[450px] md:left-[533px] md:w-[284px] md:h-[70px]
               z-20"
           >
             <Image
@@ -226,7 +231,9 @@ export default function LandingPage() {
             />
           </div>
           <div
-            className="absolute top-[174px] left-[61px] w-[135px] h-[36px] sm:top-[270px] sm:left-[70px] sm:w-[164px] sm:h-[53px] md:top-[129px] md:left-[16px] md:w-[214px] md:h-[70px]
+            className="absolute top-[174px] left-[61px] w-[135px] h-[36px]
+            sm:top-[270px] sm:left-[70px] sm:w-[164px] sm:h-[53px]
+            md:top-[359px] md:left-[443px] md:w-[214px] md:h-[70px]
               z-20"
           >
             <Image
@@ -299,6 +306,15 @@ export default function LandingPage() {
         {/*  ▶ Call to Action Section */}
         <section className="relative flex flex-col items-center justify-center w-full h-[390px] sm:h-[667px] md:h-[900px]">
           <div className="flex flex-col items-center justify-center">
+            {/* 이미지 */}
+            <div className="relative w-[78px] h-[114px] sm:w-[130px] sm:h-[150px]">
+              <Image
+                src={ctaImg}
+                alt="포토카드"
+                fill
+                className="object-contain"
+              />
+            </div>
             {/* 텍스트 & 버튼 */}
             <h1 className="text-white text-center text-[20px] h-12 font-bold sm:h-[96px] sm:text-[40px]">
               나의 최애를 지금 찾아보세요!
