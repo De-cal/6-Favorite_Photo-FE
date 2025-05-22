@@ -3,34 +3,54 @@ import React from "react";
 import TopSection from "./_components/TopSection";
 import RankSection from "./_components/RankSection";
 import SortAndSearchSection from "./_components/SortAndSearchSection";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
+import PageNation from "./_components/PageNation";
 export default function MyGalleryPage() {
   const [searchFilter, setSearchFilter] = useState({
     keyword: "",
     grade: null,
     genre: null,
   });
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    //(page);
+  }, [page]);
+
+  const filteredCards = mockCards.filter((card) => {
+    const matchesKeyword =
+      !searchFilter.keyword ||
+      card.name.toLowerCase().includes(searchFilter.keyword.toLowerCase());
+
+    const matchesGrade =
+      !searchFilter.grade || card.rank === searchFilter.grade;
+
+    const matchesGenre =
+      !searchFilter.genre || card.genre === searchFilter.genre;
+
+    return matchesKeyword && matchesGrade && matchesGenre;
+  });
+  console.log("필터링데이터", filteredCards);
+
   return (
     <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
-      <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px]">
+      <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
         <RankSection data="" />
         <SortAndSearchSection onSearch={setSearchFilter} />
-        <PhotoCardSection datas={mookCards} />
+        <PhotoCardSection dataLists={filteredCards} />
+        <PageNation
+          count={filteredCards.length}
+          currentPage={page}
+          onClick={setPage}
+        />
       </div>
-
-      {/* 디버그용 출력
-      <div className="mt-5 text-white text-sm">
-        검색어: {searchFilter.keyword || "없음"} <br />
-        선택된 등급: {searchFilter.grade || "없음"} <br />
-        선택된 장르: {searchFilter.genre || "없음"}
-      </div> */}
     </div>
   );
 }
 
-const mookCards = [
+const mockCards = [
   {
     name: "How Far I'll Go",
     rank: "RARE",
@@ -133,6 +153,3 @@ const mookCards = [
     totalQuantity: 5,
   },
 ];
-
-//태빈님질문 뷰포인트 1480아니였는지..?
-//

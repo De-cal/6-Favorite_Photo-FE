@@ -23,7 +23,7 @@ function Dropdown({ type }) {
         onClick={() => setIsModalOpen((prev) => !prev)}
       >
         {choice}
-        <Image alt="down" src={down} />
+        <Image alt="down" src={down} className="w-5 h-5 " />
       </div>
       {isModalOpen && (
         <div className="absolute z-10 w-full">

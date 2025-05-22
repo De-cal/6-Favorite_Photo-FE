@@ -38,9 +38,8 @@ export default function HeaderLayout() {
       {!["/login", "/signup"].includes(path) && (
         <div
           className={clsx(
-            !["/marketplace", "/"].includes(path)
-              ? "hidden sm:block"
-              : "flex justify-center items-center font-notoSans"
+            !["/marketplace", "/"].includes(path) && "hidden sm:flex",
+            "flex justify-center items-center font-notoSans"
           )}
         >
           <div className="flex justify-between items-center w-full max-w-[1920px] h-[60px] px-[20px] sm:h-[70px] sm:px-[40px] md:h-[80px] md:px-[220px]">

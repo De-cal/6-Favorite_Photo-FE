@@ -4,6 +4,7 @@ import logo from "@/assets/images/img-logo.svg";
 import soldout from "@/assets/icons/ic-soldout.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
+import { GenreChange } from "@/utils/GenreChange";
 
 function DetailCard({
   onClick,
@@ -20,23 +21,6 @@ function DetailCard({
     totalQuantity: 5,
   },
 }) {
-  const GenreChange = (genre) => {
-    if (genre === "PORTRAIT") {
-      return "인물";
-    } else if (genre === "LANDSCAPE") {
-      return "풍경";
-    } else if (genre === "ANIMAL") {
-      return "동물";
-    } else if (genre === "OBJECT") {
-      return "사물";
-    } else if (genre === "FOOD") {
-      return "음식";
-    } else if (genre === "ETC") {
-      return "기타";
-    }
-    return;
-  };
-
   const StatusChange = (status) => {
     if (status === "SELLING") {
       return "판매 중";

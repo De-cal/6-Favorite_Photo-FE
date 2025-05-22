@@ -37,6 +37,7 @@ export default function ActionButton({
         : "bg-main text-black font-bold"
     ),
     secondary: clsx("border border-gray-100 bg-black text-white font-medium"),
+    upload: clsx("border border-main text-main"),
   };
 
   return (

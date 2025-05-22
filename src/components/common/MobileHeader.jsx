@@ -9,7 +9,7 @@ export default function MobileHeader({ title, src, onClick }) {
       {src ? (
         <Link href={src}>
           <button className="absolute left-[20px] top-1/2 -translate-y-1/2 cursor-pointer">
-            <Image src={back} width={18} height={18} alt="뒤로가기" />
+            <Image src={back} width={22} height={22} alt="뒤로가기" />
           </button>
         </Link>
       ) : (
@@ -17,7 +17,7 @@ export default function MobileHeader({ title, src, onClick }) {
           className="absolute left-[20px] top-1/2 -translate-y-1/2 cursor-pointer"
           onClick={onClick}
         >
-          <Image src={back} width={18} height={18} alt="뒤로가기" />
+          <Image src={back} width={22} height={22} alt="뒤로가기" />
         </button>
       )}
 
