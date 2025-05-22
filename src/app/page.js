@@ -2,18 +2,18 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import heroImg from "@/assets/images/img-landing-hero.svg";
-import heroBgImg from "@/assets/images/img-landing-hero-bg.svg";
-import logoImg from "@/assets/images/img-logo.svg";
-import featImg1 from "@/assets/images/img-landing-feature-1.svg";
-import featImg1Bg from "@/assets/images/img-landing-feature-1-bg.svg";
-import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.svg";
-import featImg2 from "@/assets/images/img-landing-feature-2.svg";
+import heroImg from "@/assets/images/img-landing-hero.avif";
+import heroBgImg from "@/assets/images/img-landing-hero-bg.avif";
+import logoImg from "@/assets/images/img-logo.avif";
+import featImg1 from "@/assets/images/img-landing-feature-1.avif";
+import featImg1Bg from "@/assets/images/img-landing-feature-1-bg.avif";
+import featImg2Bg from "@/assets/images/img-landing-feature-2-bg.avif";
+import featImg2 from "@/assets/images/img-landing-feature-2.avif";
 import grayComment from "@/assets/images/img-comment-gray.avif";
 import blueComment from "@/assets/images/img-comment-blue.avif";
-// import blueBox from "@/assets/images/img-landing-feature-3-blue-box.svg";
-// import redBox from "@/assets/images/img-landing-feature-3-red-box.svg";
-import boxesImg from "@/assets/images/img-landing-feature-3.svg";
+import blueBox from "@/assets/images/img-landing-feature-3-blue-box.avif";
+import redBox from "@/assets/images/img-landing-feature-3-red-box.avif";
+import featImg3 from "@/assets/images/img-landing-feature-3.avif";
 
 export default function LandingPage() {
   return (
@@ -288,7 +288,7 @@ export default function LandingPage() {
                        w-full max-w-[1068px] h-[198px] sm:h-[357px] md:h-[570px] z-20"
           >
             <Image
-              src={boxesImg}
+              src={featImg3}
               alt="랜덤 상자 이미지 기능 페이지"
               fill
               className="object-contain"
