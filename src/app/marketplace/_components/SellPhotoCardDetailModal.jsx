@@ -1,21 +1,67 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
 import SellPhotoDetail from "./SellPhotoDetail";
 import MobileHeader from "@/components/common/MobileHeader";
+import { postArticle } from "@/api/article";
+import CommonModal from "@/components/common/CommonModal";
 
 function SellPhotoCardDetailModal({
   setDetailModal,
   card = {
-    title: "우리집 앞마당",
-    rank: "LEGENDARY",
-    genre: "PORTRAIT",
-    owner: "유디",
-    totalQuantity: 3,
+    photoCard: {
+      title: "How Far I'll Go",
+      rank: "RARE",
+      genre: "PORTRAIT",
+      creator: {
+        nickname: "프로여행러",
+      },
+    },
+    quantity: 3,
   },
 }) {
+  const [genre, setGenre] = useState("장르를 선택해 주세요");
+  const [rank, setRank] = useState("등급을 선택해 주세요");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [sellQuantity, setSellQuantity] = useState(0);
+  const [result, setResult] = useState("");
+
+  const handleClickSubmit = async () => {
+    if (genre === "장르를 선택해 주세요") {
+      alert("장르를 선택해주세요.");
+      return;
+    }
+    if (rank === "등급을 선택해 주세요") {
+      alert("등급을 선택해주세요 ");
+      return;
+    }
+    if (price <= 0) {
+      alert("가격을 입력해주세요");
+      return;
+    }
+    if (sellQuantity <= 0) {
+      alert("판매 수량을 입력해주세요");
+      return;
+    }
+    try {
+      const newArticle = await postArticle({
+        exchangeGenre: genre,
+        exchangeRank: rank,
+        exchangeText: description,
+        totalQuantity: sellQuantity,
+        userPhotoCardId: card.id,
+        price,
+      });
+      setResult("성공");
+    } catch (error) {
+      setResult("실패");
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px]">
       <div className="max-w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px] pt-[20px]">
@@ -37,7 +83,7 @@ function SellPhotoCardDetailModal({
             나의 포토카드 판매하기
           </div>
           <div className="text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px] font-bold">
-            {card.title}
+            {card.photoCard.title}
           </div>
           <div className=" border-b-2 border-white mt-[10px] sm:mt-[20px]">
             {" "}
@@ -48,9 +94,23 @@ function SellPhotoCardDetailModal({
               alt="photocard"
               className="w-[345px] sm:flex-1"
             />
-            <SellPhotoDetail />
+            <SellPhotoDetail
+              quantity={card.quantity}
+              price={price}
+              setPrice={setPrice}
+              sellQuantity={sellQuantity}
+              setSellQuantity={setSellQuantity}
+              photoCard={card.photoCard}
+            />
           </div>
-          <ExchangeInfo />
+          <ExchangeInfo
+            setDescription={setDescription}
+            description={description}
+            genre={genre}
+            setGenre={setGenre}
+            rank={rank}
+            setRank={setRank}
+          />
           <div className="flex gap-[15px] sm:gap-[20px] md:gap-[40px] w-full justify-between mt-[44px] sm:mt-15 md:mt-[90px]">
             <button
               className="py-[18px] border-1 border-gray-100 w-full font-bold"
@@ -58,12 +118,28 @@ function SellPhotoCardDetailModal({
             >
               취소하기
             </button>
-            <button className="py-[18px] bg-main text-black w-full font-bold">
+            <button
+              className="py-[18px] bg-main text-black w-full font-bold"
+              onClick={handleClickSubmit}
+            >
               판매하기
             </button>
           </div>
         </div>
       </div>
+      {result && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50">
+          <CommonModal
+            type="판매 등록"
+            result={result}
+            data={{
+              rank: card.photoCard.rank,
+              title: card.photoCard.title,
+              quantity: sellQuantity,
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

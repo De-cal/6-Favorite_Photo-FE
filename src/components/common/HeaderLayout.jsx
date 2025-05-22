@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import ic_menu from "@/assets/icons/ic-menu.svg";
-import img_logo from "@/assets/images/img-logo.svg";
+import img_logo from "@/assets/images/img-logo.avif";
 import MobileProfileModal from "./MobileProfileModal";
 import TabletAndDesktopProfileModal from "./TabletAndDesktopProfileModal";
 import { useModal } from "@/providers/ModalProvider";

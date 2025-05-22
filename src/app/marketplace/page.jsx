@@ -10,8 +10,9 @@ import marketplace from "../../assets/images/img-marketplace.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import FilterDropdown from "./_components/FilerDropdown";
 import SellPhotoCardsModal from "./_components/SellPhotoCardsModal";
-import { getAllArticles } from "@/api/marketplace";
+
 import { useEffect } from "react";
+import { getAllArticles } from "@/api/article";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
@@ -20,7 +21,7 @@ export default function MarketplacePage() {
 
   async function getArticles() {
     const data = await getAllArticles();
-    setArticles(data);
+    // setArticles(data); 주석처리 해제
   }
   useEffect(() => {
     getArticles();
@@ -88,10 +89,10 @@ export default function MarketplacePage() {
           </div>
         </div>
         <div className="w-[347px]">
-          <div className="w-full px-[10px] mb-[20px] flex justify-between w-full mt-[15px]">
+          <div className=" px-[10px] mb-[20px] flex justify-between w-full mt-[15px]">
             <button
               onClick={() => setShowFilter(true)}
-              className="sm:hidden sm:hidden cursor-pointer
+              className=" sm:hidden cursor-pointer
 
 rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
             >
@@ -105,16 +106,16 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
             <Card
               key={article.id}
               type="for_sale"
-              card={{
-                name: article.exchangeText,
-                rank: article.exchangeRank,
-                genre: article.exchangeGenre,
-                price: article.price,
-                quantity: article.remainingQuantity,
-                totalQuantity: article.totalQuantity,
-                status: "SELLING",
-                // image, owner 값 추가도 고려
-              }}
+              // card={{
+              //   title: article.exchangeText,
+              //   rank: article.exchangeRank,
+              //   genre: article.exchangeGenre,
+              //   price: article.price,
+              //   quantity: article.remainingQuantity,
+              //   totalQuantity: article.totalQuantity,
+              //   status: "SELLING",
+              // image, owner 값 추가도 고려
+              // }}
             />
           ))}
         </div>
