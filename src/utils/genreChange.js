@@ -1,4 +1,4 @@
-export function GenreChange(genre) {
+export function genreChange(genre) {
   switch (genre) {
     case "PORTRAIT":
       return "인물";

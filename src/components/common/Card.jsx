@@ -5,7 +5,7 @@ import soldout from "../../assets/icons/ic-soldout.svg";
 import example from "../../assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
 import GradeDetail from "./GradeDetail";
-import { GenreChange } from "@/utils/genreChange";
+import { genreChange } from "@/utils/genreChange";
 
 function Card({
   onClick,
@@ -17,15 +17,15 @@ function Card({
       genre: "PORTRAIT",
       imgURL: "",
       creator: {
-        nickname: "프로여행러",
-      },
+        nickname: "프로여행러"
+      }
     },
     price: 4,
     quantity: 1,
 
     status: "SELLING",
-    totalQuantity: 5,
-  },
+    totalQuantity: 5
+  }
 }) {
   const StatusChange = (status) => {
     if (status === "SELLING") return "판매 중";
@@ -47,12 +47,7 @@ function Card({
       )}
       onClick={onClick}
     >
-      <div
-        className={clsx(
-          "relative sm:mt-0",
-          isExchange ? "mt-0 mb-[25px]" : "mt-[30px] mb-[10px] sm:mb-[25px]"
-        )}
-      >
+      <div className={clsx("relative sm:mt-0", isExchange ? "mt-0 mb-[25px]" : "mt-[30px] mb-[10px] sm:mb-[25px]")}>
         {type === "for_sale" && (
           <div
             className={clsx(
@@ -60,7 +55,7 @@ function Card({
               isExchange ? "text-[14px]" : "text-[10px] sm:text-[14px]",
               {
                 "text-white": card.status === "SELLING",
-                "text-main": card.status === "WAITING_EXCHANGE",
+                "text-main": card.status === "WAITING_EXCHANGE"
               }
             )}
           >
@@ -81,19 +76,12 @@ function Card({
           className={clsx(
             isSoldout && "brightness-50",
             "md:w-[360px] md:h-[270px]",
-            isExchange
-              ? "w-[302px] h-[226px]"
-              : "w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]"
+            isExchange ? "w-[302px] h-[226px]" : "w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]"
           )}
         />
       </div>
 
-      <div
-        className={clsx(
-          "w-full flex flex-col",
-          isExchange ? "text-[16px]" : "text-[10px] sm:text-[16px]"
-        )}
-      >
+      <div className={clsx("w-full flex flex-col", isExchange ? "text-[16px]" : "text-[10px] sm:text-[16px]")}>
         <p
           className={clsx(
             "text-white truncate overflow-hidden whitespace-nowrap w-full font-bold",
@@ -102,30 +90,16 @@ function Card({
         >
           {card.photoCard.title}
         </p>
-        <div
-          className={clsx(
-            "flex justify-between w-full",
-            isExchange ? "mt-[10px]" : "mt-[5px] sm:mt-[10px]"
-          )}
-        >
+        <div className={clsx("flex justify-between w-full", isExchange ? "mt-[10px]" : "mt-[5px] sm:mt-[10px]")}>
           <div className="flex gap-[4px] items-center">
             <GradeDetail
               grade={card.photoCard.rank}
-              className={clsx(
-                isExchange ? "text-[16px]" : "text-[10px] sm:text-[16px]"
-              )}
+              className={clsx(isExchange ? "text-[16px]" : "text-[10px] sm:text-[16px]")}
             />
-            <div
-              className={clsx(
-                "border-l border-gray-400 h-3",
-                isExchange ? "mx-[10px]" : "mx-[5px] sm:mx-[10px]"
-              )}
-            />
-            <p className="text-gray-300">{GenreChange(card.photoCard.genre)}</p>
+            <div className={clsx("border-l border-gray-400 h-3", isExchange ? "mx-[10px]" : "mx-[5px] sm:mx-[10px]")} />
+            <p className="text-gray-300">{genreChange(card.photoCard.genre)}</p>
           </div>
-          <p className="text-white underline font-normal">
-            {card.photoCard.creator.nickname}
-          </p>
+          <p className="text-white underline font-normal">{card.photoCard.creator.nickname}</p>
         </div>
 
         <div
@@ -139,33 +113,17 @@ function Card({
           <p className="text-gray-300">가격</p>
           <p className="text-white font-normal">{card.price} P</p>
         </div>
-        <div
-          className={clsx(
-            "flex justify-between w-full",
-            isExchange ? "mt-[10px]" : "mt-[5px] sm:mt-[10px]"
-          )}
-        >
-          <p className="text-gray-300">
-            {type === "my_card" ? "수량" : "잔여"}
-          </p>
+        <div className={clsx("flex justify-between w-full", isExchange ? "mt-[10px]" : "mt-[5px] sm:mt-[10px]")}>
+          <p className="text-gray-300">{type === "my_card" ? "수량" : "잔여"}</p>
           <div className="flex gap-[2px]">
             <p className="text-white font-normal">{card.quantity}</p>
-            {isTotalQuantity && (
-              <p className="text-gray-300">/ {card.totalQuantity}</p>
-            )}
+            {isTotalQuantity && <p className="text-gray-300">/ {card.totalQuantity}</p>}
           </div>
         </div>
       </div>
 
       <div className="flex justify-center mt-[30px] md:mt-[40px]">
-        <Image
-          src={logo}
-          className={clsx(
-            isExchange ? "block" : "hidden",
-            "sm:block w-[100px] h-[18px]"
-          )}
-          alt="logo"
-        />
+        <Image src={logo} className={clsx(isExchange ? "block" : "hidden", "sm:block w-[100px] h-[18px]")} alt="logo" />
       </div>
     </div>
   );
