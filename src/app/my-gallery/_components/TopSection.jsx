@@ -8,7 +8,7 @@ export default function TopSection() {
       <MobileHeader title={"마이갤러리"} src="/" />
 
       {/* 하단 고정 버튼 (모바일 전용) */}
-      <div className="fixed bottom-0 left-0 w-full px-[15px] z-50 sm:hidden bg-black flex justify-center">
+      <div className="fixed bottom-10 left-0 w-full px-[15px] z-50 sm:hidden bg-black flex justify-center">
         <Link href="/my-gallery/create">
           <ActionButton variant="primary" className="w-[356px]  h-15">
             포토카드 생성하기 (3/3)
@@ -25,16 +25,10 @@ export default function TopSection() {
         <span className="text-[14px] text-gray-300">2025년 5월</span>
         <Link href="/my-gallery/create">
           <ActionButton variant="primary" className="w-75 h-15">
-            포토카드 생성하기 (0/3)
+            포토카드 생성하기 (3/3)
           </ActionButton>
         </Link>
       </div>
     </section>
   );
 }
-
-//
-//
-//
-//
-//

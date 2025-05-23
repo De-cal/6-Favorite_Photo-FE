@@ -1,7 +1,7 @@
 "use client";
 import search from "../../../assets/icons/ic-search.svg";
 import Image from "next/image";
-import Dropdown from "@/app/my-gallery/_components/Dropdown";
+import Dropdown from "@/app/my-sell/_components/Dropdown";
 import { useState } from "react";
 // props: onSearch (부모에게 검색 조건 전달)
 export default function SortAndSearchSection({ onSearch }) {
@@ -13,7 +13,7 @@ export default function SortAndSearchSection({ onSearch }) {
     e.preventDefault();
     onSearch?.({
       keyword,
-      grade: selectedGrade,
+      rank: selectedGrade,
       genre: selectedGenre,
     });
   };
