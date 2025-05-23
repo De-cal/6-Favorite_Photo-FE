@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { encryptData, decryptData } from '@/utils/encryption';
 
-const REWARD_DURATION = 60 * 60 * 1000 - 1000; // 59분 59초
+// const REWARD_DURATION = 60 * 60 * 1000 - 1000; // 59분 59초
+const REWARD_DURATION = 3* 1000; // 3초
+
 const TIMER_START_TIME_KEY = process.env.NEXT_PUBLIC_TIMER_START_TIME_KEY
 
 function usePointRewardTimer(onRewardReady, isModalOpen) {
