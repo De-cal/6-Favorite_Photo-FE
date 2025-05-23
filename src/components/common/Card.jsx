@@ -42,15 +42,15 @@ function Card({
         "bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-center font-light",
         "md:w-[440px] md:h-[600px] md:px-[40px]",
         isExchange
-          ? "w-[342px] h-[517px] px-[20px] text-[16px]"
+          ? "w-[342px] h-[517px] px-[20px] text-[16px] pt-[20px] pb-[30px] md:p-[40px]"
           : "w-[170px] h-[234px] px-[10px] text-[10px] sm:w-[342px] sm:h-[517px] sm:px-[20px] sm:text-[16px]"
       )}
       onClick={onClick}
     >
       <div
         className={clsx(
-          "relative mt-[30px] sm:mt-0",
-          isExchange ? "mb-[25px]" : "mb-[10px] sm:mb-[25px]"
+          "relative sm:mt-0",
+          isExchange ? "mt-0 mb-[25px]" : "mt-[30px] mb-[10px] sm:mb-[25px]"
         )}
       >
         {type === "for_sale" && (
@@ -137,7 +137,7 @@ function Card({
 
         <div className="flex justify-between w-full">
           <p className="text-gray-300">가격</p>
-          <p className="text-white font-normal">{card.photoCard.price} P</p>
+          <p className="text-white font-normal">{card.price} P</p>
         </div>
         <div
           className={clsx(
@@ -160,7 +160,10 @@ function Card({
       <div className="flex justify-center mt-[30px] md:mt-[40px]">
         <Image
           src={logo}
-          className="hidden sm:block w-[100px] h-[18px]"
+          className={clsx(
+            isExchange ? "block" : "hidden",
+            "sm:block w-[100px] h-[18px]"
+          )}
           alt="logo"
         />
       </div>
