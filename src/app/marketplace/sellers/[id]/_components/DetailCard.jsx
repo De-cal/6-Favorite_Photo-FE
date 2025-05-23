@@ -4,7 +4,7 @@ import logo from "@/assets/images/img-logo.avif";
 import soldout from "@/assets/icons/ic-soldout.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
-import { GenreChange } from "@/utils/GenreChange";
+import { GenreChange } from "@/utils/genreChange";
 
 function DetailCard({
   onClick,
