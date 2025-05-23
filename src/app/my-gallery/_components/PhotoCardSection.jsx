@@ -1,4 +1,5 @@
 import Card from "@/components/common/Card";
+import Link from "next/link";
 import React from "react";
 
 export default function PhotoCardSection({ dataLists }) {
@@ -21,7 +22,9 @@ export default function PhotoCardSection({ dataLists }) {
               i % 2 === 1 ? "justify-start" : "justify-end"
             } ${mdJustify}`}
           >
-            <Card card={dataList} />
+            <Link href={"/my-gallery/1"}>
+              <Card card={dataList} />
+            </Link>
           </div>
         );
       })}
