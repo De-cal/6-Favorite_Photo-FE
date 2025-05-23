@@ -1,4 +1,5 @@
 import Card from "@/components/common/Card";
+import Link from "next/link";
 import React from "react";
 
 export default function PhotoCardSection({ dataLists }) {
@@ -17,12 +18,14 @@ export default function PhotoCardSection({ dataLists }) {
 
         return (
           <div
-            key={dataList.name}
+            key={dataList.photoCard.title}
             className={`w-full flex ${
               i % 2 === 1 ? "justify-start" : "justify-end"
             } ${mdJustify}`}
           >
-            <Card card={dataList} type={cardType} />
+            <Link href={"/marketplace/sellers/1"}>
+              <Card card={dataList} type={cardType} />
+            </Link>
           </div>
         );
       })}
