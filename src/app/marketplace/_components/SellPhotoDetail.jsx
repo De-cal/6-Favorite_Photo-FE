@@ -3,7 +3,7 @@ import plus from "@/assets/icons/ic-plus.svg";
 import minus from "@/assets/icons/ic-minus.svg";
 import Image from "next/image";
 import GradeDetail from "@/components/common/GradeDetail";
-import { GenreChange } from "@/utils/genreChange";
+import { genreChange } from "@/utils/genreChange";
 
 function SellPhotoDetail({
   photoCard = {
@@ -11,14 +11,14 @@ function SellPhotoDetail({
     rank: "LEGENDARY",
     genre: "PORTRAIT",
     creator: {
-      nickname: "프로여행러",
-    },
+      nickname: "프로여행러"
+    }
   },
   quantity,
   sellQuantity,
   setSellQuantity,
   price,
-  setPrice,
+  setPrice
 }) {
   return (
     <div className="flex flex-col w-[345px] sm:flex-1 ">
@@ -26,41 +26,27 @@ function SellPhotoDetail({
         <div className="flex gap-[5px] items-center">
           <GradeDetail grade={photoCard.rank} />
           <div className="border-l border-gray-400 h-6 mx-[15px] "></div>
-          <p className=" text-gray-300 font-bold">
-            {GenreChange(photoCard.genre)}
-          </p>
+          <p className=" text-gray-300 font-bold">{genreChange(photoCard.genre)}</p>
         </div>
-        <p className="text-white underline font-bold">
-          {photoCard.creator.nickname}
-        </p>
+        <p className="text-white underline font-bold">{photoCard.creator.nickname}</p>
       </div>
-      <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]">
-        {" "}
-      </div>
+      <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]"> </div>
       <div className="flex flex-col gap-[20px]">
         <div className="flex justify-between items-center">
           <p>총 판매 수량</p>
           <div className="flex gap-[15px] w-[202px] md:w-[245px]">
             <div className="border-gray-200 border-1 flex w-[144px] h-[45px] justify-evenly items-center">
-              <button
-                onClick={() => setSellQuantity((prev) => prev - 1)}
-                disabled={sellQuantity === 0}
-              >
+              <button onClick={() => setSellQuantity((prev) => prev - 1)} disabled={sellQuantity === 0}>
                 <Image alt="minus" src={minus} />
               </button>
               <p>{sellQuantity}</p>
-              <button
-                onClick={() => setSellQuantity((prev) => prev + 1)}
-                disabled={sellQuantity === quantity}
-              >
+              <button onClick={() => setSellQuantity((prev) => prev + 1)} disabled={sellQuantity === quantity}>
                 <Image alt="plus" src={plus} />
               </button>
             </div>
             <div>
               <p>/ {quantity}</p>
-              <p className="text-gray-200 text-[12px] md:text-[14px] w-[54px]">
-                최대 {quantity}장
-              </p>
+              <p className="text-gray-200 text-[12px] md:text-[14px] w-[54px]">최대 {quantity}장</p>
             </div>
           </div>
         </div>

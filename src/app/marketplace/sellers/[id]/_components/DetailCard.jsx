@@ -4,7 +4,7 @@ import logo from "@/assets/images/img-logo.avif";
 import soldout from "@/assets/icons/ic-soldout.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
-import { GenreChange } from "@/utils/genreChange";
+import { genreChange } from "@/utils/genreChange";
 
 function DetailCard({
   onClick,
@@ -18,8 +18,8 @@ function DetailCard({
     quantity: 1,
     image: "",
     status: "SELLING",
-    totalQuantity: 5,
-  },
+    totalQuantity: 5
+  }
 }) {
   const StatusChange = (status) => {
     if (status === "SELLING") {
@@ -44,7 +44,7 @@ function DetailCard({
               "bg-black/50 absolute top-[5px] left-[5px] py-[5px] px-2 rounded-[2px] text-[10px] sm:text-[14px] md:text-[16px]",
               {
                 "text-white": card.status === "SELLING",
-                "text-main": card.status === "WAITING_EXCHANGE",
+                "text-main": card.status === "WAITING_EXCHANGE"
               }
             )}
           >
@@ -78,43 +78,33 @@ function DetailCard({
                 "text-main": card.rank === "COMMON",
                 "text-blue": card.rank === "RARE",
                 "text-purple": card.rank === "SUPER RARE",
-                "text-pink": card.rank === "LEGENDARY",
+                "text-pink": card.rank === "LEGENDARY"
               })}
             >
               {card.rank}
             </p>
             <div className="border-l border-gray-400 h-3 "></div>
-            <p className=" text-gray-300">{GenreChange(card.genre)}</p>
+            <p className=" text-gray-300">{genreChange(card.genre)}</p>
           </div>
           <p className="text-white underline font-normal">{card.owner}</p>
         </div>
 
-        <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]">
-          {" "}
-        </div>
+        <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]"> </div>
 
         <div className="flex justify-between w-full">
           <p className=" text-gray-300">가격</p>
           <p className=" text-white font-normal">{card.price} P</p>
         </div>
         <div className="flex justify-between w-full mt-[5px] sm:mt-[10px]">
-          <p className=" text-gray-300">
-            {type === "my_card" ? "수량" : "잔여"}
-          </p>
+          <p className=" text-gray-300">{type === "my_card" ? "수량" : "잔여"}</p>
           <div className="flex gap-[2px]">
             <p className=" text-white font-normal">{card.quantity}</p>
-            {isTotalQuantity && (
-              <p className=" text-gray-300">/ {card.totalQuantity}</p>
-            )}
+            {isTotalQuantity && <p className=" text-gray-300">/ {card.totalQuantity}</p>}
           </div>
         </div>
       </div>
       <div className="flex justify-center mt-[30px] md:mt-[40px]">
-        <Image
-          src={logo}
-          className="hidden sm:block w-[100px] h-[18px]"
-          alt="logo"
-        />
+        <Image src={logo} className="hidden sm:block w-[100px] h-[18px]" alt="logo" />
       </div>
     </div>
   );
