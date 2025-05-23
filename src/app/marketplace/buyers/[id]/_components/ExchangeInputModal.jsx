@@ -20,8 +20,14 @@ export default function ExchangeInputModal() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-[15px] absolute top-0 right-0 bottom-0 left-0 overflow-y-auto z-1 bg-black sm:bg-transparent">
-      <div className="absolute top-0 w-[345px] pb-[20px] font-notoSans z-2 sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:top-auto sm:bottom-0 sm:bg-gray-500 md:top-[50%] md:left-[50%] md:translate-x-[-50%] md:translate-y-[-50%] md:bottom-auto md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]">
+    <div
+      className="flex flex-col justify-center items-center px-[15px] absolute top-0 right-0 bottom-0 left-0 overflow-y-auto z-1 bg-black sm:bg-transparent"
+      onClick={closeModal}
+    >
+      <div // 태빈님이 준 백틱 바로아래에도 이밴트 버빌링 일어나서 자식div에 온클릭->이번트 버블링 중지코드 추가
+        className="absolute top-0 w-[345px] pb-[20px] font-notoSans z-2 sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:top-auto sm:bottom-0 sm:bg-gray-500 md:top-[50%] md:left-[50%] md:translate-x-[-50%] md:translate-y-[-50%] md:bottom-auto md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <MobileHeader onClick={handleClick} title="포토카드 교환하기" />
         <Tablet>
           <div className="sm:flex sm:justify-center sm:items-center">
