@@ -3,56 +3,56 @@
     "id": "notif-001",
     "userId": "user-001",
     "isRead": false,
-    "message": "태형굿즈 님과의 [S등급 | 포에버 태형] 의 포토카드 교환이 성사되었습니다.",
-    "createdAt": "2025-05-22T09:30:00Z"
+    "message": "태형굿즈 님과의 [LEGENDARY | 포에버 태형] 의 포토카드 교환이 성사되었습니다.",
+    "createdAt": "2025-05-23T01:50:00Z"
   },
   {
     "id": "notif-002",
     "userId": "user-001",
     "isRead": false,
-    "message": "제니콜렉터 님과의 [A등급 | 스윗 제니] 의 포토카드 교환이 불발되었습니다.",
-    "createdAt": "2025-05-22T09:35:00Z"
+    "message": "제니콜렉터 님과의 [SUPER RARE | 스윗 제니] 의 포토카드 교환이 불발되었습니다.",
+    "createdAt": "2025-05-23T01:35:00Z"
   },
   {
     "id": "notif-003",
     "userId": "user-001",
     "isRead": true,
-    "message": "[SS등급 | 골든 지민] 2장을 성공적으로 구매했습니다.",
-    "createdAt": "2025-05-21T18:00:00Z"
+    "message": "[RARE | 골든 지민] 2장을 성공적으로 구매했습니다.",
+    "createdAt": "2025-03-21T18:00:00Z"
   },
   {
     "id": "notif-004",
     "userId": "user-002",
     "isRead": false,
-    "message": "로제홀릭 님이 [B등급 | 블룸 로제] 의 포토카드 교환을 제안했습니다.",
-    "createdAt": "2025-05-22T09:40:00Z"
+    "message": "로제홀릭 님이 [COMMON | 블룸 로제] 의 포토카드 교환을 제안했습니다.",
+    "createdAt": "2025-02-22T09:40:00Z"
   },
   {
     "id": "notif-005",
     "userId": "user-002",
     "isRead": true,
-    "message": "[S등급 | 포에버 태형] 1장을 성공적으로 판매했습니다.",
-    "createdAt": "2025-05-22T09:30:00Z"
+    "message": "[LEGENDARY | 포에버 태형] 이/가 품절 되었습니다.",
+    "createdAt": "2024-01-22T09:30:00Z"
   },
   {
     "id": "notif-006",
     "userId": "user-002",
     "isRead": false,
-    "message": "[A등급 | 큐티 태형] 이/가 품절 되었습니다.",
-    "createdAt": "2025-05-22T09:45:00Z"
+    "message": "[SUPER RARE | 큐티 태형] 1장을 성공적으로 판매했습니다.",
+    "createdAt": "2022-05-22T09:45:00Z"
   },
   {
     "id": "notif-007",
     "userId": "user-003",
     "isRead": false,
-    "message": "지민사랑 님이 [A등급 | 스윗 제니] 의 포토카드 교환을 제안했습니다.",
-    "createdAt": "2025-05-22T09:32:00Z"
+    "message": "지민사랑 님이 [RARE | 스윗 제니] 의 포토카드 교환을 제안했습니다.",
+    "createdAt": "2021-05-22T09:32:00Z"
   },
   {
     "id": "notif-008",
     "userId": "user-004",
     "isRead": true,
-    "message": "[B등급 | 블룸 로제] 3장을 성공적으로 구매했습니다.",
-    "createdAt": "2025-05-21T20:10:00Z"
+    "message": "[COMMON | 블룸 로제] 3장을 성공적으로 구매했습니다.",
+    "createdAt": "2020-05-21T20:10:00Z"
   }
 ]

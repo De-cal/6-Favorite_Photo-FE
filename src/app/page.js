@@ -152,7 +152,7 @@ export default function LandingPage() {
           </div>
 
           {/* 텍스트 */}
-          <div className="absolute top-[67px] sm:top-[110px] md:top-[138px] left-[32px] sm:left-[61px] md:left-[428px] flex flex-col items-start justify-center w-full  gap-3 sm:gap-[14px] z-15">
+          <div className="absolute top-[67px] sm:top-[110px] md:top-[138px] left-[32px] sm:left-[61px] md:left-1/2 md:-translate-x-1/2 flex flex-col items-center md:items-center justify-center w-full gap-3 sm:gap-[14px] z-15">
             <h1 className="text-white font-bold text-[20px] sm:text-4xl">
               포인트로 <span className="text-main">안전하게 거래</span>하세요
             </h1>
@@ -192,7 +192,7 @@ export default function LandingPage() {
             />
           </div>
           {/* 텍스트 */}
-          <div className="absolute top-[67px] left-[32px] sm:top-[110px] sm:left-[61px] md:top-[138px] md:left-[428px] flex flex-col items-start justify-center w-full gap-3 sm:gap-[14px] z-10">
+          <div className="absolute top-[67px] left-[32px] sm:top-[110px] sm:left-[61px] md:top-[138px] md:left-1/2 md:-translate-x-1/2 flex flex-col items-start md:items-center justify-center w-full gap-3 sm:gap-[14px] z-10">
             <h1 className="text-white font-bold text-[20px] sm:text-4xl">
               알림으로 보다 <span className="text-blue">빨라진 거래</span>
             </h1>
@@ -278,7 +278,7 @@ export default function LandingPage() {
             />
           </div>
           {/* 텍스트 */}
-          <div className="absolute top-[67px] sm:top-[110px] md:top-[133px] left-[32px] sm:left-[61px] md:left-[428px] flex flex-col items-start justify-center w-full gap-3 sm:gap-[14px] z-15">
+          <div className="absolute top-[67px] sm:top-[110px] md:top-[133px] left-[32px] sm:left-[61px] md:left-1/2 md:-translate-x-1/2 flex flex-col items-start md:items-center justify-center w-full gap-3 sm:gap-[14px] z-15">
             <h1 className="text-white text-center text-[20px] h-12 font-bold sm:h-[96px] sm:text-[40px]">
               랜덤 상자로 <span className="text-main">포인트 받자!</span>
               🎉
