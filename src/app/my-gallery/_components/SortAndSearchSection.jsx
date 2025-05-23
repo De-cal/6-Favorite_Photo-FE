@@ -41,7 +41,15 @@ export default function SortAndSearchSection({ onSearch, data }) {
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
           onClick={() => {
-            openModal(<MobileFilter data={data} />);
+            openModal(
+              <MobileFilter
+                data={data}
+                onSelectFilter={(selected) => {
+                  if (selected.rank) setSelectedGrade(selected.rank);
+                  if (selected.genre) setSelectedGenre(selected.genre);
+                }}
+              />,
+            );
           }}
         >
           <Image src={filter} width={24} height={24} alt="검색버튼" />

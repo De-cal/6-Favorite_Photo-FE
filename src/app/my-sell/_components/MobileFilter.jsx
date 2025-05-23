@@ -25,16 +25,17 @@ export default function MobileFilter({ data, onSelectFilter }) {
   const grade = ["COMMON", "RARE", "SUPER RARE", "LEGENDARY"];
   const sellingType = ["SELLING", "WAITING_EXCHANGE"];
   const soldout = ["SELLING", "SOLDOUT"];
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValues, setSelectedValues] = useState({
+    등급: null,
+    장르: null,
+    판매방법: null,
+    매진여부: null,
+  });
   const handleItemClick = (value) => {
-    setSelectedValue(value);
-    const selected = {
-      등급: { rank: value },
-      장르: { genre: value },
-      판매방법: { sellingType: value },
-      매진여부: { soldout: value },
-    };
-    onSelectFilter(selected[option]); // ✅ 선택된 필터 전달
+    setSelectedValues((prev) => ({
+      ...prev,
+      [option]: value,
+    }));
   };
   const renderOptionContent = () => {
     const renderList = (items, colorMap = {}) => (
@@ -43,7 +44,7 @@ export default function MobileFilter({ data, onSelectFilter }) {
           <button
             key={item}
             className={`w-full h-[49px] flex justify-between items-center px-[32px] cursor-pointer ${
-              selectedValue === item ? "bg-gray-500" : ""
+              selectedValues[option] === item ? "bg-gray-500" : ""
             }`}
             onClick={() => handleItemClick(item)}
           >
@@ -117,8 +118,20 @@ export default function MobileFilter({ data, onSelectFilter }) {
           <div className="cursor-pointer w-[54px] h-[55px] flex items-center justify-center">
             <Image alt="exchangeIcon" src={exchange} width={24} height={24} />
           </div>
-          <button className="cursor-pointer w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] text-center">
-            {`${total}개 포토보기`}
+          <button
+            className="cursor-pointer rounded-[2px] w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] text-center"
+            onClick={() => {
+              const transformed = {
+                rank: selectedValues["등급"],
+                genre: selectedValues["장르"],
+                sellingType: selectedValues["판매방법"],
+                soldout: selectedValues["매진여부"],
+              };
+              onSelectFilter(transformed); //  한 번에 전달
+              closeModal();
+            }}
+          >
+            해당 조건으로 검색하기
           </button>
         </div>
       </div>
