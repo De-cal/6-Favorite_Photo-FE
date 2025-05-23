@@ -11,9 +11,13 @@ export const ModalProvider = ({ children }) => {
   const closeModal = () => setModalContent(null);
 
   //ESC 키로 닫기
+  //
   useEffect(() => {
     const onKeyDown = (e) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") {
+        closeModal();
+        document.body.style.overflow = "auto";
+      }
     };
 
     if (modalContent) {
@@ -30,6 +34,7 @@ export const ModalProvider = ({ children }) => {
     const onClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         closeModal();
+        document.body.style.overflow = "auto";
       }
     };
 

@@ -53,7 +53,6 @@ export default function SortAndSearchSection({ onSearch, data }) {
                   if (selected.genre) setSelectedGenre(selected.genre);
                   if (selected.sellingType) setSelectedSellingType(selected.sellingType);
                   if (selected.soldout) setSelectedSoldout(selected.soldout);
-                  closeModal(); // ✅ 선택 완료되면 모달 닫기
                 }}
               />,
             );

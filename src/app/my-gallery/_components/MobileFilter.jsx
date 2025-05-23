@@ -9,6 +9,10 @@ export default function MobileFilter() {
   const rare = data.filter((card) => card.photoCard.rank === "RARE").length;
   const superrare = data.filter((card) => card.photoCard.rank === "SUPER RARE").length;
   const legendary = data.filter((card) => card.photoCard.rank === "LEGENDARY").length;
+  const genre = ["PORTRAIT", "LANDSCAPE", "ANIMAL", "OBJECT", "FOOD", "ETC"];
+  const grade = ["COMMON", "RARE", "SUPER RARE", "LEGENDARY"];
+  const sellingType = ["SELLING", "WAITING_EXCHANGE"];
+  const soldout = ["SELLING", "SOLDOUT"];
   return (
     <>
       <div className="w-full h-[480px] rounded-[20px] bg-[#1B1B1B]">

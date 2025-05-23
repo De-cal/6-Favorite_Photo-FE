@@ -25,7 +25,9 @@ export default function MobileFilter({ data, onSelectFilter }) {
   const grade = ["COMMON", "RARE", "SUPER RARE", "LEGENDARY"];
   const sellingType = ["SELLING", "WAITING_EXCHANGE"];
   const soldout = ["SELLING", "SOLDOUT"];
+  const [selectedValue, setSelectedValue] = useState(null);
   const handleItemClick = (value) => {
+    setSelectedValue(value);
     const selected = {
       등급: { rank: value },
       장르: { genre: value },
@@ -40,7 +42,9 @@ export default function MobileFilter({ data, onSelectFilter }) {
         {items.map((item) => (
           <button
             key={item}
-            className="w-full h-[49px] flex justify-between items-center px-[32px] cursor-pointer"
+            className={`w-full h-[49px] flex justify-between items-center px-[32px] cursor-pointer ${
+              selectedValue === item ? "bg-gray-500" : ""
+            }`}
             onClick={() => handleItemClick(item)}
           >
             <p className={`font-noto font-normal text-[14px] text-center ${colorMap[item] || ""}`}>{item}</p>
