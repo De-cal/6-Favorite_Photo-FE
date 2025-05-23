@@ -3,8 +3,12 @@ import React from "react";
 import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
-
+//dd
 export default function MobileFilter() {
+  const common = data.filter((card) => card.photoCard.rank === "COMMON").length;
+  const rare = data.filter((card) => card.photoCard.rank === "RARE").length;
+  const superrare = data.filter((card) => card.photoCard.rank === "SUPER RARE").length;
+  const legendary = data.filter((card) => card.photoCard.rank === "LEGENDARY").length;
   return (
     <>
       <div className="w-full h-[480px] rounded-[20px] bg-[#1B1B1B]">
@@ -32,16 +36,14 @@ export default function MobileFilter() {
               <p className="text-[#EFFF04] font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">
                 COMMON
               </p>
-              <p className="font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">
-                52개
-              </p>
+              <p className="font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">{common}</p>
             </div>
             <div className="w-full h-[49px] flex justify-between items-center px-[32px]">
               <p className="text-[#29C9F9] font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">
                 RARE
               </p>
               <p className="text-gray-400 font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">
-                16개
+                {rare}
               </p>
             </div>
             <div className="w-full h-[49px] flex justify-between items-center px-[32px]">
@@ -49,7 +51,7 @@ export default function MobileFilter() {
                 SUPER RARE
               </p>
               <p className="text-gray-400 font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">
-                5개
+                {superrare}
               </p>
             </div>
             <div className="w-full h-[49px] flex justify-between items-center px-[32px]">
@@ -57,7 +59,7 @@ export default function MobileFilter() {
                 LEGENDARY
               </p>
               <p className="text-gray-400 font-noto font-normal text-[14px] leading-[100%] tracking-[0%] text-center">
-                3개
+                {legendary}
               </p>
             </div>
           </div>
@@ -66,7 +68,7 @@ export default function MobileFilter() {
               <Image alt="exchangeIcon" src={exchange} width={24} height={24} />
             </div>
             <button className="cursor-pointer w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] leading-[100%] tracking-[0] text-center">
-              52개 포토보기
+              {`${total}개 포토보기`}
             </button>
           </div>
         </div>

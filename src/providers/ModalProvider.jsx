@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  createContext,
-  useRef,
-  useEffect,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useRef, useEffect, useContext, useState } from "react";
 
 const ModalContext = createContext(null);
 
@@ -54,9 +48,7 @@ export const ModalProvider = ({ children }) => {
 
       {modalContent && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center">
-          <div ref={modalRef} className="w-full h-full">
-            {typeof modalContent === "function" ? modalContent() : modalContent}
-          </div>
+          <div ref={modalRef}>{typeof modalContent === "function" ? modalContent() : modalContent}</div>
         </div>
       )}
     </ModalContext.Provider>

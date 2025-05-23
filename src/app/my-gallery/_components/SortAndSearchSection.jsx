@@ -3,7 +3,7 @@ import search from "../../../assets/icons/ic-search.svg";
 import filter from "../../../assets/icons/ic-filter.svg";
 import Image from "next/image";
 import Dropdown from "@/app/my-sell/_components/Dropdown";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useModal } from "@/providers/ModalProvider";
 import MobileFilter from "./MobileFilter";
 // props: onSearch (부모에게 검색 조건 전달)
@@ -21,14 +21,27 @@ export default function SortAndSearchSection({ onSearch, data }) {
     });
   };
   const { openModal, closeModal } = useModal();
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 744) {
+        closeModal(); // sm 이상이면 모달 닫기
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [closeModal]);
 
   return (
     <>
-      <section className="pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
+      <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
           onClick={() => {
-            openModal(<MobileFilter />);
+            openModal(<MobileFilter data={data} />);
           }}
         >
           <Image src={filter} width={24} height={24} alt="검색버튼" />
