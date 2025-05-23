@@ -2,7 +2,7 @@ import NotificationCard from "./NotificationCard";
 
 function NotificationsModal({ notifications }) {
   return (
-    <div>
+    <div className="overflow-y-auto no-scrollbar h-[535px]">
       {notifications &&
         notifications.map((notification) => {
           return (
