@@ -55,6 +55,8 @@ export default function SortAndSearchSection({ onSearch, data }) {
                   if (selected.soldout) setSelectedSoldout(selected.soldout);
                 }}
               />,
+              "bottom",
+              "center",
             );
           }}
         >
