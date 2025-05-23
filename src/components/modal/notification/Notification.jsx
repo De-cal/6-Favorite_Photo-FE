@@ -11,7 +11,8 @@ import { useModal } from "@/providers/ModalProvider";
 
 export default function Notification() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const [notReadCount, setNotReadCount] = useState(null);
+  //TODO: 나중에 카운트 받아와서 null값으로 바꿔주기.
+  const [notReadCount, setNotReadCount] = useState(1);
   const [notifications, setNotifications] = useState(mock_data);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -60,7 +61,6 @@ export default function Notification() {
           src={notReadCount > 0 ? ic_alarm_active : ic_alarm_default}
           alt="알림"
           fill
-          className="object-cover"
         />
       </button>
 
