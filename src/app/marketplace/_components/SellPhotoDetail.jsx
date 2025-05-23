@@ -3,7 +3,7 @@ import plus from "@/assets/icons/ic-plus.svg";
 import minus from "@/assets/icons/ic-minus.svg";
 import Image from "next/image";
 import GradeDetail from "@/components/common/GradeDetail";
-import { GenreChange } from "@/utils/GenreChange";
+import { GenreChange } from "@/utils/genreChange";
 
 function SellPhotoDetail({
   photoCard = {

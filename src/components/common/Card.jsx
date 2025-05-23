@@ -5,7 +5,7 @@ import soldout from "../../assets/icons/ic-soldout.svg";
 import example from "../../assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
 import GradeDetail from "./GradeDetail";
-import { GenreChange } from "@/utils/GenreChange";
+import { GenreChange } from "@/utils/genreChange";
 
 function Card({
   onClick,
