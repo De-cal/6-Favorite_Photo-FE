@@ -1,7 +1,7 @@
 export async function getAllArticles(keyword) {
   try {
     const query = keyword ? `?keyword=${encodeURIComponent(keyword)}` : "";
-    const response = await fetch(`http://localhost:5050/articles${query}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/articles${query}`);
     const data = await response.json();
     console.log("data", data);
     return data;
