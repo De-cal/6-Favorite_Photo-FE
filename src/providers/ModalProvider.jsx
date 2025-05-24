@@ -1,25 +1,44 @@
 "use client";
-import React, {
-  createContext,
-  useRef,
-  useEffect,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useRef, useEffect, useContext, useState } from "react";
 
 const ModalContext = createContext(null);
 
 export const ModalProvider = ({ children }) => {
   const [modalContent, setModalContent] = useState(null);
+  const [modalAlign, setModalAlign] = useState({ col: "center", row: "center" });
+  //col = [top,centet,bottom] //row = [left,centet,right]
   const modalRef = useRef();
 
-  const openModal = (content) => setModalContent(() => content);
+  const openModal = (content, col = "center", row = "center") => {
+    setModalContent(() => content);
+    setModalAlign({ col, row });
+  };
   const closeModal = () => setModalContent(null);
+
+  //모달 위치에 따른 css 지정 함수
+  const getWrapperClass = () => {
+    const colMap = {
+      top: "items-start",
+      center: "items-center",
+      bottom: "items-end",
+    };
+
+    const rowMap = {
+      left: "justify-start",
+      center: "justify-center",
+      right: "justify-end",
+    };
+
+    return `${colMap[modalAlign.col] || "items-center"} ${rowMap[modalAlign.row] || "justify-center"}`;
+  };
 
   //ESC 키로 닫기
   useEffect(() => {
     const onKeyDown = (e) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") {
+        closeModal();
+        document.body.style.overflow = "auto";
+      }
     };
 
     if (modalContent) {
@@ -36,6 +55,7 @@ export const ModalProvider = ({ children }) => {
     const onClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         closeModal();
+        document.body.style.overflow = "auto";
       }
     };
 
@@ -53,8 +73,8 @@ export const ModalProvider = ({ children }) => {
       {children}
 
       {modalContent && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center">
-          <div ref={modalRef} className="w-full h-full">
+        <div className={`fixed inset-0 z-50 bg-black/80 flex ${getWrapperClass()}`}>
+          <div ref={modalRef} className="relative">
             {typeof modalContent === "function" ? modalContent() : modalContent}
           </div>
         </div>

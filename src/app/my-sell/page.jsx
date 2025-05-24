@@ -55,8 +55,8 @@ export default function MySellPage() {
     <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
-        <RankSection data="" />
-        <SortAndSearchSection onSearch={setSearchFilter} />
+        <RankSection data={mockCards} />
+        <SortAndSearchSection onSearch={setSearchFilter} data={mockCards} />
         <PhotoCardSection dataLists={filteredCards} />
         <PageNation
           count={filteredCards.length}

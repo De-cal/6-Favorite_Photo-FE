@@ -1,3 +1,5 @@
+import dateFormat from "@/utils/dateFormat";
+
 function NotificationCard({ notification }) {
   return (
     <div
@@ -5,13 +7,13 @@ function NotificationCard({ notification }) {
         notification.isRead ? "brightness-50 " : "border-gray-400"
       } `}
     >
-      <p className="text-sm">{notification.message}</p>
+      <p className="text-sm line-clamp-2">{notification.message}</p>
       <p
         className={`text-xs font-light ${
           notification.isRead ? "" : "text-gray-300"
         } `}
       >
-        {notification.createdAt}
+        {dateFormat(notification.createdAt)}
       </p>
     </div>
   );
