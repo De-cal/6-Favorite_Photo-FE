@@ -13,6 +13,8 @@ import { useCallback, useEffect, useState } from "react";
 export default function useForm({ initialFields = {}, validators = {}, onValidationChange }) {
   const [fields, setFields] = useState(initialFields);
 
+  // 게으른 초기화 -> Input field의 initialValidation 정보 (isValid, isTouched, message) 값을 초기화
+  // 최초에 마운트 될때만 실행됨
   const [validation, setValidation] = useState(() => {
     const initialValidation = {};
     Object.keys(initialFields).forEach((fieldName) => {
@@ -25,6 +27,8 @@ export default function useForm({ initialFields = {}, validators = {}, onValidat
     return initialValidation;
   });
 
+
+  // 처음에 isFormValid는 false로 상태값 줌
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
