@@ -17,15 +17,15 @@ function Card({
       genre: "PORTRAIT",
       imgURL: "",
       creator: {
-        nickname: "프로여행러"
-      }
+        nickname: "프로여행러",
+      },
     },
     price: 4,
     quantity: 1,
 
     status: "SELLING",
-    totalQuantity: 5
-  }
+    totalQuantity: 5,
+  },
 }) {
   const StatusChange = (status) => {
     if (status === "SELLING") return "판매 중";
@@ -43,7 +43,7 @@ function Card({
         "md:w-[440px] md:h-[600px] md:px-[40px]",
         isExchange
           ? "min-w-[342px] h-[517px] px-[20px] text-[16px] pt-[20px] pb-[30px] md:p-[40px]"
-          : "w-[170px] h-[234px] px-[10px] text-[10px] sm:w-[342px] sm:h-[517px] sm:px-[20px] sm:text-[16px]"
+          : "w-[170px] h-[234px] px-[10px] text-[10px] sm:w-[342px] sm:h-[517px] sm:px-[20px] sm:text-[16px]",
       )}
       onClick={onClick}
     >
@@ -55,8 +55,8 @@ function Card({
               isExchange ? "text-[14px]" : "text-[10px] sm:text-[14px]",
               {
                 "text-white": card.status === "SELLING",
-                "text-main": card.status === "WAITING_EXCHANGE"
-              }
+                "text-main": card.status === "WAITING_EXCHANGE",
+              },
             )}
           >
             {StatusChange(card.status)}
@@ -76,7 +76,7 @@ function Card({
           className={clsx(
             isSoldout && "brightness-50",
             "md:w-[360px] md:h-[270px]",
-            isExchange ? "w-[302px] h-[226px]" : "w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]"
+            isExchange ? "w-[302px] h-[226px]" : "w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]",
           )}
         />
       </div>
@@ -85,7 +85,7 @@ function Card({
         <p
           className={clsx(
             "text-white truncate overflow-hidden whitespace-nowrap w-full font-bold",
-            isExchange ? "text-[22px]" : "text-sm sm:text-[22px]"
+            isExchange ? "text-[22px]" : "text-sm sm:text-[22px]",
           )}
         >
           {card.photoCard.title}
@@ -105,7 +105,7 @@ function Card({
         <div
           className={clsx(
             "border-b border-gray-400 h-[1px] w-full",
-            isExchange ? "my-[20px]" : "my-[10px] sm:my-[20px]"
+            isExchange ? "my-[20px]" : "my-[10px] sm:my-[20px]",
           )}
         />
 
