@@ -1,9 +1,9 @@
-export async function getAllArticles() {
+export async function getAllArticles(keyword) {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/articles`
-    );
-    const data = response.json();
+    const query = keyword ? `?keyword=${encodeURIComponent(keyword)}` : "";
+    const response = await fetch(`http://localhost:5050/articles${query}`);
+    const data = await response.json();
+    console.log("data", data);
     return data;
   } catch (error) {
     return error.message;

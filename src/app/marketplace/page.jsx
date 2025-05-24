@@ -21,7 +21,8 @@ export default function MarketplacePage() {
 
   async function getArticles() {
     const data = await getAllArticles();
-    // setArticles(data); 주석처리 해제
+    setArticles(data);
+    //주석처리 해제
   }
   useEffect(() => {
     getArticles();
@@ -31,39 +32,15 @@ export default function MarketplacePage() {
   }, [articles]);
   return (
     <div className="relative">
-      {showFilter && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setShowFilter(false)}
-        />
-      )}
-      <div
-        className={`flex flex-col items-center ${
-          showFilter ? "pointer-events-none" : ""
-        }`}
-      >
+      {showFilter && <div className="fixed inset-0 z-40" onClick={() => setShowFilter(false)} />}
+      <div className={`flex flex-col items-center ${showFilter ? "pointer-events-none" : ""}`}>
         <div className="px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
           <div className="hidden sm:flex sm:gap-[114px] md:gap-[650px]">
-            <Image
-              src={marketplace}
-              width={248}
-              height={49}
-              alt="marketplace"
-              className="md:hidden"
-            />
+            <Image src={marketplace} width={248} height={49} alt="marketplace" className="md:hidden" />
 
-            <Image
-              src={marketplace}
-              width={320}
-              height={63}
-              alt="marketplace"
-              className="hidden md:block"
-            />
-            <ActionButton
-              className="w-[342px] h-[60px] md:w-[440px]"
-              onClick={() => setIsModalOpen(true)}
-            >
-              포토카드 교환하기
+            <Image src={marketplace} width={320} height={63} alt="marketplace" className="hidden md:block" />
+            <ActionButton className="w-[342px] h-[60px] md:w-[440px]" onClick={() => setIsModalOpen(true)}>
+              나의 포토카드 판매하기
             </ActionButton>
           </div>
         </div>
@@ -106,16 +83,21 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
             <Card
               key={article.id}
               type="for_sale"
-              // card={{
-              //   title: article.exchangeText,
-              //   rank: article.exchangeRank,
-              //   genre: article.exchangeGenre,
-              //   price: article.price,
-              //   quantity: article.remainingQuantity,
-              //   totalQuantity: article.totalQuantity,
-              //   status: "SELLING",
-              // image, owner 값 추가도 고려
-              // }}
+              card={{
+                photoCard: {
+                  title: article.photoCard.title,
+                  rank: article.photoCard.rank,
+                  genre: article.photoCard.genre,
+                  imgURL: article.photoCard.imgUrl,
+                  creator: {
+                    nickname: article.user.nickname,
+                  },
+                },
+                price: article.price,
+                quantity: article.quantity,
+                status: article.status,
+                totalQuantity: article.totalQuantity,
+              }}
             />
           ))}
         </div>
