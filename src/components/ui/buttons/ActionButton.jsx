@@ -10,7 +10,7 @@ export default function ActionButton({
   children, // 버튼 텍스트를 children으로 받음
   ...rest
 }) {
-  const baseStyles = "inline-flex items-center justify-center rounded-sm cursor-pointer";
+  const baseStyles = "inline-flex items-center justify-center rounded-xs cursor-pointer";
 
   // children (버튼 텍스트)마다 반응형 크기 적용
   const sizeStyles = (() => {
