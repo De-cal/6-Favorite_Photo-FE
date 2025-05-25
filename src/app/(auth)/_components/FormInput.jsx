@@ -1,5 +1,5 @@
 "use client";
-import { isRequired, validateEmail, validatePassword } from "@/utils/authValidators";
+import { isRequired, validateEmail, validateNickname, validatePassword } from "@/utils/authValidators";
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 
