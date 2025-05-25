@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthNavigation from "./AuthNavigation";
+import AuthModal from "./AuthModal";
+import { login } from "@/api/auth";
 
 export default function LoginForm() {
   useRedirectIfAuthenticated();
@@ -33,7 +35,6 @@ export default function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!isFormValid) return;
-
     try {
       setIsLoading(true);
       const data = await login({ email, password });
@@ -89,6 +90,9 @@ export default function LoginForm() {
 
         <AuthNavigation />
       </form>
+      <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {modalMessage}
+      </AuthModal>
     </>
   );
 }
