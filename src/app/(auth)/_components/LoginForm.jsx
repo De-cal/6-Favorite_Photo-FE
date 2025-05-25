@@ -6,8 +6,6 @@ import PasswordInput from "./PasswordInput";
 import useLoginForm from "@/hooks/useLoginForm";
 import { useRouter } from "next/navigation";
 import AuthSubmitButton from "./AuthSubmitButton";
-import SocialAuthOptions from "./SocialAuthOptions";
-import AuthLogo from "../_components/AuthLogo";
 
 export default function LoginForm() {
   useRedirectIfAuthenticated();
@@ -53,8 +51,7 @@ export default function LoginForm() {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center">
-      <AuthLogo />
+    <>
       <form className="flex flex-col items-center justify-center w-full h-full" onSubmit={handleSubmit} action="submit">
         <FormInput
           id="email"
@@ -78,8 +75,7 @@ export default function LoginForm() {
         />
 
         <AuthSubmitButton label="로그인" isDisabled={!isFormValid || isLoading} />
-        <SocialAuthOptions />
       </form>
-    </div>
+    </>
   );
 }
