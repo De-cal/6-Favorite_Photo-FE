@@ -6,6 +6,7 @@ import PasswordInput from "./PasswordInput";
 import useLoginForm from "@/hooks/useLoginForm";
 import { useRouter } from "next/navigation";
 import AuthSubmitButton from "./AuthSubmitButton";
+import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function LoginForm() {
   useRedirectIfAuthenticated();
@@ -52,29 +53,38 @@ export default function LoginForm() {
   };
   return (
     <>
-      <form className="flex flex-col items-center justify-center w-full h-full" onSubmit={handleSubmit} action="submit">
-        <FormInput
-          id="email"
-          label="이메일"
-          placeholder="이메일을 입력해주세요"
-          value={email}
-          onChange={handleEmailChange}
-          isValid={isEmailValid}
-          isTouched={isEmailTouched}
-          required
-        />
-        <PasswordInput
-          id="password"
-          label="비밀번호"
-          placeholder="비밀번호를 입력해주세요"
-          value={password}
-          onChange={handlePasswordChange}
-          isValid={isPasswordValid}
-          isTouched={isPasswordTouched}
-          required
-        />
+      <form
+        className="flex flex-col items-center justify-center w-full h-full gap-[44px]"
+        onSubmit={handleSubmit}
+        action="submit"
+      >
+        <div className="flex flex-col items-center justify-center w-full gap-[34px]">
+          <FormInput
+            id="email"
+            label="이메일"
+            placeholder="이메일을 입력해주세요"
+            value={email}
+            onChange={handleEmailChange}
+            isValid={isEmailValid}
+            isTouched={isEmailTouched}
+            required
+          />
+          <PasswordInput
+            id="password"
+            label="비밀번호"
+            placeholder="비밀번호를 입력해주세요"
+            value={password}
+            onChange={handlePasswordChange}
+            isValid={isPasswordValid}
+            isTouched={isPasswordTouched}
+            required
+          />
+        </div>
 
-        <AuthSubmitButton label="로그인" isDisabled={!isFormValid || isLoading} />
+        <div className="flex flex-col items-center justify-center w-full gap-[16px]">
+          <AuthSubmitButton label="로그인" isDisabled={!isFormValid || isLoading} />
+          <GoogleAuthButton label="Google로 시작하기"/>
+        </div>
       </form>
     </>
   );
