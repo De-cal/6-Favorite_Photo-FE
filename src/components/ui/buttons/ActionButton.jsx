@@ -10,8 +10,7 @@ export default function ActionButton({
   children, // 버튼 텍스트를 children으로 받음
   ...rest
 }) {
-  const baseStyles =
-    "inline-flex items-center justify-center rounded-[2px] cursor-pointer";
+  const baseStyles = "inline-flex items-center justify-center rounded-sm cursor-pointer";
 
   // children (버튼 텍스트)마다 반응형 크기 적용
   const sizeStyles = (() => {
@@ -34,7 +33,7 @@ export default function ActionButton({
     primary: clsx(
       disabled
         ? "bg-gray-400 text-gray-300 font-bold cursor-not-allowed pointer-events-none"
-        : "bg-main text-black font-bold"
+        : "bg-main text-black font-bold",
     ),
     secondary: clsx("border border-gray-100 bg-black text-white font-medium"),
     upload: clsx("border border-main text-main"),
@@ -45,12 +44,7 @@ export default function ActionButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={clsx(
-        baseStyles,
-        variantStyles[variant],
-        sizeStyles,
-        className
-      )}
+      className={clsx(baseStyles, variantStyles[variant], sizeStyles, className)}
       {...rest}
     >
       {children}
