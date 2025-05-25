@@ -44,7 +44,7 @@ export default function FormInput({
     setCurrentIsValid(validationResult.isValid);
 
     if (onChange) {
-      onChange(newValue, validationResult.isValid);
+      onChange(newValue);
     }
   };
 
