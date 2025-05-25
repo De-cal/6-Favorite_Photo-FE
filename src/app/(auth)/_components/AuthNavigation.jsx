@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
 
-export default function RedirectionLink() {
+export default function AuthNavigation() {
   const pathName = usePathname();
   const isLoginPage = pathName === "/login";
   const isSignUpPage = pathName === "/signup";

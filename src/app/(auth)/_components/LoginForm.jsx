@@ -7,7 +7,7 @@ import useLoginForm from "@/hooks/useLoginForm";
 import { useRouter } from "next/navigation";
 import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
-import RedirectionLink from "./RedirectionLink";
+import AuthNavigation from "./AuthNavigation";
 
 export default function LoginForm() {
   useRedirectIfAuthenticated();
@@ -87,7 +87,7 @@ export default function LoginForm() {
           <GoogleAuthButton label="Google로 시작하기" />
         </div>
 
-        <RedirectionLink />
+        <AuthNavigation />
       </form>
     </>
   );
