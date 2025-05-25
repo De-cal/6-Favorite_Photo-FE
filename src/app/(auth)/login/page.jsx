@@ -6,13 +6,11 @@ import GoogleAuthButton from "../_components/GoogleAuthButton";
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full mt-[168px] sm:mt-[316px] md:mt-[277px]">
-      <div className="w-full max-w-[520px] px-[15px] flex flex-col items-center gap-[80px]">
-        <AuthLogo />
-        <LoginForm />
-        <GoogleAuthButton />
-        <RedirectionLink />
-      </div>
+    <div className="flex flex-col items-center justify-center max-w-[520px] w-full h-full gap-[80px] px-[15px] mt-[168px] sm:mt-[316px] md:mt-[277px] mx-auto">
+      <AuthLogo />
+      <LoginForm />
+      <GoogleAuthButton />
+      <RedirectionLink />
     </div>
   );
 }
