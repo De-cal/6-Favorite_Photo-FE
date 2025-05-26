@@ -153,7 +153,7 @@ export default function MobileFilter({ data, onSelectFilter }) {
           {["등급", "장르", "판매방법", "매진여부"].map((item) => (
             <button
               key={item}
-              className={`cursor-pointer font-noto font-medium text-[14px] p-4 ${
+              className={`cursor-pointer font-noto font-medium text-[14px] whitespace-nowrap p-4  ${
                 option === item ? "text-white border-b-[1.5px] border-white" : "text-gray-400"
               }`}
               onClick={() => handleOptionClick(item)}
@@ -187,7 +187,7 @@ export default function MobileFilter({ data, onSelectFilter }) {
           >
             <Image alt="exchangeIcon" src={exchange} width={24} height={24} />
           </button>
-          {/* 여기 위에가 초기화 버튼 */}
+
           <button
             className="cursor-pointer rounded-[2px] w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] text-center"
             onClick={() => {

@@ -103,7 +103,7 @@ export default function MobileFilter({ data, onSelectFilter }) {
           {["등급", "장르"].map((item) => (
             <button
               key={item}
-              className={`cursor-pointer font-noto font-medium text-[14px] leading-[100%] tracking-[0%] p-4 ${
+              className={`cursor-pointer font-noto font-medium text-[14px] leading-[100%] tracking-[0%] p-4 whitespace-nowrap ${
                 option === item ? "text-white border-b-[1.5px] border-white" : "text-gray-400"
               }`}
               onClick={() => handleOptionClick(item)}
