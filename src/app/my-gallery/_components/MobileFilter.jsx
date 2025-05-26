@@ -4,35 +4,44 @@ import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
 import { useModal } from "@/providers/ModalProvider";
+import { genreChange } from "@/utils/genreChange"; // 장르 한글 변환 함수
 
 export default function MobileFilter({ data, onSelectFilter }) {
   const { closeModal } = useModal();
-  const total = data.reduce((sum, card) => sum + card.quantity, 0);
-  const common = data.filter((card) => card.photoCard.rank === "COMMON").reduce((sum, card) => sum + card.quantity, 0);
-  const rare = data.filter((card) => card.photoCard.rank === "RARE").reduce((sum, card) => sum + card.quantity, 0);
-  const superrare = data
-    .filter((card) => card.photoCard.rank === "SUPER RARE")
-    .reduce((sum, card) => sum + card.quantity, 0);
-  const legendary = data
-    .filter((card) => card.photoCard.rank === "LEGENDARY")
-    .reduce((sum, card) => sum + card.quantity, 0);
+
+  const rankCount = (data, rank) =>
+    data.filter((card) => card.photoCard.rank === rank).reduce((sum, card) => sum + card.quantity, 0);
+
+  const genreCount = (data, genre) =>
+    data.filter((card) => card.photoCard.genre === genre).reduce((sum, card) => sum + card.quantity, 0);
+
   const [option, setOption] = useState("등급");
 
-  const handleOptionClick = (value) => {
-    setOption(value);
-  };
   const genre = ["PORTRAIT", "LANDSCAPE", "ANIMAL", "OBJECT", "FOOD", "ETC"];
   const grade = ["COMMON", "RARE", "SUPER RARE", "LEGENDARY"];
+
   const [selectedValues, setSelectedValues] = useState({
     등급: null,
     장르: null,
   });
+
+  const handleOptionClick = (value) => setOption(value);
+
   const handleItemClick = (value) => {
     setSelectedValues((prev) => ({
       ...prev,
       [option]: value,
     }));
   };
+
+  const filteredTotal = data
+    .filter((card) => {
+      const matchRank = !selectedValues["등급"] || card.photoCard.rank === selectedValues["등급"];
+      const matchGenre = !selectedValues["장르"] || card.photoCard.genre === selectedValues["장르"];
+      return matchRank && matchGenre;
+    })
+    .reduce((sum, card) => sum + card.quantity, 0);
+
   const renderOptionContent = () => {
     const renderList = (items, colorMap = {}) => (
       <div className="w-full flex flex-col gap-[3px] mt-1">
@@ -44,21 +53,12 @@ export default function MobileFilter({ data, onSelectFilter }) {
             }`}
             onClick={() => handleItemClick(item)}
           >
-            <p className={`font-noto font-normal text-[14px] text-center ${colorMap[item] || ""}`}>{item}</p>
-            {/* 등급일 때만 수량 표시 */}
-            {option === "등급" && (
-              <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
-                {item === "COMMON"
-                  ? `${common}개`
-                  : item === "RARE"
-                  ? `${rare}개`
-                  : item === "SUPER RARE"
-                  ? `${superrare}개`
-                  : item === "LEGENDARY"
-                  ? `${legendary}개`
-                  : null}
-              </p>
-            )}
+            <p className={`font-noto font-normal text-[14px] text-center ${colorMap[item] || ""}`}>
+              {option === "장르" ? genreChange(item) : item}
+            </p>
+            <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
+              {option === "등급" ? `${rankCount(data, item)}개` : `${genreCount(data, item)}개`}
+            </p>
           </button>
         ))}
       </div>
@@ -91,12 +91,12 @@ export default function MobileFilter({ data, onSelectFilter }) {
           />
         </div>
 
-        <div className="flex w-full px-[24px] h-[49px] items-center gap-[24px]">
+        <div className="flex w-full px-[24px] h-[49px] items-center gap-[24px] border-b-1 border-gray-500">
           {["등급", "장르"].map((item) => (
             <button
               key={item}
-              className={`cursor-pointer font-noto font-medium text-[14px] leading-[100%] tracking-[0%] ${
-                option === item ? "text-white" : "text-gray-400"
+              className={`cursor-pointer font-noto font-medium text-[14px] leading-[100%] tracking-[0%] p-4 whitespace-nowrap ${
+                option === item ? "text-white border-b-[1.5px] border-white" : "text-gray-400"
               }`}
               onClick={() => handleOptionClick(item)}
             >
@@ -104,12 +104,30 @@ export default function MobileFilter({ data, onSelectFilter }) {
             </button>
           ))}
         </div>
+
         {renderOptionContent()}
 
         <div className="gap-[11px] flex justify-between mt-[76px] w-full px-[15px]">
-          <div className="cursor-pointer w-[54px] h-[55px] flex items-center justify-center">
+          <button
+            className="cursor-pointer w-[54px] h-[55px] flex items-center justify-center"
+            onClick={() => {
+              const resetValues = {
+                등급: null,
+                장르: null,
+                판매방법: null,
+                매진여부: null,
+              };
+              setSelectedValues(resetValues);
+              onSelectFilter({
+                rank: null,
+                genre: null,
+                sellingType: null,
+                soldout: null,
+              });
+            }}
+          >
             <Image alt="exchangeIcon" src={exchange} width={24} height={24} />
-          </div>
+          </button>
           <button
             className="cursor-pointer rounded-[2px] w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] text-center"
             onClick={() => {
@@ -119,11 +137,11 @@ export default function MobileFilter({ data, onSelectFilter }) {
                 sellingType: selectedValues["판매방법"],
                 soldout: selectedValues["매진여부"],
               };
-              onSelectFilter(transformed); //  한 번에 전달
+              onSelectFilter(transformed);
               closeModal();
             }}
           >
-            해당 조건으로 검색하기
+            {`${filteredTotal}장 카드 검색하기`}
           </button>
         </div>
       </div>

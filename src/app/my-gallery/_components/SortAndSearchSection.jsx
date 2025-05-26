@@ -6,10 +6,11 @@ import Dropdown from "@/app/my-sell/_components/Dropdown";
 import { useState, useEffect } from "react";
 import { useModal } from "@/providers/ModalProvider";
 import MobileFilter from "./MobileFilter";
-// props: onSearch (부모에게 검색 조건 전달)
+
 export default function SortAndSearchSection({ onSearch, data }) {
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null); // ✅ 드롭다운 제어 상태
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
@@ -20,6 +21,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
       genre: selectedGenre,
     });
   };
+
   const { openModal, closeModal } = useModal();
   useEffect(() => {
     const handleResize = () => {
@@ -27,16 +29,13 @@ export default function SortAndSearchSection({ onSearch, data }) {
         closeModal(); // sm 이상이면 모달 닫기
       }
     };
-
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, [closeModal]);
 
   return (
     <>
+      {/* ✅ 모바일 */}
       <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
@@ -47,8 +46,15 @@ export default function SortAndSearchSection({ onSearch, data }) {
                 onSelectFilter={(selected) => {
                   if (selected.rank) setSelectedGrade(selected.rank);
                   if (selected.genre) setSelectedGenre(selected.genre);
+                  onSearch?.({
+                    keyword,
+                    rank: selected.rank,
+                    genre: selected.genre,
+                  });
                 }}
               />,
+              "bottom",
+              "center",
             );
           }}
         >
@@ -69,10 +75,9 @@ export default function SortAndSearchSection({ onSearch, data }) {
             <Image src={search} width={17} height={17} alt="검색버튼" />
           </button>
         </form>
-
-        <div className="flex flex-row gap-[25px]"></div>
       </section>
 
+      {/* ✅ 데스크탑 */}
       <section className="pt-[15px] hidden sm:flex sm:flex-row gap-[30px] items-center md:max-w-[1480px] justify-start w-full">
         <form
           onSubmit={handleSubmit}
@@ -91,8 +96,32 @@ export default function SortAndSearchSection({ onSearch, data }) {
         </form>
 
         <div className="flex flex-row gap-[25px]">
-          <Dropdown type="등급" onSelect={setSelectedGrade} />
-          <Dropdown type="장르" onSelect={setSelectedGenre} />
+          <Dropdown
+            type="등급"
+            isOpen={openDropdown === "등급"}
+            setOpenDropdown={setOpenDropdown}
+            onSelect={(value) => {
+              setSelectedGrade(value);
+              onSearch?.({
+                keyword,
+                rank: value,
+                genre: selectedGenre,
+              });
+            }}
+          />
+          <Dropdown
+            type="장르"
+            isOpen={openDropdown === "장르"}
+            setOpenDropdown={setOpenDropdown}
+            onSelect={(value) => {
+              setSelectedGenre(value);
+              onSearch?.({
+                keyword,
+                rank: selectedGrade,
+                genre: value,
+              });
+            }}
+          />
         </div>
       </section>
     </>
