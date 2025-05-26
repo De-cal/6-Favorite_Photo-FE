@@ -9,14 +9,15 @@ import Sort from "./_components/SortDropdown";
 import marketplace from "../../assets/images/img-marketplace.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import FilterDropdown from "./_components/FilerDropdown";
-import SellPhotoCardsModal from "./_components/SellPhotoCardsModal";
+import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 
 import { useEffect } from "react";
 import { getAllArticles } from "@/api/article";
+import { useModal } from "@/providers/ModalProvider";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openModal } = useModal();
   const [articles, setArticles] = useState([]);
 
   async function getArticles() {
@@ -39,7 +40,10 @@ export default function MarketplacePage() {
             <Image src={marketplace} width={248} height={49} alt="marketplace" className="md:hidden" />
 
             <Image src={marketplace} width={320} height={63} alt="marketplace" className="hidden md:block" />
-            <ActionButton className="w-[342px] h-[60px] md:w-[440px]" onClick={() => setIsModalOpen(true)}>
+            <ActionButton
+              className="w-[342px] h-[60px] md:w-[440px]"
+              onClick={() => openModal(<SelectPhotoCardsModal />)}
+            >
               나의 포토카드 판매하기
             </ActionButton>
           </div>
@@ -107,7 +111,6 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
           <Filter />
         </div>
       )}
-      {isModalOpen && <SellPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }
