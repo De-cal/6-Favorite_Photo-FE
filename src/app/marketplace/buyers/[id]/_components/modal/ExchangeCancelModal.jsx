@@ -3,10 +3,9 @@ import Image from "next/image";
 import React from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
-import ExchangeInputModal from "./ExchangeInputModal";
 
 export default function ExchangeCancelModal() {
-  const { closeModal, openModal } = useModal();
+  const { closeModal } = useModal();
 
   const cardArticle = {
     photoCard: {
@@ -27,12 +26,16 @@ export default function ExchangeCancelModal() {
     exchangeGenre: "풍경",
   };
 
+  // 모달 닫기
   const handleClose = () => {
     closeModal();
-    openModal(<ExchangeInputModal />);
+    document.body.style.overflow = "auto";
   };
 
+  // 교환 취소하기
   const handleCancel = () => {
+    // TODO: 취소하기 버튼 누르면 교환 목록에서 없어지는 로직 추가
+
     closeModal();
     document.body.style.overflow = "auto";
   };

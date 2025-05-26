@@ -29,7 +29,8 @@ export default function SellerExchangeInfo() {
     exchangeGenre: "풍경",
   };
 
-  const handleClick = () => {
+  // 교환하기
+  const handleExchange = () => {
     openModal(<SelectPhotoCardsModal />);
     document.body.style.overflow = "hidden";
   };
@@ -43,7 +44,7 @@ export default function SellerExchangeInfo() {
         <div className="hidden pb-[20px] sm:block max-w-[440px] min-w[342px] w-full">
           <ActionButton
             className="mt-[120px] sm:top-0 sm:right-0 sm:h-[60px] max-w-[440px] min-w[342px] w-full"
-            onClick={handleClick}
+            onClick={handleExchange}
           >
             포토카드 교환하기
           </ActionButton>
@@ -57,7 +58,7 @@ export default function SellerExchangeInfo() {
         <div className="border-l-[1.5px] border-gray-400 h-[17px]"></div>
         <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">{cardArticle.exchangeGenre}</p>
       </div>
-      <ActionButton className="mt-[40px] sm:mt-0 sm:hidden sm:top-0 sm:right-0" onClick={handleClick}>
+      <ActionButton className="mt-[40px] sm:mt-0 sm:hidden sm:top-0 sm:right-0" onClick={handleExchange}>
         포토카드 교환하기
       </ActionButton>
     </div>
