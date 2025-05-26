@@ -12,6 +12,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [selectedSellingType, setSelectedSellingType] = useState(null);
   const [selectedSoldout, setSelectedSoldout] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null); // "등급", "장르" 등
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
@@ -53,6 +54,13 @@ export default function SortAndSearchSection({ onSearch, data }) {
                   if (selected.genre) setSelectedGenre(selected.genre);
                   if (selected.sellingType) setSelectedSellingType(selected.sellingType);
                   if (selected.soldout) setSelectedSoldout(selected.soldout);
+                  onSearch?.({
+                    keyword,
+                    rank: selected.rank ?? selectedGrade,
+                    genre: selected.genre ?? selectedGenre,
+                    sellingType: selected.sellingType ?? selectedSellingType,
+                    soldout: selected.soldout ?? selectedSoldout,
+                  });
                 }}
               />,
               "bottom",
@@ -96,10 +104,69 @@ export default function SortAndSearchSection({ onSearch, data }) {
         </form>
 
         <div className="flex flex-row gap-[25px]">
-          <Dropdown type="등급" onSelect={setSelectedGrade} />
-          <Dropdown type="장르" onSelect={setSelectedGenre} />
-          <Dropdown type="판매방법" onSelect={setSelectedSellingType} />
-          <Dropdown type="매진여부" onSelect={setSelectedSoldout} />
+          <Dropdown
+            type="등급"
+            isOpen={openDropdown === "등급"}
+            setOpenDropdown={setOpenDropdown}
+            onSelect={(value) => {
+              setSelectedGrade(value);
+              onSearch?.({
+                keyword,
+                rank: value,
+                genre: selectedGenre,
+                sellingType: selectedSellingType,
+                soldout: selectedSoldout,
+              });
+            }}
+          />
+
+          <Dropdown
+            type="장르"
+            isOpen={openDropdown === "장르"}
+            setOpenDropdown={setOpenDropdown}
+            onSelect={(value) => {
+              setSelectedGenre(value);
+              onSearch?.({
+                keyword,
+                rank: selectedGrade,
+                genre: value,
+                sellingType: selectedSellingType,
+                soldout: selectedSoldout,
+              });
+            }}
+          />
+
+          <Dropdown
+            type="판매방법"
+            isOpen={openDropdown === "판매방법"}
+            setOpenDropdown={setOpenDropdown}
+            onSelect={(value) => {
+              setSelectedSellingType(value);
+              onSearch?.({
+                keyword,
+                rank: selectedGrade,
+                genre: selectedGenre,
+                sellingType: value,
+                soldout: selectedSoldout,
+              });
+            }}
+          />
+
+          <Dropdown
+            type="매진여부"
+            isOpen={openDropdown === "매진여부"}
+            setOpenDropdown={setOpenDropdown}
+            onSelect={(value) => {
+              setSelectedSoldout(value);
+              onSearch?.({
+                keyword,
+                rank: selectedGrade,
+                genre: selectedGenre,
+                sellingType: selectedSellingType,
+                soldout: value,
+              });
+            }}
+          />
         </div>
       </section>
     </>
