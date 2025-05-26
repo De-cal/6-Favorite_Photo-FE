@@ -6,6 +6,7 @@ import Dropdown from "@/app/my-sell/_components/Dropdown";
 import { useState, useEffect } from "react";
 import { useModal } from "@/providers/ModalProvider";
 import MobileFilter from "@/app/my-sell/_components/MobileFilter";
+import TsetModal from "@/app/modal-test/TsetModal";
 // props: onSearch (부모에게 검색 조건 전달)
 export default function SortAndSearchSection({ onSearch, data }) {
   const [selectedGrade, setSelectedGrade] = useState(null);
@@ -67,6 +68,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
               "bottom",
               "center",
             );
+            openModal(<TsetModal />, "center", "center", true);
           }}
         >
           <Image src={filter} width={24} height={24} alt="검색버튼" />

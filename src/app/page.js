@@ -92,23 +92,13 @@ export default function LandingPage() {
             md:left-[58px] md:right-[61px] md:top-[13px]
             flex items-center justify-center w-auto rounded-2xl overflow-hidden z-0"
           >
-            <Image
-              src={heroBgImg}
-              alt="히어로 백그라운드 이미지"
-              fill
-              className="object-cover"
-            />
+            <Image src={heroBgImg} alt="히어로 백그라운드 이미지" fill className="object-cover" />
           </div>
 
           {/* 텍스트 & CTA 버튼 */}
           <div className="absolute top-[70px] left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center z-30">
             <div className="relative overflow-hidden hidden sm:block sm:w-[138px] sm:h-[25px] sm:mb-[23px]">
-              <Image
-                src={logoImg}
-                alt="최애의 포토 로고"
-                fill
-                className="object-cover"
-              />
+              <Image src={logoImg} alt="최애의 포토 로고" fill className="object-cover" />
             </div>
             <h1 className="text-white text-center text-[20px] leading-[26px] sm:leading-[48px] h-12 mb-6 font-bold sm:h-[96px] sm:text-[40px] sm:mb-[38px] md:mb-[33px]">
               구하기 어려웠던
@@ -130,12 +120,7 @@ export default function LandingPage() {
             className="absolute top-[187px] sm:top-[364px] md:top-[319px] 
                        w-full min-h-[199px] sm:h-[352px] max-h-[765px] z-20"
           >
-            <Image
-              src={heroImg}
-              alt="히어로 이미지"
-              fill
-              className="object-cover"
-            />
+            <Image src={heroImg} alt="히어로 이미지" fill className="object-cover" />
           </div>
         </section>
 
@@ -143,12 +128,7 @@ export default function LandingPage() {
         <section className="relative flex flex-col items-center justify-center w-full h-[440px] sm:h-[744px] md:h-[800px] overflow-hidden">
           {/* 배경 이미지 */}
           <div className="absolute top-[319px] sm:top-[459px] md:top-[438px] left-[131px] sm:left-[193px] flex items-center justify-center w-full h-[140px] sm:h-[300px] md:h-[740px] overflow-x-hidden z-0">
-            <Image
-              src={featImg1Bg}
-              alt="배경 이미지"
-              fill
-              className="object-cover"
-            />
+            <Image src={featImg1Bg} alt="배경 이미지" fill className="object-cover" />
           </div>
 
           {/* 텍스트 */}
@@ -168,12 +148,7 @@ export default function LandingPage() {
             className="absolute top-[155px] left-[32px] sm:top-[233px] sm:left-[61px] md:top-[247px] md:left-[428px] overflow-hidden
                        w-full max-w-[1068px] h-[231px] sm:h-[384px] md:h-[518px] z-20"
           >
-            <Image
-              src={featImg1}
-              alt="포인트로 안전하게 거래하세요"
-              fill
-              className="object-contain"
-            />
+            <Image src={featImg1} alt="포인트로 안전하게 거래하세요" fill className="object-contain" />
           </div>
         </section>
 
@@ -184,12 +159,7 @@ export default function LandingPage() {
             className="
           absolute top-[334px] sm:top-[548px] md:top-[407px] left-[-55px] md:left-[83px] w-full h-[135px] sm:h-[260px] md:h-[400px] overflow-hidden z-0"
           >
-            <Image
-              src={featImg2Bg}
-              alt="배경 이미지"
-              fill
-              className="object-cover"
-            />
+            <Image src={featImg2Bg} alt="배경 이미지" fill className="object-cover" />
           </div>
           {/* 텍스트 */}
           <div className="absolute top-[67px] left-[32px] sm:top-[110px] sm:left-[61px] md:top-[138px] md:left-1/2 md:-translate-x-1/2 flex flex-col items-start md:items-center justify-center w-full gap-3 sm:gap-[14px] z-10">
@@ -209,12 +179,7 @@ export default function LandingPage() {
             md:top-[237px] md:left-[427px] w-full h-[226px] sm:h-[383px] md:h-[518px]
               z-20"
           >
-            <Image
-              src={featImg2}
-              alt="마켓플레이스 페이지 알림 화면"
-              fill
-              className="object-contain"
-            />
+            <Image src={featImg2} alt="마켓플레이스 페이지 알림 화면" fill className="object-contain" />
           </div>
           {/* comments */}
           <div
@@ -223,12 +188,7 @@ export default function LandingPage() {
             md:top-[450px] md:left-[533px] md:w-[284px] md:h-[70px]
               z-20"
           >
-            <Image
-              src={grayComment}
-              alt="포카 사고싶어요 코멘트"
-              fill
-              className="object-contain"
-            />
+            <Image src={grayComment} alt="포카 사고싶어요 코멘트" fill className="object-contain" />
           </div>
           <div
             className="absolute top-[174px] left-[61px] w-[135px] h-[36px]
@@ -236,12 +196,7 @@ export default function LandingPage() {
             md:top-[359px] md:left-[443px] md:w-[214px] md:h-[70px]
               z-20"
           >
-            <Image
-              src={blueComment}
-              alt="제 포카랑 교환해요 코멘트"
-              fill
-              className="object-contain"
-            />
+            <Image src={blueComment} alt="제 포카랑 교환해요 코멘트" fill className="object-contain" />
           </div>
         </section>
 
@@ -256,12 +211,7 @@ export default function LandingPage() {
           md:w-[280px] md:h-[216px] md:top-[384px] md:left-[1366px]
           z-10"
           >
-            <Image
-              src={redBox}
-              alt="빨간 선물상자 배경"
-              fill
-              className="object-cover"
-            />
+            <Image src={redBox} alt="빨간 선물상자 배경" fill className="object-cover" />
           </div>
           {/* 선물상자 background  2*/}
           <div
@@ -270,12 +220,7 @@ export default function LandingPage() {
           md:w-[685px] md:h-[530px] md:top-[714px] md:left-[26px]
           z-10"
           >
-            <Image
-              src={blueBox}
-              alt="파란 선물상자 배경"
-              fill
-              className="object-cover"
-            />
+            <Image src={blueBox} alt="파란 선물상자 배경" fill className="object-cover" />
           </div>
           {/* 텍스트 */}
           <div className="absolute top-[67px] sm:top-[110px] md:top-[133px] left-[32px] sm:left-[61px] md:left-1/2 md:-translate-x-1/2 flex flex-col items-start md:items-center justify-center w-full gap-3 sm:gap-[14px] z-15">
@@ -294,12 +239,7 @@ export default function LandingPage() {
             className="absolute top-[166px] left-[38px] sm:top-[257px] sm:left-[94px] md:top-[274px] md:left-[515px] overflow-hidden
                        w-full max-w-[1068px] h-[198px] sm:h-[357px] md:h-[570px] z-20"
           >
-            <Image
-              src={featImg3}
-              alt="랜덤 상자 이미지 기능 페이지"
-              fill
-              className="object-contain"
-            />
+            <Image src={featImg3} alt="랜덤 상자 이미지 기능 페이지" fill className="object-contain" />
           </div>
         </section>
 
@@ -308,12 +248,7 @@ export default function LandingPage() {
           <div className="flex flex-col items-center justify-center">
             {/* 이미지 */}
             <div className="relative w-[78px] h-[114px] sm:w-[130px] sm:h-[150px]">
-              <Image
-                src={ctaImg}
-                alt="포토카드"
-                fill
-                className="object-contain"
-              />
+              <Image src={ctaImg} alt="포토카드" fill className="object-contain" />
             </div>
             {/* 텍스트 & 버튼 */}
             <h1 className="text-white text-center text-[20px] h-12 font-bold sm:h-[96px] sm:text-[40px]">

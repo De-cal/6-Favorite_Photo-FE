@@ -2,7 +2,8 @@
 import CommonModal from "@/components/common/CommonModal";
 import MobileHeader from "@/components/common/MobileHeader";
 import { useModal } from "@/providers/ModalProvider";
-import React from "react";
+import React, { useEffect } from "react";
+import TsetModal from "./TsetModal";
 
 function modalTestPage() {
   // type => 판매 등록 , 교환 제시, 구매, 포토카드 생성 (띄어쓰기 그대로 4가지)
@@ -29,21 +30,13 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(
-                <CommonModal type="판매 등록" result="성공" data={data} />
-              )
-            }
+            onClick={() => openModal(<CommonModal type="판매 등록" result="성공" data={data} />)}
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(
-                <CommonModal type="판매 등록" result="실패" data={data} />
-              )
-            }
+            onClick={() => openModal(<CommonModal type="판매 등록" result="실패" data={data} />)}
           >
             실패
           </button>
@@ -55,17 +48,13 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(<CommonModal type="구매" result="성공" data={data} />)
-            }
+            onClick={() => openModal(<CommonModal type="구매" result="성공" data={data} />)}
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(<CommonModal type="구매" result="실패" data={data} />)
-            }
+            onClick={() => openModal(<CommonModal type="구매" result="실패" data={data} />)}
           >
             실패
           </button>
@@ -77,21 +66,13 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(
-                <CommonModal type="교환 제시" result="성공" data={data} />
-              )
-            }
+            onClick={() => openModal(<CommonModal type="교환 제시" result="성공" data={data} />)}
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(
-                <CommonModal type="교환 제시" result="실패" data={data} />
-              )
-            }
+            onClick={() => openModal(<CommonModal type="교환 제시" result="실패" data={data} />)}
           >
             실패
           </button>
@@ -103,23 +84,30 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(
-                <CommonModal type="포토카드 생성" result="성공" data={data} />
-              )
-            }
+            onClick={() => openModal(<CommonModal type="포토카드 생성" result="성공" data={data} />)}
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() =>
-              openModal(
-                <CommonModal type="포토카드 생성" result="성공" data={data} />
-              )
-            }
+            onClick={() => openModal(<CommonModal type="포토카드 생성" result="성공" data={data} />)}
           >
             실패
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center justify-center gap-5">
+        <h1 className="text-3xl ">재욱님 모달 테스트 버튼</h1>
+        <div className="flex flex-row justify-between items-center gap-10">
+          <button
+            className="bg-main w-60 h-20 rounded-3xl text-gray-300 text-[20px]"
+            onClick={() => {
+              openModal(<CommonModal type="포토카드 생성" result="성공" data={data} />, "top", "left");
+              openModal(<TsetModal />, "center", "center", true);
+            }}
+          >
+            모달 2개 뜨는거 테스트
           </button>
         </div>
       </div>

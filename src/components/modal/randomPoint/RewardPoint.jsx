@@ -40,21 +40,13 @@ function RewardPoint({ clearTimer, formatTime, remainingTime }) {
             <p className="text-main">{formatTime(remainingTime)}</p>
           </div>
           <div className="flex py-9">
-            <RandomBoxCard
-              boxColor={"blue"}
-              selectedOption={selectedOption}
-              handleSelectOption={handleSelectOption}
-            />
+            <RandomBoxCard boxColor={"blue"} selectedOption={selectedOption} handleSelectOption={handleSelectOption} />
             <RandomBoxCard
               boxColor={"purple"}
               selectedOption={selectedOption}
               handleSelectOption={handleSelectOption}
             />
-            <RandomBoxCard
-              boxColor={"red"}
-              selectedOption={selectedOption}
-              handleSelectOption={handleSelectOption}
-            />
+            <RandomBoxCard boxColor={"red"} selectedOption={selectedOption} handleSelectOption={handleSelectOption} />
           </div>
           {selectedOption !== null && (
             <button
