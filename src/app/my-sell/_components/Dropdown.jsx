@@ -3,18 +3,10 @@ import down from "@/assets/icons/ic-down.svg";
 import up from "@/assets/icons/ic-up.svg";
 import Image from "next/image";
 import { useState } from "react";
+import { genreChange } from "@/utils/genreChange"; // genreChange 함수 import
 
 export default function Dropdown({ type, onSelect, isOpen, setOpenDropdown }) {
   const [choice, setChoice] = useState(type);
-
-  const genreMap = {
-    PORTRAIT: "인물",
-    LANDSCAPE: "풍경",
-    ANIMAL: "동물",
-    OBJECT: "사물",
-    FOOD: "음식",
-    ETC: "기타",
-  };
 
   const sellingTypeMap = {
     SELLING: "판매 중",
@@ -29,7 +21,7 @@ export default function Dropdown({ type, onSelect, isOpen, setOpenDropdown }) {
   const getOptionsByType = () => {
     switch (type) {
       case "장르":
-        return Object.entries(genreMap);
+        return ["PORTRAIT", "LANDSCAPE", "ANIMAL", "OBJECT", "FOOD", "ETC"].map((genre) => [genre, genreChange(genre)]);
       case "판매방법":
         return Object.entries(sellingTypeMap);
       case "매진여부":
@@ -42,8 +34,8 @@ export default function Dropdown({ type, onSelect, isOpen, setOpenDropdown }) {
 
   const handleClick = (value, label) => {
     setChoice(label);
-    onSelect?.(value); // 영어 값 전달
-    setOpenDropdown(null); // 닫기
+    onSelect?.(value); // 영어 value를 부모로 전달
+    setOpenDropdown(null);
   };
 
   return (

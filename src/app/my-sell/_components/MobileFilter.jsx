@@ -4,6 +4,7 @@ import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
 import { useModal } from "@/providers/ModalProvider";
+import { genreChange } from "@/utils/genreChange";
 
 export default function MobileFilter({ data, onSelectFilter }) {
   const { closeModal } = useModal();
@@ -25,15 +26,6 @@ export default function MobileFilter({ data, onSelectFilter }) {
   const [option, setOption] = useState("등급");
 
   const handleOptionClick = (value) => setOption(value);
-
-  const genreLabelMap = {
-    LANDSCAPE: "풍경",
-    PORTRAIT: "인물",
-    ANIMAL: "동물",
-    OBJECT: "사물",
-    FOOD: "음식",
-    ETC: "기타",
-  };
 
   const sellingTypeMap = {
     "판매 중": "SELLING",
@@ -98,20 +90,18 @@ export default function MobileFilter({ data, onSelectFilter }) {
               onClick={() => handleItemClick(item)}
             >
               <p className={`font-noto font-normal text-[14px] text-center ${colorMap[item] || ""}`}>
-                {option === "장르" ? genreLabelMap[item] : item}
+                {option === "장르" ? genreChange(item) : item}
               </p>
 
-              {(option === "등급" || option === "장르" || option === "판매방법" || option === "매진여부") && (
-                <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
-                  {option === "등급"
-                    ? `${rankCount(data, item)}개`
-                    : option === "장르"
-                    ? `${genreCount(data, item)}개`
-                    : option === "판매방법"
-                    ? `${sellingTypeCount(data, actualValue)}개`
-                    : `${soldoutCount(data, actualValue)}개`}
-                </p>
-              )}
+              <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
+                {option === "등급"
+                  ? `${rankCount(data, item)}개`
+                  : option === "장르"
+                  ? `${genreCount(data, item)}개`
+                  : option === "판매방법"
+                  ? `${sellingTypeCount(data, actualValue)}개`
+                  : `${soldoutCount(data, actualValue)}개`}
+              </p>
             </button>
           );
         })}
@@ -166,7 +156,6 @@ export default function MobileFilter({ data, onSelectFilter }) {
         {renderOptionContent()}
 
         <div className="gap-[11px] flex justify-between mt-[76px] w-full px-[15px]">
-          {/* 여기 밑에가 초기화 버튼 */}
           <button
             className="cursor-pointer w-[54px] h-[55px] flex items-center justify-center"
             onClick={() => {
