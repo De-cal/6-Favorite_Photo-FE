@@ -42,6 +42,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
 
   return (
     <>
+      {/* ✅ 모바일 */}
       <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
@@ -70,7 +71,10 @@ export default function SortAndSearchSection({ onSearch, data }) {
         >
           <Image src={filter} width={24} height={24} alt="검색버튼" />
         </button>
-        <form onSubmit={handleSubmit} className="flex items-center border border-gray-200 w-full  h-[45px]  px-5">
+        <form
+          onSubmit={handleSubmit}
+          className="flex items-center border border-gray-200 w-full sm:max-w-[250px]  h-[45px]  px-5"
+        >
           <input
             type="text"
             placeholder="검색"
