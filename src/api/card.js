@@ -1,6 +1,13 @@
-export const getAllCards = async () => {
+export const getAllCards = async ({ page, pageSize, rank, genre, keyword, status } = {}) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`);
+    const queryParams = new URLSearchParams();
+    if (page) queryParams.append("page", page);
+    if (pageSize) queryParams.append("pageSize", pageSize);
+    if (rank) queryParams.append("rank", rank);
+    if (genre) queryParams.append("genre", genre);
+    if (keyword) queryParams.append("keyword", keyword);
+    if (status) queryParams.append("status", status);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards?${queryParams.toString()}`);
     const data = await res.json();
     console.log("data", data);
     return data.list;

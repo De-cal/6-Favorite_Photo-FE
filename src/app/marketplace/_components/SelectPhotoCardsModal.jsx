@@ -4,26 +4,61 @@ import React, { useEffect, useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import Card from "@/components/common/Card";
 import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
-import Search from "./Search";
-import filter from "@/assets/icons/ic-filter.svg";
-import Filter from "./Filter";
-import FilterDropdown from "./FilerDropdown";
 import { useModal } from "@/providers/ModalProvider";
 import ExchangeInputModal from "../buyers/[id]/_components/modal/ExchangeInputModal";
 import { getAllCards } from "@/api/card";
+import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
 
 function SelectPhotoCardsModal({ type = "판매" }) {
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [cards, setCards] = useState([]);
   const { openModal, closeModal } = useModal();
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [searchFilter, setSearchFilter] = useState({
+    keyword: "",
+    rank: null,
+    genre: null,
+  });
 
   useEffect(() => {
-    const fetchAllCards = async () => {
-      const fetchCards = await getAllCards();
-      setCards(fetchCards);
+    setPage(1);
+    setHasMore(true);
+    setCards([]);
+    fetchCards(1);
+  }, [searchFilter]);
+
+  useEffect(() => {
+    fetchCards(page);
+  }, [page]);
+
+  const fetchCards = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const fetchedCards = await getAllCards({ ...searchFilter, page });
+      if (fetchedCards.length === 0) {
+        setHasMore(false);
+      } else {
+        setCards((prev) => (page === 1 ? fetchedCards : [...prev, ...fetchedCards]));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (loading || !hasMore) return;
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
+        setPage((prev) => prev + 1);
+      }
     };
-    fetchAllCards();
-  }, []);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading, hasMore]);
 
   const handleClickOpenModal = (card) => {
     if (type === "판매") {
@@ -48,14 +83,7 @@ function SelectPhotoCardsModal({ type = "판매" }) {
           </div>
           <div className="hidden sm:block border-b-2 border-white mt-[20px]"> </div>
           <div className="flex gap-[10px] w-full mt-[20px] sm:flex-row-reverse">
-            <button
-              onClick={() => setIsFilterOpen(true)}
-              className="border-1 border-gray-200 w-[45px] h-[45px] flex justify-center items-center sm:hidden"
-            >
-              <Image alt="filter" src={filter} className="w-[20px]" />
-            </button>
-            <FilterDropdown />
-            <Search />
+            <SortAndSearchSection data={cards} onSearch={setSearchFilter} />
           </div>
           <div className="grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]">
             {cards.map((card) => (
@@ -64,11 +92,6 @@ function SelectPhotoCardsModal({ type = "판매" }) {
           </div>
         </div>
       </div>
-      {isFilterOpen && (
-        <div className="fixed inset-0 z-[60] bg-black/50 flex justify-center items-end">
-          <Filter />
-        </div>
-      )}
     </div>
   );
 }
