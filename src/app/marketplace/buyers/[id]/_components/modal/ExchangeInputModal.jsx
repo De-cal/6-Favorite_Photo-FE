@@ -10,11 +10,24 @@ import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
 import Tablet from "@/components/common/Tablet";
+import BuyerActionModal from "./ExchangeCancelModal";
 
 export default function ExchangeInputModal() {
-  const { closeModal } = useModal();
+  const { closeModal, openModal } = useModal();
 
-  const handleClick = () => {
+  const handleClose = () => {
+    closeModal();
+    document.body.style.overflow = "auto";
+  };
+
+  const handleCancel = () => {
+    closeModal();
+    document.body.style.overflow = "auto";
+    openModal(<BuyerActionModal />);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleExchange = () => {
     closeModal();
     document.body.style.overflow = "auto";
   };
@@ -23,7 +36,7 @@ export default function ExchangeInputModal() {
     <div className="fixed inset-0 w-full overflow-y-auto pb-[20px] font-notoSans z-2 bg-black sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:bg-gray-500 sm:fixed sm:top-auto md:static md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]">
       <div className="flex justify-center items-center w-full">
         <div className="flex w-[345px]">
-          <MobileHeader onClick={handleClick} title="포토카드 교환하기" />
+          <MobileHeader onClick={handleClose} title="포토카드 교환하기" />
         </div>
       </div>
       <Tablet>
@@ -35,7 +48,7 @@ export default function ExchangeInputModal() {
       </Tablet>
       <Desktop>
         <div className="md:flex md:justify-end md:items-center">
-          <button onClick={handleClick} className="relative w-[32px] h-[32px] cursor-pointer">
+          <button onClick={handleClose} className="relative w-[32px] h-[32px] cursor-pointer">
             <Image src={ic_close_gray} alt="닫기" fill className="object-cover" />
           </button>
         </div>
@@ -60,13 +73,14 @@ export default function ExchangeInputModal() {
               </div>
               <div className="flex justify-center items-center gap-[15px] mt-[44px] sm:gap-[20px] sm:mt-[60px]">
                 <ActionButton
-                  onClick={handleClick}
+                  onClick={handleCancel}
                   variant="secondary"
                   className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[51px] sm:px-[50px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69px]"
                 >
                   취소하기
                 </ActionButton>
                 <ActionButton
+                  onClick={handleExchange}
                   variant="primary"
                   className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[52px] sm:px-[50px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69.5px]"
                 >
