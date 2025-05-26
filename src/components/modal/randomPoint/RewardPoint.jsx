@@ -1,14 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RandomBoxCard from "./RandomBoxCard";
 import pointImage from "@/assets/images/img-point.avif";
+import closeIcon from "@/assets/icons/ic-close.svg";
 import Image from "next/image";
+import { usePointTimer } from "@/providers/PointTimerProvider";
+import { useModal } from "@/providers/ModalProvider";
 
-function RewardPoint({ clearTimer, formatTime, remainingTime }) {
+function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
   const [rewardPoints, setRewardPoints] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const { formattedTime, spendOpportunity } = usePointTimer();
+  // const { closePointModal } = useModal();
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
@@ -20,45 +26,48 @@ function RewardPoint({ clearTimer, formatTime, remainingTime }) {
 
     // TODO: 백엔드 및 api 코드 작성후 api 호출 부분 추가 예정.
 
-    clearTimer();
+    spendOpportunity();
     setIsSelected(true);
   };
 
+  useEffect(() => {
+    console.log("formattedTime:", formattedTime);
+  }, [formattedTime]);
+
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h2 className="text-3xl font-baskinRobbins mb-2">
+    // <div className="relative flex flex-col justify-center items-center bg-gray-500 w-[345px] h-[441px] sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px] ">
+    <div className="flex flex-col justify-center items-center ">
+      {/* <button
+        className="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-gray-500 focus:outline-none cursor-pointer"
+        onClick={closePointModal()}
+      >
+        <Image src={closeIcon} alt="closeModalButton" />
+      </button> */}
+      <h2 className="font-baskinRobbins mb-2 text-3xl sm:text-4xl md:text-5xl  ">
         랜덤 <span className="text-main">포인트</span>
       </h2>
       {!isSelected ? (
         <div className="flex flex-col items-center">
-          <div className="flex flex-col items-center font-bold py-4">
+          <div className="flex flex-col items-center font-bold py-4 md:text-xl ">
             <p>1시간마다 돌아오는 기회!</p>
             <p>랜덤 상자 뽑기를 통해 포인트를 획득하세요!</p>
           </div>
-          <div className="flex flex-col items-center text-sm py-3">
+          <div className="flex flex-col items-center text-sm py-3 md:flex-row md:gap-3">
             <p className="text-gray-300">다음 기회까지 남은 시간</p>
-            <p className="text-main">{formatTime(remainingTime)}</p>
+            <p className="text-main">{formattedTime}</p>
           </div>
-          <div className="flex py-9">
-            <RandomBoxCard
-              boxColor={"blue"}
-              selectedOption={selectedOption}
-              handleSelectOption={handleSelectOption}
-            />
+          <div className="flex py-9 md:gap-6 ">
+            <RandomBoxCard boxColor={"blue"} selectedOption={selectedOption} handleSelectOption={handleSelectOption} />
             <RandomBoxCard
               boxColor={"purple"}
               selectedOption={selectedOption}
               handleSelectOption={handleSelectOption}
             />
-            <RandomBoxCard
-              boxColor={"red"}
-              selectedOption={selectedOption}
-              handleSelectOption={handleSelectOption}
-            />
+            <RandomBoxCard boxColor={"red"} selectedOption={selectedOption} handleSelectOption={handleSelectOption} />
           </div>
           {selectedOption !== null && (
             <button
-              className="bg-main text-black w-[300px] h-[55px] font-bold rounded-xs my-3"
+              className="bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs my-3"
               onClick={handleGetPoint}
             >
               선택완료
@@ -67,14 +76,14 @@ function RewardPoint({ clearTimer, formatTime, remainingTime }) {
         </div>
       ) : (
         <div className="flex flex-col items-center p-2">
-          <Image src={pointImage} alt="getRandomPoint" />
+          <Image src={pointImage} alt="getRandomPoint" className="w-60 h-50 object-cover " />
           <p className="p-3 text-2xl font-bold">
             <span className="text-main">{rewardPoints}P</span> 획득!
           </p>
 
           <div className="flex flex-col items-center p-5">
             <p className="text-gray-300">다음 기회까지 남은 시간</p>
-            <p className="text-main">{formatTime(remainingTime)}</p>
+            <p className="text-main">{formattedTime}</p>
           </div>
         </div>
       )}

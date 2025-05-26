@@ -4,13 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import closeIcon from "@/assets/icons/ic-close.svg";
 
-function CommonModal({
-  isOpen,
-  onClose,
-  children,
-  className = "",
-  overlayClassName = "",
-}) {
+function CommonModal({ isOpen, onClose, children, className = "", overlayClassName = "" }) {
   const modalRef = useRef(null);
 
   const handleOverlayClick = (event) => {
@@ -49,10 +43,7 @@ function CommonModal({
       className={`fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50 ${overlayClassName}`}
       onClick={handleOverlayClick}
     >
-      <div
-        className={`relative rounded-md shadow-lg ${className}`}
-        ref={modalRef}
-      >
+      <div className={`relative rounded-md shadow-lg ${className}`} ref={modalRef}>
         <button
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none cursor-pointer"
           onClick={onClose}

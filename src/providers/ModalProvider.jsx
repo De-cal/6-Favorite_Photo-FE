@@ -6,14 +6,29 @@ const ModalContext = createContext(null);
 export const ModalProvider = ({ children }) => {
   const [modalContent, setModalContent] = useState(null);
   const [modalAlign, setModalAlign] = useState({ col: "center", row: "center" });
-  //col = [top,centet,bottom] //row = [left,centet,right]
+  const [pointModalContent, setPointModalContent] = useState(null);
   const modalRef = useRef();
+  const pointModalRef = useRef();
 
   const openModal = (content, col = "center", row = "center") => {
     setModalContent(() => content);
+
     setModalAlign({ col, row });
   };
-  const closeModal = () => setModalContent(null);
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
+
+  const openPointModal = (content, col = "center", row = "center") => {
+    setPointModalContent(() => content);
+
+    setModalAlign({ col, row });
+  };
+
+  const closePointModal = () => {
+    setPointModalContent(null);
+  };
 
   //모달 위치에 따른 css 지정 함수
   const getWrapperClass = () => {
@@ -36,7 +51,7 @@ export const ModalProvider = ({ children }) => {
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === "Escape") {
-        closeModal();
+        isPoint ? closeModal(true) : closeModal();
         document.body.style.overflow = "auto";
       }
     };
@@ -53,7 +68,10 @@ export const ModalProvider = ({ children }) => {
   // 바깥 클릭으로 닫기
   useEffect(() => {
     const onClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
+      if (pointModalRef.current && !pointModalRef.current.contains(e.target)) {
+        closePointModal();
+        document.body.style.overflow = "auto";
+      } else if (modalRef.current && !modalRef.current.contains(e.target)) {
         closeModal();
         document.body.style.overflow = "auto";
       }
@@ -69,11 +87,19 @@ export const ModalProvider = ({ children }) => {
   }, [modalContent]);
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal, closePointModal, openPointModal }}>
       {children}
 
+      {pointModalContent && (
+        <div className={`fixed inset-0 z-55 bg-black/70 flex ${getWrapperClass()}`}>
+          <div ref={pointModalRef} className="relative">
+            {typeof pointModalContent === "function" ? pointModalContent() : pointModalContent}
+          </div>
+        </div>
+      )}
+
       {modalContent && (
-        <div className={`fixed inset-0 z-50 bg-black/80 flex ${getWrapperClass()}`}>
+        <div className={`fixed inset-0 z-40 bg-black/80 flex ${getWrapperClass()}`}>
           <div ref={modalRef} className="relative">
             {typeof modalContent === "function" ? modalContent() : modalContent}
           </div>

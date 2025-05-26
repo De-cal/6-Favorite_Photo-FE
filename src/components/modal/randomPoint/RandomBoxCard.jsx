@@ -3,6 +3,7 @@ import blueBox from "@/assets/images/img-box-blue-ribbon.avif";
 import purpleBox from "@/assets/images/img-box-purple-ribbon.avif";
 import redBox from "@/assets/images/img-box-red-ribbon.avif";
 import Image from "next/image";
+import clsx from "clsx";
 
 function RandomBoxCard({ boxColor, selectedOption, handleSelectOption }) {
   const colorToBox = {
@@ -16,13 +17,13 @@ function RandomBoxCard({ boxColor, selectedOption, handleSelectOption }) {
       <Image
         src={colorToBox[boxColor]}
         alt="randomPointBox"
-        className={`h-19 cursor-pointer ${
-          selectedOption === null
-            ? ""
-            : selectedOption === boxColor
-            ? ""
-            : "brightness-50"
-        } `}
+        className={clsx(
+          `cursor-pointer ${selectedOption === null ? "" : selectedOption === boxColor ? "" : "brightness-50"}`,
+          {
+            "h-[79px] w-[89px]  sm:h-33 sm:w-[150px] md:h-[198px] md:w-[224px]  ": boxColor === "purple",
+            "h-[76px] w-[98px]  sm:h-32 sm:w-41 md:h-[190px] md:w-[246px] ": boxColor !== "purple",
+          },
+        )}
         onClick={() => handleSelectOption(boxColor)}
       />
     </div>
