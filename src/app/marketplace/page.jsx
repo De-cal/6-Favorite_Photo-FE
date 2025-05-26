@@ -3,34 +3,52 @@ import React, { useState } from "react";
 import Image from "next/image";
 import filterIcon from "../../assets/icons/ic-filter.svg";
 import Card from "@/components/common/Card";
-import Filter from "./_components/Filter";
 import Search from "./_components/Search";
 import Sort from "./_components/SortDropdown";
 import marketplace from "../../assets/images/img-marketplace.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import FilterDropdown from "./_components/FilerDropdown";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
-
 import { useEffect } from "react";
 import { getAllArticles } from "@/api/article";
 import { useModal } from "@/providers/ModalProvider";
+import MobileFilter from "../my-gallery/_components/MobileFilter";
+
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
   const { openModal } = useModal();
   const [articles, setArticles] = useState([]);
+  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const [filters, setFilters] = useState(null);
 
   async function getArticles() {
     const data = await getAllArticles();
     setArticles(data);
-    //주석처리 해제
   }
+  const searchedCards = articles.filter((article) => {
+    if (!searchKeyWord || searchKeyWord.trim() === "") return true;
+    const keyword = searchKeyWord?.toLowerCase();
+    return article.photoCard.title.toLowerCase().includes(keyword);
+  });
+  const filteredCards = searchedCards.filter((article) => {
+    if (!filters) return true;
+    const matchRank = filters.rank ? article.photoCard.rank === filters.rank : true;
+    const matchGenre = filters.genre ? article.photoCard.genre === filters.genre : true;
+    const matchSoldout = filters.soldout ? article.status === filters.soldout : true;
+
+    return matchRank && matchGenre && matchSoldout;
+  });
+
+  const handleSelectFilter = (selectedFilters) => {
+    setFilters(selectedFilters);
+    setShowFilter(false);
+  };
+
   useEffect(() => {
     getArticles();
   }, []);
-  useEffect(() => {
-    console.log("articles updated", articles);
-  }, [articles]);
+
   return (
     <div className="relative">
       {showFilter && <div className="fixed inset-0 z-40" onClick={() => setShowFilter(false)} />}
@@ -57,7 +75,7 @@ export default function MarketplacePage() {
           <div className="w-full">
             <div className="flex mt-[20px] justify-center sm:justify-between md:justify-between">
               <div className="flex items-center">
-                <Search />
+                <Search onSearch={setSearchKeyWord} />
                 <FilterDropdown />
               </div>
               <Sort className="hidden sm:flex md:flex" />
@@ -83,7 +101,7 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
-          {articles.map((article) => (
+          {filteredCards.map((article) => (
             <Card
               key={article.id}
               type="for_sale"
@@ -108,7 +126,7 @@ rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h
       </div>
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
-          <Filter />
+          <MobileFilter data={articles} onSelectFilter={handleSelectFilter} />
         </div>
       )}
     </div>

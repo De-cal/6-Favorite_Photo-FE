@@ -18,38 +18,23 @@ export default function MySellPage() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    //(page);
-  }, [page]);
+    // 원하는 로직 실행 ( API 호출)
+  }, [page, searchFilter]);
 
   const filteredCards = mockCards.filter((card) => {
     const matchesKeyword =
-      !searchFilter.keyword ||
-      card.photoCard.title
-        .toLowerCase()
-        .includes(searchFilter.keyword.toLowerCase());
+      !searchFilter.keyword || card.photoCard.title.toLowerCase().includes(searchFilter.keyword.toLowerCase());
 
-    const matchesGrade =
-      !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
+    const matchesGrade = !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
 
-    const matchesGenre =
-      !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
+    const matchesGenre = !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
 
-    const matchesSellingType =
-      !searchFilter.sellingType || card.status === searchFilter.sellingType;
+    const matchesSellingType = !searchFilter.sellingType || card.status === searchFilter.sellingType;
 
     const matchesSoldout =
-      !searchFilter.soldout ||
-      (searchFilter.soldout === "SELLING"
-        ? card.quantity > 0
-        : card.quantity === 0);
+      !searchFilter.soldout || (searchFilter.soldout === "SELLING" ? card.quantity > 0 : card.quantity === 0);
 
-    return (
-      matchesKeyword &&
-      matchesGrade &&
-      matchesGenre &&
-      matchesSellingType &&
-      matchesSoldout
-    );
+    return matchesKeyword && matchesGrade && matchesGenre && matchesSellingType && matchesSoldout;
   });
   return (
     <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
@@ -58,11 +43,7 @@ export default function MySellPage() {
         <RankSection data={mockCards} />
         <SortAndSearchSection onSearch={setSearchFilter} data={mockCards} />
         <PhotoCardSection dataLists={filteredCards} />
-        <PageNation
-          count={filteredCards.length}
-          currentPage={page}
-          onClick={setPage}
-        />
+        <PageNation count={filteredCards.length} currentPage={page} onClick={setPage} />
       </div>
     </div>
   );
