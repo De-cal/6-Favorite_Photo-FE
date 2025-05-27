@@ -6,6 +6,9 @@ import SortAndSearchSection from "./_components/SortAndSearchSection";
 import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCards } from "@/api/card.js";
+
 export default function MyGalleryPage() {
   const [searchFilter, setSearchFilter] = useState({
     keyword: "",
@@ -13,18 +16,38 @@ export default function MyGalleryPage() {
     genre: null,
   });
   const [page, setPage] = useState(1);
+  const pageSize = 15;
 
   useEffect(() => {
     // 원하는 로직 실행 ( API 호출)
   }, [page, searchFilter]);
 
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["my-gallery-cards", page, searchFilter],
+    queryFn: () =>
+      getAllCards({
+        page,
+        pageSize,
+        rank: searchFilter.rank,
+        genre: searchFilter.genre,
+        keyword: searchFilter.keyword,
+        status: "SELLING", // 고정값이라면
+      }),
+    keepPreviousData: true,
+  });
+  console.log("데이터", data);
   const filteredCards = mockCards.filter((card) => {
     const matchesKeyword =
-      !searchFilter.keyword || card.photoCard.title.toLowerCase().includes(searchFilter.keyword.toLowerCase());
+      !searchFilter.keyword ||
+      card.photoCard.title
+        .toLowerCase()
+        .includes(searchFilter.keyword.toLowerCase());
 
-    const matchesGrade = !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
+    const matchesGrade =
+      !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
 
-    const matchesGenre = !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
+    const matchesGenre =
+      !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
 
     return matchesKeyword && matchesGrade && matchesGenre;
   });
@@ -37,7 +60,11 @@ export default function MyGalleryPage() {
         <RankSection data={mockCards} />
         <SortAndSearchSection onSearch={setSearchFilter} data={mockCards} />
         <PhotoCardSection dataLists={filteredCards} />
-        <PageNation count={filteredCards.length} currentPage={page} onClick={setPage} />
+        <PageNation
+          count={filteredCards.length}
+          currentPage={page}
+          onClick={setPage}
+        />
       </div>
     </div>
   );

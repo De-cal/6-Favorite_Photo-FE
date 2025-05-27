@@ -1,7 +1,9 @@
 export async function getAllArticles(keyword) {
   try {
     const query = keyword ? `?keyword=${encodeURIComponent(keyword)}` : "";
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/articles${query}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/articles${query}`,
+    );
     const data = await response.json();
     console.log("data", data);
     return data;
@@ -9,6 +11,36 @@ export async function getAllArticles(keyword) {
     return error.message;
   }
 }
+
+export const getUserArticles = async ({
+  page,
+  pageSize,
+  rank,
+  genre,
+  keyword,
+  status,
+} = {}) => {
+  try {
+    const queryParams = new URLSearchParams();
+    if (page) queryParams.append("page", page);
+    if (pageSize) queryParams.append("pageSize", pageSize);
+    if (rank) queryParams.append("rank", rank);
+    if (genre) queryParams.append("genre", genre);
+    if (keyword) queryParams.append("keyword", keyword);
+    if (status) queryParams.append("status", status);
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_URL
+      }/articles/user?${queryParams.toString()}`,
+    );
+    const data = await res.json();
+    console.log("data", data);
+    return data.list;
+  } catch (error) {
+    console.error("아티클 목록을 가져오는데 실패했습니다:", error);
+    throw error;
+  }
+};
 
 export const postArticle = async (articleData) => {
   try {
