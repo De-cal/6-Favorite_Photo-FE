@@ -12,7 +12,7 @@ import AuthNavigation from "./AuthNavigation";
 
 export default function SignUpForm() {
   // 토큰이 있는 유저는 marketplace 페이지로 리다이렉트
-  useRedirectIfAuthenticated();
+  // useRedirectIfAuthenticated(); 리팩터링 해야함 쿠키토큰 방식에 맞게
   const {
     email,
     nickname,
@@ -34,7 +34,7 @@ export default function SignUpForm() {
     resetForm,
   } = useSignUpForm();
 
-  const router = useRouter;
+  const router = useRouter();
 
   // 임시 모달
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,16 +46,12 @@ export default function SignUpForm() {
     if (!isFormValid) return;
     try {
       setIsLoading(true);
-      const data = await signUp({
+      await signUp({
         email,
         nickname,
         password,
         passwordConfirm,
       });
-      const accessToken = data.accessToken;
-      const refreshToken = data.refreshToken;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
       resetForm();
       router.push("/items");
     } catch (error) {
@@ -118,7 +114,10 @@ export default function SignUpForm() {
           />
         </div>
         <div className="flex flex-col items-center justify-center w-full gap-[16px]">
-          <AuthSubmitButton label="회원가입" isDisabled={!isFormValid || isLoading} />
+          <AuthSubmitButton
+            label="회원가입"
+            isDisabled={!isFormValid || isLoading}
+          />
           <GoogleAuthButton label="Google로 시작하기" />
         </div>
 
