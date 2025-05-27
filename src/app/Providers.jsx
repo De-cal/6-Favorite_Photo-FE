@@ -1,5 +1,10 @@
 import ModalProvider from "../providers/ModalProvider";
+import PointTimerProvider from "@/providers/PointTimerProvider";
 
 export default function Providers({ children }) {
-  return <ModalProvider>{children}</ModalProvider>;
+  return (
+    <PointTimerProvider>
+      <ModalProvider>{children}</ModalProvider>
+    </PointTimerProvider>
+  );
 }
