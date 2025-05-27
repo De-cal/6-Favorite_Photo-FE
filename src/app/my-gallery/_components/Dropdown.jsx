@@ -24,14 +24,20 @@ export default function Dropdown({ type, value, setValue }) {
         className="w-full h-[60px] flex justify-between items-center bg-black border border-gray-400 px-4 py-2 text-left"
         onClick={() => setIsModalOpen((prev) => !prev)}
       >
-        <span className={`text-white ${!value && "text-gray-400"}`}>{value || placeholder}</span>
+        <span className={`text-white ${!value && "text-gray-400"}`}>
+          {value || placeholder}
+        </span>
         <Image alt="arrow" src={isModalOpen ? up : down} />
       </button>
 
       {isModalOpen && (
         <div className="absolute top-full left-0 mt-1 w-full border border-gray-400 bg-black z-10">
           {(type === "등급" ? grade : genre).map((item) => (
-            <div key={item} className="px-4 py-2 hover:bg-gray-800 cursor-pointer" onClick={() => handleClick(item)}>
+            <div
+              key={item}
+              className="px-4 py-2 hover:bg-gray-800 cursor-pointer"
+              onClick={() => handleClick(item)}
+            >
               {item}
             </div>
           ))}
