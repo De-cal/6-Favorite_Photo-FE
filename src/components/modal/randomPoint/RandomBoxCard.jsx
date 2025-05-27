@@ -18,10 +18,18 @@ function RandomBoxCard({ boxColor, selectedOption, handleSelectOption }) {
         src={colorToBox[boxColor]}
         alt="randomPointBox"
         className={clsx(
-          `cursor-pointer ${selectedOption === null ? "" : selectedOption === boxColor ? "" : "brightness-50"}`,
+          `cursor-pointer ${
+            selectedOption === null
+              ? ""
+              : selectedOption === boxColor
+              ? ""
+              : "brightness-50"
+          }`,
           {
-            "h-[79px] w-[89px]  sm:h-33 sm:w-[150px] md:h-[198px] md:w-[224px]  ": boxColor === "purple",
-            "h-[76px] w-[98px]  sm:h-32 sm:w-41 md:h-[190px] md:w-[246px] ": boxColor !== "purple",
+            "h-[79px] w-[89px]  sm:h-33 sm:w-[150px] md:h-[198px] md:w-[224px]  ":
+              boxColor === "purple",
+            "h-[76px] w-[98px]  sm:h-32 sm:w-41 md:h-[190px] md:w-[246px] ":
+              boxColor !== "purple",
           },
         )}
         onClick={() => handleSelectOption(boxColor)}

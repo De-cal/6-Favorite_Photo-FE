@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import RandomBoxCard from "./RandomBoxCard";
 import pointImage from "@/assets/images/img-point.avif";
 import closeIcon from "@/assets/icons/ic-close.svg";
@@ -8,6 +8,7 @@ import Image from "next/image";
 import { usePointTimer } from "@/providers/PointTimerProvider";
 import { useModal } from "@/providers/ModalProvider";
 import clsx from "clsx";
+import { postPoint } from "@/api/point";
 
 function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
@@ -26,14 +27,11 @@ function RewardPoint() {
     setRewardPoints(points);
 
     // TODO: 백엔드 및 api 코드 작성후 api 호출 부분 추가 예정.
+    // postPoint(rewardPoints);
 
     spendOpportunity();
     setIsSelected(true);
   };
-
-  useEffect(() => {
-    console.log("formattedTime:", formattedTime);
-  }, [formattedTime]);
 
   return (
     <div

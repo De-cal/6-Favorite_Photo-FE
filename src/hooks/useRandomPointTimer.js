@@ -21,7 +21,6 @@ function useRandomPointTimer() {
     setTimeLeft(ONE_HOUR);
     setHasOpportunity(false);
     setIsTimerActive(true);
-    console.log("타이머 초기화됨");
   }, []);
 
   // 타이머 시작
@@ -130,11 +129,6 @@ function useRandomPointTimer() {
     const seconds = totalSeconds % 60;
     return `${minutes.toString().padStart(2, '0')}분 ${seconds.toString().padStart(2, '0')}초`;
   };
-
-
-  useEffect(() => {
-    console.log("timeLeft:",timeLeft)
-  },[timeLeft])
 
 
   return {
