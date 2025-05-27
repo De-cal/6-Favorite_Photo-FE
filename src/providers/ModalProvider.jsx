@@ -15,15 +15,28 @@ export const ModalProvider = ({ children }) => {
     col: "center",
     row: "center",
   });
-  //col = [top,centet,bottom] //row = [left,centet,right]
+  const [pointModalAlign, setPointModalAlign] = useState({
+    col: "center",
+    row: "center",
+  });
+  const [pointModalContent, setPointModalContent] = useState(null);
   const modalRef = useRef();
   const pointModalRef = useRef();
 
-  const openModal = (content, col = "center", row = "center") => {
-    setModalContent(() => content);
-    setModalAlign({ col, row });
+  const openModal = (
+    content,
+    col = "center",
+    row = "center",
+    isPoint = false,
+  ) => {
+    if (isPoint) setPointModalContent(() => content);
+    else setModalContent(() => content);
+    if (isPoint) setPointModalAlign({ col, row });
+    else setModalAlign({ col, row });
   };
+
   const closeModal = () => setModalContent(null);
+  const closePointModal = () => setPointModalContent(null);
 
   const getWrapperClass = (isPoint) => {
     const colMap = {
@@ -45,7 +58,8 @@ export const ModalProvider = ({ children }) => {
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === "Escape") {
-        closeModal();
+        if (pointModalContent) closePointModal();
+        else closeModal();
         document.body.style.overflow = "auto";
       }
     };
@@ -59,7 +73,20 @@ export const ModalProvider = ({ children }) => {
 
   useEffect(() => {
     const onClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
+      if (
+        pointModalContent &&
+        pointModalRef.current &&
+        !pointModalRef.current.contains(e.target)
+      ) {
+        closePointModal();
+        return;
+      }
+      if (
+        modalContent &&
+        modalRef.current &&
+        !modalRef.current.contains(e.target) &&
+        !(pointModalRef.current && pointModalRef.current.contains(e.target))
+      ) {
         closeModal();
         document.body.style.overflow = "auto";
       }
@@ -73,9 +100,8 @@ export const ModalProvider = ({ children }) => {
   }, [modalContent, pointModalContent]);
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal, closePointModal }}>
       {children}
-
       {modalContent && (
         <div
           className={`fixed inset-0 z-50 bg-black/80 flex ${getWrapperClass()}`}
