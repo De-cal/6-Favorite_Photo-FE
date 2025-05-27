@@ -76,7 +76,7 @@ function CardInfo({ data }) {
         <div className="py-[30px] border-b-1 border-gray-400 text-center sm:text-start">
           {`구매 일시 : ${data.createdAt} `}
         </div>
-        <div className="py-[30px] text-center">
+        <div className="pt-[60px] text-center">
           <ActionButton
             className="w-full h-20 text-2xl"
             // onClick={()=>openModal(<판매하기 모달/>)}
