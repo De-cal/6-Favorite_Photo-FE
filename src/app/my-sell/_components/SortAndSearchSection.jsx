@@ -54,7 +54,8 @@ export default function SortAndSearchSection({ onSearch, data }) {
                 onSelectFilter={(selected) => {
                   if (selected.rank) setSelectedGrade(selected.rank);
                   if (selected.genre) setSelectedGenre(selected.genre);
-                  if (selected.sellingType) setSelectedSellingType(selected.sellingType);
+                  if (selected.sellingType)
+                    setSelectedSellingType(selected.sellingType);
                   if (selected.soldout) setSelectedSoldout(selected.soldout);
                   onSearch?.({
                     keyword,
@@ -68,7 +69,6 @@ export default function SortAndSearchSection({ onSearch, data }) {
               "bottom",
               "center",
             );
-            openModal(<TsetModal />, "center", "center", true);
           }}
         >
           <Image src={filter} width={24} height={24} alt="검색버튼" />
