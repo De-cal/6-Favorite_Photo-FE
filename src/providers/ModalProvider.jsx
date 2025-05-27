@@ -1,17 +1,34 @@
 "use client";
-import React, { createContext, useRef, useEffect, useContext, useState } from "react";
+import React, {
+  createContext,
+  useRef,
+  useEffect,
+  useContext,
+  useState,
+} from "react";
 
 const ModalContext = createContext(null);
 
 export const ModalProvider = ({ children }) => {
   const [modalContent, setModalContent] = useState(null);
-  const [modalAlign, setModalAlign] = useState({ col: "center", row: "center" });
-  const [pointModalAlign, setPointModalAlign] = useState({ col: "center", row: "center" });
+  const [modalAlign, setModalAlign] = useState({
+    col: "center",
+    row: "center",
+  });
+  const [pointModalAlign, setPointModalAlign] = useState({
+    col: "center",
+    row: "center",
+  });
   const [pointModalContent, setPointModalContent] = useState(null);
   const modalRef = useRef();
   const pointModalRef = useRef();
 
-  const openModal = (content, col = "center", row = "center", isPoint = false) => {
+  const openModal = (
+    content,
+    col = "center",
+    row = "center",
+    isPoint = false,
+  ) => {
     if (isPoint) setPointModalContent(() => content);
     else setModalContent(() => content);
     if (isPoint) setPointModalAlign({ col, row });
@@ -33,7 +50,9 @@ export const ModalProvider = ({ children }) => {
       right: "justify-end",
     };
     const align = isPoint ? pointModalAlign : modalAlign;
-    return `${colMap[align.col] || "items-center"} ${rowMap[align.row] || "justify-center"}`;
+    return `${colMap[align.col] || "items-center"} ${
+      rowMap[align.row] || "justify-center"
+    }`;
   };
 
   useEffect(() => {
@@ -54,7 +73,11 @@ export const ModalProvider = ({ children }) => {
 
   useEffect(() => {
     const onClickOutside = (e) => {
-      if (pointModalContent && pointModalRef.current && !pointModalRef.current.contains(e.target)) {
+      if (
+        pointModalContent &&
+        pointModalRef.current &&
+        !pointModalRef.current.contains(e.target)
+      ) {
         closePointModal();
         return;
       }
@@ -80,16 +103,24 @@ export const ModalProvider = ({ children }) => {
     <ModalContext.Provider value={{ openModal, closeModal, closePointModal }}>
       {children}
       {modalContent && (
-        <div className={`fixed inset-0 z-50 bg-black/80 flex ${getWrapperClass()}`}>
+        <div
+          className={`fixed inset-0 z-50 bg-black/80 flex ${getWrapperClass()}`}
+        >
           <div ref={modalRef} className="relative">
             {typeof modalContent === "function" ? modalContent() : modalContent}
           </div>
         </div>
       )}
       {pointModalContent && (
-        <div className={`fixed inset-0 z-60 bg-black/60 flex ${getWrapperClass(true)}`}>
+        <div
+          className={`fixed inset-0 z-60 bg-black/60 flex ${getWrapperClass(
+            true,
+          )}`}
+        >
           <div ref={pointModalRef} className="relative">
-            {typeof pointModalContent === "function" ? pointModalContent() : pointModalContent}
+            {typeof pointModalContent === "function"
+              ? pointModalContent()
+              : pointModalContent}
           </div>
         </div>
       )}

@@ -15,10 +15,8 @@ function SurprisePointModal() {
     setIsSurpriseModalOpen(true);
   }, [setIsSurpriseModalOpen]);
 
-  const { startTimer, clearTimer, formatTime, remainingTime } = usePointRewardTimer(
-    handleRewardReady,
-    isSurpriseModalOpen,
-  );
+  const { startTimer, clearTimer, formatTime, remainingTime } =
+    usePointRewardTimer(handleRewardReady, isSurpriseModalOpen);
 
   const handleCloseSurpriseModal = useCallback(() => {
     setIsSurpriseModalOpen(false);
@@ -44,7 +42,11 @@ function SurprisePointModal() {
         onClose={handleCloseSurpriseModal}
         className="w-[345px] px-4 py-8 bg-gray-500"
       >
-        <RewardPoint clearTimer={clearTimer} formatTime={formatTime} remainingTime={remainingTime} />
+        <RewardPoint
+          clearTimer={clearTimer}
+          formatTime={formatTime}
+          remainingTime={remainingTime}
+        />
       </CommonModal>
     </div>
   );
