@@ -1,19 +1,20 @@
 "use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import filterIcon from "../../assets/icons/ic-filter.svg";
-import Card from "@/components/common/Card";
-import Search from "./_components/Search";
-import Sort from "./_components/SortDropdown";
 import marketplace from "../../assets/images/img-marketplace.svg";
-import ActionButton from "@/components/ui/buttons/ActionButton";
-import FilterDropdown from "./_components/FilerDropdown";
-import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 import { useEffect } from "react";
 import { getAllArticles } from "@/api/article";
 import { useModal } from "@/providers/ModalProvider";
+// 컴포넌트
 import MobileFilter from "../my-gallery/_components/MobileFilter";
-
+import ActionButton from "@/components/ui/buttons/ActionButton";
+import FilterDropdown from "./_components/FilerDropdown";
+import Search from "./_components/Search";
+import Sort from "./_components/SortDropdown";
+import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
+import Card from "@/components/common/Card";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
@@ -21,6 +22,7 @@ export default function MarketplacePage() {
   const [articles, setArticles] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [filters, setFilters] = useState(null);
+  const [dropDown, setDropDown] = useState({ rank: null, genre: null, soldout: null });
 
   async function getArticles() {
     const data = await getAllArticles();
@@ -31,6 +33,9 @@ export default function MarketplacePage() {
     const keyword = searchKeyWord?.toLowerCase();
     return article.photoCard.title.toLowerCase().includes(keyword);
   });
+
+  const dropDown= 
+  // 모바일
   const filteredCards = searchedCards.filter((article) => {
     if (!filters) return true;
     const matchRank = filters.rank ? article.photoCard.rank === filters.rank : true;
@@ -39,6 +44,7 @@ export default function MarketplacePage() {
 
     return matchRank && matchGenre && matchSoldout;
   });
+  // 태블릿, 데스크탑
 
   const handleSelectFilter = (selectedFilters) => {
     setFilters(selectedFilters);
@@ -76,7 +82,7 @@ export default function MarketplacePage() {
             <div className="flex mt-[20px] justify-center sm:justify-between md:justify-between">
               <div className="flex items-center">
                 <Search onSearch={setSearchKeyWord} />
-                <FilterDropdown />
+                <FilterDropdown onSearch={setDropDown} />
               </div>
               <Sort className="hidden sm:flex md:flex" />
             </div>
@@ -91,9 +97,7 @@ export default function MarketplacePage() {
           <div className=" px-[10px] mb-[20px] flex justify-between w-full mt-[15px]">
             <button
               onClick={() => setShowFilter(true)}
-              className=" sm:hidden cursor-pointer
-
-rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
+              className=" sm:hidden cursor-pointer rounded-[2px] flex items-center justify-center border border-gray-200 w-[35px] h-[35px]"
             >
               <Image alt="filerIcon" src={filterIcon} width={20} height={20} />
             </button>
