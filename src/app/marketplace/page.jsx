@@ -11,10 +11,10 @@ import { useModal } from "@/providers/ModalProvider";
 import MobileFilter from "../my-gallery/_components/MobileFilter";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Search from "./_components/Search";
-import Sort from "./_components/SortDropdown";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 import Card from "@/components/common/Card";
 import Dropdowns from "./_components/Dropdowns";
+import SortDropdown from "./_components/SortDropdown";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
@@ -22,6 +22,8 @@ export default function MarketplacePage() {
   const [articles, setArticles] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [filterSettings, setFilterSettings] = useState(null);
+  const [sortOpen, setSortOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("낮은 가격순");
 
   async function getArticles() {
     const data = await getAllArticles();
@@ -48,11 +50,18 @@ export default function MarketplacePage() {
     setFilterSettings(selectedFilters);
     setShowFilter(false);
   };
-
+  const sortedCards = [...filteredCards].sort((a, b) => {
+    if (sortOption === "낮은 가격순") return a.price - b.price;
+    if (sortOption === "높은 가격순") return b.price - a.price;
+    if (sortOption === "최신순") return new Date(b.createdAt) - new Date(a.createdAt);
+    return 0;
+  });
   useEffect(() => {
     getArticles();
   }, []);
-
+  useEffect(() => {
+    console.log(sortedCards);
+  }, [sortedCards]);
   return (
     <div className="relative">
       {showFilter && <div className="fixed inset-0 z-40" onClick={() => setShowFilter(false)} />}
@@ -82,7 +91,13 @@ export default function MarketplacePage() {
                 <Search onSearch={setSearchKeyWord} />
                 <Dropdowns onSearch={setFilterSettings} />
               </div>
-              <Sort className="hidden sm:flex md:flex" />
+              <SortDropdown
+                className="hidden sm:flex md:flex"
+                isOpen={sortOpen}
+                onToggle={setSortOpen}
+                selected={sortOption}
+                onSelect={setSortOption}
+              />
             </div>
           </div>
         </div>
@@ -99,11 +114,17 @@ export default function MarketplacePage() {
             >
               <Image alt="filerIcon" src={filterIcon} width={20} height={20} />
             </button>
-            <Sort className="flex sm:hidden md:hidden" />
+            <SortDropdown
+              className="flex sm:hidden md:hidden"
+              isOpen={sortOpen}
+              onToggle={setSortOpen}
+              selected={sortOption}
+              onSelect={setSortOption}
+            />
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
-          {filteredCards.map((article) => (
+          {sortedCards.map((article) => (
             <Card
               key={article.id}
               type="for_sale"
