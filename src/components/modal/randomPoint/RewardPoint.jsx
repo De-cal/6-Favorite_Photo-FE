@@ -7,6 +7,7 @@ import closeIcon from "@/assets/icons/ic-close.svg";
 import Image from "next/image";
 import { usePointTimer } from "@/providers/PointTimerProvider";
 import { useModal } from "@/providers/ModalProvider";
+import clsx from "clsx";
 
 function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
@@ -35,10 +36,18 @@ function RewardPoint() {
   }, [formattedTime]);
 
   return (
-    <div className="relative flex flex-col justify-center items-center bg-gray-500 w-[345px] h-[541px] sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px] ">
+    <div
+      className={clsx(
+        "relative flex flex-col justify-center items-center bg-gray-500 w-[345px] h-[541px]",
+        {
+          "sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px]": !isSelected,
+          "sm:w-[455px] sm:h-[658px] md:w-[455px] md:h-[678px]": isSelected,
+        },
+      )}
+    >
       <button
         className="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-gray-500 focus:outline-none cursor-pointer"
-        onClick={closePointModal()}
+        onClick={closePointModal}
       >
         <Image src={closeIcon} alt="closeModalButton" />
       </button>
@@ -56,13 +65,21 @@ function RewardPoint() {
             <p className="text-main">{formattedTime}</p>
           </div>
           <div className="flex py-9 md:gap-6 ">
-            <RandomBoxCard boxColor={"blue"} selectedOption={selectedOption} handleSelectOption={handleSelectOption} />
+            <RandomBoxCard
+              boxColor={"blue"}
+              selectedOption={selectedOption}
+              handleSelectOption={handleSelectOption}
+            />
             <RandomBoxCard
               boxColor={"purple"}
               selectedOption={selectedOption}
               handleSelectOption={handleSelectOption}
             />
-            <RandomBoxCard boxColor={"red"} selectedOption={selectedOption} handleSelectOption={handleSelectOption} />
+            <RandomBoxCard
+              boxColor={"red"}
+              selectedOption={selectedOption}
+              handleSelectOption={handleSelectOption}
+            />
           </div>
           {selectedOption !== null && (
             <button
@@ -74,13 +91,17 @@ function RewardPoint() {
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center p-2">
-          <Image src={pointImage} alt="getRandomPoint" className="w-60 h-50 object-cover " />
-          <p className="p-3 text-2xl font-bold">
+        <div className="flex flex-col items-center">
+          <Image
+            src={pointImage}
+            alt="getRandomPoint"
+            className="object-cover w-60 h-57 sm:w-[340px] sm:h-[324px]"
+          />
+          <p className="p-3 mt-5 text-2xl sm:text-[28px] md:text-[32px] font-bold">
             <span className="text-main">{rewardPoints}P</span> 획득!
           </p>
 
-          <div className="flex flex-col items-center p-5">
+          <div className="flex flex-col sm:flex-row sm:gap-2 items-center mt-5">
             <p className="text-gray-300">다음 기회까지 남은 시간</p>
             <p className="text-main">{formattedTime}</p>
           </div>
