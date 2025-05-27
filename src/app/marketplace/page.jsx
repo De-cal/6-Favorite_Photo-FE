@@ -36,9 +36,15 @@ export default function MarketplacePage() {
   // 모바일
   const filteredCards = searchedCards.filter((article) => {
     if (!filterSettings) return true;
-    const matchRank = filterSettings.rank ? article.photoCard.rank === filterSettings.rank : true;
-    const matchGenre = filterSettings.genre ? article.photoCard.genre === filterSettings.genre : true;
-    const matchSoldout = filterSettings.soldout ? article.status === filterSettings.soldout : true;
+    const matchRank = filterSettings.rank
+      ? article.photoCard.rank === filterSettings.rank
+      : true;
+    const matchGenre = filterSettings.genre
+      ? article.photoCard.genre === filterSettings.genre
+      : true;
+    const matchSoldout = filterSettings.soldout
+      ? article.status === filterSettings.soldout
+      : true;
 
     return matchRank && matchGenre && matchSoldout;
   });
@@ -53,18 +59,43 @@ export default function MarketplacePage() {
     getArticles();
   }, []);
 
+  const handleClickOpenModal = () => {
+    openModal(<SelectPhotoCardsModal />);
+  };
+
   return (
     <div className="relative">
-      {showFilter && <div className="fixed inset-0 z-40" onClick={() => setShowFilter(false)} />}
-      <div className={`flex flex-col items-center ${showFilter ? "pointer-events-none" : ""}`}>
+      {showFilter && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowFilter(false)}
+        />
+      )}
+      <div
+        className={`flex flex-col items-center ${
+          showFilter ? "pointer-events-none" : ""
+        }`}
+      >
         <div className="px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
           <div className="hidden sm:flex sm:gap-[114px] md:gap-[650px]">
-            <Image src={marketplace} width={248} height={49} alt="marketplace" className="md:hidden" />
+            <Image
+              src={marketplace}
+              width={248}
+              height={49}
+              alt="marketplace"
+              className="md:hidden"
+            />
 
-            <Image src={marketplace} width={320} height={63} alt="marketplace" className="hidden md:block" />
+            <Image
+              src={marketplace}
+              width={320}
+              height={63}
+              alt="marketplace"
+              className="hidden md:block"
+            />
             <ActionButton
               className="w-[342px] h-[60px] md:w-[440px]"
-              onClick={() => openModal(<SelectPhotoCardsModal />)}
+              onClick={handleClickOpenModal}
             >
               나의 포토카드 판매하기
             </ActionButton>
