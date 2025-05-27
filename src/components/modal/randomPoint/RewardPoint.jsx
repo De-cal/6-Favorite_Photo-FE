@@ -14,7 +14,7 @@ function RewardPoint() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const { formattedTime, spendOpportunity } = usePointTimer();
-  // const { closePointModal } = useModal();
+  const { closePointModal } = useModal();
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
@@ -35,14 +35,13 @@ function RewardPoint() {
   }, [formattedTime]);
 
   return (
-    // <div className="relative flex flex-col justify-center items-center bg-gray-500 w-[345px] h-[441px] sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px] ">
-    <div className="flex flex-col justify-center items-center ">
-      {/* <button
+    <div className="relative flex flex-col justify-center items-center bg-gray-500 w-[345px] h-[541px] sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px] ">
+      <button
         className="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-gray-500 focus:outline-none cursor-pointer"
         onClick={closePointModal()}
       >
         <Image src={closeIcon} alt="closeModalButton" />
-      </button> */}
+      </button>
       <h2 className="font-baskinRobbins mb-2 text-3xl sm:text-4xl md:text-5xl  ">
         랜덤 <span className="text-main">포인트</span>
       </h2>

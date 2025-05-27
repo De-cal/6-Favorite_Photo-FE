@@ -11,21 +11,20 @@ function SurprisePointModal() {
   const { isLoggedIn, login, logout } = useAuth();
   const { openPointModal } = useModal();
   const { hasOpportunity, formattedTime } = usePointTimer();
-
-  const [isSurpriseModalOpen, setIsSurpriseModalOpen] = useState(false);
+  const { openModal } = useModal();
 
   // 기회가 생겼을 때 자동으로 모달 열기
-  // useEffect(() => {
-  //   if (hasOpportunity && isLoggedIn) {
-  //     openPointModal(() => <RewardPoint />);
-  //   }
-  // }, [hasOpportunity, isLoggedIn]);
-
   useEffect(() => {
     if (hasOpportunity && isLoggedIn) {
-      setIsSurpriseModalOpen(true);
+      openModal(() => <RewardPoint />, "center", "center", true);
     }
   }, [hasOpportunity, isLoggedIn]);
+
+  // useEffect(() => {
+  //   if (hasOpportunity && isLoggedIn) {
+  //     setIsSurpriseModalOpen(true);
+  //   }
+  // }, [hasOpportunity, isLoggedIn]);
 
   // TODO: 비활동 타이머 - 20분 비활동시 타이머 초기화
   // const handleInactive = () => {
@@ -34,9 +33,9 @@ function SurprisePointModal() {
   // };
   // useInactiveTimer(handleInactive, isLoggedIn);
 
-  const handleCloseSurpriseModal = useCallback(() => {
-    setIsSurpriseModalOpen(false);
-  }, [setIsSurpriseModalOpen]);
+  // const handleCloseSurpriseModal = useCallback(() => {
+  //   setIsSurpriseModalOpen(false);
+  // }, [setIsSurpriseModalOpen]);
 
   return (
     <div>
@@ -52,14 +51,6 @@ function SurprisePointModal() {
         )}
       </div>
       <div>다음 포인트 획득 기회까지: {formattedTime}</div>
-
-      <CommonModal
-        isOpen={isSurpriseModalOpen}
-        onClose={handleCloseSurpriseModal}
-        className="flex felx-col items-center justify-center px-4 bg-gray-500  w-[345px] h-[541px] sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px]  "
-      >
-        <RewardPoint />
-      </CommonModal>
     </div>
   );
 }
