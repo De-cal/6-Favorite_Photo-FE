@@ -10,23 +10,23 @@ import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
 import Tablet from "@/components/common/Tablet";
-import BuyerActionModal from "./ExchangeCancelModal";
 
 export default function ExchangeInputModal() {
-  const { closeModal, openModal } = useModal();
+  const { closeModal } = useModal();
 
+  // 모달 닫기
   const handleClose = () => {
     closeModal();
     document.body.style.overflow = "auto";
   };
 
+  // 교환 취소하기
   const handleCancel = () => {
     closeModal();
     document.body.style.overflow = "auto";
-    openModal(<BuyerActionModal />);
-    document.body.style.overflow = "hidden";
   };
 
+  // 교환하기
   const handleExchange = () => {
     closeModal();
     document.body.style.overflow = "auto";

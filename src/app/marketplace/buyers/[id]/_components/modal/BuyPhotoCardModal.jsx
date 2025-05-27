@@ -3,10 +3,9 @@ import Image from "next/image";
 import React from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
-import ExchangeInputModal from "./ExchangeInputModal";
 
-export default function BuyPhotoCardModal() {
-  const { closeModal, openModal } = useModal();
+export default function BuyPhotoCardModal({ purchaseQuantity }) {
+  const { closeModal } = useModal();
 
   const cardArticle = {
     photoCard: {
@@ -27,6 +26,7 @@ export default function BuyPhotoCardModal() {
     exchangeGenre: "풍경",
   };
 
+  // 취소하기
   const handleCancel = () => {
     closeModal();
     document.body.style.overflow = "auto";
@@ -44,7 +44,7 @@ export default function BuyPhotoCardModal() {
           <p className="font-bold text-[18px]/[26px] md:text-[20px]/[29px]">포토카드 구매</p>
           <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 md:whitespace-pre md:mt-[40px] md:mb-[60px] sm:text-[16px]/[23px]">
             <span className="">{`[${cardArticle.photoCard.rank} | ${cardArticle.photoCard.title}]`}</span>
-            <span className=""> 2장을 구매하시겠습니까?</span>
+            <span className=""> {purchaseQuantity}장을 구매하시겠습니까?</span>
           </div>
           <ActionButton onClick={handleCancel} className="w-[120px] h-[55px] sm:w-[140px] md:w-[170px] md:h-[60px]">
             취소하기

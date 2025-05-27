@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import img_card_placeholder_1 from "@/assets/images/img-card-placeholder-1.svg";
 import ic_plus from "@/assets/icons/ic-plus.svg";
@@ -11,6 +11,8 @@ import { useModal } from "@/providers/ModalProvider";
 import BuyPhotoCardModal from "./modal/BuyPhotoCardModal";
 
 export default function PhotoCardBuyerDetail() {
+  const [purchaseQuantity, setPurchaseQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(null);
   const { openModal } = useModal();
 
   const cardArticle = {
@@ -32,8 +34,32 @@ export default function PhotoCardBuyerDetail() {
     exchangeGenre: "풍경",
   };
 
-  const handleClick = () => {
-    openModal(<BuyPhotoCardModal />);
+  useEffect(() => {
+    setTotalPrice(cardArticle.price * purchaseQuantity);
+  }, []);
+
+  // 구매수량 감소
+  const handleDecrease = () => {
+    if (purchaseQuantity === 1) return;
+
+    setPurchaseQuantity(purchaseQuantity - 1);
+  };
+
+  // 구매수량 추가
+  const handleIncrease = () => {
+    if (purchaseQuantity === cardArticle.ramainingQuantity) return;
+
+    setPurchaseQuantity(purchaseQuantity + 1);
+  };
+
+  // 총 가격 변경
+  useEffect(() => {
+    setTotalPrice(cardArticle.price * purchaseQuantity);
+  }, [purchaseQuantity]);
+
+  // 구매하기
+  const handleBuy = () => {
+    openModal(<BuyPhotoCardModal purchaseQuantity={purchaseQuantity} />);
     document.body.style.overflow = "hidden";
   };
 
@@ -82,11 +108,17 @@ export default function PhotoCardBuyerDetail() {
             <div className="flex justify-between items-center">
               <p className="font-normal text-[18px]/[22px] md:text-[20px]/[24px]">구매수량</p>
               <div className="flex justify-center items-center max-w-[176px] py-[10px] px-[12px] border border-gray-200 rounded-[2px] gap-[33px] md:gap-[46px]">
-                <button className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
+                <button
+                  onClick={handleDecrease}
+                  className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px] cursor-pointer"
+                >
                   <Image src={ic_minus} alt="마이너스" fill className="object-cover" />
                 </button>
-                <p className="font-normal text-[18px]/[22px] md:text-[20px]/[24px]">2</p>
-                <button className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
+                <p className="font-normal text-[18px]/[22px] md:text-[20px]/[24px]">{purchaseQuantity}</p>
+                <button
+                  onClick={handleIncrease}
+                  className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px] cursor-pointer"
+                >
                   <Image src={ic_plus} alt="플러스" fill className="object-cover" />
                 </button>
               </div>
@@ -94,12 +126,14 @@ export default function PhotoCardBuyerDetail() {
             <div className="flex justify-between items-center">
               <p className="font-normal text-[18px]/[22px] md:text-[20px]/[24px]">총 가격</p>
               <div className="flex justify-center items-center gap-[10px]">
-                <p className="font-bold text-[20px]/[24px] md:text-[24px]/[29px]">8 P</p>
-                <p className="font-normal text-[18px]/[22px] text-gray-300 md:text-[20px]/[24px]">(2장)</p>
+                <p className="font-bold text-[20px]/[24px] md:text-[24px]/[29px]">{totalPrice} P</p>
+                <p className="font-normal text-[18px]/[22px] text-gray-300 md:text-[20px]/[24px]">
+                  ({purchaseQuantity}장)
+                </p>
               </div>
             </div>
           </div>
-          <ActionButton className="mt-[40px] md:mt-[80px] max-w-[440px] min-w[342px] w-full" onClick={handleClick}>
+          <ActionButton className="mt-[40px] md:mt-[80px] max-w-[440px] min-w[342px] w-full" onClick={handleBuy}>
             포토카드 구매하기
           </ActionButton>
         </div>
