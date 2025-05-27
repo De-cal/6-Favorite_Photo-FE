@@ -49,7 +49,9 @@ export default function ExchangeCard({
         <Image
           src={example}
           alt="photocard"
-          className={clsx("md:w-[360px] md:h-[270px] w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]")}
+          className={clsx(
+            "md:w-[360px] md:h-[270px] w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]",
+          )}
         />
       </div>
 
@@ -64,18 +66,33 @@ export default function ExchangeCard({
           </p>
           <div className="flex flex-col w-full gap-y-[5px] sm:gap-y-[10px] md:flex-row">
             <div className="flex gap-[4px] justify-start items-center">
-              <GradeDetail grade={card.photoCard.rank} className={clsx("text-[10px]/[12px] sm:text-[16px]/[19px]")} />
-              <div className={clsx("border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px]")} />
+              <GradeDetail
+                grade={card.photoCard.rank}
+                className={clsx("text-[10px]/[12px] sm:text-[16px]/[19px]")}
+              />
+              <div
+                className={clsx(
+                  "border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px]",
+                )}
+              />
               <p className="text-gray-300 text-[10px]/[12px] sm:text-[16px]/[19px]">
                 {genreChange(card.photoCard.genre)}
               </p>
-              <div className={clsx("hidden border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px] md:block")} />
+              <div
+                className={clsx(
+                  "hidden border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px] md:block",
+                )}
+              />
             </div>
 
             <div className="flex justify-between items-center w-full">
               <div className="flex justify-center items-center gap-[2px]">
-                <p className="text-white font-normal text-[10px]/[12px] sm:text-[16px]/[19px]">{card.price} P</p>
-                <p className="text-gray-300 text-[10px]/[12px] sm:text-[16px]/[19px]">에 구매</p>
+                <p className="text-white font-normal text-[10px]/[12px] sm:text-[16px]/[19px]">
+                  {card.price} P
+                </p>
+                <p className="text-gray-300 text-[10px]/[12px] sm:text-[16px]/[19px]">
+                  에 구매
+                </p>
               </div>
               <p className="text-white underline font-normal text-[10px]/[12px] sm:text-[16px]/[19px]">
                 {card.photoCard.creator.nickname}
@@ -84,10 +101,15 @@ export default function ExchangeCard({
           </div>
         </div>
 
-        <div className={clsx("border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]")} />
+        <div
+          className={clsx(
+            "border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]",
+          )}
+        />
 
         <p className="font-normal text-[10px]/[12px] line-clamp-2 sm:text-[16px]/[19px]">
-          스페인 여행 사진도 좋은데.. 우리집 앞마당 포토카드와 교환하고 싶습니다!
+          스페인 여행 사진도 좋은데.. 우리집 앞마당 포토카드와 교환하고
+          싶습니다!
         </p>
         {type === "buyer" ? (
           <ActionButton
