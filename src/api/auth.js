@@ -5,8 +5,6 @@ import {
   validateNickname,
   validateConfirmPassword,
 } from "@/utils/authValidators";
-const AUTH_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050";
 
 export async function signUp({ email, nickname, password, passwordConfirm }) {
   // 유효성 검사
