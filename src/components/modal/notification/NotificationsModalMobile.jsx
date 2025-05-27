@@ -10,12 +10,7 @@ function NotificationsModalMobile({ notifications }) {
       <MobileHeader onClick={() => closeModal()} title={"알림"} />
       {notifications &&
         notifications.map((notification) => {
-          return (
-            <NotificationCard
-              key={notification.id}
-              notification={notification}
-            />
-          );
+          return <NotificationCard key={notification.id} notification={notification} />;
         })}
     </div>
   );

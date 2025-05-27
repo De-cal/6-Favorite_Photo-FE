@@ -1,45 +1,85 @@
-import { useState, useEffect } from 'react';
+"use client";
+
+import { useEffect, useCallback, useRef } from 'react';
+import { encryptData, decryptData } from '@/utils/encryption';
 
 const INACTIVE_THRESHOLD = 20 * 60 * 1000; // 20분
-const LAST_ACTIVE_TIME_KEY = process.env.NEXT_PUBLIC_LAST_ACTIVE_TIME_KEY
+const LAST_ACTIVE_TIME_KEY = process.env.NEXT_PUBLIC_LAST_ACTIVE_TIME_KEY;
+const events = ['mousemove', 'keypress', 'scroll', 'click'];
 
-// 최대 20분까지 움직임이 없는 사용자는 포인트 시간 초기화.
-function useInactiveTimer(onInactive) {
-  const [lastActive, setLastActive] = useState(Date.now());
+function useInactiveTimer(onInactiveCallback, isLoggedIn) {
+  const lastActivityTimeRef = useRef(null);
+  const intervalIdRef = useRef(null);
+  const onInactiveCallbackRef = useRef(onInactiveCallback);
 
   useEffect(() => {
-    const handleActivity = () => {
-      setLastActive(Date.now());
-      localStorage.setItem(LAST_ACTIVE_TIME_KEY, Date.now());
-    };
+    onInactiveCallbackRef.current = onInactiveCallback;
+  }, [onInactiveCallback]);
 
-    window.addEventListener('mousemove', handleActivity);
-    window.addEventListener('keypress', handleActivity);
-    window.addEventListener('scroll', handleActivity);
-    window.addEventListener('click', handleActivity);
-
-    return () => {
-      window.removeEventListener('mousemove', handleActivity);
-      window.removeEventListener('keypress', handleActivity);
-      window.removeEventListener('scroll', handleActivity);
-      window.removeEventListener('click', handleActivity);
-    };
+  const updateLastActivityTime = useCallback(() => {
+    const now = Date.now();
+    lastActivityTimeRef.current = now;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(LAST_ACTIVE_TIME_KEY, encryptData(now.toString()));
+    }
   }, []);
 
-  useEffect(() => {
-    const checkInactiveInterval = setInterval(() => {
-      const storedLastActive = localStorage.getItem(LAST_ACTIVE_TIME_KEY);
-      const currentTime = Date.now();
-
-      if (storedLastActive && currentTime - parseInt(storedLastActive, 10) > INACTIVE_THRESHOLD) {
-        onInactive();
+  const checkInactive = useCallback(() => {
+    if (!isLoggedIn) {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
       }
-    }, 1000); 
+      return;
+    }
 
-    return () => clearInterval(checkInactiveInterval);
-  }, [onInactive]);
+    if (!lastActivityTimeRef.current) {
+      const storedEncrypted = localStorage.getItem(LAST_ACTIVE_TIME_KEY);
+      if (storedEncrypted) {
+        const decrypted = decryptData(storedEncrypted);
+        if (decrypted) {
+          lastActivityTimeRef.current = parseInt(decrypted, 10);
+        } else {
+          updateLastActivityTime();
+        }
+      } else {
+        updateLastActivityTime();
+      }
+    }
 
-  return { resetInactiveTimer: () => setLastActive(Date.now()) };
+    const currentTime = Date.now();
+    if (currentTime - lastActivityTimeRef.current > INACTIVE_THRESHOLD) {
+      console.log("사용자 비활동 감지: 포인트 타이머 초기화 및 모달 닫기");
+      onInactiveCallbackRef.current();
+      updateLastActivityTime();
+    }
+  }, [updateLastActivityTime, isLoggedIn]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
+      }
+      
+      events.forEach(event => window.removeEventListener(event, updateLastActivityTime));
+      return;
+    }
+
+    updateLastActivityTime();
+
+    events.forEach(event => window.addEventListener(event, updateLastActivityTime));
+    intervalIdRef.current = setInterval(checkInactive, 5000);
+
+    return () => {
+      events.forEach(event => window.removeEventListener(event, updateLastActivityTime));
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+      }
+    };
+  }, [updateLastActivityTime, checkInactive, isLoggedIn]);
+
+  return { resetInactiveTimer: updateLastActivityTime };
 }
 
 export default useInactiveTimer;
