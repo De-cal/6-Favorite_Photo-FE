@@ -10,19 +10,18 @@ import { useModal } from "@/providers/ModalProvider";
 // 컴포넌트
 import MobileFilter from "../my-gallery/_components/MobileFilter";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import FilterDropdown from "./_components/FilerDropdown";
 import Search from "./_components/Search";
 import Sort from "./_components/SortDropdown";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 import Card from "@/components/common/Card";
+import Dropdowns from "./_components/Dropdowns";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
   const { openModal } = useModal();
   const [articles, setArticles] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
-  const [filters, setFilters] = useState(null);
-  const [dropDown, setDropDown] = useState({ rank: null, genre: null, soldout: null });
+  const [filterSettings, setFilterSettings] = useState(null);
 
   async function getArticles() {
     const data = await getAllArticles();
@@ -34,20 +33,19 @@ export default function MarketplacePage() {
     return article.photoCard.title.toLowerCase().includes(keyword);
   });
 
-  const dropDown= 
   // 모바일
   const filteredCards = searchedCards.filter((article) => {
-    if (!filters) return true;
-    const matchRank = filters.rank ? article.photoCard.rank === filters.rank : true;
-    const matchGenre = filters.genre ? article.photoCard.genre === filters.genre : true;
-    const matchSoldout = filters.soldout ? article.status === filters.soldout : true;
+    if (!filterSettings) return true;
+    const matchRank = filterSettings.rank ? article.photoCard.rank === filterSettings.rank : true;
+    const matchGenre = filterSettings.genre ? article.photoCard.genre === filterSettings.genre : true;
+    const matchSoldout = filterSettings.soldout ? article.status === filterSettings.soldout : true;
 
     return matchRank && matchGenre && matchSoldout;
   });
   // 태블릿, 데스크탑
 
   const handleSelectFilter = (selectedFilters) => {
-    setFilters(selectedFilters);
+    setFilterSettings(selectedFilters);
     setShowFilter(false);
   };
 
@@ -82,7 +80,7 @@ export default function MarketplacePage() {
             <div className="flex mt-[20px] justify-center sm:justify-between md:justify-between">
               <div className="flex items-center">
                 <Search onSearch={setSearchKeyWord} />
-                <FilterDropdown onSearch={setDropDown} />
+                <Dropdowns onSearch={setFilterSettings} />
               </div>
               <Sort className="hidden sm:flex md:flex" />
             </div>
@@ -131,6 +129,7 @@ export default function MarketplacePage() {
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
           <MobileFilter data={articles} onSelectFilter={handleSelectFilter} />
+          {/* 매진한거는 없어서 그부분은 안뜸 */}
         </div>
       )}
     </div>
