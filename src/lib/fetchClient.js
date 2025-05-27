@@ -30,7 +30,7 @@ export async function defaultFetch(path, options = {}) {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "API request failed");
+    throw new Error(errorData.message || "API 요청이 실패하였습니다");
   }
 
   return response.json();

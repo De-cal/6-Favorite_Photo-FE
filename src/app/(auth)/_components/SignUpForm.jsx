@@ -9,6 +9,7 @@ import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthModal from "./AuthModal";
 import AuthNavigation from "./AuthNavigation";
+import { signUp } from "@/api/auth";
 
 export default function SignUpForm() {
   // 토큰이 있는 유저는 marketplace 페이지로 리다이렉트
@@ -53,7 +54,7 @@ export default function SignUpForm() {
         passwordConfirm,
       });
       resetForm();
-      router.push("/items");
+      router.push("/marketplace");
     } catch (error) {
       console.error("회원가입 실패:", error);
       setModalMessage(error.message);
