@@ -95,7 +95,7 @@ export default function MarketplacePage() {
             />
             <ActionButton
               className="w-[342px] h-[60px] md:w-[440px]"
-              onClick={handleClickOpenModal}
+              onClick={() => openModal(<SelectPhotoCardsModal />)}
             >
               나의 포토카드 판매하기
             </ActionButton>
