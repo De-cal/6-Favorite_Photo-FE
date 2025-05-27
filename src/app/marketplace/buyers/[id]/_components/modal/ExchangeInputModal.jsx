@@ -10,23 +10,27 @@ import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
 import Tablet from "@/components/common/Tablet";
-import BuyerActionModal from "./ExchangeCancelModal";
+import ExchangeCancelModal from "./ExchangeCancelModal";
+import SelectPhotoCardsModal from "@/app/marketplace/_components/SelectPhotoCardsModal";
 
-export default function ExchangeInputModal() {
+export default function ExchangeInputModal({ card }) {
   const { closeModal, openModal } = useModal();
 
+  // 모달 닫기
   const handleClose = () => {
     closeModal();
+    openModal(<SelectPhotoCardsModal type="exchange" />);
     document.body.style.overflow = "auto";
   };
 
+  // 교환 취소하기
   const handleCancel = () => {
     closeModal();
-    document.body.style.overflow = "auto";
-    openModal(<BuyerActionModal />);
+    openModal(<ExchangeCancelModal />);
     document.body.style.overflow = "hidden";
   };
 
+  // 교환하기
   const handleExchange = () => {
     closeModal();
     document.body.style.overflow = "auto";
@@ -42,14 +46,27 @@ export default function ExchangeInputModal() {
       <Tablet>
         <div className="sm:flex sm:justify-center sm:items-center">
           <div className="relative w-[48px] h-[6px] mt-[15px]">
-            <Image src={ic_modal_close} alt="닫기" fill className="object-cover" />
+            <Image
+              src={ic_modal_close}
+              alt="닫기"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </Tablet>
       <Desktop>
         <div className="md:flex md:justify-end md:items-center">
-          <button onClick={handleClose} className="relative w-[32px] h-[32px] cursor-pointer">
-            <Image src={ic_close_gray} alt="닫기" fill className="object-cover" />
+          <button
+            onClick={handleClose}
+            className="relative w-[32px] h-[32px] cursor-pointer"
+          >
+            <Image
+              src={ic_close_gray}
+              alt="닫기"
+              fill
+              className="object-cover"
+            />
           </button>
         </div>
       </Desktop>
@@ -59,13 +76,15 @@ export default function ExchangeInputModal() {
         </p>
         <div className="flex flex-col justify-center items-center sm:max-w-[704px] md:max-w-[920px]">
           <div className="font-bold text-[24px]/[29px] w-full mt-[20px] mb-[26px] pb-[10px] border-b-[2px] border-gray-100 sm:text-[40px]/[41px] sm:mt-[40px] sm:mb-[40px] sm:pb-[20px] md:mb-[50px] md:text-[40px]/[48px]">
-            How Far I`ll Go
+            {card.photoCard.title}
           </div>
           <div className="sm:flex justify-center w-full sm:gap-[20px] md:gap-[40px]">
-            <Card type="exchange" />
+            <Card type="exchange" card={card} />
             <div className="flex flex-col w-full max-w-[440px]">
               <div className="flex flex-col w-full justify-center items-start gap-y-[10px] mt-[26px] sm:mt-0">
-                <p className="font-bold text-[16px]/[19px] sm:mt-0 md:text-[20px]/[24px]">교환 제시 내용</p>
+                <p className="font-bold text-[16px]/[19px] sm:mt-0 md:text-[20px]/[24px]">
+                  교환 제시 내용
+                </p>
                 <textarea
                   className="font-normal text-[14px]/[17px] w-[345px] h-[140px] py-[12px] px-[20px] bg-gray-500 border rounded-[2px] border-gray-200 resize-none sm:w-full sm:max-w-[440px] sm:text-[16px]/[19px] md:py-[18px]"
                   placeholder="내용을 입력해주세요"

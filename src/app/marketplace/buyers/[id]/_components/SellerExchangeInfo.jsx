@@ -5,7 +5,7 @@ import img_card_placeholder_1 from "@/assets/images/img-card-placeholder-1.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import { useModal } from "@/providers/ModalProvider";
 import GradeDetail from "@/components/common/GradeDetail";
-// import SelectPhotoCardsModal from "@/app/marketplace/_components/SelectPhotoCardsModal";
+import SelectPhotoCardsModal from "@/app/marketplace/_components/SelectPhotoCardsModal";
 
 export default function SellerExchangeInfo() {
   const { openModal } = useModal();
@@ -13,7 +13,8 @@ export default function SellerExchangeInfo() {
   const cardArticle = {
     photoCard: {
       title: "우리집 앞마당",
-      description: "우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다.",
+      description:
+        "우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다.",
       rank: "LEGENDARY",
       genre: "풍경",
       imgUrl: img_card_placeholder_1,
@@ -24,13 +25,15 @@ export default function SellerExchangeInfo() {
     price: 4,
     totalQuantity: 5,
     ramainingQuantity: 2,
-    exchangeText: "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
+    exchangeText:
+      "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
     exchangeRank: "RARE",
     exchangeGenre: "풍경",
   };
 
-  const handleClick = () => {
-    openModal(<SelectPhotoCardsModal />);
+  // 교환하기
+  const handleExchange = () => {
+    openModal(<SelectPhotoCardsModal type="exchange" />);
     document.body.style.overflow = "hidden";
   };
 
@@ -43,7 +46,7 @@ export default function SellerExchangeInfo() {
         <div className="hidden pb-[20px] sm:block max-w-[440px] min-w[342px] w-full">
           <ActionButton
             className="mt-[120px] sm:top-0 sm:right-0 sm:h-[60px] max-w-[440px] min-w[342px] w-full"
-            onClick={handleClick}
+            onClick={handleExchange}
           >
             포토카드 교환하기
           </ActionButton>
@@ -53,11 +56,19 @@ export default function SellerExchangeInfo() {
         {cardArticle.exchangeText}
       </p>
       <div className="flex justify-start items-center gap-[15px] mt-[20px]">
-        <GradeDetail grade={cardArticle.exchangeRank} className="font-bold text-[18px]/[22px] md:text-[24px]/[29px]" />
+        <GradeDetail
+          grade={cardArticle.exchangeRank}
+          className="font-bold text-[18px]/[22px] md:text-[24px]/[29px]"
+        />
         <div className="border-l-[1.5px] border-gray-400 h-[17px]"></div>
-        <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">{cardArticle.exchangeGenre}</p>
+        <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">
+          {cardArticle.exchangeGenre}
+        </p>
       </div>
-      <ActionButton className="mt-[40px] sm:mt-0 sm:hidden sm:top-0 sm:right-0" onClick={handleClick}>
+      <ActionButton
+        className="mt-[40px] sm:mt-0 sm:hidden sm:top-0 sm:right-0"
+        onClick={handleExchange}
+      >
         포토카드 교환하기
       </ActionButton>
     </div>
