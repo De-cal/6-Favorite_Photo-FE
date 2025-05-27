@@ -18,6 +18,7 @@ export default function MyGalleryDetailPage() {
     quantity: 1,
     status: "SELLING",
     totalQuantity: 5,
+    createdAt: "2025년 5월 20일 15시 33분",
   };
   return (
     <>

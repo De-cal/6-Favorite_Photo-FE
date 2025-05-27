@@ -64,19 +64,19 @@ function CardInfo({ data }) {
           <div className="text-sm">{data.photoCard.creator.nickname}</div>
         </div>
 
-        <div className="py-[30px] border-b-1 border-gray-400">
+        <div className="py-[30px] border-b-1 border-gray-400 text-center sm:text-start">
           {data.photoCard.description}
         </div>
-        <div className="py-[30px] border-b-1 border-gray-400">
+        <div className="py-[30px] border-b-1 border-gray-400 text-center sm:text-start">
           {`구매 가격 : ${data.price}P `}
         </div>
-        <div className="py-[30px] border-b-1 border-gray-400 text-center">
-          시안 업데이트 시
+        <div className="py-[30px] border-b-1 border-gray-400 text-center sm:text-start">
+          {`보유 수량 : ${data.quantity}장 `}
         </div>
-        <div className="py-[30px] border-b-1 border-gray-400 text-center">
-          다른 정보 추가 예정
+        <div className="py-[30px] border-b-1 border-gray-400 text-center sm:text-start">
+          {`구매 일시 : ${data.createdAt} `}
         </div>
-        <div className="py-[30px] border-b-1 border-gray-400 text-center">
+        <div className="py-[30px] text-center">
           <ActionButton
             className="w-full h-20 text-2xl"
             // onClick={()=>openModal(<판매하기 모달/>)}
