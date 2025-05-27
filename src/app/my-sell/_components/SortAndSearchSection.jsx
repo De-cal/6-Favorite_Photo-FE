@@ -6,6 +6,7 @@ import Dropdown from "@/app/my-sell/_components/Dropdown";
 import { useState, useEffect } from "react";
 import { useModal } from "@/providers/ModalProvider";
 import MobileFilter from "@/app/my-sell/_components/MobileFilter";
+import TsetModal from "@/app/modal-test/TsetModal";
 // props: onSearch (부모에게 검색 조건 전달)
 export default function SortAndSearchSection({ onSearch, data }) {
   const [selectedGrade, setSelectedGrade] = useState(null);
@@ -53,7 +54,8 @@ export default function SortAndSearchSection({ onSearch, data }) {
                 onSelectFilter={(selected) => {
                   if (selected.rank) setSelectedGrade(selected.rank);
                   if (selected.genre) setSelectedGenre(selected.genre);
-                  if (selected.sellingType) setSelectedSellingType(selected.sellingType);
+                  if (selected.sellingType)
+                    setSelectedSellingType(selected.sellingType);
                   if (selected.soldout) setSelectedSoldout(selected.soldout);
                   onSearch?.({
                     keyword,
