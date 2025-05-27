@@ -7,8 +7,8 @@ import TopSection from "./_components/TopSection";
 import clsx from "clsx";
 
 export default function MyGalleryCreatePage() {
-  const [name, setName] = useState("");
-  const [grade, setGrade] = useState("");
+  const [title, setTitle] = useState("");
+  const [rank, setRank] = useState("");
   const [genre, setGenre] = useState("");
   const [price, setPrice] = useState("");
   const [totalQuantity, setTotalQuantity] = useState("");
@@ -54,9 +54,10 @@ export default function MyGalleryCreatePage() {
     }
 
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("name", name);
-    formData.append("grade", grade);
+    formData.append("file", file); 
+    formData.append("title", title);        
+    formData.append("rank", rank);         
+    formData.append("genre", genre);
     formData.append("genre", genre);
     formData.append("price", price);
     formData.append("totalQuantity", totalQuantity);
@@ -72,15 +73,17 @@ export default function MyGalleryCreatePage() {
   };
 
   const isFormValid =
-    name && grade && genre && price && totalQuantity && !priceError && !quantityError && description && file;
+    title && rank && genre && price && totalQuantity && !priceError && !quantityError && description && file;
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <TopSection />
       <div className="min-h-screen bg-black text-white flex justify-center items-start p-8">
         <form onSubmit={handleSubmit} className="w-[345px] sm:w-[440px] md:w-[520px] space-y-6">
-          <Input label="포토카드 이름" value={name} setValue={setName} placeholder="포토카드 이름을 입력해 주세요" />
-          <Dropdown type="등급" value={grade} setValue={setGrade} />
+          <Input label="포토카드 이름" value={title} setValue={setTitle} placeholder="포토카드 이름을 입력해 주세요" />
+          <label className="block mb-1 font-bold text-[20px]">등급</label>
+          <Dropdown type="등급" value={rank} setValue={setRank} />
+          <label className="block mb-1 font-bold text-[20px]">장르</label>
           <Dropdown type="장르" value={genre} setValue={setGenre} />
 
           <div>
