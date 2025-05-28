@@ -1,4 +1,7 @@
-import { validateConfirmPassword, validatePassword } from "@/utils/authValidators";
+import {
+  validateConfirmPassword,
+  validatePassword,
+} from "@/lib/utils/authValidators";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import visibleIc from "@/assets/icons/ic-visible.svg";
@@ -20,7 +23,9 @@ export default function PasswordInput({
 }) {
   const [inputValue, setInputValue] = useState(propValue || "");
   const [visible, setVisible] = useState(false);
-  const [currentIsValid, setCurrentIsValid] = useState(propIsValid === undefined ? true : propIsValid);
+  const [currentIsValid, setCurrentIsValid] = useState(
+    propIsValid === undefined ? true : propIsValid,
+  );
 
   const isInvalid = !currentIsValid && isTouched;
 
@@ -79,16 +84,30 @@ export default function PasswordInput({
         >
           {visible ? (
             <div className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
-              <Image src={visibleIc} alt="비밀번호 보이기" fill className="object-cover" />
+              <Image
+                src={visibleIc}
+                alt="비밀번호 보이기"
+                fill
+                className="object-cover"
+              />
             </div>
           ) : (
             <div className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
-              <Image src={invisibleIc} alt="비밀번호 숨김" fill className="object-cover" />
+              <Image
+                src={invisibleIc}
+                alt="비밀번호 숨김"
+                fill
+                className="object-cover"
+              />
             </div>
           )}
         </button>
       </div>
-      {isInvalid && <p className="text-error text-sm font-semibold leading-6">{validateInput(inputValue).message}</p>}
+      {isInvalid && (
+        <p className="text-error text-sm font-semibold leading-6">
+          {validateInput(inputValue).message}
+        </p>
+      )}
     </div>
   );
 }

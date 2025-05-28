@@ -1,6 +1,6 @@
 "use client";
 import { useCallback } from "react";
-import { validateEmail, validatePassword } from "@/utils/authValidators";
+import { validateEmail, validatePassword } from "@/lib/utils/authValidators";
 import useForm from "./useForm";
 
 export default function useLoginForm() {

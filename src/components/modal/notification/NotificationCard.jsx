@@ -1,4 +1,4 @@
-import dateFormat from "@/utils/dateFormat";
+import dateFormat from "@/lib/utils/dateFormat";
 
 function NotificationCard({ notification }) {
   return (

@@ -6,7 +6,7 @@ import Card from "@/components/common/Card";
 import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
 import { useModal } from "@/providers/ModalProvider";
 import ExchangeInputModal from "../buyers/[id]/_components/modal/ExchangeInputModal";
-import { getAllCards } from "@/api/card";
+import { getAllCards } from "@/lib/api/card.api";
 import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
 
 function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {

@@ -9,7 +9,7 @@ import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthNavigation from "./AuthNavigation";
 import AuthModal from "./AuthModal";
-import { login } from "@/api/auth";
+import { login } from "@/lib/api/auth.api";
 
 export default function LoginForm() {
   // useRedirectIfAuthenticated(); 리팩터링 후 다시 적용예정

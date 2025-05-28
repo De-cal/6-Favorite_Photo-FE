@@ -9,7 +9,7 @@ import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthModal from "./AuthModal";
 import AuthNavigation from "./AuthNavigation";
-import { signUp } from "@/api/auth";
+import { signUp } from "@/lib/api/auth.api";
 
 export default function SignUpForm() {
   // 토큰이 있는 유저는 marketplace 페이지로 리다이렉트
