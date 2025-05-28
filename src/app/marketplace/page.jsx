@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import filterIcon from "../../assets/icons/ic-filter.svg";
 import marketplace from "../../assets/images/img-marketplace.svg";
-import { useEffect } from "react";
 import { getAllArticles } from "@/api/article";
 import MobileFilter from "../my-gallery/_components/MobileFilter";
 import ActionButton from "@/components/ui/buttons/ActionButton";
@@ -23,17 +22,67 @@ export default function MarketplacePage() {
   const [sortOpen, setSortOpen] = useState(false);
   const [sortOption, setSortOption] = useState("낮은 가격순");
 
-  async function getArticles() {
-    const data = await getAllArticles();
-    setArticles(data);
-  }
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const LIMIT = 12;
+
+  const getArticles = useCallback(async () => {
+    if (loading || !hasMore) return;
+    setLoading(true);
+    try {
+      const data = await getAllArticles(page, LIMIT, searchKeyWord);
+      if (data && Array.isArray(data.articles)) {
+        setArticles((prev) => [...prev, ...data.articles]);
+        setHasMore(page < data.totalPages);
+      } else {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, searchKeyWord, hasMore, loading]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 100 &&
+        !loading &&
+        hasMore
+      ) {
+        setPage((prev) => prev + 1);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    setArticles([]);
+    setPage(1);
+    setHasMore(true);
+  }, [searchKeyWord]);
+
+  useEffect(() => {
+    getArticles();
+  }, [page, searchKeyWord]);
+
+  const handleSelectFilter = (selectedFilters) => {
+    setFilterSettings(selectedFilters);
+    setShowFilter(false);
+  };
+
   const searchedCards = articles.filter((article) => {
-    if (!searchKeyWord || searchKeyWord.trim() === "") return true;
-    const keyword = searchKeyWord?.toLowerCase();
-    return article.photoCard.title.toLowerCase().includes(keyword);
+    if (!searchKeyWord) return true;
+    return article.photoCard.title
+      .toLowerCase()
+      .includes(searchKeyWord.toLowerCase());
   });
 
-  // 모바일
   const filteredCards = searchedCards.filter((article) => {
     if (!filterSettings) return true;
     const matchRank = filterSettings.rank
@@ -45,15 +94,9 @@ export default function MarketplacePage() {
     const matchSoldout = filterSettings.soldout
       ? article.status === filterSettings.soldout
       : true;
-
     return matchRank && matchGenre && matchSoldout;
   });
-  // 태블릿, 데스크탑
 
-  const handleSelectFilter = (selectedFilters) => {
-    setFilterSettings(selectedFilters);
-    setShowFilter(false);
-  };
   const sortedCards = [...filteredCards].sort((a, b) => {
     if (sortOption === "낮은 가격순") return a.price - b.price;
     if (sortOption === "높은 가격순") return b.price - a.price;
@@ -61,12 +104,7 @@ export default function MarketplacePage() {
       return new Date(b.createdAt) - new Date(a.createdAt);
     return 0;
   });
-  useEffect(() => {
-    getArticles();
-  }, []);
-  useEffect(() => {
-    console.log(sortedCards);
-  }, [sortedCards]);
+
   return (
     <div className="relative">
       {showFilter && (
@@ -89,7 +127,6 @@ export default function MarketplacePage() {
               alt="marketplace"
               className="md:hidden"
             />
-
             <Image
               src={marketplace}
               width={320}
@@ -176,10 +213,12 @@ export default function MarketplacePage() {
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
           <MobileFilter data={articles} onSelectFilter={handleSelectFilter} />
-          {/* 매진한거는 없어서 그부분은 안뜸 */}
         </div>
       )}
       {isModalOpen && <SelectPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
+      {loading && (
+        <div className="text-center py-4 text-gray-500">로딩 중...</div>
+      )}
     </div>
   );
 }
