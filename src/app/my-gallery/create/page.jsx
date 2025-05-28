@@ -4,7 +4,11 @@ import { createCard } from "@/api/card";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Dropdown from "../_components/Dropdown";
 import TopSection from "./_components/TopSection";
+import CommonModal from "@/components/common/CommonModal";
+import { useModal } from "@/providers/ModalProvider";
+
 import clsx from "clsx";
+
 
 export default function MyGalleryCreatePage() {
   const [title, setTitle] = useState("");
@@ -16,6 +20,8 @@ export default function MyGalleryCreatePage() {
   const [file, setFile] = useState(null);
   const [priceError, setPriceError] = useState("");
   const [quantityError, setQuantityError] = useState("");
+
+  const { openModal } = useModal();
 
   const handlePriceChange = (e) => {
     const numericValue = e.target.value.replace(/[^0-9]/g, "");
@@ -54,10 +60,9 @@ export default function MyGalleryCreatePage() {
     }
 
     const formData = new FormData();
-    formData.append("file", file); 
-    formData.append("title", title);        
-    formData.append("rank", rank);         
-    formData.append("genre", genre);
+    formData.append("file", file);
+    formData.append("title", title);
+    formData.append("rank", rank);
     formData.append("genre", genre);
     formData.append("price", price);
     formData.append("totalQuantity", totalQuantity);
@@ -65,12 +70,24 @@ export default function MyGalleryCreatePage() {
 
     try {
       await createCard(formData);
-      alert("카드가 성공적으로 생성되었습니다!");
-      // 초기화 또는 이동
+      openModal(
+        <CommonModal
+          type="포토카드 생성"
+          result="성공"
+          data={{ rank, title }}
+        />
+      );
     } catch (err) {
-      alert("카드 생성 중 오류가 발생했습니다.");
+      openModal(
+        <CommonModal
+          type="포토카드 생성"
+          result="실패"
+          data={{ rank, title }}
+        />
+      );
     }
   };
+
 
   const isFormValid =
     title && rank && genre && price && totalQuantity && !priceError && !quantityError && description && file;
