@@ -30,13 +30,21 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="판매 등록" result="성공" data={data} />)}
+            onClick={() =>
+              openModal(
+                <CommonModal type="판매 등록" result="성공" data={data} />,
+              )
+            }
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="판매 등록" result="실패" data={data} />)}
+            onClick={() =>
+              openModal(
+                <CommonModal type="판매 등록" result="실패" data={data} />,
+              )
+            }
           >
             실패
           </button>
@@ -48,13 +56,17 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="구매" result="성공" data={data} />)}
+            onClick={() =>
+              openModal(<CommonModal type="구매" result="성공" data={data} />)
+            }
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="구매" result="실패" data={data} />)}
+            onClick={() =>
+              openModal(<CommonModal type="구매" result="실패" data={data} />)
+            }
           >
             실패
           </button>
@@ -66,13 +78,21 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="교환 제시" result="성공" data={data} />)}
+            onClick={() =>
+              openModal(
+                <CommonModal type="교환 제시" result="성공" data={data} />,
+              )
+            }
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="교환 제시" result="실패" data={data} />)}
+            onClick={() =>
+              openModal(
+                <CommonModal type="교환 제시" result="실패" data={data} />,
+              )
+            }
           >
             실패
           </button>
@@ -84,13 +104,21 @@ function modalTestPage() {
         <div className="flex flex-row justify-between items-center gap-10">
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="포토카드 생성" result="성공" data={data} />)}
+            onClick={() =>
+              openModal(
+                <CommonModal type="포토카드 생성" result="성공" data={data} />,
+              )
+            }
           >
             성공
           </button>
           <button
             className="bg-main w-20 h-10 rounded-3xl text-gray-300 text-[20px]"
-            onClick={() => openModal(<CommonModal type="포토카드 생성" result="성공" data={data} />)}
+            onClick={() =>
+              openModal(
+                <CommonModal type="포토카드 생성" result="성공" data={data} />,
+              )
+            }
           >
             실패
           </button>
@@ -103,8 +131,12 @@ function modalTestPage() {
           <button
             className="bg-main w-60 h-20 rounded-3xl text-gray-300 text-[20px]"
             onClick={() => {
-              openModal(<CommonModal type="포토카드 생성" result="성공" data={data} />, "top", "left");
-              openModal(<TsetModal />, "center", "center", true);
+              openModal(
+                <CommonModal type="포토카드 생성" result="성공" data={data} />,
+                "center",
+                "center",
+              );
+              openModal(<TsetModal />, "bottom", "center", true);
             }}
           >
             모달 2개 뜨는거 테스트

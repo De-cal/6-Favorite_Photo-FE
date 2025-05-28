@@ -1,3 +1,14 @@
+import { cookieFetch } from "@/lib/fetchClient";
+
+function parseJwt(token) {
+  if (!token) return null;
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (e) {
+    console.error("JWT 파싱 실패:", e);
+    return null;
+  }
+}
 export const getAllCards = async ({
   page,
   pageSize,
@@ -5,7 +16,6 @@ export const getAllCards = async ({
   genre,
   keyword,
   status,
-  includeZero,
 } = {}) => {
   try {
     const queryParams = new URLSearchParams();
@@ -19,7 +29,10 @@ export const getAllCards = async ({
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/cards?${queryParams.toString()}`,
     );
-    const data = await res.json();
+
+    // 쿠키에 있는 accessToken 자동 전송
+    const data = await cookieFetch(`/cards?${queryParams.toString()}`);
+
     return data.list;
   } catch (error) {
     console.error("카드 목록을 가져오는데 실패했습니다:", error);

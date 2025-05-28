@@ -6,6 +6,8 @@ import SortAndSearchSection from "./_components/SortAndSearchSection";
 import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
+import { useQuery } from "@tanstack/react-query";
+import { getUserArticles } from "@/api/article.js";
 
 export default function MySellPage() {
   const [searchFilter, setSearchFilter] = useState({
@@ -16,10 +18,26 @@ export default function MySellPage() {
     soldout: null,
   });
   const [page, setPage] = useState(1);
+  const pageSize = 15;
 
   useEffect(() => {
     // 원하는 로직 실행 ( API 호출)
   }, [page, searchFilter]);
+  //리액트 쿼리
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["my-user-articles", page, searchFilter],
+    queryFn: () =>
+      getUserArticles({
+        page,
+        pageSize,
+        rank: searchFilter.rank,
+        genre: searchFilter.genre,
+        keyword: searchFilter.keyword,
+        sellingType: searchFilter.sellingType,
+        soldOut: searchFilter.soldout,
+      }),
+  });
+  console.log("데이터", data);
 
   const filteredCards = mockCards.filter((card) => {
     const matchesKeyword =

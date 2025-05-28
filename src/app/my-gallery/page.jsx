@@ -6,6 +6,9 @@ import SortAndSearchSection from "./_components/SortAndSearchSection";
 import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCards } from "@/api/card.js";
+
 export default function MyGalleryPage() {
   const [searchFilter, setSearchFilter] = useState({
     keyword: "",
@@ -13,11 +16,26 @@ export default function MyGalleryPage() {
     genre: null,
   });
   const [page, setPage] = useState(1);
+  const pageSize = 15;
 
   useEffect(() => {
     // 원하는 로직 실행 ( API 호출)
   }, [page, searchFilter]);
-
+  //리액트 쿼리
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["my-gallery-cards", page, searchFilter],
+    queryFn: () =>
+      getAllCards({
+        page,
+        pageSize,
+        rank: searchFilter.rank,
+        genre: searchFilter.genre,
+        keyword: searchFilter.keyword,
+        status: "OWNED", // 고정값이라면
+      }),
+  });
+  console.log("데이터", data);
+  //리액트 쿼리
   const filteredCards = mockCards.filter((card) => {
     const matchesKeyword =
       !searchFilter.keyword ||
@@ -33,7 +51,6 @@ export default function MyGalleryPage() {
 
     return matchesKeyword && matchesGrade && matchesGenre;
   });
-  console.log("필터링데이터", filteredCards);
 
   return (
     <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
