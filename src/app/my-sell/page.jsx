@@ -45,7 +45,6 @@ export default function MySellPage() {
   const totalCount = data.totalCount.total;
   const articleCount = data.totalCount.articleCount;
   const ranks = data.rankCounts;
-  console.log("데이터", data);
 
   const filteredCards = cards.filter((card) => {
     const matchesKeyword =

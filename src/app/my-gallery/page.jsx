@@ -42,7 +42,7 @@ export default function MyGalleryPage() {
   const totalCount = data.totalCount.totalCount;
   const cardCount = data.totalCount.cardCount;
   const ranks = data.rankCounts;
-  console.log("데이터", data);
+
   //리액트 쿼리
   const filteredCards = cards.filter((card) => {
     const matchesKeyword =
