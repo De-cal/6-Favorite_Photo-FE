@@ -23,13 +23,21 @@ function SellPhotoCardDetailModal({
     quantity: 3,
   },
   setIsModalOpen,
+  article = {
+    exchangeGenre: "장르를 선택해 주세요",
+    exchangeRank: "등급을 선택해 주세요",
+    description: "",
+    price: 0,
+    totalQuantity: 0,
+  },
+  type = "sell",
 }) {
   const { closeModal } = useModal();
-  const [genre, setGenre] = useState("장르를 선택해 주세요");
-  const [rank, setRank] = useState("등급을 선택해 주세요");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [sellQuantity, setSellQuantity] = useState(0);
+  const [genre, setGenre] = useState(article.exchangeGenre);
+  const [rank, setRank] = useState(article.exchangeRank);
+  const [description, setDescription] = useState(article.description);
+  const [price, setPrice] = useState(article.price);
+  const [sellQuantity, setSellQuantity] = useState(article.totalQuantity);
   const [result, setResult] = useState("");
 
   const handleClickSubmit = async () => {
@@ -50,16 +58,20 @@ function SellPhotoCardDetailModal({
       return;
     }
     try {
-      const newArticle = await postArticle({
-        exchangeGenre: genre,
-        exchangeRank: rank,
-        exchangeText: description,
-        totalQuantity: sellQuantity,
-        userPhotoCardId: card.id,
-        price,
-      });
-      setResult("성공");
+      if (type === "sell") {
+        const newArticle = await postArticle({
+          exchangeGenre: genre,
+          exchangeRank: rank,
+          exchangeText: description,
+          totalQuantity: sellQuantity,
+          userPhotoCardId: card.id,
+          price,
+        });
+        setResult("성공");
+      } else {
+      }
     } catch (error) {
+      //수정 성공/실패 모달?
       setResult("실패");
     }
   };
@@ -71,7 +83,7 @@ function SellPhotoCardDetailModal({
   return (
     <div className="md:w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px] pt-[20px]">
       <MobileHeader
-        title="나의 포토카드 판매하기"
+        title={type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
         onClick={handleClickCloseModal}
       />
       <div className="flex justify-end w-full mr-[30px] mt-[30px]">
@@ -81,7 +93,7 @@ function SellPhotoCardDetailModal({
       </div>
       <div className="max-w-[920px] sm:w-full w-[345px] md:mx-[120px]">
         <div className="text-gray-300 font-baskinRobbins text-[16px] md:text-[24px] hidden sm:block">
-          나의 포토카드 판매하기
+          {type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
         </div>
         <div className="text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px] font-bold">
           {card.photoCard.title}
@@ -121,7 +133,7 @@ function SellPhotoCardDetailModal({
             className="py-[18px] bg-main text-black w-full font-bold"
             onClick={handleClickSubmit}
           >
-            판매하기
+            {type === "sell" ? "판매하기" : "수정하기"}
           </button>
         </div>
       </div>
