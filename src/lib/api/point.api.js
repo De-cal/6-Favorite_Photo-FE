@@ -1,4 +1,4 @@
-import { cookieFetch } from "@/lib/fetchClient";
+import { cookieFetch } from "@/lib/api/fetchClient.api";
 
 export const postPoint = async (rewardPoints) => {
   try {

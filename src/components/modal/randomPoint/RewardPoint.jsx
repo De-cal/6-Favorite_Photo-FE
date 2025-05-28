@@ -8,7 +8,7 @@ import Image from "next/image";
 import { usePointTimer } from "@/providers/PointTimerProvider";
 import { useModal } from "@/providers/ModalProvider";
 import clsx from "clsx";
-import { postPoint } from "@/api/point";
+import { postPoint } from "@/lib/api/point.api";
 import { useMutation } from "@tanstack/react-query";
 
 function RewardPoint() {

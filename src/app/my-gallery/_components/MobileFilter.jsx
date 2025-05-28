@@ -4,16 +4,20 @@ import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
 import { useModal } from "@/providers/ModalProvider";
-import { genreChange } from "@/utils/genreChange"; // 장르 한글 변환 함수
+import { genreChange } from "@/lib/utils/genreChange"; // 장르 한글 변환 함수
 
 export default function MobileFilter({ data, onSelectFilter }) {
   const { closeModal } = useModal();
 
   const rankCount = (data, rank) =>
-    data.filter((card) => card.photoCard.rank === rank).reduce((sum, card) => sum + card.quantity, 0);
+    data
+      .filter((card) => card.photoCard.rank === rank)
+      .reduce((sum, card) => sum + card.quantity, 0);
 
   const genreCount = (data, genre) =>
-    data.filter((card) => card.photoCard.genre === genre).reduce((sum, card) => sum + card.quantity, 0);
+    data
+      .filter((card) => card.photoCard.genre === genre)
+      .reduce((sum, card) => sum + card.quantity, 0);
 
   const [option, setOption] = useState("등급");
 
@@ -36,8 +40,12 @@ export default function MobileFilter({ data, onSelectFilter }) {
 
   const filteredTotal = data
     .filter((card) => {
-      const matchRank = !selectedValues["등급"] || card.photoCard.rank === selectedValues["등급"];
-      const matchGenre = !selectedValues["장르"] || card.photoCard.genre === selectedValues["장르"];
+      const matchRank =
+        !selectedValues["등급"] ||
+        card.photoCard.rank === selectedValues["등급"];
+      const matchGenre =
+        !selectedValues["장르"] ||
+        card.photoCard.genre === selectedValues["장르"];
       return matchRank && matchGenre;
     })
     .reduce((sum, card) => sum + card.quantity, 0);
@@ -53,11 +61,17 @@ export default function MobileFilter({ data, onSelectFilter }) {
             }`}
             onClick={() => handleItemClick(item)}
           >
-            <p className={`font-noto font-normal text-[14px] text-center ${colorMap[item] || ""}`}>
+            <p
+              className={`font-noto font-normal text-[14px] text-center ${
+                colorMap[item] || ""
+              }`}
+            >
               {option === "장르" ? genreChange(item) : item}
             </p>
             <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
-              {option === "등급" ? `${rankCount(data, item)}개` : `${genreCount(data, item)}개`}
+              {option === "등급"
+                ? `${rankCount(data, item)}개`
+                : `${genreCount(data, item)}개`}
             </p>
           </button>
         ))}
@@ -82,7 +96,9 @@ export default function MobileFilter({ data, onSelectFilter }) {
     <div className="w-full pb-10 rounded-[20px] bg-[#1B1B1B]">
       <div className="w-full flex flex-col items-center">
         <div className="w-full relative py-[16.5px]">
-          <p className="font-noto font-medium text-[16px] text-gray-400 text-center">필터</p>
+          <p className="font-noto font-medium text-[16px] text-gray-400 text-center">
+            필터
+          </p>
           <Image
             alt="닫기버튼"
             src={deleteIcon}
@@ -96,7 +112,9 @@ export default function MobileFilter({ data, onSelectFilter }) {
             <button
               key={item}
               className={`cursor-pointer font-noto font-medium text-[14px] leading-[100%] tracking-[0%] p-4 whitespace-nowrap ${
-                option === item ? "text-white border-b-[1.5px] border-white" : "text-gray-400"
+                option === item
+                  ? "text-white border-b-[1.5px] border-white"
+                  : "text-gray-400"
               }`}
               onClick={() => handleOptionClick(item)}
             >
