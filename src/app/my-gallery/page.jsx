@@ -21,7 +21,7 @@ export default function MyGalleryPage() {
   useEffect(() => {
     // 원하는 로직 실행 ( API 호출)
   }, [page, searchFilter]);
-
+  //리액트 쿼리
   const { data, isLoading, isError } = useQuery({
     queryKey: ["my-gallery-cards", page, searchFilter],
     queryFn: () =>
@@ -31,11 +31,11 @@ export default function MyGalleryPage() {
         rank: searchFilter.rank,
         genre: searchFilter.genre,
         keyword: searchFilter.keyword,
-        status: "SELLING", // 고정값이라면
+        status: "OWNED", // 고정값이라면
       }),
-    keepPreviousData: true,
   });
   console.log("데이터", data);
+  //리액트 쿼리
   const filteredCards = mockCards.filter((card) => {
     const matchesKeyword =
       !searchFilter.keyword ||
@@ -51,7 +51,6 @@ export default function MyGalleryPage() {
 
     return matchesKeyword && matchesGrade && matchesGenre;
   });
-  console.log("필터링데이터", filteredCards);
 
   return (
     <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
