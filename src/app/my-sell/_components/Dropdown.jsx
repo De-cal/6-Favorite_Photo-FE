@@ -21,14 +21,19 @@ export default function Dropdown({ type, onSelect, isOpen, setOpenDropdown }) {
   const getOptionsByType = () => {
     switch (type) {
       case "장르":
-        return ["PORTRAIT", "LANDSCAPE", "ANIMAL", "OBJECT", "FOOD", "ETC"].map((genre) => [genre, genreChange(genre)]);
+        return ["PORTRAIT", "LANDSCAPE", "ANIMAL", "OBJECT", "FOOD", "ETC"].map(
+          (genre) => [genre, genreChange(genre)],
+        );
       case "판매방법":
         return Object.entries(sellingTypeMap);
       case "매진여부":
         return Object.entries(soldoutMap);
       case "등급":
       default:
-        return ["COMMON", "RARE", "SUPER RARE", "LEGENDARY"].map((item) => [item, item]);
+        return ["COMMON", "RARE", "SUPER RARE", "LEGENDARY"].map((item) => [
+          item,
+          item,
+        ]);
     }
   };
 
@@ -42,9 +47,10 @@ export default function Dropdown({ type, onSelect, isOpen, setOpenDropdown }) {
     <div className="w-full flex flex-row gap-[5px]">
       <div className="relative flex items-center gap-1">
         <div
-          className={`font-bold text-[14px] md:text-[16px] whitespace-nowrap ${
+          className={`font-bold text-[14px] md:text-[16px] whitespace-nowrap cursor-pointer ${
             type === "판매방법" || type === "매진여부" ? "min-w-[60px]" : ""
           }`}
+          onClick={() => setOpenDropdown(isOpen ? null : type)}
         >
           {choice}
         </div>

@@ -20,11 +20,16 @@ export default function MyGalleryPage() {
 
   const filteredCards = mockCards.filter((card) => {
     const matchesKeyword =
-      !searchFilter.keyword || card.photoCard.title.toLowerCase().includes(searchFilter.keyword.toLowerCase());
+      !searchFilter.keyword ||
+      card.photoCard.title
+        .toLowerCase()
+        .includes(searchFilter.keyword.toLowerCase());
 
-    const matchesGrade = !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
+    const matchesGrade =
+      !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
 
-    const matchesGenre = !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
+    const matchesGenre =
+      !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
 
     return matchesKeyword && matchesGrade && matchesGenre;
   });
@@ -37,7 +42,11 @@ export default function MyGalleryPage() {
         <RankSection data={mockCards} />
         <SortAndSearchSection onSearch={setSearchFilter} data={mockCards} />
         <PhotoCardSection dataLists={filteredCards} />
-        <PageNation count={filteredCards.length} currentPage={page} onClick={setPage} />
+        <PageNation
+          count={filteredCards.length}
+          currentPage={page}
+          onClick={setPage}
+        />
       </div>
     </div>
   );
@@ -60,7 +69,7 @@ const mockCards = [
   {
     photoCard: {
       title: "고양이",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "ANIMAL",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -112,7 +121,7 @@ const mockCards = [
   {
     photoCard: {
       title: "캐논 DSLR 카메라",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "OBJECT",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -125,7 +134,7 @@ const mockCards = [
   {
     photoCard: {
       title: "아이패드와 맥북",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "OBJECT",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -177,7 +186,7 @@ const mockCards = [
   {
     photoCard: {
       title: "고급 테스트 1",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "ETC",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -217,7 +226,7 @@ const mockCards = [
   {
     photoCard: {
       title: "고급 테스트 2",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "ETC",
       imgURL: "",
       creator: { nickname: "김숲안" },

@@ -22,6 +22,7 @@ function SellPhotoCardDetailModal({
     },
     quantity: 3,
   },
+  setIsModalOpen,
 }) {
   const { closeModal } = useModal();
   const [genre, setGenre] = useState("장르를 선택해 주세요");
@@ -62,12 +63,19 @@ function SellPhotoCardDetailModal({
       setResult("실패");
     }
   };
+  const handleClickCloseModal = () => {
+    closeModal();
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="md:w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px] pt-[20px]">
-      <MobileHeader title="나의 포토카드 판매하기" onClick={closeModal} />
+      <MobileHeader
+        title="나의 포토카드 판매하기"
+        onClick={handleClickCloseModal}
+      />
       <div className="flex justify-end w-full mr-[30px] mt-[30px]">
-        <button onClick={closeModal}>
+        <button onClick={handleClickCloseModal}>
           <Image src={close} alt="close" className="h-[32px] hidden sm:block" />
         </button>
       </div>

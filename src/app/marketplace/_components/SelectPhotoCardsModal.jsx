@@ -11,7 +11,8 @@ import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSect
 
 function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
   const [cards, setCards] = useState([]);
-  const [openDetailModal, setOpenDetailModal] = useState(null);
+
+  const { openModal } = useModal();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -70,8 +71,14 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
   }, [loading, hasMore]);
 
   const handleClickOpenModal = (card) => {
+    setIsModalOpen(false);
     if (type === "판매") {
-      openModal(<SellPhotoCardDetailModal card={card} />);
+      openModal(
+        <SellPhotoCardDetailModal
+          card={card}
+          setIsModalOpen={setIsModalOpen}
+        />,
+      );
     } else {
       openModal(<ExchangeInputModal card={card} />);
     }
