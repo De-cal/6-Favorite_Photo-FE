@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RandomBoxCard from "./RandomBoxCard";
 import pointImage from "@/assets/images/img-point.avif";
 import closeIcon from "@/assets/icons/ic-close.svg";
@@ -9,6 +9,7 @@ import { usePointTimer } from "@/providers/PointTimerProvider";
 import { useModal } from "@/providers/ModalProvider";
 import clsx from "clsx";
 import { postPoint } from "@/api/point";
+import { useMutation } from "@tanstack/react-query";
 
 function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
@@ -18,19 +19,25 @@ function RewardPoint() {
   const { formattedTime, spendOpportunity } = usePointTimer();
   const { closePointModal } = useModal();
 
+  const { mutate: mutateGetPoint } = useMutation({
+    mutationFn: postPoint,
+    onSuccess: () => {
+      spendOpportunity();
+      setIsSelected(true);
+      setSelectedOption(null);
+    },
+  });
+
   const handleSelectOption = (option) => {
     setSelectedOption(option);
   };
 
-  const handleGetPoint = () => {
+  // 포인트 획득 함수.
+  const handleGetPoint = async () => {
     const points = Math.floor(Math.random() * 10) + 1;
     setRewardPoints(points);
 
-    // TODO: 백엔드 및 api 코드 작성후 api 호출 부분 추가 예정.
-    // postPoint(rewardPoints);
-
-    spendOpportunity();
-    setIsSelected(true);
+    mutateGetPoint(points);
   };
 
   return (

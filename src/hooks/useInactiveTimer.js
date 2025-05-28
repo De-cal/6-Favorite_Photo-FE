@@ -3,7 +3,8 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { encryptData, decryptData } from '@/utils/encryption';
 
-const INACTIVE_THRESHOLD = 20 * 60 * 1000; // 20분
+// const INACTIVE_THRESHOLD = 20 * 60 * 1000; // 20분
+const INACTIVE_THRESHOLD = 20  * 1000; // 테스트용 20초
 const LAST_ACTIVE_TIME_KEY = process.env.NEXT_PUBLIC_LAST_ACTIVE_TIME_KEY;
 const events = ['mousemove', 'keypress', 'scroll', 'click'];
 
@@ -49,7 +50,6 @@ function useInactiveTimer(onInactiveCallback, isLoggedIn) {
 
     const currentTime = Date.now();
     if (currentTime - lastActivityTimeRef.current > INACTIVE_THRESHOLD) {
-      console.log("사용자 비활동 감지: 포인트 타이머 초기화 및 모달 닫기");
       onInactiveCallbackRef.current();
       updateLastActivityTime();
     }
