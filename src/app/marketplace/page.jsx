@@ -6,8 +6,6 @@ import filterIcon from "../../assets/icons/ic-filter.svg";
 import marketplace from "../../assets/images/img-marketplace.svg";
 import { useEffect } from "react";
 import { getAllArticles } from "@/api/article";
-import { useModal } from "@/providers/ModalProvider";
-// 컴포넌트
 import MobileFilter from "../my-gallery/_components/MobileFilter";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Search from "./_components/Search";
@@ -18,7 +16,7 @@ import SortDropdown from "./_components/SortDropdown";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
-  const { openModal } = useModal();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [articles, setArticles] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [filterSettings, setFilterSettings] = useState(null);
@@ -38,9 +36,15 @@ export default function MarketplacePage() {
   // 모바일
   const filteredCards = searchedCards.filter((article) => {
     if (!filterSettings) return true;
-    const matchRank = filterSettings.rank ? article.photoCard.rank === filterSettings.rank : true;
-    const matchGenre = filterSettings.genre ? article.photoCard.genre === filterSettings.genre : true;
-    const matchSoldout = filterSettings.soldout ? article.status === filterSettings.soldout : true;
+    const matchRank = filterSettings.rank
+      ? article.photoCard.rank === filterSettings.rank
+      : true;
+    const matchGenre = filterSettings.genre
+      ? article.photoCard.genre === filterSettings.genre
+      : true;
+    const matchSoldout = filterSettings.soldout
+      ? article.status === filterSettings.soldout
+      : true;
 
     return matchRank && matchGenre && matchSoldout;
   });
@@ -53,7 +57,8 @@ export default function MarketplacePage() {
   const sortedCards = [...filteredCards].sort((a, b) => {
     if (sortOption === "낮은 가격순") return a.price - b.price;
     if (sortOption === "높은 가격순") return b.price - a.price;
-    if (sortOption === "최신순") return new Date(b.createdAt) - new Date(a.createdAt);
+    if (sortOption === "최신순")
+      return new Date(b.createdAt) - new Date(a.createdAt);
     return 0;
   });
   useEffect(() => {
@@ -64,16 +69,37 @@ export default function MarketplacePage() {
   }, [sortedCards]);
   return (
     <div className="relative">
-      {showFilter && <div className="fixed inset-0 z-40" onClick={() => setShowFilter(false)} />}
-      <div className={`flex flex-col items-center ${showFilter ? "pointer-events-none" : ""}`}>
+      {showFilter && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowFilter(false)}
+        />
+      )}
+      <div
+        className={`flex flex-col items-center ${
+          showFilter ? "pointer-events-none" : ""
+        }`}
+      >
         <div className="px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
           <div className="hidden sm:flex sm:gap-[114px] md:gap-[650px]">
-            <Image src={marketplace} width={248} height={49} alt="marketplace" className="md:hidden" />
+            <Image
+              src={marketplace}
+              width={248}
+              height={49}
+              alt="marketplace"
+              className="md:hidden"
+            />
 
-            <Image src={marketplace} width={320} height={63} alt="marketplace" className="hidden md:block" />
+            <Image
+              src={marketplace}
+              width={320}
+              height={63}
+              alt="marketplace"
+              className="hidden md:block"
+            />
             <ActionButton
               className="w-[342px] h-[60px] md:w-[440px]"
-              onClick={() => openModal(<SelectPhotoCardsModal />)}
+              onClick={() => setIsModalOpen(true)}
             >
               나의 포토카드 판매하기
             </ActionButton>
@@ -153,6 +179,7 @@ export default function MarketplacePage() {
           {/* 매진한거는 없어서 그부분은 안뜸 */}
         </div>
       )}
+      {isModalOpen && <SelectPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }
