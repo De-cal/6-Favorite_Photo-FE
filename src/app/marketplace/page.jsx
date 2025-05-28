@@ -5,7 +5,7 @@ import Image from "next/image";
 import filterIcon from "../../assets/icons/ic-filter.svg";
 import marketplace from "../../assets/images/img-marketplace.svg";
 import { useEffect } from "react";
-import { getAllArticles } from "@/api/article";
+import { getAllArticles } from "@/lib/api/article.api";
 import MobileFilter from "../my-gallery/_components/MobileFilter";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Search from "./_components/Search";

@@ -1,4 +1,4 @@
-import { cookieFetch } from "@/lib/fetchClient";
+import { cookieFetch } from "@/lib/api/fetchClient.api";
 
 export async function getAllArticles(keyword) {
   try {

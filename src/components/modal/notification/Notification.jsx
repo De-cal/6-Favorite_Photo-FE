@@ -9,8 +9,11 @@ import mock_data from "./mock_data.json";
 import NotificationsModalMobile from "./NotificationsModalMobile";
 import { useModal } from "@/providers/ModalProvider";
 
-export default function Notification() {
-  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+export default function Notification({
+  isNotificationModalOpen,
+  setIsNotificationModalOpen,
+  handleTabletAndDesktopModalClose,
+}) {
   //TODO: 나중에 카운트 받아와서 null값으로 바꿔주기.
   const [notReadCount, setNotReadCount] = useState(1);
   const [notifications, setNotifications] = useState(mock_data);
@@ -22,6 +25,7 @@ export default function Notification() {
   // 알림 모달 토글.
   const handleNotificationModal = () => {
     setIsNotificationModalOpen(!isNotificationModalOpen);
+    handleTabletAndDesktopModalClose(false);
   };
 
   // 모바일 프로필 모달 열기

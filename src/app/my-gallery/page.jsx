@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCards } from "@/api/card.js";
+import { getAllCards } from "@/lib/api/card.api.js";
 
 export default function MyGalleryPage() {
   const [searchFilter, setSearchFilter] = useState({

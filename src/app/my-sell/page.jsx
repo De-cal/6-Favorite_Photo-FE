@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
 import { useQuery } from "@tanstack/react-query";
-import { getUserArticles } from "@/api/article.js";
+import { getUserArticles } from "@/lib/api/article.api.js";
 
 export default function MySellPage() {
   const [searchFilter, setSearchFilter] = useState({
