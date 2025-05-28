@@ -1,20 +1,17 @@
-export const postPoint = async ({rewardPoints}) => {
+import { cookieFetch } from "@/lib/fetchClient";
+
+export const postPoint = async (rewardPoints) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/points`, {
+    const res = await cookieFetch("/points", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({rewardPoints}),
+      body: JSON.stringify({ rewardPoints }),
     });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
+    if (!res) {
+      throw new Error(data.message || "알 수 없는 서버 에러가 발생했습니다.");
     }
-    return data;
+    return res;
   } catch (error) {
-    console.error("포인트 획득에 실패했습니다:", error);
+    console.error("포인트 획득 API 호출 중 실패했습니다:", error);
     throw error;
   }
 };

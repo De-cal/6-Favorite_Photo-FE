@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RandomBoxCard from "./RandomBoxCard";
 import pointImage from "@/assets/images/img-point.avif";
 import closeIcon from "@/assets/icons/ic-close.svg";
@@ -22,15 +22,17 @@ function RewardPoint() {
     setSelectedOption(option);
   };
 
-  const handleGetPoint = () => {
+  // 포인트 획득 함수.
+  const handleGetPoint = async () => {
     const points = Math.floor(Math.random() * 10) + 1;
     setRewardPoints(points);
 
-    // TODO: 백엔드 및 api 코드 작성후 api 호출 부분 추가 예정.
-    // postPoint(rewardPoints);
-
-    spendOpportunity();
-    setIsSelected(true);
+    const response = await postPoint(points);
+    if (response) {
+      spendOpportunity();
+      setIsSelected(true);
+      setSelectedOption(null);
+    }
   };
 
   return (
