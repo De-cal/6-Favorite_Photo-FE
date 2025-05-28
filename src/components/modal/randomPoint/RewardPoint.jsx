@@ -9,6 +9,7 @@ import { usePointTimer } from "@/providers/PointTimerProvider";
 import { useModal } from "@/providers/ModalProvider";
 import clsx from "clsx";
 import { postPoint } from "@/api/point";
+import { useMutation } from "@tanstack/react-query";
 
 function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
@@ -17,6 +18,15 @@ function RewardPoint() {
 
   const { formattedTime, spendOpportunity } = usePointTimer();
   const { closePointModal } = useModal();
+
+  const { mutate: mutateGetPoint } = useMutation({
+    mutationFn: postPoint,
+    onSuccess: () => {
+      spendOpportunity();
+      setIsSelected(true);
+      setSelectedOption(null);
+    },
+  });
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
@@ -27,12 +37,7 @@ function RewardPoint() {
     const points = Math.floor(Math.random() * 10) + 1;
     setRewardPoints(points);
 
-    const response = await postPoint(points);
-    if (response) {
-      spendOpportunity();
-      setIsSelected(true);
-      setSelectedOption(null);
-    }
+    mutateGetPoint(points);
   };
 
   return (
