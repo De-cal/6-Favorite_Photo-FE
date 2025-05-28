@@ -34,9 +34,17 @@ export default function MyGalleryPage() {
         status: "OWNED", // 고정값이라면
       }),
   });
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>에러 발생</div>;
+
+  const cards = data.list;
+  const totalCount = data.totalCount.totalCount;
+  const cardCount = data.totalCount.cardCount;
+  const ranks = data.rankCounts;
   console.log("데이터", data);
   //리액트 쿼리
-  const filteredCards = mockCards.filter((card) => {
+  const filteredCards = cards.filter((card) => {
     const matchesKeyword =
       !searchFilter.keyword ||
       card.photoCard.title
@@ -56,11 +64,11 @@ export default function MyGalleryPage() {
     <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
-        <RankSection data={mockCards} />
-        <SortAndSearchSection onSearch={setSearchFilter} data={mockCards} />
+        <RankSection totalCount={totalCount} rankCounts={ranks} />
+        <SortAndSearchSection onSearch={setSearchFilter} data={cards} />
         <PhotoCardSection dataLists={filteredCards} />
         <PageNation
-          count={filteredCards.length}
+          count={Math.ceil(cardCount / pageSize)}
           currentPage={page}
           onClick={setPage}
         />
@@ -68,202 +76,3 @@ export default function MyGalleryPage() {
     </div>
   );
 }
-
-const mockCards = [
-  {
-    photoCard: {
-      title: "How Far I'll Go",
-      rank: "RARE",
-      genre: "PORTRAIT",
-      imgURL: "",
-      creator: { nickname: "프로여행러" },
-    },
-    price: 4,
-    quantity: 1,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "고양이",
-      rank: "SUPERRARE",
-      genre: "ANIMAL",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 6,
-    quantity: 2,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "강아지",
-      rank: "COMMON",
-      genre: "ANIMAL",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 2,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "거리를 걷는 남자",
-      rank: "LEGENDARY",
-      genre: "PORTRAIT",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 10,
-    quantity: 1,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "창밖을 보는 여인",
-      rank: "LEGENDARY",
-      genre: "PORTRAIT",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 11,
-    quantity: 3,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "캐논 DSLR 카메라",
-      rank: "SUPERRARE",
-      genre: "OBJECT",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 7,
-    quantity: 3,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "아이패드와 맥북",
-      rank: "SUPERRARE",
-      genre: "OBJECT",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 9,
-    quantity: 3,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "그냥 하얀바탕 사진",
-      rank: "COMMON",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 2,
-    quantity: 3,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "코드 샘플 캡쳐본",
-      rank: "COMMON",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 3,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "테스트 1",
-      rank: "COMMON",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 0,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "고급 테스트 1",
-      rank: "SUPERRARE",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 0,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "최고급 테스트 1",
-      rank: "LEGENDARY",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 0,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-
-  {
-    photoCard: {
-      title: "테스트 2",
-      rank: "COMMON",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 1,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "고급 테스트 2",
-      rank: "SUPERRARE",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 2,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-  {
-    photoCard: {
-      title: "최고급 테스트 2",
-      rank: "LEGENDARY",
-      genre: "ETC",
-      imgURL: "",
-      creator: { nickname: "김숲안" },
-    },
-    price: 3,
-    quantity: 3,
-    status: "SELLING",
-    totalQuantity: 5,
-  },
-];

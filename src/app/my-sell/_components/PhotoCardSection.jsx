@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 export default function PhotoCardSection({ dataLists }) {
+  console.log("넘어온데이터", dataLists);
   return dataLists.length === 0 ? (
     <div className="font-baskinRobbins text-xl text-main pt-20">
       검색 및 필터링을 적용한 카드가 존재하지 않습니다.
@@ -18,13 +19,13 @@ export default function PhotoCardSection({ dataLists }) {
 
         return (
           <div
-            key={dataList.photoCard.title}
+            key={dataList.userPhotoCard.photoCard.title}
             className={`w-full flex ${
               i % 2 === 1 ? "justify-start" : "justify-end"
             } ${mdJustify}`}
           >
             <Link href={"/marketplace/sellers/1"}>
-              <Card card={dataList} type={cardType} />
+              <Card card={dataList.userPhotoCard} type={cardType} />
             </Link>
           </div>
         );

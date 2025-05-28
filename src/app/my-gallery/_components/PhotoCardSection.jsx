@@ -23,7 +23,7 @@ export default function PhotoCardSection({ dataLists }) {
             } ${mdJustify}`}
           >
             <Link href={"/my-gallery/1"}>
-              <Card card={dataList} />
+              <Card card={dataList} type="my_card" />
             </Link>
           </div>
         );
