@@ -12,7 +12,7 @@ import AuthModal from "./AuthModal";
 import { login } from "@/api/auth";
 
 export default function LoginForm() {
-  useRedirectIfAuthenticated();
+  // useRedirectIfAuthenticated(); 리팩터링 후 다시 적용예정
   const {
     email,
     password,
@@ -37,12 +37,7 @@ export default function LoginForm() {
     if (!isFormValid) return;
     try {
       setIsLoading(true);
-      const data = await login({ email, password });
-      // 액세스토큰, 리프레쉬 토큰 발급하여 저장
-      const accessToken = data.accessToken;
-      const refreshToken = data.refreshToken;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      await login({ email, password }); // 서버쪽에서 쿠키에 토큰 넣어줌
       resetForm();
       router.push("/marketplace");
     } catch (error) {
@@ -84,7 +79,10 @@ export default function LoginForm() {
         </div>
 
         <div className="flex flex-col items-center justify-center w-full gap-[16px]">
-          <AuthSubmitButton label="로그인" isDisabled={!isFormValid || isLoading} />
+          <AuthSubmitButton
+            label="로그인"
+            isDisabled={!isFormValid || isLoading}
+          />
           <GoogleAuthButton label="Google로 시작하기" />
         </div>
 

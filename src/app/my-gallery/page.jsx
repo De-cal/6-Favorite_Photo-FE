@@ -86,7 +86,7 @@ const mockCards = [
   {
     photoCard: {
       title: "고양이",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "ANIMAL",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -138,7 +138,7 @@ const mockCards = [
   {
     photoCard: {
       title: "캐논 DSLR 카메라",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "OBJECT",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -151,7 +151,7 @@ const mockCards = [
   {
     photoCard: {
       title: "아이패드와 맥북",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "OBJECT",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -203,7 +203,7 @@ const mockCards = [
   {
     photoCard: {
       title: "고급 테스트 1",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "ETC",
       imgURL: "",
       creator: { nickname: "김숲안" },
@@ -243,7 +243,7 @@ const mockCards = [
   {
     photoCard: {
       title: "고급 테스트 2",
-      rank: "SUPER RARE",
+      rank: "SUPERRARE",
       genre: "ETC",
       imgURL: "",
       creator: { nickname: "김숲안" },
