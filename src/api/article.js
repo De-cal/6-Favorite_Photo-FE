@@ -1,3 +1,5 @@
+import { cookieFetch } from "@/lib/fetchClient";
+
 export async function getAllArticles(keyword) {
   try {
     const query = keyword ? `?keyword=${encodeURIComponent(keyword)}` : "";
@@ -18,7 +20,8 @@ export const getUserArticles = async ({
   rank,
   genre,
   keyword,
-  status,
+  sellingType,
+  soldOut,
 } = {}) => {
   try {
     const queryParams = new URLSearchParams();
@@ -27,14 +30,12 @@ export const getUserArticles = async ({
     if (rank) queryParams.append("rank", rank);
     if (genre) queryParams.append("genre", genre);
     if (keyword) queryParams.append("keyword", keyword);
-    if (status) queryParams.append("status", status);
-    const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/articles/user?${queryParams.toString()}`,
-    );
-    const data = await res.json();
-    console.log("data", data);
+    if (sellingType) queryParams.append("sellingType", sellingType);
+    if (soldOut !== null && soldOut !== undefined)
+      queryParams.append("soldOut", soldOut);
+
+    const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
+
     return data.list;
   } catch (error) {
     console.error("아티클 목록을 가져오는데 실패했습니다:", error);
