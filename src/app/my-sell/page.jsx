@@ -43,6 +43,7 @@ export default function MySellPage() {
       }),
   });
 
+  if (isLoading) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
 
   const cards = data.list;
@@ -95,9 +96,7 @@ export default function MySellPage() {
           data={cards}
           selectedFilter={searchFilter}
         />
-
         <PhotoCardSection dataLists={filteredCards} />
-
         <PageNation
           count={Math.ceil(data.totalCount.articleCount / pageSize)}
           currentPage={page}
