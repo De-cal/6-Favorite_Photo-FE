@@ -7,6 +7,7 @@ const AuthContext = createContext({
   logout: () => {},
   user: null,
   signUp: () => {},
+  getUser: () => {},
 });
 
 export const useAuth = () => {
@@ -23,7 +24,6 @@ export default function AuthProvider({ children }) {
     try {
       const { data: userData } = await authService.getMe();
       setUser(userData);
-      console.log(userData);
     } catch (error) {
       console.error("사용자 정보를 가져오는데 실패했습니다:", error);
       setUser(null);
@@ -51,7 +51,7 @@ export default function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, signUp }}>
+    <AuthContext.Provider value={{ user, login, logout, signUp, getUser }}>
       {children}
     </AuthContext.Provider>
   );
