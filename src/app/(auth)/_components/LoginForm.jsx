@@ -9,9 +9,10 @@ import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthNavigation from "./AuthNavigation";
 import AuthModal from "./AuthModal";
-import { login } from "@/lib/api/auth.api";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function LoginForm() {
+  const { login } = useAuth();
   // useRedirectIfAuthenticated(); 리팩터링 후 다시 적용예정
   const {
     email,
@@ -80,7 +81,7 @@ export default function LoginForm() {
 
         <div className="flex flex-col items-center justify-center w-full gap-[16px]">
           <AuthSubmitButton
-            label="로그인"
+            label={isLoading ? "로그인 중..." : "로그인"}
             isDisabled={!isFormValid || isLoading}
           />
           <GoogleAuthButton label="Google로 시작하기" />

@@ -38,18 +38,20 @@ export const getAllCards = async ({
   }
 };
 
+
 export const createCard = async (formData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {
       method: "POST",
       body: formData,
+      credentials: "include",
     });
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error("카드 생성에 실패했습니다.");
     }
 
-    const data = await res.json();
+    const data = await response.json();
     console.log("카드 생성 성공:", data);
     return data;
   } catch (error) {
