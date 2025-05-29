@@ -5,18 +5,17 @@ import ic_alarm_default from "@/assets/icons/ic-alarm-default.svg";
 import ic_alarm_active from "@/assets/icons/ic-alarm-active.svg";
 import NotificationsModal from "./NotificationsModal";
 import Image from "next/image";
-import mock_data from "./mock_data.json";
 import NotificationsModalMobile from "./NotificationsModalMobile";
 import { useModal } from "@/providers/ModalProvider";
+import { getMyNotifications } from "@/lib/api/notification.api";
 
 export default function Notification({
   isNotificationModalOpen,
   setIsNotificationModalOpen,
   handleTabletAndDesktopModalClose,
 }) {
-  //TODO: 나중에 카운트 받아와서 null값으로 바꿔주기.
-  const [notReadCount, setNotReadCount] = useState(1);
-  const [notifications, setNotifications] = useState(mock_data);
+  const [notReadCount, setNotReadCount] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -53,7 +52,16 @@ export default function Notification({
   }, []);
 
   // TODO: 알림 받아오는 로직(카운트 포함). (유즈이펙트) => 리액트 쿼리로 변경.
-  useEffect(() => {}, []);
+  const dataFetch = async () => {
+    const response = await getMyNotifications();
+    if (response) {
+      setNotifications(response.notifications);
+      setNotReadCount(response.unreadCount);
+    }
+  };
+  useEffect(() => {
+    dataFetch();
+  }, []);
 
   return (
     <div className="relative">
