@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 
 export default function PhotoCardSection({ dataLists }) {
-  console.log("넘어온데이터", dataLists);
   return dataLists.length === 0 ? (
     <div className="font-baskinRobbins text-xl text-main pt-20">
       검색 및 필터링을 적용한 카드가 존재하지 않습니다.
@@ -15,7 +14,8 @@ export default function PhotoCardSection({ dataLists }) {
         if (i % 3 === 1) mdJustify = "md:justify-center";
         else if (i % 3 === 2) mdJustify = "md:justify-end";
 
-        const cardType = dataList.quantity === 0 ? "soldout" : "for_sale";
+        const cardType =
+          dataList.remainingQuantity === 0 ? "soldout" : "for_sale";
 
         return (
           <div

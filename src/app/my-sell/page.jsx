@@ -1,29 +1,29 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import TopSection from "./_components/TopSection";
 import RankSection from "./_components/RankSection";
 import SortAndSearchSection from "./_components/SortAndSearchSection";
-import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
 import { useQuery } from "@tanstack/react-query";
 import { getUserArticles } from "@/lib/api/article.api.js";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function MySellPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [searchFilter, setSearchFilter] = useState({
-    keyword: "",
-    rank: null,
-    genre: null,
-    sellingType: null,
-    soldout: null,
+    keyword: searchParams.get("keyword") ?? "",
+    rank: searchParams.get("rank") ?? null,
+    genre: searchParams.get("genre") ?? null,
+    sellingType: searchParams.get("sellingType") ?? null,
+    soldout: searchParams.get("soldout") ?? null,
   });
-  const [page, setPage] = useState(1);
+
+  const [page, setPage] = useState(Number(searchParams.get("page") ?? "1"));
   const pageSize = 15;
 
-  useEffect(() => {
-    // 원하는 로직 실행 ( API 호출)
-  }, [page, searchFilter]);
-  //리액트 쿼리
   const { data, isLoading, isError } = useQuery({
     queryKey: ["my-user-articles", page, searchFilter],
     queryFn: () =>
@@ -34,11 +34,15 @@ export default function MySellPage() {
         genre: searchFilter.genre,
         keyword: searchFilter.keyword,
         sellingType: searchFilter.sellingType,
-        soldOut: searchFilter.soldout,
+        soldOut:
+          searchFilter.soldout === "SOLDOUT"
+            ? true
+            : searchFilter.soldout === "SELLING"
+            ? false
+            : undefined,
       }),
   });
 
-  if (isLoading) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
 
   const cards = data.list;
@@ -47,17 +51,20 @@ export default function MySellPage() {
   const ranks = data.rankCounts;
 
   const filteredCards = cards.filter((card) => {
+    const photoCard = card.userPhotoCard?.photoCard;
+    if (!photoCard) return false;
+
     const matchesKeyword =
       !searchFilter.keyword ||
-      card.photoCard.title
+      photoCard.title
         .toLowerCase()
         .includes(searchFilter.keyword.toLowerCase());
 
     const matchesGrade =
-      !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
+      !searchFilter.rank || photoCard.rank === searchFilter.rank;
 
     const matchesGenre =
-      !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
+      !searchFilter.genre || photoCard.genre === searchFilter.genre;
 
     const matchesSellingType =
       !searchFilter.sellingType || card.status === searchFilter.sellingType;
@@ -65,8 +72,8 @@ export default function MySellPage() {
     const matchesSoldout =
       !searchFilter.soldout ||
       (searchFilter.soldout === "SELLING"
-        ? card.quantity > 0
-        : card.quantity === 0);
+        ? card.remainingQuantity > 0
+        : card.remainingQuantity === 0);
 
     return (
       matchesKeyword &&
@@ -76,17 +83,30 @@ export default function MySellPage() {
       matchesSoldout
     );
   });
+  console.log("data:", data);
+
   return (
-    <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
-      <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
+    <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
+      <div className="flex flex-col w-full max-w-[1480px] items-center justify-center">
         <TopSection />
         <RankSection totalCount={totalCount} rankCounts={ranks} />
-        <SortAndSearchSection onSearch={setSearchFilter} data={cards} />
+        <SortAndSearchSection
+          onSearch={setSearchFilter}
+          data={cards}
+          selectedFilter={searchFilter}
+        />
+
         <PhotoCardSection dataLists={filteredCards} />
+
         <PageNation
-          count={Math.ceil(articleCount / pageSize)}
+          count={Math.ceil(data.totalCount.articleCount / pageSize)}
           currentPage={page}
-          onClick={setPage}
+          onClick={(newPage) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set("page", newPage);
+            router.push(`?${params.toString()}`);
+            setPage(newPage);
+          }}
         />
       </div>
     </div>

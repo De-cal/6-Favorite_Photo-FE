@@ -1,3 +1,4 @@
+// SortAndSearchSection.jsx
 "use client";
 import search from "../../../assets/icons/ic-search.svg";
 import filter from "../../../assets/icons/ic-filter.svg";
@@ -10,23 +11,19 @@ import MobileFilter from "./MobileFilter";
 export default function SortAndSearchSection({ onSearch, data }) {
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
-  const [openDropdown, setOpenDropdown] = useState(null); // ✅ 드롭다운 제어 상태
+  const [openDropdown, setOpenDropdown] = useState(null);
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch?.({
-      keyword,
-      rank: selectedGrade,
-      genre: selectedGenre,
-    });
+    onSearch?.({ keyword, rank: selectedGrade, genre: selectedGenre });
   };
 
   const { openModal, closeModal } = useModal();
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 744) {
-        closeModal(); // sm 이상이면 모달 닫기
+        closeModal();
       }
     };
     window.addEventListener("resize", handleResize);
@@ -35,7 +32,6 @@ export default function SortAndSearchSection({ onSearch, data }) {
 
   return (
     <>
-      {/* ✅ 모바일 */}
       <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
@@ -77,7 +73,6 @@ export default function SortAndSearchSection({ onSearch, data }) {
         </form>
       </section>
 
-      {/* ✅ 데스크탑 */}
       <section className="pt-[15px] hidden sm:flex sm:flex-row gap-[30px] items-center md:max-w-[1480px] justify-start w-full">
         <form
           onSubmit={handleSubmit}
@@ -102,11 +97,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
             setOpenDropdown={setOpenDropdown}
             onSelect={(value) => {
               setSelectedGrade(value);
-              onSearch?.({
-                keyword,
-                rank: value,
-                genre: selectedGenre,
-              });
+              onSearch?.({ keyword, rank: value, genre: selectedGenre });
             }}
           />
           <Dropdown
@@ -115,11 +106,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
             setOpenDropdown={setOpenDropdown}
             onSelect={(value) => {
               setSelectedGenre(value);
-              onSearch?.({
-                keyword,
-                rank: selectedGrade,
-                genre: value,
-              });
+              onSearch?.({ keyword, rank: selectedGrade, genre: value });
             }}
           />
         </div>

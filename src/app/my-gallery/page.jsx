@@ -1,76 +1,73 @@
+// page.jsx
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import TopSection from "./_components/TopSection";
 import RankSection from "./_components/RankSection";
 import SortAndSearchSection from "./_components/SortAndSearchSection";
-import { useState, useEffect } from "react";
 import PhotoCardSection from "./_components/PhotoCardSection";
 import PageNation from "./_components/PageNation";
-import { useQuery } from "@tanstack/react-query";
-import { getAllCards } from "@/lib/api/card.api.js";
+import { getAllCards } from "@/lib/api/card.api";
 
 export default function MyGalleryPage() {
-  const [searchFilter, setSearchFilter] = useState({
-    keyword: "",
-    rank: null,
-    genre: null,
-  });
-  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
   const pageSize = 15;
 
-  useEffect(() => {
-    // 원하는 로직 실행 ( API 호출)
-  }, [page, searchFilter]);
-  //리액트 쿼리
+  const searchFilter = {
+    keyword: searchParams.get("keyword") || "",
+    rank: searchParams.get("rank") || null,
+    genre: searchParams.get("genre") || null,
+  };
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["my-gallery-cards", page, searchFilter],
     queryFn: () =>
       getAllCards({
         page,
         pageSize,
-        rank: searchFilter.rank,
-        genre: searchFilter.genre,
-        keyword: searchFilter.keyword,
-        status: "OWNED", // 고정값이라면
+        ...searchFilter,
+        status: "OWNED",
       }),
   });
+
+  const updateQuery = (newFilters) => {
+    const params = new URLSearchParams();
+    if (newFilters.keyword) params.set("keyword", newFilters.keyword);
+    if (newFilters.rank) params.set("rank", newFilters.rank);
+    if (newFilters.genre) params.set("genre", newFilters.genre);
+    params.set("page", "1"); // 검색 후 페이지 초기화
+    router.push(`?${params.toString()}`);
+    setPage(1);
+  };
 
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
 
   const cards = data.list;
   const totalCount = data.totalCount.totalCount;
-  const cardCount = data.totalCount.cardCount;
   const ranks = data.rankCounts;
 
-  //리액트 쿼리
-  const filteredCards = cards.filter((card) => {
-    const matchesKeyword =
-      !searchFilter.keyword ||
-      card.photoCard.title
-        .toLowerCase()
-        .includes(searchFilter.keyword.toLowerCase());
-
-    const matchesGrade =
-      !searchFilter.rank || card.photoCard.rank === searchFilter.rank;
-
-    const matchesGenre =
-      !searchFilter.genre || card.photoCard.genre === searchFilter.genre;
-
-    return matchesKeyword && matchesGrade && matchesGenre;
-  });
-
   return (
-    <div className=" flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
+    <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
         <RankSection totalCount={totalCount} rankCounts={ranks} />
-        <SortAndSearchSection onSearch={setSearchFilter} data={cards} />
-        <PhotoCardSection dataLists={filteredCards} />
+        <SortAndSearchSection onSearch={updateQuery} data={cards} />
+
+        <PhotoCardSection dataLists={cards} />
         <PageNation
-          count={Math.ceil(cardCount / pageSize)}
+          count={Math.ceil(data.totalCount.cardCount / pageSize)}
           currentPage={page}
-          onClick={setPage}
+          onClick={(newPage) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set("page", newPage);
+            router.push(`?${params.toString()}`);
+            setPage(newPage);
+          }}
         />
       </div>
     </div>

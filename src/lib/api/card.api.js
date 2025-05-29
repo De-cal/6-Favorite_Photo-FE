@@ -26,7 +26,6 @@ export const getAllCards = async ({
     if (genre) queryParams.append("genre", genre);
     if (keyword) queryParams.append("keyword", keyword);
     if (status) queryParams.append("status", status);
-    //if (includeZero) queryParams.append("includeZero", includeZero);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/cards?${queryParams.toString()}`,
     );
