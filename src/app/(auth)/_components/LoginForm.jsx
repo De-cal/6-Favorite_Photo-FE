@@ -80,7 +80,7 @@ export default function LoginForm() {
 
         <div className="flex flex-col items-center justify-center w-full gap-[16px]">
           <AuthSubmitButton
-            label="로그인"
+            label={isLoading ? "로그인 중..." : "로그인"}
             isDisabled={!isFormValid || isLoading}
           />
           <GoogleAuthButton label="Google로 시작하기" />

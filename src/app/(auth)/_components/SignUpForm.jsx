@@ -116,7 +116,7 @@ export default function SignUpForm() {
         </div>
         <div className="flex flex-col items-center justify-center w-full gap-[16px]">
           <AuthSubmitButton
-            label="회원가입"
+            label={isLoading ? "회원가입 중..." : "회원가입"}
             isDisabled={!isFormValid || isLoading}
           />
           <GoogleAuthButton label="Google로 시작하기" />

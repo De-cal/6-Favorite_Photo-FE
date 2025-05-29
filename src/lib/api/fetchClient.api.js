@@ -4,6 +4,7 @@ const API_BASE_URL =
 export async function cookieFetch(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: "include", // 쿠키 보내기 위한 설정 (access/refresh tokens)
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {}),
