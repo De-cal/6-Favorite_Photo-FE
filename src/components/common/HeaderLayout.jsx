@@ -17,7 +17,7 @@ export default function HeaderLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { openModal } = useModal();
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const { user, login, logout, signup } = useAuth();
+  const { user, logout } = useAuth();
 
   const path = usePathname();
 

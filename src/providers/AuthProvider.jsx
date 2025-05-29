@@ -29,8 +29,10 @@ export default function AuthProvider({ children }) {
       setUser(null);
     }
   };
-  const signUp = async (name, email, password) => {
-    await authService.signUp(name, email, password);
+  
+  const signUp = async (email, nickname, password, passwordConfirm) => {
+    await authService.signUp(email, nickname, password, passwordConfirm);
+    await getUser();
   };
 
   const login = async (email, password) => {
