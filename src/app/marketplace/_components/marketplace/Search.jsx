@@ -1,5 +1,5 @@
 import React from "react";
-import searchIcon from "../../../assets/icons/ic-search.svg";
+import searchIcon from "@/assets/icons/ic-search.svg";
 import Image from "next/image";
 import { useState } from "react";
 
