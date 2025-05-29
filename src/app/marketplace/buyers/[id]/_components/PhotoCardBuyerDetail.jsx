@@ -29,7 +29,7 @@ export default function PhotoCardBuyerDetail() {
     },
     price: 4,
     totalQuantity: 5,
-    ramainingQuantity: 2,
+    remainingQuantity: 2,
     exchangeText:
       "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
     exchangeRank: "RARE",
@@ -49,7 +49,7 @@ export default function PhotoCardBuyerDetail() {
 
   // 구매수량 추가
   const handleIncrease = () => {
-    if (purchaseQuantity === cardArticle.ramainingQuantity) return;
+    if (purchaseQuantity === cardArticle.remainingQuantity) return;
 
     setPurchaseQuantity(purchaseQuantity + 1);
   };
@@ -116,7 +116,7 @@ export default function PhotoCardBuyerDetail() {
               </p>
               <div className="flex justify-center items-center gap-[5px]">
                 <p className="font-bold text-[20px]/[24px] md:text-[24px]/[29px]">
-                  {cardArticle.ramainingQuantity}
+                  {cardArticle.remainingQuantity}
                 </p>
                 <p className="font-normal text-[20px]/[24px] text-gray-300 md:text-[24px]/[29px]">
                   / {cardArticle.totalQuantity}

@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React,{useState} from "react";
 import GradeDetail from "@/components/common/GradeDetail";
 import Image from "next/image";
 import exchange from "@/assets/icons/ic-exchange.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
+import DeletePhotoCardModal from "./DeletePhotoCardModal";
 
 export default function SellerCardInfo({ cardArticle }) {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   return (
     <div className="flex flex-col justify-between w-[345px] md:w-[440px] sm:w-[342px] m-auto">
       <div>
@@ -38,7 +40,7 @@ export default function SellerCardInfo({ cardArticle }) {
             <span className="text-[20px] text-gray-300">잔여 </span>
             <div>
               <span className="text-lg font-bold">
-                {cardArticle.ramainingQuantity}
+                {cardArticle.remainingQuantity}
               </span>
               <span className="text-gray-300 text-lg font-bold">
                 {" "}
@@ -80,8 +82,16 @@ export default function SellerCardInfo({ cardArticle }) {
         >
           수정하기
         </ActionButton>
-        <ActionButton variant="secondary">판매 내리기</ActionButton>
+        <ActionButton onClick={() => setIsDeleteModalOpen(true)} variant="secondary">판매 내리기</ActionButton>
       </div>
+
+      {/* 삭제 모달 */}
+      {isDeleteModalOpen && (
+        <DeletePhotoCardModal
+          onClose={() => setIsDeleteModalOpen(false)}
+          cardId={cardArticle.id} // 필요 시 카드 ID 전달
+        />
+      )}
     </div>
   );
 }

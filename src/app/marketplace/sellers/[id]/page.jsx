@@ -35,7 +35,7 @@ export default function SellerPage() {
                 },
                 price: 4,
                 totalQuantity: 5,
-                ramainingQuantity: 2,
+                remainingQuantity: 2,
                 exchangeText: "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
                 exchangeRank: "RARE",
                 exchangeGenre: "풍경",
