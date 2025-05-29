@@ -64,3 +64,10 @@ export async function getMe() {
     method: "GET",
   });
 }
+
+export default {
+  signUp,
+  login,
+  logout,
+  getMe,
+};
