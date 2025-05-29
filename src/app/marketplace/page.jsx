@@ -34,7 +34,13 @@ export default function MarketplacePage() {
     try {
       const data = await getAllArticles(page, LIMIT, searchKeyWord);
       if (data && Array.isArray(data.articles)) {
-        setArticles((prev) => [...prev, ...data.articles]);
+        setArticles((prev) => {
+          const existingIds = new Set(prev.map((article) => article.id));
+          const newArticles = data.articles.filter(
+            (article) => !existingIds.has(article.id),
+          );
+          return [...prev, ...newArticles];
+        });
         setHasMore(page < data.totalPages);
       } else {
         setHasMore(false);
