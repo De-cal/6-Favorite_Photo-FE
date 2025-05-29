@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import Card from "@/components/common/Card";
 import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
@@ -8,67 +8,57 @@ import { useModal } from "@/providers/ModalProvider";
 import ExchangeInputModal from "../buyers/[id]/_components/modal/ExchangeInputModal";
 import { getAllCards } from "@/lib/api/card.api";
 import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
-  const [cards, setCards] = useState([]);
-
   const { openModal } = useModal();
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const scrollRef = useRef(null);
+
   const [searchFilter, setSearchFilter] = useState({
     keyword: "",
     rank: null,
     genre: null,
   });
 
-  useEffect(() => {
-    setPage(1);
-    setHasMore(true);
-    setCards([]);
-    fetchCards(1);
-  }, [searchFilter]);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery({
+      queryKey: ["cards", JSON.stringify(searchFilter)],
+      queryFn: ({ pageParam = 1 }) =>
+        getAllCards({
+          ...searchFilter,
+          page: pageParam,
+          pageSize: 12,
+        }),
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+    });
+
+  const allCards = data?.pages.flatMap((page) => page.list) || [];
 
   useEffect(() => {
-    fetchCards(page);
-  }, [page]);
+    const target = scrollRef.current;
+    if (!target) return;
 
-  const fetchCards = async () => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const fetchedCards = await getAllCards({
-        ...searchFilter,
-        page,
-        includeZero: false,
-      });
-      if (fetchedCards.length === 0) {
-        setHasMore(false);
-      } else {
-        setCards((prev) =>
-          page === 1 ? fetchedCards : [...prev, ...fetchedCards],
-        );
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
     const handleScroll = () => {
-      if (loading || !hasMore) return;
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 300
-      ) {
-        setPage((prev) => prev + 1);
+      if (isFetchingNextPage || !hasNextPage) return;
+      const { scrollTop, clientHeight, scrollHeight } = target;
+      if (scrollTop + clientHeight >= scrollHeight - 200) {
+        fetchNextPage();
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore]);
+    target.addEventListener("scroll", handleScroll);
+    return () => target.removeEventListener("scroll", handleScroll);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleClickOpenModal = (card) => {
     setIsModalOpen(false);
@@ -84,24 +74,13 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
     }
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        setIsModalOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   return (
     <div
-      className="fixed inset-0 z-50 flex justify-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px"
+      className="fixed inset-0 z-50 flex justify-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px]"
       onClick={() => setIsModalOpen(false)}
     >
       <div
+        ref={scrollRef}
         className="max-w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px]"
         onClick={(e) => e.stopPropagation()}
       >
@@ -110,21 +89,22 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
             <Image src={close} alt="close" className="h-[32px]" />
           </button>
         </div>
-        <div className=" w-[345px] sm:w-[704px] md:w-[920px]">
+        <div className="w-[345px] sm:w-[704px] md:w-[920px]">
           <div className="text-gray-300 font-baskinRobbins text-[14px] sm:text-[16px] md:text-[24px]">
             마이갤러리
           </div>
           <div className="font-baskinRobbins text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px]">
             {type === "판매" ? "나의 포토카드 판매하기" : "포토카드 교환하기"}
           </div>
-          <div className="hidden sm:block border-b-2 border-white mt-[20px]">
-            {" "}
-          </div>
+          <div className="hidden sm:block border-b-2 border-white mt-[20px]" />
           <div className="flex gap-[10px] w-full mt-[20px] sm:flex-row-reverse">
-            <SortAndSearchSection data={cards} onSearch={setSearchFilter} />
+            <SortAndSearchSection
+              data={allCards}
+              onSearch={(filter) => setSearchFilter(filter)}
+            />
           </div>
           <div className="grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]">
-            {cards.map((card) => (
+            {allCards.map((card) => (
               <Card
                 key={card.id}
                 onClick={() => handleClickOpenModal(card)}
@@ -133,6 +113,10 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
               />
             ))}
           </div>
+          {isLoading && <div className="text-white mt-4">로딩 중...</div>}
+          {isFetchingNextPage && (
+            <div className="text-white mt-4">로딩 중...</div>
+          )}
         </div>
       </div>
     </div>

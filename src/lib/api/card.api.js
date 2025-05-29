@@ -26,12 +26,10 @@ export const getAllCards = async ({
     if (genre) queryParams.append("genre", genre);
     if (keyword) queryParams.append("keyword", keyword);
     if (status) queryParams.append("status", status);
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/cards?${queryParams.toString()}`,
-    );
 
     // 쿠키에 있는 accessToken 자동 전송
     const data = await cookieFetch(`/cards?${queryParams.toString()}`);
+    console.log("data", data);
 
     return data;
   } catch (error) {
@@ -42,16 +40,17 @@ export const getAllCards = async ({
 
 export const createCard = async (formData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {
       method: "POST",
       body: formData,
+      credentials: "include",
     });
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error("카드 생성에 실패했습니다.");
     }
 
-    const data = await res.json();
+    const data = await response.json();
     console.log("카드 생성 성공:", data);
     return data;
   } catch (error) {

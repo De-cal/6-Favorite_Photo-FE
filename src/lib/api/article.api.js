@@ -1,16 +1,25 @@
 import { cookieFetch } from "@/lib/api/fetchClient.api";
 
-export async function getAllArticles(keyword) {
+export async function getAllArticles(page = 1, limit = 12, keyword = "") {
   try {
-    const query = keyword ? `?keyword=${encodeURIComponent(keyword)}` : "";
+    const query =
+      `?page=${page}&limit=${limit}` +
+      (keyword ? `&keyword=${encodeURIComponent(keyword)}` : "");
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/articles${query}`,
     );
-    const data = await response.json();
-    console.log("data", data);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch articles");
+    }
+
+    const data = await response.json(); // { articles: [], totalPages, currentPage }
+    console.log(data);
     return data;
   } catch (error) {
-    return error.message;
+    console.error("getAllArticles error:", error);
+    return { articles: [], totalPages: 1 };
   }
 }
 
@@ -45,12 +54,8 @@ export const getUserArticles = async ({
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/articles`, {
+    const res = await cookieFetch(`/articles`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
       body: JSON.stringify(articleData),
     });
     const data = await res.json();
