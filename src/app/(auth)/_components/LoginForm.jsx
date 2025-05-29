@@ -9,7 +9,6 @@ import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthNavigation from "./AuthNavigation";
 import AuthModal from "./AuthModal";
-// import { login } from "@/lib/api/auth.api";
 import { useAuth } from "@/providers/AuthProvider";
 
 export default function LoginForm() {

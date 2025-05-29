@@ -9,11 +9,12 @@ import AuthSubmitButton from "./AuthSubmitButton";
 import GoogleAuthButton from "./GoogleAuthButton";
 import AuthModal from "./AuthModal";
 import AuthNavigation from "./AuthNavigation";
-import { signUp } from "@/lib/api/auth.api";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function SignUpForm() {
   // 토큰이 있는 유저는 marketplace 페이지로 리다이렉트
   // useRedirectIfAuthenticated(); 리팩터링 해야함 쿠키토큰 방식에 맞게
+  const { signUp } = useAuth();
   const {
     email,
     nickname,
