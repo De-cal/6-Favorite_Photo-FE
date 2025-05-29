@@ -22,12 +22,10 @@ export const readNotification = async (notificationId) => {
     const res = await cookieFetch(`/notifications/${notificationId}/read`, {
       method: "PATCH",
     });
-    
-    const data = await res.json();
-    if (!res.ok) {
+    if (!res) {
       throw new Error(data.message);
     }
-    return data;
+    return res;
   } catch (error) {
     console.error("읽음 처리 하는데 실패했습니다:", error);
     throw error;
