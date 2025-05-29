@@ -21,8 +21,9 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const getUser = async () => {
     try {
-      const userData = await authService.getMe();
+      const { data: userData } = await authService.getMe();
       setUser(userData);
+      console.log(userData);
     } catch (error) {
       console.error("사용자 정보를 가져오는데 실패했습니다:", error);
       setUser(null);
@@ -38,6 +39,8 @@ export default function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+    await authService.logout();
+    setUser(null);
     console.log("로그아웃");
   };
 

@@ -11,11 +11,13 @@ import { useModal } from "@/providers/ModalProvider";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Notification from "../modal/notification/Notification";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function HeaderLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { openModal } = useModal();
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const { user, login, logout, signup } = useAuth();
 
   const path = usePathname();
 
@@ -63,11 +65,11 @@ export default function HeaderLayout() {
                 className="object-cover"
               />
             </Link>
-            {/* 지수님 TODO: 인증/인가 하실 때 true 부분 변경하시면 됩니다. */}
-            {true ? (
+            {/* 지수님 TODO: 인증/인가 하실 때 true 부분 변경하시면 됩니다. -> 변경하였습니다 */}
+            {user ? (
               <div className="flex justify-center items-center gap-[30px]">
                 <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
-                  1,540 P
+                  {user.pointAmount}
                 </p>
                 <div>
                   <Notification
@@ -83,7 +85,7 @@ export default function HeaderLayout() {
                     onClick={handleTabletAndDesktopModalOpen}
                     className="font-baskinRobbins font-normal text-[18px]/[18px] tracking-[-3%] text-gray-200 cursor-pointer"
                   >
-                    유디
+                    {user.nickname}
                   </button>
                   {isModalVisible && (
                     <TabletAndDesktopProfileModal
@@ -94,12 +96,12 @@ export default function HeaderLayout() {
                   )}
                 </div>
                 <div className="border-l-[1.5px] border-gray-400 h-[17px] hidden sm:block"></div>
-                <Link
-                  href="/"
+                <button
+                  onClick={logout}
                   className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 hidden sm:block"
                 >
                   로그아웃
-                </Link>
+                </button>
               </div>
             ) : (
               <div className="flex justify-center items-center gap-[30px]">
