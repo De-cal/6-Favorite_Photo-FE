@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
-import { genreChange } from "@/utils/genreChange";
+import { genreChange } from "@/lib/utils/genreChange";
 import GradeDetail from "@/components/common/GradeDetail";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import { useModal } from "@/providers/ModalProvider";

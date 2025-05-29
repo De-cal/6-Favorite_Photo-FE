@@ -1,5 +1,10 @@
 "use client";
-import { isRequired, validateEmail, validateNickname, validatePassword } from "@/utils/authValidators";
+import {
+  isRequired,
+  validateEmail,
+  validateNickname,
+  validatePassword,
+} from "@/lib/utils/authValidators";
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 
@@ -17,7 +22,9 @@ export default function FormInput({
   ...props
 }) {
   const [inputValue, setInputValue] = useState(propValue || "");
-  const [currentIsValid, setCurrentIsValid] = useState(propIsValid === undefined ? true : propIsValid);
+  const [currentIsValid, setCurrentIsValid] = useState(
+    propIsValid === undefined ? true : propIsValid,
+  );
 
   useEffect(() => {
     if (propValue !== undefined) {
@@ -70,7 +77,11 @@ export default function FormInput({
         onChange={handleChange}
         {...props}
       />
-      {isInvalid && <p className="text-red text-sm font-semibold leading-6">{validateInput(inputValue).message}</p>}
+      {isInvalid && (
+        <p className="text-red text-sm font-semibold leading-6">
+          {validateInput(inputValue).message}
+        </p>
+      )}
     </div>
   );
 }

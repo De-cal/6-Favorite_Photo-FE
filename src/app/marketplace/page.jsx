@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { getAllArticles } from "@/api/article";
 import MarketplaceHeader from "./_components/marketplace/MarketplaceHeader";
 import ArticleGrid from "./_components/marketplace/ArticleGrid";
 import MobileSortAndFilter from "./_components/marketplace/MobileSortAndFilter";
+
+import { getAllArticles } from "@/lib/api/article.api";
+
 import MobileFilter from "../my-gallery/_components/MobileFilter";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 

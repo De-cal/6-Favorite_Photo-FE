@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
 import example from "@/assets/images/img-card-placeholder-1.svg";
-import { genreChange } from "@/utils/genreChange";
+import { genreChange } from "@/lib/utils/genreChange";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import { useModal } from "@/providers/ModalProvider";
 

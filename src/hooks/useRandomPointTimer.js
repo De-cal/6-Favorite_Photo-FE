@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { encryptData, decryptData } from '@/utils/encryption';
+import { encryptData, decryptData } from '@/lib/utils/encryption';
 
 const POINT_TIMER_KEY = process.env.NEXT_PUBLIC_POINT_TIMER_KEY;
 const POINT_OPPORTUNITY_KEY = process.env.NEXT_PUBLIC_POINT_OPPORTUNITY_KEY;

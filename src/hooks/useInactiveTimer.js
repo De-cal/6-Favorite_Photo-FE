@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useCallback, useRef } from 'react';
-import { encryptData, decryptData } from '@/utils/encryption';
+import { encryptData, decryptData } from '@/lib/utils/encryption';
 
 // const INACTIVE_THRESHOLD = 20 * 60 * 1000; // 20분
 const INACTIVE_THRESHOLD = 20  * 1000; // 테스트용 20초

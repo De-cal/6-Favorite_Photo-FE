@@ -1,4 +1,4 @@
-import { cookieFetch } from "@/lib/fetchClient";
+import { cookieFetch } from "@/lib/api/fetchClient.api";
 
 export async function getAllArticles(page = 1, limit = 12, keyword = "") {
   try {
@@ -44,7 +44,7 @@ export const getUserArticles = async ({
 
     const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
 
-    return data.list;
+    return data;
   } catch (error) {
     console.error("아티클 목록을 가져오는데 실패했습니다:", error);
     throw error;
