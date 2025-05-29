@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "@/components/common/Card";
+import Link from "next/link";
 
 export default function ArticleGrid({
   articles,
@@ -39,25 +40,27 @@ export default function ArticleGrid({
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
       {filtered.map((article) => (
-        <Card
-          key={article.id}
-          type="for_sale"
-          card={{
-            photoCard: {
-              title: article.photoCard.title,
-              rank: article.photoCard.rank,
-              genre: article.photoCard.genre,
-              imgURL: article.photoCard.imgUrl,
-              creator: {
-                nickname: article.user.nickname,
+        <Link key={article.id} href={`/buyers/${article.id}`}>
+          <Card
+            type="for_sale"
+            onClick={() => Router.push}
+            card={{
+              photoCard: {
+                title: article.photoCard.title,
+                rank: article.photoCard.rank,
+                genre: article.photoCard.genre,
+                imgURL: article.photoCard.imgUrl,
+                creator: {
+                  nickname: article.user.nickname,
+                },
               },
-            },
-            price: article.price,
-            quantity: article.quantity,
-            status: article.status,
-            totalQuantity: article.totalQuantity,
-          }}
-        />
+              price: article.price,
+              quantity: article.quantity,
+              status: article.status,
+              totalQuantity: article.totalQuantity,
+            }}
+          />
+        </Link>
       ))}
     </div>
   );
