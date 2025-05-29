@@ -16,7 +16,7 @@ export default function MySellPage() {
   const [searchFilter, setSearchFilter] = useState(null);
   const [page, setPage] = useState(1);
   const pageSize = 15;
-  //진짜 왜 충돌나는지 알려줘 ㅠ
+  //진짜
   useEffect(() => {
     const keyword = searchParams.get("keyword") ?? "";
     const rank = searchParams.get("rank")?.replace(/\s+/g, "") ?? null;
@@ -101,11 +101,13 @@ export default function MySellPage() {
           totalCount={data.totalCount.totalCount}
           rankCounts={ranks}
         />
+        {/* 서스팬스로 감싸기 */}
         <SortAndSearchSection
           onSearch={setSearchFilter}
           data={data}
           selectedFilter={searchFilter}
         />
+        {/* 서스팬스로 감싸기 */}
         <PhotoCardSection dataLists={filteredCards} />
         <PageNation
           count={Math.ceil(articleCount / pageSize)}
