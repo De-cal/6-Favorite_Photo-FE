@@ -21,13 +21,17 @@ export default function SortAndSearchSection({
 
   const updateQuery = (key, value) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set(key, value);
+
+    const sanitizedValue = value?.replace?.(/\s+/g, "");
+
+    if (sanitizedValue) {
+      params.set(key, sanitizedValue);
     } else {
       params.delete(key);
     }
+
     router.push(`?${params.toString()}`);
-    onSearch((prev) => ({ ...prev, [key]: value }));
+    onSearch((prev) => ({ ...prev, [key]: sanitizedValue }));
   };
 
   const handleSubmit = (e) => {
@@ -49,6 +53,48 @@ export default function SortAndSearchSection({
 
   return (
     <>
+      {/* ✅ 모바일 */}
+      <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
+        <button
+          className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
+          onClick={() => {
+            openModal(
+              <MobileFilter
+                datas={data}
+                onSelectFilter={(selected) => {
+                  if (selected.rank) setSelectedGrade(selected.rank);
+                  if (selected.genre) setSelectedGenre(selected.genre);
+                  onSearch?.({
+                    keyword,
+                    rank: selected.rank,
+                    genre: selected.genre,
+                  });
+                }}
+              />,
+              "bottom",
+              "center",
+            );
+          }}
+        >
+          <Image src={filter} width={24} height={24} alt="검색버튼" />
+        </button>
+        <form
+          onSubmit={handleSubmit}
+          className="flex items-center border border-gray-200 w-full sm:max-w-[250px] h-[45px] md:max-w-[320px] md:h-[50px] px-5"
+        >
+          <input
+            type="text"
+            placeholder="검색"
+            className="bg-transparent outline-none flex-grow text-sm text-white"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+          <button type="submit" className="cursor-pointer">
+            <Image src={search} width={17} height={17} alt="검색버튼" />
+          </button>
+        </form>
+      </section>
+
       {/* 데스크탑 */}
       <section className="pt-[15px] sm:flex flex-row gap-[30px] items-center w-full hidden">
         <form

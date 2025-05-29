@@ -62,7 +62,7 @@ export default function Dropdown({
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-2 z-10 max-w-45 border border-gray-200 bg-black">
+          <div className="absolute top-full left-0 mt-2 z-11 max-w-45 border border-gray-200 bg-black ">
             {getOptionsByType().map(([value, label]) => (
               <div
                 key={value}

@@ -1,4 +1,3 @@
-// page.jsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -14,16 +13,21 @@ export default function MyGalleryPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+  const [page, setPage] = useState(1);
+  const [searchFilter, setSearchFilter] = useState(null);
   const pageSize = 15;
 
-  const searchFilter = {
-    keyword: searchParams.get("keyword") || "",
-    rank: searchParams.get("rank") || null,
-    genre: searchParams.get("genre") || null,
-  };
+  useEffect(() => {
+    const parsedPage = Number(searchParams.get("page") || "1");
+    const keyword = searchParams.get("keyword") || "";
+    const rank = searchParams.get("rank") || null;
+    const genre = searchParams.get("genre") || null;
 
-  const { data, isLoading, isError } = useQuery({
+    setPage(parsedPage);
+    setSearchFilter({ keyword, rank, genre });
+  }, [searchParams.toString()]);
+
+  const { data, isPending, isError } = useQuery({
     queryKey: ["my-gallery-cards", page, searchFilter],
     queryFn: () =>
       getAllCards({
@@ -32,19 +36,22 @@ export default function MyGalleryPage() {
         ...searchFilter,
         status: "OWNED",
       }),
+    enabled: !!searchFilter,
   });
 
   const updateQuery = (newFilters) => {
     const params = new URLSearchParams();
     if (newFilters.keyword) params.set("keyword", newFilters.keyword);
-    if (newFilters.rank) params.set("rank", newFilters.rank);
+    if (newFilters.rank) {
+      params.set("rank", newFilters.rank.replace(/\s+/g, ""));
+    }
     if (newFilters.genre) params.set("genre", newFilters.genre);
-    params.set("page", "1"); // 검색 후 페이지 초기화
+    params.set("page", "1");
     router.push(`?${params.toString()}`);
     setPage(1);
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (!searchFilter || isPending) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
 
   const cards = data.list;
@@ -56,8 +63,11 @@ export default function MyGalleryPage() {
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
         <RankSection totalCount={totalCount} rankCounts={ranks} />
-        <SortAndSearchSection onSearch={updateQuery} data={cards} />
-
+        <SortAndSearchSection
+          onSearch={updateQuery}
+          data={data}
+          selectedFilter={searchFilter}
+        />
         <PhotoCardSection dataLists={cards} />
         <PageNation
           count={Math.ceil(data.totalCount.cardCount / pageSize)}

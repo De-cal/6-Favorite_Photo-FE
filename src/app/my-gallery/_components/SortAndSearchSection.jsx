@@ -1,30 +1,38 @@
-// SortAndSearchSection.jsx
 "use client";
 import search from "../../../assets/icons/ic-search.svg";
 import filter from "../../../assets/icons/ic-filter.svg";
 import Image from "next/image";
 import Dropdown from "@/app/my-sell/_components/Dropdown";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useModal } from "@/providers/ModalProvider";
-import MobileFilter from "./MobileFilter";
+import MobileFilter from "@/app/my-sell/_components/MobileFilter";
 
-export default function SortAndSearchSection({ onSearch, data }) {
-  const [selectedGrade, setSelectedGrade] = useState(null);
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [openDropdown, setOpenDropdown] = useState(null);
+export default function SortAndSearchSection({
+  onSearch,
+  data,
+  selectedFilter,
+}) {
   const [keyword, setKeyword] = useState("");
+
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  useEffect(() => {
+    setKeyword(selectedFilter.keyword || "");
+  }, [selectedFilter]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch?.({ keyword, rank: selectedGrade, genre: selectedGenre });
+    onSearch?.({
+      keyword,
+      rank: selectedFilter.rank,
+      genre: selectedFilter.genre,
+    });
   };
 
   const { openModal, closeModal } = useModal();
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 744) {
-        closeModal();
-      }
+      if (window.innerWidth >= 744) closeModal();
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -32,13 +40,14 @@ export default function SortAndSearchSection({ onSearch, data }) {
 
   return (
     <>
+      {/*  모바일 */}
       <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
           onClick={() => {
             openModal(
               <MobileFilter
-                data={data}
+                datas={data}
                 onSelectFilter={(selected) => {
                   if (selected.rank) setSelectedGrade(selected.rank);
                   if (selected.genre) setSelectedGenre(selected.genre);
@@ -48,6 +57,7 @@ export default function SortAndSearchSection({ onSearch, data }) {
                     genre: selected.genre,
                   });
                 }}
+                where="mygallery"
               />,
               "bottom",
               "center",
@@ -95,19 +105,27 @@ export default function SortAndSearchSection({ onSearch, data }) {
             type="등급"
             isOpen={openDropdown === "등급"}
             setOpenDropdown={setOpenDropdown}
-            onSelect={(value) => {
-              setSelectedGrade(value);
-              onSearch?.({ keyword, rank: value, genre: selectedGenre });
-            }}
+            selectedValue={selectedFilter.rank}
+            onSelect={(value) =>
+              onSearch?.({
+                keyword,
+                rank: value,
+                genre: selectedFilter.genre,
+              })
+            }
           />
           <Dropdown
             type="장르"
             isOpen={openDropdown === "장르"}
             setOpenDropdown={setOpenDropdown}
-            onSelect={(value) => {
-              setSelectedGenre(value);
-              onSearch?.({ keyword, rank: selectedGrade, genre: value });
-            }}
+            selectedValue={selectedFilter.genre}
+            onSelect={(value) =>
+              onSearch?.({
+                keyword,
+                rank: selectedFilter.rank,
+                genre: value,
+              })
+            }
           />
         </div>
       </section>
