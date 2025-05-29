@@ -17,7 +17,6 @@ export default function MySellPage() {
   const [page, setPage] = useState(1);
   const pageSize = 15;
 
-  // ✅ 쿼리스트링 파싱은 useEffect 안에서 실행
   useEffect(() => {
     const keyword = searchParams.get("keyword") ?? "";
     const rank = searchParams.get("rank")?.replace(/\s+/g, "") ?? null;
