@@ -58,3 +58,16 @@ export async function logout() {
     method: "POST",
   });
 }
+
+export async function getMe() {
+  return cookieFetch("/auth/me", {
+    method: "GET",
+  });
+}
+
+export default {
+  signUp,
+  login,
+  logout,
+  getMe,
+};
