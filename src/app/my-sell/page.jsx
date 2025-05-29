@@ -16,7 +16,7 @@ export default function MySellPage() {
   const [searchFilter, setSearchFilter] = useState(null);
   const [page, setPage] = useState(1);
   const pageSize = 15;
-
+  //진짜 왜 충돌나는지 알려줘 ㅠ
   useEffect(() => {
     const keyword = searchParams.get("keyword") ?? "";
     const rank = searchParams.get("rank")?.replace(/\s+/g, "") ?? null;
