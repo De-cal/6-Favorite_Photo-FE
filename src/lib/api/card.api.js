@@ -26,12 +26,9 @@ export const getAllCards = async ({
     if (genre) queryParams.append("genre", genre);
     if (keyword) queryParams.append("keyword", keyword);
     if (status) queryParams.append("status", status);
-<<<<<<< HEAD
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/cards?${queryParams.toString()}`,
     );
-=======
->>>>>>> 403927eac5f16fa92178bceb94d7237e52637cb3
 
     // 쿠키에 있는 accessToken 자동 전송
     const data = await cookieFetch(`/cards?${queryParams.toString()}`);
