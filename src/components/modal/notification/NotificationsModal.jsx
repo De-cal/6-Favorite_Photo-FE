@@ -1,9 +1,17 @@
 import { readNotification } from "@/lib/api/notification.api";
 import NotificationCard from "./NotificationCard";
+import { useMutation } from "@tanstack/react-query";
 
-function NotificationsModal({ notifications }) {
+function NotificationsModal({ notifications, refetchNotifications }) {
+  const { mutate: mutateReadNotification } = useMutation({
+    mutationFn: readNotification,
+    onSuccess: () => {
+      refetchNotifications();
+    },
+  });
+
   const handleReadNotification = (notificationId) => {
-    readNotification(notificationId);
+    mutateReadNotification(notificationId);
   };
 
   return (
