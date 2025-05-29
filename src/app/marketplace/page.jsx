@@ -5,10 +5,10 @@ import MarketplaceHeader from "./_components/marketplace/MarketplaceHeader";
 import ArticleGrid from "./_components/marketplace/ArticleGrid";
 import MobileSortAndFilter from "./_components/marketplace/MobileSortAndFilter";
 import { getAllArticles } from "@/lib/api/article.api";
-import MobileFilter from "../my-gallery/_components/MobileFilter";
+import MobileFilter from "../my-sell/_components/MobileFilter";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import { useModal } from "@/providers/ModalProvider";
+import LoginNeed from "./_components/marketplace/LoginNeed";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
@@ -155,6 +155,13 @@ export default function MarketplacePage() {
           </ActionButton>
         </div>
       )}
+
+      {/* <div
+        className="fixed inset-0 bg-black/50 z-40"
+        onClick={() => setIsModalOpen(false)}
+      />
+      <LoginNeed />
+    </div> */}
     </div>
   );
 }

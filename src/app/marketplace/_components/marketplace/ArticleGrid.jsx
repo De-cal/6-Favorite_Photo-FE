@@ -11,7 +11,7 @@ export default function ArticleGrid({
   const filtered = articles
     .filter((article) =>
       searchKeyWord
-        ? article.photoCard.title
+        ? article.userPhotoCard.photoCard.title
             .toLowerCase()
             .includes(searchKeyWord.toLowerCase())
         : true,
@@ -19,13 +19,13 @@ export default function ArticleGrid({
     .filter((article) => {
       if (!filterSettings) return true;
       const matchRank = filterSettings.rank
-        ? article.photoCard.rank === filterSettings.rank
+        ? article.userPhotoCard.photoCard.rank === filterSettings.rank
         : true;
       const matchGenre = filterSettings.genre
-        ? article.photoCard.genre === filterSettings.genre
+        ? article.userPhotoCard.photoCard.genre === filterSettings.genre
         : true;
       const matchSoldout = filterSettings.soldout
-        ? article.status === filterSettings.soldout
+        ? article.userPhotoCard.status === filterSettings.soldout
         : true;
       return matchRank && matchGenre && matchSoldout;
     })
@@ -42,21 +42,21 @@ export default function ArticleGrid({
       {filtered.map((article) => (
         <Link key={article.id} href={`/buyers/${article.id}`}>
           <Card
-            type="for_sale"
-            onClick={() => Router.push}
+            type={article.remainingQuantity !== 0 ? "original" : "soldout"}
             card={{
               photoCard: {
-                title: article.photoCard.title,
-                rank: article.photoCard.rank,
-                genre: article.photoCard.genre,
-                imgURL: article.photoCard.imgUrl,
+                title: article.userPhotoCard.photoCard.title,
+                rank: article.userPhotoCard.photoCard.rank,
+                genre: article.userPhotoCard.photoCard.genre,
+                imgURL: article.userPhotoCard.photoCard.imgUrl,
                 creator: {
-                  nickname: article.user.nickname,
+                  nickname: article.userPhotoCard.user.nickname,
                 },
               },
               price: article.price,
-              quantity: article.quantity,
-              status: article.status,
+              quantity: article.remainingQuantity,
+
+              status: article.userPhotoCard.status,
               totalQuantity: article.totalQuantity,
             }}
           />

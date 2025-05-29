@@ -15,6 +15,7 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
     }
 
     const data = await response.json(); // { articles: [], totalPages, currentPage }
+    console.log(data);
     return data;
   } catch (error) {
     console.error("getAllArticles error:", error);
