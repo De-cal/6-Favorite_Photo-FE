@@ -4,23 +4,31 @@ import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
 import { useModal } from "@/providers/ModalProvider";
-import { genreChange } from "@/utils/genreChange";
+import { genreChange } from "@/lib/utils/genreChange";
 
 export default function MobileFilter({ data, onSelectFilter }) {
   const { closeModal } = useModal();
 
   const rankCount = (data, rank) =>
-    data.filter((card) => card.photoCard.rank === rank).reduce((sum, card) => sum + card.quantity, 0);
+    data
+      .filter((card) => card.photoCard.rank === rank)
+      .reduce((sum, card) => sum + card.quantity, 0);
 
   const genreCount = (data, genre) =>
-    data.filter((card) => card.photoCard.genre === genre).reduce((sum, card) => sum + card.quantity, 0);
+    data
+      .filter((card) => card.photoCard.genre === genre)
+      .reduce((sum, card) => sum + card.quantity, 0);
 
   const sellingTypeCount = (data, type) =>
-    data.filter((card) => card.status === type).reduce((sum, card) => sum + card.quantity, 0);
+    data
+      .filter((card) => card.status === type)
+      .reduce((sum, card) => sum + card.quantity, 0);
 
   const soldoutCount = (data, soldout) =>
     data
-      .filter((card) => (soldout === "SOLDOUT" ? card.quantity === 0 : card.quantity > 0))
+      .filter((card) =>
+        soldout === "SOLDOUT" ? card.quantity === 0 : card.quantity > 0,
+      )
       .reduce((sum, card) => sum + card.quantity, 0);
 
   const [option, setOption] = useState("등급");
@@ -51,7 +59,11 @@ export default function MobileFilter({ data, onSelectFilter }) {
 
   const handleItemClick = (value) => {
     const actualValue =
-      option === "판매방법" ? sellingTypeMap[value] : option === "매진여부" ? soldoutMap[value] : value;
+      option === "판매방법"
+        ? sellingTypeMap[value]
+        : option === "매진여부"
+        ? soldoutMap[value]
+        : value;
 
     setSelectedValues((prev) => ({
       ...prev,
@@ -61,12 +73,20 @@ export default function MobileFilter({ data, onSelectFilter }) {
 
   const filteredTotal = data
     .filter((card) => {
-      const matchRank = !selectedValues["등급"] || card.photoCard.rank === selectedValues["등급"];
-      const matchGenre = !selectedValues["장르"] || card.photoCard.genre === selectedValues["장르"];
-      const matchSellingType = !selectedValues["판매방법"] || card.status === selectedValues["판매방법"];
+      const matchRank =
+        !selectedValues["등급"] ||
+        card.photoCard.rank === selectedValues["등급"];
+      const matchGenre =
+        !selectedValues["장르"] ||
+        card.photoCard.genre === selectedValues["장르"];
+      const matchSellingType =
+        !selectedValues["판매방법"] ||
+        card.status === selectedValues["판매방법"];
       const matchSoldout =
         !selectedValues["매진여부"] ||
-        (selectedValues["매진여부"] === "SOLDOUT" ? card.quantity === 0 : card.quantity > 0);
+        (selectedValues["매진여부"] === "SOLDOUT"
+          ? card.quantity === 0
+          : card.quantity > 0);
 
       return matchRank && matchGenre && matchSellingType && matchSoldout;
     })
@@ -77,7 +97,11 @@ export default function MobileFilter({ data, onSelectFilter }) {
       <div className="w-full flex flex-col gap-[3px] mt-1">
         {items.map((item) => {
           const actualValue =
-            option === "판매방법" ? sellingTypeMap[item] : option === "매진여부" ? soldoutMap[item] : item;
+            option === "판매방법"
+              ? sellingTypeMap[item]
+              : option === "매진여부"
+              ? soldoutMap[item]
+              : item;
 
           const isSelected = selectedValues[option] === actualValue;
 
@@ -89,7 +113,11 @@ export default function MobileFilter({ data, onSelectFilter }) {
               }`}
               onClick={() => handleItemClick(item)}
             >
-              <p className={`font-noto font-normal text-[14px] text-center ${colorMap[item] || ""}`}>
+              <p
+                className={`font-noto font-normal text-[14px] text-center ${
+                  colorMap[item] || ""
+                }`}
+              >
                 {option === "장르" ? genreChange(item) : item}
               </p>
 
@@ -130,7 +158,9 @@ export default function MobileFilter({ data, onSelectFilter }) {
     <div className="w-full pb-10 rounded-[20px] bg-[#1B1B1B]">
       <div className="w-full flex flex-col items-center">
         <div className="w-full relative py-[16.5px]">
-          <p className="font-noto font-medium text-[16px] text-gray-400 text-center">필터</p>
+          <p className="font-noto font-medium text-[16px] text-gray-400 text-center">
+            필터
+          </p>
           <Image
             alt="닫기버튼"
             src={deleteIcon}
@@ -144,7 +174,9 @@ export default function MobileFilter({ data, onSelectFilter }) {
             <button
               key={item}
               className={`cursor-pointer font-noto font-medium text-[14px] whitespace-nowrap p-4  ${
-                option === item ? "text-white border-b-[1.5px] border-white" : "text-gray-400"
+                option === item
+                  ? "text-white border-b-[1.5px] border-white"
+                  : "text-gray-400"
               }`}
               onClick={() => handleOptionClick(item)}
             >

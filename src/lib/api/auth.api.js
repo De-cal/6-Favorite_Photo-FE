@@ -1,10 +1,10 @@
-import { cookieFetch } from "@/lib/fetchClient";
+import { cookieFetch } from "@/lib/api/fetchClient.api";
 import {
   validateEmail,
   validatePassword,
   validateNickname,
   validateConfirmPassword,
-} from "@/utils/authValidators";
+} from "@/lib/utils/authValidators";
 
 export async function signUp({ email, nickname, password, passwordConfirm }) {
   // 유효성 검사

@@ -3,7 +3,7 @@ import down from "@/assets/icons/ic-down.svg";
 import up from "@/assets/icons/ic-up.svg";
 import Image from "next/image";
 import { useState } from "react";
-import { genreChange } from "@/utils/genreChange"; // genreChange 함수 import
+import { genreChange } from "@/lib/utils/genreChange"; // genreChange 함수 import
 
 export default function Dropdown({ type, onSelect, isOpen, setOpenDropdown }) {
   const [choice, setChoice] = useState(type);

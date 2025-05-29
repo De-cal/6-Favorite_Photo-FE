@@ -4,7 +4,7 @@ import logo from "@/assets/images/img-logo.avif";
 import soldout from "@/assets/icons/ic-soldout.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
-import { genreChange } from "@/utils/genreChange";
+import { genreChange } from "@/lib/utils/genreChange";
 import ExchangeCards from "./ExchangeCards";
 
 function DetailCard({
@@ -91,7 +91,9 @@ function DetailCard({
           <p className="text-white underline font-normal">{card.owner}</p>
         </div>
 
-        <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]"> </div>
+        <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]">
+          {" "}
+        </div>
 
         {ExchangeInfo ? (
           <div>{<ExchangeCards />}</div>
@@ -102,14 +104,22 @@ function DetailCard({
               <p className="text-white font-normal">{card.price} P</p>
             </div>
             <div className="flex justify-between w-full mt-[5px] sm:mt-[10px]">
-              <p className="text-gray-300">{type === "my_card" ? "수량" : "잔여"}</p>
+              <p className="text-gray-300">
+                {type === "my_card" ? "수량" : "잔여"}
+              </p>
               <div className="flex gap-[2px]">
                 <p className="text-white font-normal">{card.quantity}</p>
-                {isTotalQuantity && <p className="text-gray-300">/ {card.totalQuantity}</p>}
+                {isTotalQuantity && (
+                  <p className="text-gray-300">/ {card.totalQuantity}</p>
+                )}
               </div>
             </div>
             <div className="flex justify-center mt-[30px] md:mt-[40px]">
-              <Image src={logo} className="hidden sm:block w-[100px] h-[18px]" alt="logo" />
+              <Image
+                src={logo}
+                className="hidden sm:block w-[100px] h-[18px]"
+                alt="logo"
+              />
             </div>
           </>
         )}
