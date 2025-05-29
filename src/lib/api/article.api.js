@@ -45,12 +45,8 @@ export const getUserArticles = async ({
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/articles`, {
+    const res = await cookieFetch(`/articles`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
       body: JSON.stringify(articleData),
     });
     const data = await res.json();
