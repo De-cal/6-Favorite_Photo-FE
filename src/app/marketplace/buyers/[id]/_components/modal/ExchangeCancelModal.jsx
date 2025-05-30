@@ -6,6 +6,7 @@ import { useModal } from "@/providers/ModalProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import articleApi from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
+import GradeDetail from "@/components/common/GradeDetail";
 
 export default function ExchangeCancelModal({
   exchangeId,
@@ -60,9 +61,16 @@ export default function ExchangeCancelModal({
           <p className="font-bold text-[18px]/[26px] md:text-[20px]/[29px]">
             교환 제시 취소
           </p>
-          <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 whitespace-pre md:mt-[40px] md:mb-[60px] sm:text-[16px]/[23px]">
-            <span className="">{`[${rank} | ${title}]`}</span>
-            <span className=""> 교환 제시를 취소하시겠습니까?</span>
+          <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 whitespace-pre md:mt-[40px] md:mb-[60px] md:text-[16px]/[23px]">
+            <span>
+              [
+              <GradeDetail
+                grade={rank}
+                className="text-[14px]/[20px] md:text-[16px]/[23px]"
+              />{" "}
+              | {title}]
+            </span>
+            <span> 교환 제시를 취소하시겠습니까?</span>
           </div>
           <ActionButton
             onClick={handleCancel}

@@ -13,6 +13,7 @@ import Tablet from "@/components/common/Tablet";
 import articleApi from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import CommonModal from "@/components/common/CommonModal";
 
 export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -25,8 +26,27 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const { mutate: exchangeRequest } = useMutation({
     mutationFn: ({ articleId, body }) =>
       articleApi.exchangeRequest(articleId, body),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["articles", articleId] }),
+    onSuccess: () => {
+      document.body.style.overflow = "hidden";
+      openModal(
+        <CommonModal
+          type="교환 제시"
+          result="성공"
+          data={{ title: card.photoCard.title, rank: card.photoCard.rank }}
+        />,
+      );
+      queryClient.invalidateQueries({ queryKey: ["articles", articleId] });
+    },
+    onError: () => {
+      document.body.style.overflow = "hidden";
+      openModal(
+        <CommonModal
+          type="교환 제시"
+          result="실패"
+          data={{ title: card.photoCard.title, rank: card.photoCard.rank }}
+        />,
+      );
+    },
   });
 
   // 교환 요청하기
@@ -120,7 +140,7 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
                 <ActionButton
                   onClick={handleClose}
                   variant="secondary"
-                  className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[51px] sm:px-[50px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69px]"
+                  className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[51px] sm:px-[45px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69px]"
                 >
                   취소하기
                 </ActionButton>
@@ -128,7 +148,7 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
                   onClick={handleExchange}
                   variant="primary"
                   disabled={isDisabled}
-                  className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[52px] sm:px-[50px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69.5px]"
+                  className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[52px] sm:px-[45px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69.5px]"
                 >
                   교환하기
                 </ActionButton>
