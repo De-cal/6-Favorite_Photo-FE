@@ -11,7 +11,6 @@ import { useParams } from "next/navigation";
 export default function SellerExchangeInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id: articleId } = useParams();
-
   const { data: cardArticle, isPending } = useQuery({
     queryKey: ["articles", articleId],
     queryFn: () => articleApi.getArticle(articleId),

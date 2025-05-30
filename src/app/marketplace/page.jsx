@@ -19,7 +19,6 @@ export default function MarketplacePage() {
   const [filterSettings, setFilterSettings] = useState(null);
   const [sortOption, setSortOption] = useState("낮은 가격순");
   const [sortOpen, setSortOpen] = useState(false);
-
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -140,7 +139,7 @@ export default function MarketplacePage() {
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
           <MobileFilter
-            data={articles.userPhotoCard}
+            datas={articles.userPhotoCard}
             onSelectFilter={handleSelectFilter}
           />
         </div>
