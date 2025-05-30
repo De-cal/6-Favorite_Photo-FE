@@ -17,7 +17,7 @@ function SurprisePointModal() {
     if (!!user && hasOpportunity) {
       openModal(() => <RewardPoint />, "center", "center", true);
     }
-  }, [hasOpportunity, isLoggedIn]);
+  }, [hasOpportunity, user]);
 
   // 비활동 타이머 - 20분 비활동시 타이머 초기화
   const handleInactive = () => {
