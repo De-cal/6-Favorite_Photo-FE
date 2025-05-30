@@ -10,6 +10,7 @@ import { useModal } from "@/providers/ModalProvider";
 import clsx from "clsx";
 import { postPoint } from "@/lib/api/point.api";
 import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "@/providers/AuthProvider";
 
 function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
@@ -18,6 +19,7 @@ function RewardPoint() {
 
   const { formattedTime, spendOpportunity } = usePointTimer();
   const { closePointModal } = useModal();
+  const { getUser } = useAuth();
 
   const { mutate: mutateGetPoint } = useMutation({
     mutationFn: postPoint,
@@ -25,6 +27,7 @@ function RewardPoint() {
       spendOpportunity();
       setIsSelected(true);
       setSelectedOption(null);
+      getUser();
     },
   });
 
@@ -88,7 +91,7 @@ function RewardPoint() {
           </div>
           {selectedOption !== null && (
             <button
-              className="bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs my-3"
+              className="bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs my-3 cursor-pointer"
               onClick={handleGetPoint}
             >
               선택완료
