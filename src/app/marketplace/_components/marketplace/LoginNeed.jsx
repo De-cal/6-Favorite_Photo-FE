@@ -3,7 +3,7 @@ import Image from "next/image";
 import close from "@/assets/icons/ic-close.svg";
 import Link from "next/link";
 
-export default function LoginNeed() {
+export default function LoginNeed({ onClose }) {
   return (
     <div
       className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
@@ -11,6 +11,7 @@ export default function LoginNeed() {
                     bg-gray-500 rounded-lg shadow-lg"
     >
       <Image
+        onClick={onClose}
         src={close}
         width={28}
         height={28}
@@ -18,6 +19,7 @@ export default function LoginNeed() {
         className="md:hidden absolute top-[15px] right-[15px] cursor-pointer z-50"
       />
       <Image
+        onClick={onClose}
         src={close}
         width={28}
         height={28}

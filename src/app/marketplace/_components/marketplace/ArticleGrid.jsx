@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/lib/api/article.api";
+import { getMe } from "@/lib/api/article.api";
 import Card from "@/components/common/Card";
 
 export default function ArticleGrid({
@@ -7,14 +7,15 @@ export default function ArticleGrid({
   searchKeyWord,
   filterSettings,
   sortOption,
-  onRequireLogin, // 상위에서 받은 prop
+  onRequireLogin,
 }) {
   const router = useRouter();
 
   const handleCardClick = async (articleId) => {
-    const user = await getCurrentUser();
+    const user = await getMe();
+    console.log("getMe", user);
     if (user) {
-      router.push(`/buyers/${articleId}`);
+      router.push(`/marketplace/buyers/${articleId}`);
     } else {
       onRequireLogin?.(); // 로그인 필요 모달 띄우기
     }
@@ -47,7 +48,8 @@ export default function ArticleGrid({
         return new Date(b.createdAt) - new Date(a.createdAt);
       return 0;
     });
-
+  //article의 UserPhotoCard의 userId
+  //article의 UserPhotoCard의 user의 닉네임
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
       {filtered.map((article) => (
@@ -65,7 +67,7 @@ export default function ArticleGrid({
                 genre: article.userPhotoCard.photoCard.genre,
                 imgURL: article.userPhotoCard.photoCard.imgUrl,
                 creator: {
-                  nickname: article.userPhotoCard.user.nickname,
+                  nickname: article.userPhotoCard.photoCard.creator.nickname,
                 },
               },
               price: article.price,
