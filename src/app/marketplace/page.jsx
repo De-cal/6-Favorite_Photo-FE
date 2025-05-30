@@ -4,11 +4,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import MarketplaceHeader from "./_components/marketplace/MarketplaceHeader";
 import ArticleGrid from "./_components/marketplace/ArticleGrid";
 import MobileSortAndFilter from "./_components/marketplace/MobileSortAndFilter";
-import { getAllArticles } from "@/lib/api/article.api";
 import MobileFilter from "../my-sell/_components/MobileFilter";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
-import ActionButton from "@/components/ui/buttons/ActionButton";
+import { getAllArticles } from "@/lib/api/article.api";
+
 import LoginNeed from "./_components/marketplace/LoginNeed";
+import MyCardSellBtn from "./_components/marketplace/MyCardSellBtn";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
@@ -22,8 +23,9 @@ export default function MarketplacePage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const LIMIT = 12;
+
   //동일한 값이면 재사용
   const getArticles = useCallback(async () => {
     //요청중이거나 더 남아있지 않으면 종료
@@ -117,6 +119,7 @@ export default function MarketplacePage() {
           setSortOption={setSortOption}
           sortOpen={sortOpen}
           setSortOpen={setSortOpen}
+          onRequireLogin={() => setLoginModalOpen(true)}
         />
         <MobileSortAndFilter
           sortOption={sortOption}
@@ -130,38 +133,43 @@ export default function MarketplacePage() {
           searchKeyWord={searchKeyWord}
           filterSettings={filterSettings}
           sortOption={sortOption}
+          onRequireLogin={() => setLoginModalOpen(true)}
         />
       </div>
 
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
-          <MobileFilter data={articles} onSelectFilter={handleSelectFilter} />
+          <MobileFilter
+            data={articles.userPhotoCard}
+            onSelectFilter={handleSelectFilter}
+          />
         </div>
       )}
 
       {isModalOpen && <SelectPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
+
       {loading && (
         <div className="text-center py-4 text-gray-500">로딩 중...</div>
       )}
+
       {!showFilter && !isModalOpen && (
-        <div className="sm:hidden md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
-          <ActionButton
-            className="w-[342px] h-[60px]"
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
-          >
-            나의 포토카드 판매하기
-          </ActionButton>
-        </div>
+        <MyCardSellBtn
+          setIsModalOpen={setIsModalOpen}
+          onRequireLogin={() => setLoginModalOpen(true)}
+        />
       )}
 
-      {/* <div
-        className="fixed inset-0 bg-black/50 z-40"
-        onClick={() => setIsModalOpen(false)}
-      />
-      <LoginNeed />
-    </div> */}
+      {loginModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={() => setLoginModalOpen(false)} // 배경 클릭 시 닫힘
+        >
+          <div onClick={(e) => e.stopPropagation()}>
+            {/* 내부 클릭은 무시 */}
+            <LoginNeed onClose={() => setLoginModalOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
