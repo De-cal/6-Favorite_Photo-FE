@@ -31,7 +31,7 @@ export default function Dropdown({ type, value, setValue }) {
       </button>
 
       {isModalOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full border border-gray-400 bg-black z-10">
+        <div className="absolute top-full left-0 mt-1 w-full border border-gray-400 bg-black z-11">
           {(type === "등급" ? grade : genre).map((item) => (
             <div
               key={item}
