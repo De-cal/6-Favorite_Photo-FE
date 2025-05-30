@@ -106,7 +106,7 @@ export const ModalProvider = ({ children }) => {
         <div
           className={`fixed inset-0 z-50 bg-black/80 flex ${getWrapperClass()}`}
         >
-          <div ref={modalRef} className="relative max-h-screen overflow-y-auto">
+          <div ref={modalRef} className="relative max-h-screen">
             {typeof modalContent === "function" ? modalContent() : modalContent}
           </div>
         </div>

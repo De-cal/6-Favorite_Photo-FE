@@ -17,6 +17,7 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
     }
 
     const data = await response.json(); // { articles: [], totalPages, currentPage }
+    console.log(data);
     return data;
   } catch (error) {
     console.error("getAllArticles error:", error);
@@ -32,7 +33,7 @@ export async function getMe() {
 
     if (!user) return null;
 
-    return user;
+    return { data: user }; // 이렇게 감싸야 destructuring 가능
   } catch (error) {
     console.error("getMe() 오류:", error);
     return null;
@@ -51,7 +52,6 @@ export const getUserArticles = async ({} = {}) => {
     throw error;
   }
 };
-
 // 특정 아티클 상세 정보 가져오기
 export async function getArticleById(articleId) {
   try {
@@ -77,7 +77,7 @@ export async function deleteArticle(articleId) {
     const data = await cookieFetch(`/articles/${articleId}`, {
       method: "DELETE",
     });
-    
+
     return data;
   } catch (error) {
     console.error("아티클 삭제에 실패했습니다:", error);
@@ -87,14 +87,11 @@ export async function deleteArticle(articleId) {
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await cookieFetch(`/articles`, {
+    const data = await cookieFetch(`/articles`, {
       method: "POST",
       body: JSON.stringify(articleData),
     });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
-    }
+
     return data;
   } catch (error) {
     console.error("판매 등록에 실패했습니다:", error);
@@ -151,9 +148,22 @@ const cancelExchangeRequest = async (
   }
 };
 
+//아티클 수정
+const patchArticle = async (articleId, data) => {
+  try {
+    return await cookieFetch(`/articles/${articleId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
 export default {
   getArticle,
   purchaseArticle,
   exchangeRequest,
   cancelExchangeRequest,
+  patchArticle,
 };
