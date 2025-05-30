@@ -33,7 +33,7 @@ export async function getMe() {
 
     if (!user) return null;
 
-    return { data: user }; // 이렇게 감싸야 destructuring 가능
+    return user;
   } catch (error) {
     console.error("getMe() 오류:", error);
     return null;
