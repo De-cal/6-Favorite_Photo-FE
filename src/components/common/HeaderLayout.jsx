@@ -65,11 +65,10 @@ export default function HeaderLayout() {
                 className="object-cover"
               />
             </Link>
-            {/* 지수님 TODO: 인증/인가 하실 때 true 부분 변경하시면 됩니다. -> 변경하였습니다 */}
             {user ? (
               <div className="flex justify-center items-center gap-[30px]">
                 <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
-                  {user.pointAmount}
+                  {new Intl.NumberFormat().format(user.pointAmount)} P
                 </p>
                 <div>
                   <Notification
