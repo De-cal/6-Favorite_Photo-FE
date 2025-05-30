@@ -9,9 +9,14 @@ import SortAndSearchSection from "./SortAndSearchSection";
 import PhotoCardSection from "./PhotoCardSection";
 import PageNation from "./PageNation";
 import { getUserArticles } from "@/lib/api/article.api.js";
-import Loading from "@/app/Loading";
+import Loading from "@/components/common/Loading";
+import { useAuth } from "@/providers/AuthProvider";
+import TsetModal from "@/app/modal-test/TsetModal";
 
 export default function MySell() {
+  const { user } = useAuth();
+  if (!user) return <TsetModal />; //로그인 모달로 대체
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -96,7 +101,7 @@ export default function MySell() {
 
   console.log(data);
 
-  return (
+  return user ? (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
@@ -126,5 +131,7 @@ export default function MySell() {
         />
       </div>
     </div>
+  ) : (
+    <TsetModal />
   );
 }

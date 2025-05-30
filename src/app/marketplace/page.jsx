@@ -10,7 +10,6 @@ import { getAllArticles } from "@/lib/api/article.api";
 
 import LoginNeed from "./_components/marketplace/LoginNeed";
 import MyCardSellBtn from "./_components/marketplace/MyCardSellBtn";
-import Loading from "../Loading";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
