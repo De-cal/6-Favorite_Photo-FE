@@ -23,25 +23,9 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
   }
 }
 
-export const getUserArticles = async ({
-  page,
-  pageSize,
-  rank,
-  genre,
-  keyword,
-  sellingType,
-  soldOut,
-} = {}) => {
+export const getUserArticles = async ({} = {}) => {
   try {
     const queryParams = new URLSearchParams();
-    if (page) queryParams.append("page", page);
-    if (pageSize) queryParams.append("pageSize", pageSize);
-    if (rank) queryParams.append("rank", rank);
-    if (genre) queryParams.append("genre", genre);
-    if (keyword) queryParams.append("keyword", keyword);
-    if (sellingType) queryParams.append("sellingType", sellingType);
-    if (soldOut !== null && soldOut !== undefined)
-      queryParams.append("soldOut", soldOut);
 
     const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
 

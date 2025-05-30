@@ -5,43 +5,22 @@ import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
 import { useModal } from "@/providers/ModalProvider";
 import { genreChange } from "@/lib/utils/genreChange";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function MobileFilter({ data, onSelectFilter }) {
+export default function MobileFilter({ datas, onSelectFilter, where }) {
+  const data = datas.list;
   const { closeModal } = useModal();
-
-  const rankCount = (data, rank) =>
-    data
-      .filter((card) => card.photoCard.rank === rank)
-      .reduce((sum, card) => sum + card.quantity, 0);
-
-  const genreCount = (data, genre) =>
-    data
-      .filter((card) => card.photoCard.genre === genre)
-      .reduce((sum, card) => sum + card.quantity, 0);
-
-  const sellingTypeCount = (data, type) =>
-    data
-      .filter((card) => card.status === type)
-      .reduce((sum, card) => sum + card.quantity, 0);
-
-  const soldoutCount = (data, soldout) =>
-    data
-      .filter((card) =>
-        soldout === "SOLDOUT" ? card.quantity === 0 : card.quantity > 0,
-      )
-      .reduce((sum, card) => sum + card.quantity, 0);
-
   const [option, setOption] = useState("등급");
 
-  const handleOptionClick = (value) => setOption(value);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const sellingTypeMap = {
     "판매 중": "SELLING",
     "교환 대기 중": "WAITING_EXCHANGE",
   };
-
   const soldoutMap = {
-    "판매 중": "SELLING",
+    "판매 중": "NOT_SOLDOUT",
     "판매 완료": "SOLDOUT",
   };
 
@@ -57,6 +36,8 @@ export default function MobileFilter({ data, onSelectFilter }) {
     매진여부: null,
   });
 
+  const handleOptionClick = (value) => setOption(value);
+
   const handleItemClick = (value) => {
     const actualValue =
       option === "판매방법"
@@ -71,26 +52,10 @@ export default function MobileFilter({ data, onSelectFilter }) {
     }));
   };
 
-  const filteredTotal = data
-    .filter((card) => {
-      const matchRank =
-        !selectedValues["등급"] ||
-        card.photoCard.rank === selectedValues["등급"];
-      const matchGenre =
-        !selectedValues["장르"] ||
-        card.photoCard.genre === selectedValues["장르"];
-      const matchSellingType =
-        !selectedValues["판매방법"] ||
-        card.status === selectedValues["판매방법"];
-      const matchSoldout =
-        !selectedValues["매진여부"] ||
-        (selectedValues["매진여부"] === "SOLDOUT"
-          ? card.quantity === 0
-          : card.quantity > 0);
-
-      return matchRank && matchGenre && matchSellingType && matchSoldout;
-    })
-    .reduce((sum, card) => sum + card.quantity, 0);
+  const filterTabs =
+    where === "mygallery"
+      ? ["등급", "장르"]
+      : ["등급", "장르", "판매방법", "매진여부"];
 
   const renderOptionContent = () => {
     const renderList = (items, colorMap = {}) => (
@@ -123,12 +88,12 @@ export default function MobileFilter({ data, onSelectFilter }) {
 
               <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
                 {option === "등급"
-                  ? `${rankCount(data, item)}개`
+                  ? `${datas.rankCounts?.[item.replace(/\s/g, "")] ?? 0}개`
                   : option === "장르"
-                  ? `${genreCount(data, item)}개`
+                  ? `${datas.genreCounts?.[item] ?? 0}개`
                   : option === "판매방법"
-                  ? `${sellingTypeCount(data, actualValue)}개`
-                  : `${soldoutCount(data, actualValue)}개`}
+                  ? `${datas.sellingTypeCounts?.[sellingTypeMap[item]] ?? 0}개`
+                  : `${datas.soldOutCounts?.[soldoutMap[item]] ?? 0}개`}
               </p>
             </button>
           );
@@ -149,6 +114,7 @@ export default function MobileFilter({ data, onSelectFilter }) {
           COMMON: "text-[#EFFF04]",
           RARE: "text-[#29C9F9]",
           "SUPER RARE": "text-[#A77EFF]",
+          SUPERRARE: "text-[#A77EFF]",
           LEGENDARY: "text-[#FF2A6A]",
         });
     }
@@ -170,7 +136,7 @@ export default function MobileFilter({ data, onSelectFilter }) {
         </div>
 
         <div className="flex w-full px-[24px] h-[49px] items-center gap-[24px] border-b-1 border-gray-500">
-          {["등급", "장르", "판매방법", "매진여부"].map((item) => (
+          {filterTabs.map((item) => (
             <button
               key={item}
               className={`cursor-pointer font-noto font-medium text-[14px] whitespace-nowrap p-4  ${
@@ -204,6 +170,13 @@ export default function MobileFilter({ data, onSelectFilter }) {
                 sellingType: null,
                 soldout: null,
               });
+
+              const params = new URLSearchParams(searchParams.toString());
+              ["rank", "genre", "sellingType", "soldout"].forEach((key) =>
+                params.delete(key),
+              );
+              params.set("page", "1");
+              router.push(`?${params.toString()}`);
             }}
           >
             <Image alt="exchangeIcon" src={exchange} width={24} height={24} />
@@ -219,10 +192,28 @@ export default function MobileFilter({ data, onSelectFilter }) {
                 soldout: selectedValues["매진여부"],
               };
               onSelectFilter(transformed);
+
+              const params = new URLSearchParams(searchParams.toString());
+              if (transformed.rank) params.set("rank", transformed.rank);
+              else params.delete("rank");
+
+              if (transformed.genre) params.set("genre", transformed.genre);
+              else params.delete("genre");
+
+              if (transformed.sellingType)
+                params.set("sellingType", transformed.sellingType);
+              else params.delete("sellingType");
+
+              if (transformed.soldout)
+                params.set("soldout", transformed.soldout);
+              else params.delete("soldout");
+
+              params.set("page", "1");
+              router.push(`?${params.toString()}`);
               closeModal();
             }}
           >
-            {`${filteredTotal}장 카드 검색하기`}
+            {`${datas.totalCount.totalCount}장 카드 검색하기`}
           </button>
         </div>
       </div>
