@@ -13,7 +13,7 @@ export default function ExchangeCancelModal({
   title,
   rank,
 }) {
-  const articleId = useParams();
+  const { id: articleId } = useParams();
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
@@ -21,8 +21,9 @@ export default function ExchangeCancelModal({
   const { mutate: cancelExchangeRequest } = useMutation({
     mutationFn: ({ articleId, exchangeId, requesterCardId }) =>
       articleApi.cancelExchangeRequest(articleId, exchangeId, requesterCardId),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["articles", articleId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["articles", articleId] });
+    },
   });
 
   // 모달 닫기

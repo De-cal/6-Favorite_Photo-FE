@@ -18,6 +18,7 @@ export default function PhotoCardBuyerDetail() {
   const [totalPrice, setTotalPrice] = useState(null);
   const { id: articleId } = useParams();
   const { openModal } = useModal();
+
   const { data: cardArticle, isPending } = useQuery({
     queryKey: ["articles", articleId],
     queryFn: () => articleApi.getArticle(articleId),
