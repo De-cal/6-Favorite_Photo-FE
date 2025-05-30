@@ -8,6 +8,7 @@ import SortAndSearchSection from "../_components/SortAndSearchSection";
 import PhotoCardSection from "../_components/PhotoCardSection";
 import PageNation from "../_components/PageNation";
 import { getAllCards } from "@/lib/api/card.api";
+import Loading from "./Loading";
 
 export default function MyGallery() {
   const router = useRouter();
@@ -51,7 +52,7 @@ export default function MyGallery() {
     setPage(1);
   };
 
-  if (!searchFilter || isPending) return <div>로딩 중...</div>;
+  if (!searchFilter || isPending) return <Loading />;
   if (isError) return <div>에러 발생</div>;
 
   const cards = data.list;
@@ -68,6 +69,7 @@ export default function MyGallery() {
           data={data}
           selectedFilter={searchFilter}
         />
+
         <PhotoCardSection dataLists={cards} />
         <PageNation
           count={Math.ceil(data.totalCount.cardCount / pageSize)}
