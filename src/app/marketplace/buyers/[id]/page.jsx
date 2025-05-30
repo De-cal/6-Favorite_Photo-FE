@@ -1,6 +1,6 @@
 import React from "react";
 import PhotoCardBuyerDetail from "./_components/PhotoCardBuyerDetail";
-import MyExchangeOffers from "./_components/MyExchangeOffers";
+import MyExchangeOffer from "./_components/MyExchangeOffer";
 import SellerExchangeInfo from "./_components/SellerExchangeInfo";
 import MobileHeader from "@/components/common/MobileHeader";
 
@@ -14,7 +14,7 @@ export default function BuyerPage() {
           </div>
           <PhotoCardBuyerDetail />
           <SellerExchangeInfo />
-          <MyExchangeOffers />
+          <MyExchangeOffer />
         </div>
       </div>
     </>
