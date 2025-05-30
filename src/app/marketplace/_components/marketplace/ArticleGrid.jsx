@@ -10,12 +10,17 @@ export default function ArticleGrid({
   onRequireLogin,
 }) {
   const router = useRouter();
-
-  const handleCardClick = async (articleId) => {
+  const handleCardClick = async (articleId, article) => {
     const user = await getMe();
-    console.log("getMe", user);
     if (user) {
-      router.push(`/marketplace/buyers/${articleId}`);
+      router.push(
+        user.data.nickname === article.userPhotoCard.user.nickname
+          ? `/marketplace/sellers/${articleId}`
+          : `/marketplace/buyers/${articleId}`,
+      );
+
+      console.log("getMe", user.data.nickname);
+      console.log("아티클 작성자", article.userPhotoCard.user.nickname);
     } else {
       onRequireLogin?.(); // 로그인 필요 모달 띄우기
     }
@@ -48,14 +53,13 @@ export default function ArticleGrid({
         return new Date(b.createdAt) - new Date(a.createdAt);
       return 0;
     });
-  //article의 UserPhotoCard의 userId
-  //article의 UserPhotoCard의 user의 닉네임
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
       {filtered.map((article) => (
         <div
           key={article.id}
-          onClick={() => handleCardClick(article.id)}
+          onClick={() => handleCardClick(article.id, article)}
           className="cursor-pointer"
         >
           <Card

@@ -7,7 +7,7 @@ import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
 import { useModal } from "@/providers/ModalProvider";
 import ExchangeInputModal from "../buyers/[id]/_components/modal/ExchangeInputModal";
 import { getAllCards } from "@/lib/api/card.api";
-import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
+import SortAndSearchSection from "@/app/my-sell/_components/SortAndSearchSection";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
@@ -103,6 +103,7 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
             <SortAndSearchSection
               data={allCards}
               onSearch={(filter) => setSearchFilter(filter)}
+              selectedFilter
             />
           </div>
           <div className="grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]">
