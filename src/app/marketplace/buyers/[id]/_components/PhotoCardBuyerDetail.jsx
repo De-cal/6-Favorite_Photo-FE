@@ -172,7 +172,7 @@ export default function PhotoCardBuyerDetail() {
             </div>
           </div>
           <ActionButton
-            className="mt-[40px] md:mt-[80px] max-w-[440px] min-w[342px] w-full"
+            className="mt-[40px] md:mt-[80px] max-w-[440px] min-w-[342px] w-full"
             onClick={handleBuy}
           >
             포토카드 구매하기

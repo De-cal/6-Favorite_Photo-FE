@@ -4,10 +4,14 @@ import React from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
 
-export default function DeletePhotoCardModal({ onClose }) {
+export default function DeletePhotoCardModal({ onClose, onConfirm}) {
   const handleCancel = () => {
     onClose();
     document.body.style.overflow = "auto";
+  };
+
+  const handleConfirm = () => {
+    onConfirm(); // 실제 삭제 API 호출
   };
 
   return (
@@ -34,7 +38,7 @@ export default function DeletePhotoCardModal({ onClose }) {
             <span className="">정말로 판매를 중단하시겠습니까?</span>
           </div>
           <ActionButton
-            onClick={handleCancel}
+            onClick={handleConfirm}
             className="w-[120px] h-[55px] sm:w-[140px] md:w-[170px] md:h-[60px]"
           >
             판매 내리기
