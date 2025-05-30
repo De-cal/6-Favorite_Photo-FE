@@ -1,12 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import GradeDetail from "@/components/common/GradeDetail";
 import Image from "next/image";
 import exchange from "@/assets/icons/ic-exchange.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
+import DeletePhotoCardModal from "./DeletePhotoCardModal";
+import { deleteArticle } from "@/lib/api/article.api";
 
-export default function SellerCardInfo({ cardArticle }) {
+export default function SellerCardInfo({ cardArticle, onUpdate }) {
+  const router = useRouter();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleEdit = () => {
+    // 수정 페이지로 이동 (예: /marketplace/edit/[articleId])
+    router.push(`/marketplace/edit/${cardArticle.id}`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleting(true);
+      await deleteArticle(cardArticle.id);
+      
+      // 삭제 성공 시 마켓플레이스로 이동
+      router.push("/marketplace");
+      
+      // 성공 메시지 표시 (토스트 등)
+      alert("판매가 취소되었습니다.");
+    } catch (error) {
+      console.error("삭제 실패:", error);
+      alert("판매 취소에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between w-[345px] md:w-[440px] sm:w-[342px] m-auto">
       <div>
@@ -38,7 +69,7 @@ export default function SellerCardInfo({ cardArticle }) {
             <span className="text-[20px] text-gray-300">잔여 </span>
             <div>
               <span className="text-lg font-bold">
-                {cardArticle.ramainingQuantity}
+                {cardArticle.remainingQuantity}
               </span>
               <span className="text-gray-300 text-lg font-bold">
                 {" "}
@@ -77,11 +108,27 @@ export default function SellerCardInfo({ cardArticle }) {
         <ActionButton
           variant="primary"
           className="w-[345px] h-[75px] text-lg md:text-xl md:w-[440px] md:h-[80px]"
+          onClick={handleEdit}
         >
           수정하기
         </ActionButton>
-        <ActionButton variant="secondary">판매 내리기</ActionButton>
+        <ActionButton 
+          onClick={() => setIsDeleteModalOpen(true)} 
+          variant="secondary"
+        >
+          판매 내리기
+        </ActionButton>
       </div>
+
+      {/* 삭제 모달 */}
+      {isDeleteModalOpen && (
+        <DeletePhotoCardModal
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={handleDelete}
+          cardTitle={cardArticle.photoCard.title}
+          isLoading={isDeleting}
+        />
+      )}
     </div>
   );
 }
