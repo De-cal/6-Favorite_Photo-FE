@@ -49,8 +49,6 @@ export default function SortAndSearchSection({
               <MobileFilter
                 datas={data}
                 onSelectFilter={(selected) => {
-                  if (selected.rank) setSelectedGrade(selected.rank);
-                  if (selected.genre) setSelectedGenre(selected.genre);
                   onSearch?.({
                     keyword,
                     rank: selected.rank,
