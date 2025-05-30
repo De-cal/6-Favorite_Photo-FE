@@ -114,10 +114,10 @@ export const postArticle = async (articleData) => {
   }
 };
 
-// 포토카드 상세 불러오기
+// 포토카드 구매자 상세 불러오기
 const getArticle = async (articleId) => {
   try {
-    return await cookieFetch(`/articles/${articleId}`);
+    return await cookieFetch(`/articles/${articleId}/buyer`);
   } catch (e) {
     console.error(e.message);
   }

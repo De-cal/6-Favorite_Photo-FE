@@ -5,7 +5,7 @@ import MobileHeader from "@/components/common/MobileHeader";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import { useModal } from "@/providers/ModalProvider";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
@@ -15,6 +15,7 @@ import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function ExchangeInputModal({ card, setIsModalOpen }) {
+  const [isDisabled, setIsDisabled] = useState(true);
   const [description, setDescription] = useState("");
   const { id: articleId } = useParams();
   const { closeModal, openModal } = useModal();
@@ -49,6 +50,15 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const handleValue = (e) => {
     setDescription(e.target.value);
   };
+
+  // 교환하기 버튼 활성화
+  useEffect(() => {
+    if (description.trim() === "") {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [description]);
 
   return (
     <div className="fixed inset-0 w-full overflow-y-auto pb-[20px] font-notoSans z-2 bg-black sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:bg-gray-500 sm:fixed sm:top-auto md:static md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]">
@@ -117,6 +127,7 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
                 <ActionButton
                   onClick={handleExchange}
                   variant="primary"
+                  disabled={isDisabled}
                   className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[52px] sm:px-[50px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69.5px]"
                 >
                   교환하기

@@ -35,7 +35,7 @@ export default function ExchangeCard({ type }) {
     genre,
     imgUrl;
 
-  const exchange = cardArticle.recipient?.[0];
+  const exchange = cardArticle.exchange?.[0];
 
   // 포토카드 상세 교환 목록 데이터 구조분해
   if (exchange) {
@@ -65,7 +65,7 @@ export default function ExchangeCard({ type }) {
   };
 
   return (
-    cardArticle.recipient?.[0] && (
+    cardArticle.exchange?.[0] && (
       <div
         className={clsx(
           "bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-start font-light md:w-[440px] md:max-h-[626px] md:p-[40px] w-[170px] h-auto p-[10px] text-[10px] sm:w-[342px] sm:max-h-[561px] sm:p-[20px] sm:text-[16px]",
