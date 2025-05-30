@@ -9,6 +9,7 @@ import SortAndSearchSection from "./SortAndSearchSection";
 import PhotoCardSection from "./PhotoCardSection";
 import PageNation from "./PageNation";
 import { getUserArticles } from "@/lib/api/article.api.js";
+import Loading from "@/app/Loading";
 
 export default function MySell() {
   const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ export default function MySell() {
   const [searchFilter, setSearchFilter] = useState(null);
   const [page, setPage] = useState(1);
   const pageSize = 15;
-  //진짜
+
   useEffect(() => {
     const keyword = searchParams.get("keyword") ?? "";
     const rank = searchParams.get("rank")?.replace(/\s+/g, "") ?? null;
@@ -48,15 +49,12 @@ export default function MySell() {
             : undefined,
       }),
     enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
-    enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
   });
+  if (!searchFilter || isPending) return <Loading />;
 
-  if (!searchFilter || isPending) return <div>로딩 중...</div>;
-  if (!searchFilter || isPending) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
-
+  console.log(data);
   const cards = data.list;
-  const totalCount = data.totalCount.total;
   const articleCount = data.totalCount.articleCount;
   const ranks = data.rankCounts;
 

@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import MyGallery from "./_components/MyGallery";
-import Loading from "./_components/Loading";
+import Loading from "../Loading";
 
 export default function MyGalleryPage() {
   return (

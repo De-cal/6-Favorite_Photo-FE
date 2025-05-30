@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
@@ -8,7 +8,6 @@ import { genreChange } from "@/lib/utils/genreChange";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function MobileFilter({ datas, onSelectFilter, where }) {
-  const data = datas.list;
   const { closeModal } = useModal();
   const [option, setOption] = useState("등급");
 
@@ -36,6 +35,62 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
     매진여부: null,
   });
 
+  const filterTabs =
+    where === "mygallery"
+      ? ["등급", "장르"]
+      : where === "marketplace"
+      ? ["등급", "장르", "매진여부"]
+      : ["등급", "장르", "판매방법", "매진여부"];
+
+  // 데이터 카운트 계산 로직
+  const rankCounts = useMemo(() => {
+    if (Array.isArray(datas)) {
+      return datas.reduce((acc, item) => {
+        const rank = item.userPhotoCard?.photoCard?.rank || item.exchangeRank;
+        const qty = item.remainingQuantity ?? 0;
+        if (rank) acc[rank] = (acc[rank] || 0) + qty;
+        return acc;
+      }, {});
+    }
+    return datas.rankCounts || {};
+  }, [datas]);
+
+  const genreCounts = useMemo(() => {
+    if (Array.isArray(datas)) {
+      return datas.reduce((acc, item) => {
+        const genre =
+          item.userPhotoCard?.photoCard?.genre || item.exchangeGenre;
+        const qty = item.remainingQuantity ?? 0;
+        if (genre) acc[genre] = (acc[genre] || 0) + qty;
+        return acc;
+      }, {});
+    }
+    return datas.genreCounts || {};
+  }, [datas]);
+
+  const soldOutCounts = useMemo(() => {
+    if (Array.isArray(datas)) {
+      return datas.reduce(
+        (acc, item) => {
+          const qty = item.remainingQuantity ?? 0;
+          if (qty === 0) acc["SOLDOUT"] += 1;
+          else acc["NOT_SOLDOUT"] += qty;
+          return acc;
+        },
+        { SOLDOUT: 0, NOT_SOLDOUT: 0 },
+      );
+    }
+    return datas.soldOutCounts || {};
+  }, [datas]);
+  const totalCount = useMemo(() => {
+    if (Array.isArray(datas)) {
+      return datas.reduce(
+        (acc, item) => acc + (item.remainingQuantity ?? 0),
+        0,
+      );
+    }
+    return datas?.totalCount?.totalCount ?? 0;
+  }, [datas]);
   const handleOptionClick = (value) => setOption(value);
 
   const handleItemClick = (value) => {
@@ -51,11 +106,6 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
       [option]: actualValue,
     }));
   };
-
-  const filterTabs =
-    where === "mygallery"
-      ? ["등급", "장르"]
-      : ["등급", "장르", "판매방법", "매진여부"];
 
   const renderOptionContent = () => {
     const renderList = (items, colorMap = {}) => (
@@ -85,15 +135,14 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
               >
                 {option === "장르" ? genreChange(item) : item}
               </p>
-
               <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
                 {option === "등급"
-                  ? `${datas.rankCounts?.[item.replace(/\s/g, "")] ?? 0}개`
+                  ? `${rankCounts[item.replace(/\s/g, "")] ?? 0}개`
                   : option === "장르"
-                  ? `${datas.genreCounts?.[item] ?? 0}개`
+                  ? `${genreCounts[item] ?? 0}개`
                   : option === "판매방법"
                   ? `${datas.sellingTypeCounts?.[sellingTypeMap[item]] ?? 0}개`
-                  : `${datas.soldOutCounts?.[soldoutMap[item]] ?? 0}개`}
+                  : `${soldOutCounts[soldoutMap[item]] ?? 0}개`}
               </p>
             </button>
           );
@@ -213,7 +262,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
               closeModal();
             }}
           >
-            {`${datas.totalCount.totalCount}장 카드 검색하기`}
+            {`${totalCount}장 카드 검색하기`}
           </button>
         </div>
       </div>

@@ -8,7 +8,7 @@ import SortAndSearchSection from "../_components/SortAndSearchSection";
 import PhotoCardSection from "../_components/PhotoCardSection";
 import PageNation from "../_components/PageNation";
 import { getAllCards } from "@/lib/api/card.api";
-import Loading from "./Loading";
+import Loading from "@/app/Loading";
 
 export default function MyGallery() {
   const router = useRouter();
