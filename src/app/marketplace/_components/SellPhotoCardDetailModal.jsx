@@ -6,7 +6,7 @@ import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
 import SellPhotoDetail from "./SellPhotoDetail";
 import MobileHeader from "@/components/common/MobileHeader";
-import { postArticle } from "@/lib/api/article.api";
+import articleApi, { postArticle } from "@/lib/api/article.api";
 import CommonModal from "@/components/common/CommonModal";
 import { useModal } from "@/providers/ModalProvider";
 
@@ -24,6 +24,7 @@ function SellPhotoCardDetailModal({
   },
   setIsModalOpen,
   article = {
+    id: "default",
     exchangeGenre: "장르를 선택해 주세요",
     exchangeRank: "등급을 선택해 주세요",
     description: "",
@@ -69,6 +70,12 @@ function SellPhotoCardDetailModal({
         });
         setResult("성공");
       } else {
+        const updatedArticle = await articleApi.patchArticle(article.id, {
+          exchangeGenre,
+          exchangeRank,
+          exchangeText: description,
+          totalQuantity: sellQuantity,
+        });
       }
     } catch (error) {
       //수정 성공/실패 모달?

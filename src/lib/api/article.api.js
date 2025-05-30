@@ -116,9 +116,21 @@ const cancelExchangeRequest = async (
   }
 };
 
+const patchArticle = async (articleId, data) => {
+  try {
+    return await cookieFetch(`/articles/${articleId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
 export default {
   getArticle,
   purchaseArticle,
   exchangeRequest,
   cancelExchangeRequest,
+  patchArticle,
 };
