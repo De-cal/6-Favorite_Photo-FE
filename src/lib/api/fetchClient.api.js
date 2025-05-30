@@ -1,7 +1,7 @@
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5050";
 
-export async function cookieFetch(path, options = {}) {
+export async function cookieFetch(path, options = {}, retry = true) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: "include", // 쿠키 보내기 위한 설정 (access/refresh tokens)
     cache: "no-store",

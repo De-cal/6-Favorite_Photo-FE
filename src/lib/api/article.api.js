@@ -39,12 +39,27 @@ export async function getMe() {
   }
 }
 
-export const getUserArticles = async ({} = {}) => {
+export const getUserArticles = async ({
+  page,
+  pageSize,
+  rank,
+  genre,
+  keyword,
+  sellingType,
+  soldOut,
+} = {}) => {
   try {
     const queryParams = new URLSearchParams();
 
-    const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
+    if (page) queryParams.set("page", String(page));
+    if (pageSize) queryParams.set("pageSize", String(pageSize));
+    if (rank) queryParams.set("rank", rank);
+    if (genre) queryParams.set("genre", genre);
+    if (keyword) queryParams.set("keyword", keyword);
+    if (sellingType) queryParams.set("sellingType", sellingType);
+    if (soldOut !== undefined) queryParams.set("soldOut", String(soldOut));
 
+    const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
     return data;
   } catch (error) {
     console.error("아티클 목록을 가져오는데 실패했습니다:", error);
@@ -77,7 +92,7 @@ export async function deleteArticle(articleId) {
     const data = await cookieFetch(`/articles/${articleId}`, {
       method: "DELETE",
     });
-    
+
     return data;
   } catch (error) {
     console.error("아티클 삭제에 실패했습니다:", error);
