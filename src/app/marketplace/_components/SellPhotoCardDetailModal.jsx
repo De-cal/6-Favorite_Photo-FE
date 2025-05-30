@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
@@ -40,6 +40,13 @@ function SellPhotoCardDetailModal({
   const [price, setPrice] = useState(article.price);
   const [sellQuantity, setSellQuantity] = useState(article.totalQuantity);
   const [result, setResult] = useState("");
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const handleClickSubmit = async () => {
     if (genre === "장르를 선택해 주세요") {
@@ -88,60 +95,64 @@ function SellPhotoCardDetailModal({
   };
 
   return (
-    <div className="md:w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen overflow-y-auto pb-[100px] pt-[20px]">
+    <div className="h-[1000px] md:w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen  pb-[100px] pt-[20px] overflow-hidden">
       <MobileHeader
         title={type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
         onClick={handleClickCloseModal}
       />
-      <div className="flex justify-end w-full mr-[30px] mt-[30px]">
+      <div className="flex justify-end w-full mr-[40px] mt-[30px]">
         <button onClick={handleClickCloseModal}>
           <Image src={close} alt="close" className="h-[32px] hidden sm:block" />
         </button>
       </div>
-      <div className="max-w-[920px] sm:w-full w-[345px] md:mx-[120px]">
-        <div className="text-gray-300 font-baskinRobbins text-[16px] md:text-[24px] hidden sm:block">
-          {type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
-        </div>
-        <div className="text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px] font-bold">
-          {card.photoCard.title}
-        </div>
-        <div className=" border-b-2 border-white mt-[10px] sm:mt-[20px]"> </div>
-        <div className="mt-[26px] sm:mt-[48px] flex flex-col items-center sm:flex-row gap-[20px] md:gap-[40px] sm:justify-center sm:items-start w-full">
-          <Image
-            src={example}
-            alt="photocard"
-            className="w-[345px] sm:flex-1"
+      <div className="overflow-y-auto overflow-x-hidden">
+        <div className="max-w-[920px] sm:w-full w-[345px] mx-auto px-[10px]">
+          <div className="text-gray-300 font-baskinRobbins text-[16px] md:text-[24px] hidden sm:block">
+            {type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
+          </div>
+          <div className="text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px] font-bold">
+            {card.photoCard.title}
+          </div>
+          <div className=" border-b-2 border-white mt-[10px] sm:mt-[20px]">
+            {" "}
+          </div>
+          <div className="mt-[26px] sm:mt-[48px] flex flex-col items-center sm:flex-row gap-[20px] md:gap-[40px] sm:justify-center sm:items-start w-full">
+            <Image
+              src={example}
+              alt="photocard"
+              className="w-[345px] sm:flex-1"
+            />
+            <SellPhotoDetail
+              quantity={card.quantity}
+              price={price}
+              setPrice={setPrice}
+              sellQuantity={sellQuantity}
+              setSellQuantity={setSellQuantity}
+              photoCard={card.photoCard}
+            />
+          </div>
+          <ExchangeInfo
+            setDescription={setDescription}
+            description={description}
+            genre={genre}
+            setGenre={setGenre}
+            rank={rank}
+            setRank={setRank}
           />
-          <SellPhotoDetail
-            quantity={card.quantity}
-            price={price}
-            setPrice={setPrice}
-            sellQuantity={sellQuantity}
-            setSellQuantity={setSellQuantity}
-            photoCard={card.photoCard}
-          />
-        </div>
-        <ExchangeInfo
-          setDescription={setDescription}
-          description={description}
-          genre={genre}
-          setGenre={setGenre}
-          rank={rank}
-          setRank={setRank}
-        />
-        <div className="flex gap-[15px] sm:gap-[20px] md:gap-[40px] w-full justify-between mt-[44px] sm:mt-15 md:mt-[90px]">
-          <button
-            className="py-[18px] border-1 border-gray-100 w-full font-bold"
-            onClick={closeModal}
-          >
-            취소하기
-          </button>
-          <button
-            className="py-[18px] bg-main text-black w-full font-bold"
-            onClick={handleClickSubmit}
-          >
-            {type === "sell" ? "판매하기" : "수정하기"}
-          </button>
+          <div className="flex gap-[15px] sm:gap-[20px] md:gap-[40px] w-full justify-between mt-[44px] sm:mt-15 md:mt-[90px] ">
+            <button
+              className="py-[18px] border-1 border-gray-100 w-full font-bold"
+              onClick={closeModal}
+            >
+              취소하기
+            </button>
+            <button
+              className="py-[18px] bg-main text-black w-full font-bold"
+              onClick={handleClickSubmit}
+            >
+              {type === "sell" ? "판매하기" : "수정하기"}
+            </button>
+          </div>
         </div>
       </div>
       {result && (
