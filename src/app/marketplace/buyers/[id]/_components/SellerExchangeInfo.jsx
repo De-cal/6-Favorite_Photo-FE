@@ -1,44 +1,39 @@
 "use client";
 
-import React from "react";
-import img_card_placeholder_1 from "@/assets/images/img-card-placeholder-1.svg";
+import React, { useState } from "react";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import { useModal } from "@/providers/ModalProvider";
 import GradeDetail from "@/components/common/GradeDetail";
 import SelectPhotoCardsModal from "@/app/marketplace/_components/SelectPhotoCardsModal";
+import { useQuery } from "@tanstack/react-query";
+import articleApi from "@/lib/api/article.api";
+import { useParams } from "next/navigation";
 
 export default function SellerExchangeInfo() {
-  const { openModal } = useModal();
-
-  const cardArticle = {
-    photoCard: {
-      title: "우리집 앞마당",
-      description:
-        "우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다.",
-      rank: "LEGENDARY",
-      genre: "풍경",
-      imgUrl: img_card_placeholder_1,
-    },
-    user: {
-      nickname: "미쓰손",
-    },
-    price: 4,
-    totalQuantity: 5,
-    remainingQuantity: 2,
-    exchangeText:
-      "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
-    exchangeRank: "RARE",
-    exchangeGenre: "풍경",
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { id: articleId } = useParams();
+  const { data: cardArticle, isPending } = useQuery({
+    queryKey: ["articles", articleId],
+    queryFn: () => articleApi.getArticle(articleId),
+  });
 
   // 교환하기
   const handleExchange = () => {
-    openModal(<SelectPhotoCardsModal type="exchange" />);
+    setIsModalOpen(true);
     document.body.style.overflow = "hidden";
   };
 
+  if (isPending) {
+    return <div>로딩 중...</div>;
+  }
+
   return (
     <div className="relative">
+      {isModalOpen && (
+        <SelectPhotoCardsModal
+          type="exchange"
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
       <div className="flex justify-between items-center border-b-[2px] border-gray-100 sm:gap-[20px] md:gap-[80px]">
         <h2 className="font-bold text-[24px]/[29px] w-full mt-[120px] pb-[10px] sm:text-[32px]/[38px] sm:pb-[42px] md:text-[40px]/[48px]">
           교환 희망 정보

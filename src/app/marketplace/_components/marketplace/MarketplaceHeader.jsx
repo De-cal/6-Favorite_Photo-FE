@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import marketplace from "@/assets/images/img-marketplace.svg";
@@ -5,6 +7,7 @@ import ActionButton from "@/components/ui/buttons/ActionButton";
 import Search from "./Search";
 import Dropdowns from "./Dropdowns";
 import SortDropdown from "./SortDropdown";
+import { getMe } from "@/lib/api/article.api";
 
 export default function MarketplaceHeader({
   setIsModalOpen,
@@ -14,7 +17,17 @@ export default function MarketplaceHeader({
   setSortOption,
   sortOpen,
   setSortOpen,
+  onRequireLogin,
 }) {
+  const handleCardClick = async () => {
+    const user = await getMe();
+    if (user) {
+      setIsModalOpen(true);
+    } else {
+      onRequireLogin?.();
+    }
+  };
+
   return (
     <>
       <div className="px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
@@ -35,7 +48,7 @@ export default function MarketplaceHeader({
           />
           <ActionButton
             className="w-[342px] h-[60px] md:w-[440px]"
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleCardClick}
           >
             나의 포토카드 판매하기
           </ActionButton>
