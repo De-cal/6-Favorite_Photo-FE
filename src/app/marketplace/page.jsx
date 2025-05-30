@@ -22,7 +22,7 @@ export default function MarketplacePage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const LIMIT = 12;
   //동일한 값이면 재사용
   const getArticles = useCallback(async () => {
@@ -130,6 +130,7 @@ export default function MarketplacePage() {
           searchKeyWord={searchKeyWord}
           filterSettings={filterSettings}
           sortOption={sortOption}
+          onRequireLogin={() => setLoginModalOpen(true)}
         />
       </div>
 
@@ -156,12 +157,15 @@ export default function MarketplacePage() {
         </div>
       )}
 
-      {/* <div
-        className="fixed inset-0 bg-black/50 z-40"
-        onClick={() => setIsModalOpen(false)}
-      />
-      <LoginNeed />
-    </div> */}
+      {loginModalOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={() => setLoginModalOpen(false)}
+          />
+          <LoginNeed />
+        </>
+      )}
     </div>
   );
 }

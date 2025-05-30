@@ -23,6 +23,16 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
   }
 }
 
+export async function getCurrentUser() {
+  try {
+    const res = await cookieFetch("/auth/me");
+    if (!res.ok) return null;
+    const user = await res.json();
+    return user; // or return true
+  } catch {
+    return null;
+  }
+}
 export const getUserArticles = async ({
   page,
   pageSize,

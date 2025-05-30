@@ -1,13 +1,24 @@
-import React from "react";
+import { useRouter } from "next/navigation";
+import { getCurrentUser } from "@/lib/api/article.api";
 import Card from "@/components/common/Card";
-import Link from "next/link";
 
 export default function ArticleGrid({
   articles,
   searchKeyWord,
   filterSettings,
   sortOption,
+  onRequireLogin, // 상위에서 받은 prop
 }) {
+  const router = useRouter();
+
+  const handleCardClick = async (articleId) => {
+    const user = await getCurrentUser();
+    if (user) {
+      router.push(`/buyers/${articleId}`);
+    } else {
+      onRequireLogin?.(); // 로그인 필요 모달 띄우기
+    }
+  };
   const filtered = articles
     .filter((article) =>
       searchKeyWord
@@ -40,7 +51,11 @@ export default function ArticleGrid({
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
       {filtered.map((article) => (
-        <Link key={article.id} href={`/buyers/${article.id}`}>
+        <div
+          key={article.id}
+          onClick={() => handleCardClick(article.id)}
+          className="cursor-pointer"
+        >
           <Card
             type={article.remainingQuantity !== 0 ? "original" : "soldout"}
             card={{
@@ -55,12 +70,11 @@ export default function ArticleGrid({
               },
               price: article.price,
               quantity: article.remainingQuantity,
-
               status: article.userPhotoCard.status,
               totalQuantity: article.totalQuantity,
             }}
           />
-        </Link>
+        </div>
       ))}
     </div>
   );
