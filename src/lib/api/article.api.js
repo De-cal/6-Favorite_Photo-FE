@@ -54,14 +54,11 @@ export const getUserArticles = async ({
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await cookieFetch(`/articles`, {
+    const data = await cookieFetch(`/articles`, {
       method: "POST",
       body: JSON.stringify(articleData),
     });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
-    }
+
     return data;
   } catch (error) {
     console.error("판매 등록에 실패했습니다:", error);
