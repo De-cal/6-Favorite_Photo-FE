@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import TopSection from "./_components/TopSection";
 import RankSection from "./_components/RankSection";
 import SortAndSearchSection from "./_components/SortAndSearchSection";
@@ -23,10 +26,10 @@ export default function MySellPage() {
     const genre = searchParams.get("genre") ?? null;
     const sellingType = searchParams.get("sellingType") ?? null;
     const soldout = searchParams.get("soldout") ?? null;
-    const parsedPage = Number(searchParams.get("page") ?? "1");
+    const curruntPage = Number(searchParams.get("page") ?? "1");
 
     setSearchFilter({ keyword, rank, genre, sellingType, soldout });
-    setPage(parsedPage);
+    setPage(curruntPage);
   }, [searchParams.toString()]);
 
   const { data, isPending, isError } = useQuery({
@@ -47,8 +50,10 @@ export default function MySellPage() {
             : undefined,
       }),
     enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
+    enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
   });
 
+  if (!searchFilter || isPending) return <div>로딩 중...</div>;
   if (!searchFilter || isPending) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
 
@@ -93,10 +98,18 @@ export default function MySellPage() {
 
   console.log(data);
 
+  console.log(data);
+
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
+      <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
+        <RankSection
+          totalCount={data.totalCount.totalCount}
+          rankCounts={ranks}
+        />
+        {/* 서스팬스로 감싸기 */}
         <RankSection
           totalCount={data.totalCount.totalCount}
           rankCounts={ranks}
@@ -105,11 +118,14 @@ export default function MySellPage() {
         <SortAndSearchSection
           onSearch={setSearchFilter}
           data={data}
+          data={data}
           selectedFilter={searchFilter}
         />
         {/* 서스팬스로 감싸기 */}
+        {/* 서스팬스로 감싸기 */}
         <PhotoCardSection dataLists={filteredCards} />
         <PageNation
+          count={Math.ceil(articleCount / pageSize)}
           count={Math.ceil(articleCount / pageSize)}
           currentPage={page}
           onClick={(newPage) => {
