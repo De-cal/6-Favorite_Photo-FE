@@ -1,35 +1,39 @@
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
+import { useParams } from "next/navigation";
+import articleApi, { purchaseArticle } from "@/lib/api/article.api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function BuyPhotoCardModal({ purchaseQuantity }) {
+export default function BuyPhotoCardModal({
+  cardArticle,
+  purchaseQuantity,
+  totalPrice,
+}) {
+  const { id: articleId } = useParams();
   const { closeModal } = useModal();
+  const queryClient = useQueryClient();
 
-  const cardArticle = {
-    photoCard: {
-      title: "우리집 앞마당",
-      description:
-        "우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다.",
-      rank: "LEGENDARY",
-      genre: "풍경",
-      imgUrl: "img_card_placeholder_1",
-    },
-    user: {
-      nickname: "미쓰손",
-    },
-    price: 4,
-    totalQuantity: 5,
-    ramainingQuantity: 2,
-    exchangeText:
-      "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
-    exchangeRank: "RARE",
-    exchangeGenre: "풍경",
-  };
+  // 포토카드 구매 API
+  const { mutate: purchaseArticle } = useMutation({
+    mutationFn: ({ articleId, body }) =>
+      articleApi.purchaseArticle(articleId, body),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["articles", articleId] }),
+  });
 
   // 취소하기
   const handleCancel = () => {
+    closeModal();
+    document.body.style.overflow = "auto";
+  };
+
+  // 구매하기
+  const handleBuyPhotoCard = () => {
+    purchaseArticle({ articleId, body: { purchaseQuantity, totalPrice } });
+
     closeModal();
     document.body.style.overflow = "auto";
   };
@@ -54,12 +58,12 @@ export default function BuyPhotoCardModal({ purchaseQuantity }) {
           <p className="font-bold text-[18px]/[26px] md:text-[20px]/[29px]">
             포토카드 구매
           </p>
-          <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 md:whitespace-pre md:mt-[40px] md:mb-[60px] sm:text-[16px]/[23px]">
-            <span className="">{`[${cardArticle.photoCard.rank} | ${cardArticle.photoCard.title}]`}</span>
+          <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 whitespace-pre md:mt-[40px] md:mb-[60px] sm:text-[16px]/[23px]">
+            <span className="">{`[${cardArticle.userPhotoCard.photoCard.rank} | ${cardArticle.userPhotoCard.photoCard.title}]`}</span>
             <span className=""> {purchaseQuantity}장을 구매하시겠습니까?</span>
           </div>
           <ActionButton
-            onClick={handleCancel}
+            onClick={handleBuyPhotoCard}
             className="w-[120px] h-[55px] sm:w-[140px] md:w-[170px] md:h-[60px]"
           >
             구매하기

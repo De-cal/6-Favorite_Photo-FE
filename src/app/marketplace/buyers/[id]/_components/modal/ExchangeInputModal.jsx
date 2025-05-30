@@ -5,35 +5,49 @@ import MobileHeader from "@/components/common/MobileHeader";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import { useModal } from "@/providers/ModalProvider";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
 import Tablet from "@/components/common/Tablet";
-import ExchangeCancelModal from "./ExchangeCancelModal";
-import SelectPhotoCardsModal from "@/app/marketplace/_components/SelectPhotoCardsModal";
+import articleApi from "@/lib/api/article.api";
+import { useParams } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function ExchangeInputModal({ card }) {
+export default function ExchangeInputModal({ card, setIsModalOpen }) {
+  const [description, setDescription] = useState("");
+  const { id: articleId } = useParams();
   const { closeModal, openModal } = useModal();
+  const queryClient = useQueryClient();
 
-  // 모달 닫기
+  // 교환 요청 API
+  const { mutate: exchangeRequest } = useMutation({
+    mutationFn: ({ articleId, body }) =>
+      articleApi.exchangeRequest(articleId, body),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["articles", articleId] }),
+  });
+
+  // 교환 요청하기
+  const handleExchange = () => {
+    exchangeRequest({
+      articleId,
+      body: { requesterCardId: card.id, description },
+    });
+    closeModal();
+    document.body.style.overflow = "auto";
+  };
+
+  // 뒤로가기
   const handleClose = () => {
     closeModal();
-    openModal(<SelectPhotoCardsModal type="exchange" />);
+    setIsModalOpen(true);
     document.body.style.overflow = "auto";
   };
 
-  // 교환 취소하기
-  const handleCancel = () => {
-    closeModal();
-    openModal(<ExchangeCancelModal />);
-    document.body.style.overflow = "hidden";
-  };
-
-  // 교환하기
-  const handleExchange = () => {
-    closeModal();
-    document.body.style.overflow = "auto";
+  // Description 변경
+  const handleValue = (e) => {
+    setDescription(e.target.value);
   };
 
   return (
@@ -86,13 +100,15 @@ export default function ExchangeInputModal({ card }) {
                   교환 제시 내용
                 </p>
                 <textarea
+                  onChange={handleValue}
+                  value={description}
                   className="font-normal text-[14px]/[17px] w-[345px] h-[140px] py-[12px] px-[20px] bg-gray-500 border rounded-[2px] border-gray-200 resize-none sm:w-full sm:max-w-[440px] sm:text-[16px]/[19px] md:py-[18px]"
                   placeholder="내용을 입력해주세요"
                 />
               </div>
               <div className="flex justify-center items-center gap-[15px] mt-[44px] sm:gap-[20px] sm:mt-[60px]">
                 <ActionButton
-                  onClick={handleCancel}
+                  onClick={handleClose}
                   variant="secondary"
                   className="font-bold text-[16px]/[19px] w-full h-[55px] py-[18px] px-[51px] sm:px-[50px] md:h-[60px] md:text-[18px]/[22px] md:py-[19px] md:px-[69px]"
                 >
