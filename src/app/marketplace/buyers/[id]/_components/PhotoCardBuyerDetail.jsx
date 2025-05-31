@@ -75,8 +75,14 @@ export default function PhotoCardBuyerDetail() {
     remainingQuantity,
     totalQuantity,
     userPhotoCard: {
-      user: { nickname },
-      photoCard: { title, imgUrl, rank, genre, description },
+      photoCard: {
+        title,
+        imgUrl,
+        rank,
+        genre,
+        description,
+        creator: { nickname },
+      },
     },
   } = cardArticle;
 
