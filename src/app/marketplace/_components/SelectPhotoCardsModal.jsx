@@ -85,11 +85,11 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex justify-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px]"
+      className="fixed inset-0 z-50 flex justify-center items-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px]"
       onClick={() => setIsModalOpen(false)}
     >
       <div
-        className="w-full max-w-[1160px] bg-gray-500 h-[1000px] rounded-xl overflow-hidden flex flex-col px-[15px]"
+        className="relative w-full max-w-[1160px] bg-gray-500 h-[1000px] rounded-xl overflow-hidden flex flex-col px-[15px]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 닫기 버튼 */}
@@ -101,40 +101,38 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
             <Image src={close} alt="close" className="h-[32px]" />
           </button>
         </div>
-        <div
-          ref={scrollRef}
-          className="overflow-y-auto flex-1 pb-[100px] bg-transparent"
-        >
-          <div className="w-[345px] sm:w-[704px] md:w-[920px] mx-auto">
-            <div className="text-gray-300 font-baskinRobbins text-[14px] sm:text-[16px] md:text-[24px]">
-              마이갤러리
-            </div>
-            <div className="font-baskinRobbins text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px]">
-              {type === "판매" ? "나의 포토카드 판매하기" : "포토카드 교환하기"}
-            </div>
-            <div className="hidden sm:block border-b-2 border-white mt-[20px]" />
-            <div className="flex gap-[10px] w-full mt-[20px] sm:flex-row-reverse">
-              <SortAndSearchSection
-                data={allCards}
-                onSearch={(filter) => setSearchFilter(filter)}
-                selectedFilter
-              />
-            </div>
-            <div className="grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]">
-              {allCards.map((card) => (
-                <Card
-                  key={card.id}
-                  onClick={() => handleClickOpenModal(card)}
-                  type="my_card"
-                  card={card}
-                />
-              ))}
-            </div>
-            {isLoading && <div className="text-white mt-4">로딩 중...</div>}
-            {isFetchingNextPage && (
-              <div className="text-white mt-4">로딩 중...</div>
-            )}
+        <div className="w-[345px] sm:w-[704px] md:w-[920px] mx-auto">
+          <div className="text-gray-300 font-baskinRobbins text-[14px] sm:text-[16px] md:text-[24px]">
+            마이갤러리
           </div>
+          <div className="font-baskinRobbins text-[26px] sm:text-[40px] md:text-[46px] mt-[15px] sm:mt-[40px]">
+            {type === "판매" ? "나의 포토카드 판매하기" : "포토카드 교환하기"}
+          </div>
+          <div className="hidden sm:block border-b-2 border-white mt-[20px]" />
+          <div className="flex gap-[10px] w-full mt-[20px] sm:flex-row-reverse">
+            <SortAndSearchSection
+              data={allCards}
+              onSearch={(filter) => setSearchFilter(filter)}
+              selectedFilter
+            />
+          </div>
+          <div
+            ref={scrollRef}
+            className="md:absolute md:left-[50%] md:translate-x-[-50%] scrollbar overflow-y-auto overflow-x-hidden md:px-[20px] md:w-[960px] h-[600px] grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]"
+          >
+            {allCards.map((card) => (
+              <Card
+                key={card.id}
+                onClick={() => handleClickOpenModal(card)}
+                type="my_card"
+                card={card}
+              />
+            ))}
+          </div>
+          {isLoading && <div className="text-white mt-4">로딩 중...</div>}
+          {isFetchingNextPage && (
+            <div className="text-white mt-4">로딩 중...</div>
+          )}
         </div>
       </div>
     </div>

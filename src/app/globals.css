@@ -41,6 +41,22 @@ html {
   display: none; /* Chrome, Safari, Opera */
 }
 
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1480px) {
+  .scrollbar::-webkit-scrollbar {
+    display: block;
+    width: 8px; /* Chrome, Safari, Opera */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #5a5a5a;
+    border-radius: 2px;
+  }
+}
+
 @keyframes grade-loop {
   0% {
     transform: translateY(0);
