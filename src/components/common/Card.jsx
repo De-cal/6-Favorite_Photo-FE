@@ -39,7 +39,7 @@ function Card({
   return (
     <div
       className={clsx(
-        "bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-center font-light",
+        "bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-center font-light cursor-pointer",
         "md:w-[440px] md:h-[600px] md:px-[40px]",
         isExchange
           ? "min-w-[342px] h-[517px] px-[20px] text-[16px] pt-[20px] pb-[30px] md:p-[40px]"
