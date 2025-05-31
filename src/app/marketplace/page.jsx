@@ -94,6 +94,7 @@ export default function MarketplacePage() {
     setFilterSettings(selectedFilters);
     setShowFilter(false);
   };
+  console.log("데이터", articles);
 
   return (
     <div className="relative">
@@ -139,8 +140,9 @@ export default function MarketplacePage() {
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
           <MobileFilter
-            datas={articles.userPhotoCard}
+            datas={articles}
             onSelectFilter={handleSelectFilter}
+            where="marketplace"
           />
         </div>
       )}

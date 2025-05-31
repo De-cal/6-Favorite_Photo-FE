@@ -18,6 +18,7 @@ export default function PhotoCardBuyerDetail() {
   const [totalPrice, setTotalPrice] = useState(null);
   const { id: articleId } = useParams();
   const { openModal } = useModal();
+
   const { data: cardArticle, isPending } = useQuery({
     queryKey: ["articles", articleId],
     queryFn: () => articleApi.getArticle(articleId),
@@ -54,7 +55,8 @@ export default function PhotoCardBuyerDetail() {
   const openBuyConfirmModal = () => {
     openModal(
       <BuyPhotoCardModal
-        cardArticle={cardArticle}
+        title={title}
+        rank={rank}
         purchaseQuantity={purchaseQuantity}
         totalPrice={totalPrice}
       />,
@@ -102,7 +104,7 @@ export default function PhotoCardBuyerDetail() {
             <div className="flex justify-center items-center gap-[10px] md:gap-[30px]">
               <GradeDetail
                 grade={rank}
-                className="text-[18px]/[22px] md:text-[24px]/[29px]"
+                className="font-bold text-[18px]/[22px] md:text-[24px]/[29px]"
               />
               <div className="border-l-[1.5px] border-gray-400 h-[17px]"></div>
               <p className="font-bold text-[18px]/[22px] text-gray-300 md:text-[24px]/[29px]">

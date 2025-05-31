@@ -14,11 +14,6 @@ function makeQueryClient() {
       console.log("❗쿼리 실패 발생");
       console.log("에러 객체:", error);
       console.log("쿼리 객체:", query);
-      alert(
-        `오류 발생: ${query.meta?.name || "알 수 없는 쿼리"} - ${
-          error.message
-        }`,
-      );
     },
   });
 

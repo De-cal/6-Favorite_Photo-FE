@@ -9,15 +9,21 @@ import SortAndSearchSection from "./SortAndSearchSection";
 import PhotoCardSection from "./PhotoCardSection";
 import PageNation from "./PageNation";
 import { getUserArticles } from "@/lib/api/article.api.js";
+import Loading from "@/components/common/Loading";
+import { useAuth } from "@/providers/AuthProvider";
+import TsetModal from "@/app/modal-test/TsetModal";
 
 export default function MySell() {
+  const { user } = useAuth();
+  if (!user) return <TsetModal />; //로그인 모달로 대체
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [searchFilter, setSearchFilter] = useState(null);
   const [page, setPage] = useState(1);
   const pageSize = 15;
-  //진짜
+
   useEffect(() => {
     const keyword = searchParams.get("keyword") ?? "";
     const rank = searchParams.get("rank")?.replace(/\s+/g, "") ?? null;
@@ -48,15 +54,12 @@ export default function MySell() {
             : undefined,
       }),
     enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
-    enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
   });
+  if (!searchFilter || isPending) return <Loading />;
 
-  if (!searchFilter || isPending) return <div>로딩 중...</div>;
-  if (!searchFilter || isPending) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
-
+  console.log(data);
   const cards = data.list;
-  const totalCount = data.totalCount.total;
   const articleCount = data.totalCount.articleCount;
   const ranks = data.rankCounts;
 
@@ -98,7 +101,7 @@ export default function MySell() {
 
   console.log(data);
 
-  return (
+  return user ? (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
@@ -128,5 +131,7 @@ export default function MySell() {
         />
       </div>
     </div>
+  ) : (
+    <TsetModal />
   );
 }

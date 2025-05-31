@@ -40,3 +40,19 @@ html {
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+@keyframes grade-loop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200rem); /* 4등급 x 2.5rem x 20회 = 200rem */
+  }
+}
+
+.grade-roller-loop {
+  display: flex;
+  flex-direction: column;
+  animation: grade-loop 55s linear infinite;
+  will-change: transform;
+}

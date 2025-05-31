@@ -17,6 +17,7 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
     }
 
     const data = await response.json(); // { articles: [], totalPages, currentPage }
+    console.log(data);
     return data;
   } catch (error) {
     console.error("getAllArticles error:", error);
@@ -32,26 +33,40 @@ export async function getMe() {
 
     if (!user) return null;
 
-    return user;
+    return { data: user }; // 이렇게 감싸야 destructuring 가능
   } catch (error) {
     console.error("getMe() 오류:", error);
     return null;
   }
 }
 
-export const getUserArticles = async ({} = {}) => {
+export const getUserArticles = async ({
+  page,
+  pageSize,
+  rank,
+  genre,
+  keyword,
+  sellingType,
+  soldOut,
+} = {}) => {
   try {
     const queryParams = new URLSearchParams();
 
-    const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
+    if (page) queryParams.set("page", String(page));
+    if (pageSize) queryParams.set("pageSize", String(pageSize));
+    if (rank) queryParams.set("rank", rank);
+    if (genre) queryParams.set("genre", genre);
+    if (keyword) queryParams.set("keyword", keyword);
+    if (sellingType) queryParams.set("sellingType", sellingType);
+    if (soldOut !== undefined) queryParams.set("soldOut", String(soldOut));
 
+    const data = await cookieFetch(`/articles/user?${queryParams.toString()}`);
     return data;
   } catch (error) {
     console.error("아티클 목록을 가져오는데 실패했습니다:", error);
     throw error;
   }
 };
-
 // 특정 아티클 상세 정보 가져오기
 export async function getArticleById(articleId) {
   try {
@@ -77,7 +92,7 @@ export async function deleteArticle(articleId) {
     const data = await cookieFetch(`/articles/${articleId}`, {
       method: "DELETE",
     });
-    
+
     return data;
   } catch (error) {
     console.error("아티클 삭제에 실패했습니다:", error);
@@ -87,14 +102,11 @@ export async function deleteArticle(articleId) {
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await cookieFetch(`/articles`, {
+    const data = await cookieFetch(`/articles`, {
       method: "POST",
       body: JSON.stringify(articleData),
     });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
-    }
+
     return data;
   } catch (error) {
     console.error("판매 등록에 실패했습니다:", error);
@@ -102,10 +114,10 @@ export const postArticle = async (articleData) => {
   }
 };
 
-// 포토카드 상세 불러오기
+// 포토카드 구매자 상세 불러오기
 const getArticle = async (articleId) => {
   try {
-    return await cookieFetch(`/articles/${articleId}`);
+    return await cookieFetch(`/articles/${articleId}/buyer`);
   } catch (e) {
     console.error(e.message);
   }
@@ -120,6 +132,7 @@ const purchaseArticle = async (articleId, body) => {
     });
   } catch (e) {
     console.error(e.message);
+    throw e;
   }
 };
 
@@ -132,6 +145,7 @@ const exchangeRequest = async (articleId, body) => {
     });
   } catch (e) {
     console.error(e.message);
+    throw e;
   }
 };
 
@@ -151,9 +165,22 @@ const cancelExchangeRequest = async (
   }
 };
 
+//아티클 수정
+const patchArticle = async (articleId, data) => {
+  try {
+    return await cookieFetch(`/articles/${articleId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
 export default {
   getArticle,
   purchaseArticle,
   exchangeRequest,
   cancelExchangeRequest,
+  patchArticle,
 };

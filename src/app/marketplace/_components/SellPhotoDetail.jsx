@@ -24,13 +24,16 @@ function SellPhotoDetail({
     <div className="flex flex-col w-[345px] sm:flex-1 ">
       <div className="flex flex-row justify-between w-full mt-[5px] sm:mt-0 text-[18px]">
         <div className="flex gap-[5px] items-center">
-          <GradeDetail grade={photoCard.rank} />
+          <GradeDetail
+            grade={photoCard.rank}
+            className="font-bold text-[18px] md:text-[24px]"
+          />
           <div className="border-l border-gray-400 h-6 mx-[15px] "></div>
-          <p className=" text-gray-300 font-bold">
+          <p className=" text-gray-300 font-bold text-[18px] md:text-[24px]">
             {genreChange(photoCard.genre)}
           </p>
         </div>
-        <p className="text-white underline font-bold">
+        <p className="text-white underline font-bold text-[18px] md:text-[24px]">
           {photoCard.creator.nickname}
         </p>
       </div>
@@ -38,7 +41,7 @@ function SellPhotoDetail({
         {" "}
       </div>
       <div className="flex flex-col gap-[20px]">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center text-[18px] md:text-[20px]">
           <p>총 판매 수량</p>
           <div className="flex gap-[15px] w-[202px] md:w-[245px]">
             <div className="border-gray-200 border-1 flex w-[144px] h-[45px] justify-evenly items-center">
@@ -64,7 +67,7 @@ function SellPhotoDetail({
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center text-[18px] md:text-[20px]">
           <p>장당 가격</p>
           <div className="border-gray-200 border-1 w-[202px] h-[45px] md:w-[245px] md:h-[50px] relative flex justify-center">
             <input

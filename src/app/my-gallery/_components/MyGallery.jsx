@@ -8,9 +8,13 @@ import SortAndSearchSection from "../_components/SortAndSearchSection";
 import PhotoCardSection from "../_components/PhotoCardSection";
 import PageNation from "../_components/PageNation";
 import { getAllCards } from "@/lib/api/card.api";
-import Loading from "./Loading";
+import Loading from "@/components/common/Loading";
+import { useAuth } from "@/providers/AuthProvider";
+import TsetModal from "@/app/modal-test/TsetModal";
 
 export default function MyGallery() {
+  const { user } = useAuth();
+  if (!user) return <TsetModal />; // 로그인 필요 모달로 교체예정
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -62,7 +66,7 @@ export default function MyGallery() {
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
-        <TopSection />
+        <TopSection user={user} />
         <RankSection totalCount={totalCount} rankCounts={ranks} />
         <SortAndSearchSection
           onSearch={updateQuery}
