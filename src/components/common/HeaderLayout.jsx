@@ -21,6 +21,23 @@ export default function HeaderLayout() {
 
   const path = usePathname();
 
+  // 태블릿 -> 모바일로 가면 모달 자동 닫기
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 744px)");
+
+    const handleMediaChange = (e) => {
+      if (e.matches) {
+        setIsModalVisible(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
+
   // 모바일 모달 열기
   const handleMobileModalOpen = () => {
     openModal(<MobileProfileModal />);

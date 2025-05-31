@@ -2,12 +2,29 @@
 
 import { useModal } from "@/providers/ModalProvider";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "@/providers/AuthProvider";
 
 export default function MobileProfileModal() {
   const { closeModal } = useModal();
   const { user, logout } = useAuth();
+
+  // 모바일 -> 태블릿 이상으로 가면 모달 자동 닫기
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 744px)");
+
+    const handleMediaChange = (e) => {
+      if (e.matches) {
+        closeModal();
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, [closeModal]);
 
   // 모바일 모달 닫기
   const handleMobileModalClose = (e) => {
@@ -24,7 +41,7 @@ export default function MobileProfileModal() {
   return (
     <div
       onClick={handleMobileModalClose}
-      className="fixed top-0 right-0 bottom-0 left-0 bg-transparent z-1 sm:hidden"
+      className="fixed top-0 right-0 bottom-0 left-0 bg-transparent z-1"
     >
       <div className="fixed flex flex-col justify-between min-h-screen min-w-[260px] bg-gray-500 z-2">
         <div className="font-notoSans flex flex-col pt-[40px] px-[20px] pb-[27px] gap-[20px] border-b-[1px] border-gray-400">
