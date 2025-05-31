@@ -6,6 +6,7 @@ export default function TabletAndDesktopProfileModal({
   handleTabletAndDesktopModalClose,
 }) {
   const { user } = useAuth();
+
   return (
     <>
       <div
