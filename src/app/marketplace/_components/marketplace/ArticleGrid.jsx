@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
-import { getMe } from "@/lib/api/article.api";
 import Card from "@/components/common/Card";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function ArticleGrid({
   articles,
@@ -10,16 +10,17 @@ export default function ArticleGrid({
   onRequireLogin,
 }) {
   const router = useRouter();
+  const { user } = useAuth();
+  console.log("getMe", user);
+
   const handleCardClick = async (articleId, article) => {
-    const user = await getMe();
     if (user) {
       router.push(
-        user.data.nickname === article.userPhotoCard.user.nickname
+        user.nickname === article.userPhotoCard.user.nickname
           ? `/marketplace/sellers/${articleId}`
           : `/marketplace/buyers/${articleId}`,
       );
 
-      console.log("getMe", user.data.nickname);
       console.log("아티클 작성자", article.userPhotoCard.user.nickname);
     } else {
       onRequireLogin?.(); // 로그인 필요 모달 띄우기

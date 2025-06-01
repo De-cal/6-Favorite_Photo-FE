@@ -1,10 +1,10 @@
 import React from "react";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import { getMe } from "@/lib/api/article.api";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function MyCardSellBtn({ onRequireLogin, setIsModalOpen }) {
+  const { user } = useAuth();
   const handleCardClick = async () => {
-    const user = await getMe();
     console.log("getMe", user);
     if (user) {
       setIsModalOpen(true); // 로그인 되어 있으면 SelectPhotoCardsModal 열기
