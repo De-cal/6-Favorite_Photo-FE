@@ -143,6 +143,7 @@ export default function MarketplacePage() {
             datas={articles}
             onSelectFilter={handleSelectFilter}
             where="marketplace"
+            close={() => setShowFilter(false)}
           />
         </div>
       )}
