@@ -117,6 +117,7 @@ const purchaseArticle = async (articleId, body) => {
     });
   } catch (e) {
     console.error(e.message);
+    throw e;
   }
 };
 
@@ -129,6 +130,7 @@ const exchangeRequest = async (articleId, body) => {
     });
   } catch (e) {
     console.error(e.message);
+    throw e;
   }
 };
 

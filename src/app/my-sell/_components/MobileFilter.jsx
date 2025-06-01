@@ -16,7 +16,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
 
   const sellingTypeMap = {
     "판매 중": "SELLING",
-    "교환 대기 중": "WAITING_EXCHANGE",
+    "교환 대기 중": "EXCHANGE_REQUESTED",
   };
   const soldoutMap = {
     "판매 중": "NOT_SOLDOUT",
@@ -235,7 +235,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
             className="cursor-pointer rounded-[2px] w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] text-center"
             onClick={() => {
               const transformed = {
-                rank: selectedValues["등급"],
+                rank: selectedValues["등급"]?.replace(/\s+/g, ""),
                 genre: selectedValues["장르"],
                 sellingType: selectedValues["판매방법"],
                 soldout: selectedValues["매진여부"],

@@ -57,14 +57,13 @@ export default function SortAndSearchSection({
       <section className="sm:hidden pt-[15px] flex flex-row gap-[10px] items-center justify-start w-full">
         <button
           className="flex flex-row w-[45px] h-[45px] items-center justify-center p-3 border-1 cursor-pointer"
+          where="mysell"
           onClick={() => {
             openModal(
               //dd
               <MobileFilter
                 datas={data}
                 onSelectFilter={(selected) => {
-                  if (selected.rank) setSelectedGrade(selected.rank);
-                  if (selected.genre) setSelectedGenre(selected.genre);
                   onSearch?.({
                     keyword,
                     rank: selected.rank,

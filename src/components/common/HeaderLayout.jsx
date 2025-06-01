@@ -21,6 +21,23 @@ export default function HeaderLayout() {
 
   const path = usePathname();
 
+  // 태블릿 -> 모바일로 가면 모달 자동 닫기
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 744px)");
+
+    const handleMediaChange = (e) => {
+      if (e.matches) {
+        setIsModalVisible(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
+
   // 모바일 모달 열기
   const handleMobileModalOpen = () => {
     openModal(<MobileProfileModal />);
@@ -65,11 +82,10 @@ export default function HeaderLayout() {
                 className="object-cover"
               />
             </Link>
-            {/* 지수님 TODO: 인증/인가 하실 때 true 부분 변경하시면 됩니다. -> 변경하였습니다 */}
             {user ? (
               <div className="flex justify-center items-center gap-[30px]">
                 <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
-                  {user.pointAmount}
+                  {new Intl.NumberFormat().format(user.pointAmount)} P
                 </p>
                 <div>
                   <Notification
