@@ -24,21 +24,6 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
     return { articles: [], totalPages: 1 };
   }
 }
-export async function getMe() {
-  try {
-    const user = await cookieFetch("/auth/me", {
-      method: "GET",
-      credentials: "include", // 꼭 필요!
-    });
-
-    if (!user) return null;
-
-    return { data: user }; // 이렇게 감싸야 destructuring 가능
-  } catch (error) {
-    console.error("getMe() 오류:", error);
-    return null;
-  }
-}
 
 export const getUserArticles = async ({
   page,

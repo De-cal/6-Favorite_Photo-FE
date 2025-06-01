@@ -7,7 +7,7 @@ import ActionButton from "@/components/ui/buttons/ActionButton";
 import Search from "./Search";
 import Dropdowns from "./Dropdowns";
 import SortDropdown from "./SortDropdown";
-import { getMe } from "@/lib/api/article.api";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function MarketplaceHeader({
   setIsModalOpen,
@@ -19,8 +19,8 @@ export default function MarketplaceHeader({
   setSortOpen,
   onRequireLogin,
 }) {
+  const { user } = useAuth();
   const handleCardClick = async () => {
-    const user = await getMe();
     if (user) {
       setIsModalOpen(true);
     } else {
