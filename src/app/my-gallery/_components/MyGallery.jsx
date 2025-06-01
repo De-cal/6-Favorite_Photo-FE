@@ -14,7 +14,6 @@ import TsetModal from "@/app/modal-test/TsetModal";
 
 export default function MyGallery() {
   const { user } = useAuth();
-  if (!user) return <TsetModal />; // 로그인 필요 모달로 교체예정
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -41,7 +40,7 @@ export default function MyGallery() {
         ...searchFilter,
         status: "OWNED",
       }),
-    enabled: !!searchFilter,
+    enabled: !!searchFilter && !!user, // 유저 없으면 쿼리도 막음
   });
 
   const updateQuery = (newFilters) => {
@@ -56,6 +55,7 @@ export default function MyGallery() {
     setPage(1);
   };
 
+  if (!user) return <TsetModal />;
   if (!searchFilter || isPending) return <Loading />;
   if (isError) return <div>에러 발생</div>;
 
@@ -73,7 +73,6 @@ export default function MyGallery() {
           data={data}
           selectedFilter={searchFilter}
         />
-
         <PhotoCardSection dataLists={cards} />
         <PageNation
           count={Math.ceil(data.totalCount.cardCount / pageSize)}
