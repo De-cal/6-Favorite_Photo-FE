@@ -23,6 +23,7 @@ export default function MarketplacePage() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+
   const LIMIT = 12;
 
   //동일한 값이면 재사용
