@@ -7,7 +7,7 @@ import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
 import { useModal } from "@/providers/ModalProvider";
 import ExchangeInputModal from "../buyers/[id]/_components/modal/ExchangeInputModal";
 import { getAllCards } from "@/lib/api/card.api";
-import SortAndSearchSection from "@/app/my-sell/_components/SortAndSearchSection";
+import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
@@ -89,14 +89,17 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
       onClick={() => setIsModalOpen(false)}
     >
       <div
-        className="relative w-full max-w-[1160px] bg-gray-500 h-[1000px] rounded-xl overflow-hidden flex flex-col px-[15px]"
+        className="relative w-full max-w-[1160px] bg-gray-500 h-screen max-h-[1000px] rounded-xl overflow-hidden flex flex-col px-[15px]"
         onClick={(e) => e.stopPropagation()}
       >
+        <div className="w-full flex justify-center mt-[15px]">
+          <div className="bg-gray-400 w-[48px] h-[6px] md:hidden rounded-[50px]"></div>
+        </div>
         {/* 닫기 버튼 */}
         <div className="flex justify-end w-full  mt-[30px] ">
           <button
             onClick={() => setIsModalOpen(false)}
-            className="hidden md:block mr-[30px]"
+            className="hidden md:block mr-[30px] cursor-pointer"
           >
             <Image src={close} alt="close" className="h-[32px]" />
           </button>
@@ -113,26 +116,34 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
             <SortAndSearchSection
               data={allCards}
               onSearch={(filter) => setSearchFilter(filter)}
-              selectedFilter
+              selectedFilter={searchFilter}
             />
           </div>
           <div
             ref={scrollRef}
             className="md:absolute md:left-[50%] md:translate-x-[-50%] scrollbar overflow-y-auto overflow-x-hidden md:px-[20px] md:w-[960px] h-[600px] grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]"
           >
-            {allCards.map((card) => (
-              <Card
-                key={card.id}
-                onClick={() => handleClickOpenModal(card)}
-                type="my_card"
-                card={card}
-              />
-            ))}
+            {allCards.length === 0 && !isLoading ? (
+              <div className="col-span-2 text-white text-center mt-[80px] text-[24px]">
+                현재 보유 중인 포토카드가 없습니다
+              </div>
+            ) : (
+              allCards.map((card) => (
+                <Card
+                  key={card.id}
+                  onClick={() => handleClickOpenModal(card)}
+                  type="my_card"
+                  card={card}
+                />
+              ))
+            )}
+
+            {(isLoading || isFetchingNextPage) && (
+              <div className="w-full flex justify-center items-center col-span-2 mt-[40px]">
+                <div className="loader" />
+              </div>
+            )}
           </div>
-          {isLoading && <div className="text-white mt-4">로딩 중...</div>}
-          {isFetchingNextPage && (
-            <div className="text-white mt-4">로딩 중...</div>
-          )}
         </div>
       </div>
     </div>

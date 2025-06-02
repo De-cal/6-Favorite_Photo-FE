@@ -15,8 +15,6 @@ import TsetModal from "@/app/modal-test/TsetModal";
 
 export default function MySell() {
   const { user } = useAuth();
-  if (!user) return <TsetModal />; //로그인 모달로 대체
-
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -53,12 +51,13 @@ export default function MySell() {
             ? false
             : undefined,
       }),
-    enabled: !!searchFilter, // 필터 초기화될 때까지 API 호출 막음
+    enabled: !!searchFilter && !!user, // 필터 초기화될 때까지 API 호출 막음
   });
-  if (!searchFilter || isPending) return <Loading />;
 
+  if (!user) return <TsetModal />;
+  if (!searchFilter || isPending) return <Loading />;
   if (isError) return <div>에러 발생</div>;
-  console.log(data);
+
   const cards = data.list;
   const articleCount = data.totalCount.articleCount;
   const ranks = data.rankCounts;
@@ -97,11 +96,7 @@ export default function MySell() {
     );
   });
 
-  console.log(data);
-
-  console.log(data);
-
-  return user ? (
+  return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
@@ -131,7 +126,5 @@ export default function MySell() {
         />
       </div>
     </div>
-  ) : (
-    <TsetModal />
   );
 }
