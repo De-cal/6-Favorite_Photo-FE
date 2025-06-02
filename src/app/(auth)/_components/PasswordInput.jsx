@@ -69,6 +69,8 @@ export default function PasswordInput({
           type={visible ? "text" : "password"}
           placeholder={placeholder}
           onChange={handleChange}
+          value={inputValue}
+          autocomplete="new-password"
           className={clsx(
             "w-full h-[55px] md:h-[60px] rounded-xs border py-[18px] px-[20px] placeholder:text-gray-200 focus:outline-none",
             isInvalid ? "border-red-500" : "border-gray-200 focus:border-main",
