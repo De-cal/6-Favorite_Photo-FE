@@ -7,7 +7,7 @@ import { useModal } from "@/providers/ModalProvider";
 import { genreChange } from "@/lib/utils/genreChange";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function MobileFilter({ datas, onSelectFilter, where }) {
+export default function MobileFilter({ datas, onSelectFilter, where, close }) {
   const { closeModal } = useModal();
   const [option, setOption] = useState("등급");
 
@@ -91,6 +91,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
     }
     return datas?.totalCount?.totalCount ?? 0;
   }, [datas]);
+  const [selectedCount, setSelectedCount] = useState(0);
   const handleOptionClick = (value) => setOption(value);
 
   const handleItemClick = (value) => {
@@ -126,7 +127,20 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
               className={`w-full h-[49px] flex justify-between items-center px-[32px] cursor-pointer ${
                 isSelected ? "bg-gray-500" : ""
               }`}
-              onClick={() => handleItemClick(item)}
+              onClick={() => {
+                handleItemClick(item);
+
+                const count =
+                  option === "등급"
+                    ? rankCounts[item.replace(/\s/g, "")] ?? 0
+                    : option === "장르"
+                    ? genreCounts[item] ?? 0
+                    : option === "판매방법"
+                    ? datas.sellingTypeCounts?.[sellingTypeMap[item]] ?? 0
+                    : soldOutCounts[soldoutMap[item]] ?? 0;
+
+                setSelectedCount(count);
+              }}
             >
               <p
                 className={`font-noto font-normal text-[14px] text-center ${
@@ -135,7 +149,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
               >
                 {option === "장르" ? genreChange(item) : item}
               </p>
-              <p className="text-gray-400 font-noto font-normal text-[14px] text-center">
+              <p className="text-gray-100 font-noto font-normal text-[14px] text-center">
                 {option === "등급"
                   ? `${rankCounts[item.replace(/\s/g, "")] ?? 0}개`
                   : option === "장르"
@@ -180,7 +194,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
             alt="닫기버튼"
             src={deleteIcon}
             className="cursor-pointer absolute right-[15px] top-[13px] text-gray-400"
-            onClick={() => closeModal()}
+            onClick={where === "marketplace" ? close : () => closeModal()}
           />
         </div>
 
@@ -262,7 +276,7 @@ export default function MobileFilter({ datas, onSelectFilter, where }) {
               closeModal();
             }}
           >
-            {`${totalCount}장 카드 검색하기`}
+            {`${selectedCount ? selectedCount : totalCount}장 포토보기`}
           </button>
         </div>
       </div>
