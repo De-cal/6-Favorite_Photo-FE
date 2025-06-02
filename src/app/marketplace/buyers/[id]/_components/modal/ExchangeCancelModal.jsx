@@ -8,20 +8,15 @@ import articleApi from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
 import GradeDetail from "@/components/common/GradeDetail";
 
-export default function ExchangeCancelModal({
-  exchangeId,
-  requesterCardId,
-  title,
-  rank,
-}) {
+export default function ExchangeCancelModal({ exchangeId, title, rank }) {
   const { id: articleId } = useParams();
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
   // 교환 요청 취소 API
   const { mutate: cancelExchangeRequest } = useMutation({
-    mutationFn: ({ articleId, exchangeId, requesterCardId }) =>
-      articleApi.cancelExchangeRequest(articleId, exchangeId, requesterCardId),
+    mutationFn: ({ articleId, exchangeId }) =>
+      articleApi.cancelExchangeRequest(articleId, exchangeId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["articles", articleId] });
     },
@@ -35,7 +30,7 @@ export default function ExchangeCancelModal({
 
   // 교환 취소하기
   const handleCancel = () => {
-    cancelExchangeRequest({ articleId, exchangeId, requesterCardId });
+    cancelExchangeRequest({ articleId, exchangeId });
 
     closeModal();
     document.body.style.overflow = "auto";
