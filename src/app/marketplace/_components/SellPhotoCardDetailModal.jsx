@@ -27,8 +27,8 @@ function SellPhotoCardDetailModal({
     id: "default",
     exchangeGenre: "장르를 선택해 주세요",
     exchangeRank: "등급을 선택해 주세요",
+    price: "",
     description: "",
-    price: 0,
     totalQuantity: 0,
   },
   type = "sell",
@@ -48,23 +48,15 @@ function SellPhotoCardDetailModal({
     };
   }, []);
 
+  const isDisabled =
+    !price ||
+    price <= 0 ||
+    sellQuantity === 0 ||
+    genre === "장르를 선택해 주세요" ||
+    rank === "등급을 선택해 주세요" ||
+    description === "";
+
   const handleClickSubmit = async () => {
-    if (genre === "장르를 선택해 주세요") {
-      alert("장르를 선택해주세요.");
-      return;
-    }
-    if (rank === "등급을 선택해 주세요") {
-      alert("등급을 선택해주세요 ");
-      return;
-    }
-    if (price <= 0) {
-      alert("가격을 입력해주세요");
-      return;
-    }
-    if (sellQuantity <= 0) {
-      alert("판매 수량을 입력해주세요");
-      return;
-    }
     try {
       if (type === "sell") {
         const newArticle = await postArticle({
@@ -75,7 +67,6 @@ function SellPhotoCardDetailModal({
           userPhotoCardId: card.id,
           price,
         });
-        setResult("성공");
       } else {
         const updatedArticle = await articleApi.patchArticle(article.id, {
           exchangeGenre,
@@ -84,6 +75,7 @@ function SellPhotoCardDetailModal({
           totalQuantity: sellQuantity,
         });
       }
+      setResult("성공");
     } catch (error) {
       //수정 성공/실패 모달?
       setResult("실패");
@@ -95,18 +87,24 @@ function SellPhotoCardDetailModal({
   };
 
   return (
-    <div className="h-[1000px] md:w-[1160px] w-full bg-gray-500 px-[15px] flex flex-col items-center min-h-screen  pb-[100px] pt-[20px] overflow-hidden">
+    <div className="max-h-[1000px] h-screen md:w-[1160px] w-full bg-black sm:bg-gray-500 px-[15px] flex flex-col items-center pb-[50px] pt-[20px] overflow-hidden">
       <MobileHeader
         title={type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
         onClick={handleClickCloseModal}
       />
-      <div className="flex justify-end w-full mr-[40px] mt-[30px]">
-        <button onClick={handleClickCloseModal}>
+      <div className="w-full flex justify-center">
+        <div className="bg-gray-400 w-[48px] h-[6px] hidden sm:block md:hidden rounded-[50px]"></div>
+      </div>
+      <div className="flex justify-end w-full mr-[40px] mt-[30px] ">
+        <button
+          onClick={handleClickCloseModal}
+          className="cursor-pointer hidden md:block"
+        >
           <Image src={close} alt="close" className="h-[32px] hidden sm:block" />
         </button>
       </div>
-      <div className="overflow-y-auto overflow-x-hidden">
-        <div className="max-w-[920px] sm:w-full w-[345px] mx-auto px-[10px]">
+      <div className="overflow-y-auto scrollbar w-full">
+        <div className="max-w-[920px] sm:w-full w-[345px] mx-auto">
           <div className="text-gray-300 font-baskinRobbins text-[16px] md:text-[24px] hidden sm:block">
             {type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
           </div>
@@ -116,7 +114,7 @@ function SellPhotoCardDetailModal({
           <div className=" border-b-2 border-white mt-[10px] sm:mt-[20px]">
             {" "}
           </div>
-          <div className="mt-[26px] sm:mt-[48px] flex flex-col items-center sm:flex-row gap-[20px] md:gap-[40px] sm:justify-center sm:items-start w-full">
+          <div className="mt-[26px] sm:mt-[48px] flex flex-col items-center sm:flex-row gap-[20px] md:gap-[40px] sm:justify-center sm:items-start w-full mb-[120px] sm:mb-[80px]">
             <Image
               src={example}
               alt="photocard"
@@ -141,14 +139,19 @@ function SellPhotoCardDetailModal({
           />
           <div className="flex gap-[15px] sm:gap-[20px] md:gap-[40px] w-full justify-between mt-[44px] sm:mt-15 md:mt-[90px] ">
             <button
-              className="py-[18px] border-1 border-gray-100 w-full font-bold"
+              className="py-[18px] border-1 border-gray-100 w-full font-bold cursor-pointer"
               onClick={closeModal}
             >
               취소하기
             </button>
             <button
-              className="py-[18px] bg-main text-black w-full font-bold"
+              className={`py-[18px]   w-full font-bold cursor-pointer ${
+                isDisabled
+                  ? "bg-gray-400 !cursor-not-allowed text-gray-300"
+                  : "bg-main text-black"
+              }`}
               onClick={handleClickSubmit}
+              disabled={isDisabled}
             >
               {type === "sell" ? "판매하기" : "수정하기"}
             </button>
