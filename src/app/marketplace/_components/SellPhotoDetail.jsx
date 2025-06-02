@@ -48,6 +48,7 @@ function SellPhotoDetail({
               <button
                 onClick={() => setSellQuantity((prev) => prev - 1)}
                 disabled={sellQuantity === 0}
+                className="cursor-pointer"
               >
                 <Image alt="minus" src={minus} />
               </button>
@@ -55,13 +56,14 @@ function SellPhotoDetail({
               <button
                 onClick={() => setSellQuantity((prev) => prev + 1)}
                 disabled={sellQuantity === quantity}
+                className="cursor-pointer"
               >
                 <Image alt="plus" src={plus} />
               </button>
             </div>
             <div>
               <p>/ {quantity}</p>
-              <p className="text-gray-200 text-[12px] md:text-[14px] w-[54px]">
+              <p className="text-gray-200 text-[12px] md:text-[14px] w-[60px]">
                 최대 {quantity}장
               </p>
             </div>
@@ -72,7 +74,7 @@ function SellPhotoDetail({
           <div className="border-gray-200 border-1 w-[202px] h-[45px] md:w-[245px] md:h-[50px] relative flex justify-center">
             <input
               placeholder="숫자만 입력"
-              className="absolute left-5 top-2 w-35"
+              className="absolute left-5 top-2 w-35 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none"
               type="number"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}

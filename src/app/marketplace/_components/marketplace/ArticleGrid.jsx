@@ -21,7 +21,7 @@ export default function ArticleGrid({
           : `/marketplace/buyers/${articleId}`,
       );
 
-      console.log("아티클 작성자", article.userPhotoCard.user.nickname);
+      console.log("아티클 작성자", article.userPhotoCard.user);
     } else {
       onRequireLogin?.(); // 로그인 필요 모달 띄우기
     }
