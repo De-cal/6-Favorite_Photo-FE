@@ -1,5 +1,4 @@
 "use client";
-import useRedirectIfAuthenticated from "@/hooks/useRedirectIfAuthenticated";
 import useSignUpForm from "@/hooks/useSignUpForm";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -12,8 +11,6 @@ import AuthNavigation from "./AuthNavigation";
 import { useAuth } from "@/providers/AuthProvider";
 
 export default function SignUpForm() {
-  // 토큰이 있는 유저는 marketplace 페이지로 리다이렉트
-  // useRedirectIfAuthenticated(); 리팩터링 해야함 쿠키토큰 방식에 맞게
   const { signUp } = useAuth();
   const {
     email,
@@ -123,7 +120,7 @@ export default function SignUpForm() {
           <GoogleAuthButton
             label="Google로 시작하기"
             onClick={() => {
-              // 백엔드의 Google OAuth 엔드포인트로 리다이렉트
+              console.log("🚀 SignUpForm에서 구글 클릭");
               window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
             }}
           />
