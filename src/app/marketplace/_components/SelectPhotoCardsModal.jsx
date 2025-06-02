@@ -5,7 +5,7 @@ import close from "@/assets/icons/ic-close.svg";
 import Card from "@/components/common/Card";
 import SellPhotoCardDetailModal from "./SellPhotoCardDetailModal";
 import { useModal } from "@/providers/ModalProvider";
-import ExchangeInputModal from "../buyers/[id]/_components/modal/ExchangeInputModal";
+import ExchangeInputModal from "../[id]/buyer/_components/modal/ExchangeInputModal";
 import { getAllCards } from "@/lib/api/card.api";
 import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
 import { useInfiniteQuery } from "@tanstack/react-query";
