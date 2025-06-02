@@ -5,7 +5,7 @@ import Image from "next/image";
 import { genreChange } from "@/lib/utils/genreChange";
 import GradeDetail from "@/components/common/GradeDetail";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import ExchangeCancelModal from "../buyers/[id]/_components/modal/ExchangeCancelModal";
+import ExchangeCancelModal from "../[id]/buyer/_components/modal/ExchangeCancelModal";
 import { useModal } from "@/providers/ModalProvider";
 
 export default function ExchangeCard({ type, cardArticle }) {
