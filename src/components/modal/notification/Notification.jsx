@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import ic_alarm_default from "@/assets/icons/ic-alarm-default.svg";
 import ic_alarm_active from "@/assets/icons/ic-alarm-active.svg";
 import NotificationsModal from "./NotificationsModal";
-import Image from "next/image";
 import NotificationsModalMobile from "./NotificationsModalMobile";
+import Image from "next/image";
 import { useModal } from "@/providers/ModalProvider";
 import { getMyNotifications } from "@/lib/api/notification.api";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export default function Notification({
   isNotificationModalOpen,
@@ -16,29 +16,59 @@ export default function Notification({
   handleTabletAndDesktopModalClose,
 }) {
   const [isMobile, setIsMobile] = useState(false);
-
   const { openModal } = useModal();
+  const observerRef = useRef(null);
+  const LIMIT = 10;
 
   const {
     data: notificationData,
-    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
     refetch: refetchNotifications,
-  } = useQuery({
+  } = useInfiniteQuery({
     queryKey: ["notifications"],
-    queryFn: () => getMyNotifications(),
-    staleTime: 1000,
-    cacheTime: 5 * 60 * 1000,
+    queryFn: ({ pageParam  = 0 }) => getMyNotifications({ pageParam , limit: LIMIT }),
+    getNextPageParam: (lastPage, allPages) => {
+    const isLastPage = lastPage.notifications.length < LIMIT;
+    return isLastPage ? undefined : allPages.length;
+    },
+    staleTime: 1000 * 60,
   });
 
-  // 알림 모달 토글.
+  const notifications = notificationData?.pages.flatMap((page) => page.notifications) || [];
+  const notReadCount = notificationData?.pages?.[0]?.unreadCount || 0;
+
+  const lastItemRef = useCallback(
+    (node) => {
+      if (observerRef.current) observerRef.current.disconnect();
+
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !isFetchingNextPage && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (node) observerRef.current.observe(node);
+    },
+    [isFetchingNextPage, fetchNextPage, hasNextPage]
+  );
+
   const handleNotificationModal = () => {
     setIsNotificationModalOpen(!isNotificationModalOpen);
     handleTabletAndDesktopModalClose(false);
   };
 
-  // 모바일 프로필 모달 열기
   const handleMobileModalOpen = () => {
-    openModal(<NotificationsModalMobile notifications={notifications} />);
+    openModal(
+      <NotificationsModalMobile
+        notifications={notifications}
+        lastItemRef={lastItemRef}
+        isFetchingNextPage={isFetchingNextPage}
+        refetchNotifications={refetchNotifications}
+      />
+    );
     setIsNotificationModalOpen(true);
   };
 
@@ -55,17 +85,13 @@ export default function Notification({
     };
   }, []);
 
-  if (isLoading) {
+  if (status === "loading") {
     return (
       <div className="relative w-[22px] h-[22px] sm:w-[24px] sm:h-[24px] cursor-pointer">
         <Image src={ic_alarm_default} alt="알림" fill />
       </div>
     );
   }
-
-  const notifications = notificationData.notifications;
-  const notReadCount = notificationData.unreadCount;
-  console.log(notReadCount);
 
   return (
     <div className="relative">
@@ -80,17 +106,17 @@ export default function Notification({
         />
       </button>
 
-      {isNotificationModalOpen && (
-        <>
-          <div className="hidden sm:block absolute right-0 top-full w-[300px] h-auto z-50">
-            <div className="flex flex-col p-4">
-              <NotificationsModal
-                notifications={notifications}
-                refetchNotifications={refetchNotifications}
-              />
-            </div>
+      {isNotificationModalOpen && !isMobile && (
+        <div className="hidden sm:block absolute right-0 top-full w-[300px] h-auto z-50">
+          <div className="flex flex-col p-4">
+            <NotificationsModal
+              notifications={notifications}
+              lastItemRef={lastItemRef}
+              isFetchingNextPage={isFetchingNextPage}
+              refetchNotifications={refetchNotifications}
+            />
           </div>
-        </>
+        </div>
       )}
     </div>
   );
