@@ -127,16 +127,11 @@ const exchangeRequest = async (articleId, body) => {
 };
 
 // 포토카드 교환 요청 취소
-const cancelExchangeRequest = async (
-  articleId,
-  exchangeId,
-  requesterCardId,
-) => {
+const cancelExchangeRequest = async (articleId, exchangeId) => {
   try {
-    return await cookieFetch(
-      `/articles/${articleId}/exchange/${exchangeId}/${requesterCardId}`,
-      { method: "DELETE" },
-    );
+    return await cookieFetch(`/articles/${articleId}/exchange/${exchangeId}`, {
+      method: "DELETE",
+    });
   } catch (e) {
     console.error(e.message);
   }

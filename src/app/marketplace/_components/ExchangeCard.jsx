@@ -25,13 +25,12 @@ export default function ExchangeCard({ type, cardArticle }) {
   }));
 
   // 교환 취소하기
-  const handleExchangeCancel = () => {
+  const handleExchangeCancel = (exchange) => {
     openModal(
       <ExchangeCancelModal
-        exchangeId={exchangeId}
-        requesterCardId={requesterCardId}
-        title={title}
-        rank={rank}
+        exchangeId={exchange.exchangeId}
+        title={exchange.title}
+        rank={exchange.rank}
       />,
     );
     document.body.style.overflow = "hidden";
@@ -120,7 +119,7 @@ export default function ExchangeCard({ type, cardArticle }) {
                   <ActionButton
                     variant="secondary"
                     className="h-[40px] mt-[20px] font-bold text-[12px]/[14px] sm:h-[55px] sm:mt-[25px] sm:font-medium sm:text-[16px]/[19px] md:h-[60px] md:mt-[40px] md:text-[18px]/[22px]"
-                    onClick={handleExchangeCancel}
+                    onClick={() => handleExchangeCancel(exchange)}
                   >
                     취소하기
                   </ActionButton>
