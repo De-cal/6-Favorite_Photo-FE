@@ -6,13 +6,13 @@ import example from "@/assets/images/img-card-placeholder-1.svg";
 import Image from "next/image";
 import SellerCardInfo from "./_components/SellerCardInfo";
 import MobileHeader from "@/components/common/MobileHeader";
-import ExchangeCards from "./_components/ExchangeCards";
 import { getArticleById } from "@/lib/api/article.api";
+import ExchangeCard from "../../_components/ExchangeCard";
 
 export default function SellerPage() {
   const params = useParams();
   const articleId = params.id;
-  
+
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,18 +20,15 @@ export default function SellerPage() {
   useEffect(() => {
     const fetchArticleData = async () => {
       if (!articleId) return;
-      
+
       try {
         setLoading(true);
-        
+
         // 아티클 상세 정보
-        const [articleData] = await Promise.all([
-          getArticleById(articleId),
-        ]);
+        const [articleData] = await Promise.all([getArticleById(articleId)]);
         console.log("imgUrl:", articleData?.userPhotoCard?.photoCard?.imgUrl);
         console.log("Fetched data:", articleData);
 
-        
         setArticle(articleData);
       } catch (err) {
         console.error("Failed to fetch article data:", err);
@@ -58,8 +55,10 @@ export default function SellerPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
-          <div className="text-lg text-red-400">{error || "아티클을 찾을 수 없습니다."}</div>
-          <button 
+          <div className="text-lg text-red-400">
+            {error || "아티클을 찾을 수 없습니다."}
+          </div>
+          <button
             onClick={() => window.history.back()}
             className="mt-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
           >
@@ -81,9 +80,9 @@ export default function SellerPage() {
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 mt-13">
             {/* 왼쪽 이미지 */}
             <div className="w-[345px] sm:w-full md:w-full mx-auto">
-              <Image 
-                 src={article.userPhotoCard.photoCard.imgUrl}
-                alt="판매 이미지" 
+              <Image
+                src={article.userPhotoCard.photoCard.imgUrl}
+                alt="판매 이미지"
                 className="w-full object-cover"
                 width={345}
                 height={400}
@@ -119,7 +118,7 @@ export default function SellerPage() {
         </div>
         <br />
         <br />
-        <ExchangeCards />
+        <ExchangeCard type="buyer" />
       </div>
     </>
   );
