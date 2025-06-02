@@ -14,13 +14,22 @@ import articleApi from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CommonModal from "@/components/common/CommonModal";
+import clsx from "clsx";
 
 export default function ExchangeInputModal({ card, setIsModalOpen }) {
+  const [isModalUp, setIsModalUp] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [description, setDescription] = useState("");
   const { id: articleId } = useParams();
   const { closeModal, openModal } = useModal();
   const queryClient = useQueryClient();
+
+  // 모달 열릴 때 올라오는 애니메이션
+  useEffect(() => {
+    setIsModalUp(true);
+    // SelectPhotoCardsModal이 언마운트 되면서 클린업 함수로 스크롤이 생겨서 다시 재적용
+    document.body.style.overflow = "hidden";
+  }, []);
 
   // 교환 요청 API
   const { mutate: exchangeRequest } = useMutation({
@@ -81,7 +90,14 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   }, [description]);
 
   return (
-    <div className="fixed inset-0 w-full overflow-y-auto pb-[20px] font-notoSans z-2 bg-black sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:bg-gray-500 sm:fixed sm:top-auto md:static md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]">
+    <div
+      className={clsx(
+        isModalUp
+          ? "sm:translate-y-0 md:translate-none"
+          : "sm:translate-y-[100%] md:translate-none",
+        "transition-transform duration-450 fixed inset-0 w-full overflow-y-auto pb-[20px] font-notoSans z-2 bg-black sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:bg-gray-500 sm:fixed sm:top-auto md:static md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]",
+      )}
+    >
       <div className="flex justify-center items-center w-full">
         <div className="flex w-[345px]">
           <MobileHeader onClick={handleClose} title="포토카드 교환하기" />
