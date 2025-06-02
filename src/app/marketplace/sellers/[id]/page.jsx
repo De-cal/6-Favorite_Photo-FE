@@ -72,7 +72,7 @@ export default function SellerPage() {
     <>
       <MobileHeader src="/marketplace" title="마켓플레이스" />
       <div className="min-h-screen flex flex-col items-center bg-black text-white p-4 sm:p-6 md:p-8">
-        <div className="w-full max-w-[1480px]">
+        <div className="w-[345px] sm:w-full sm:max-w-[1480px]">
           <h1 className="w-[345px] sm:w-full md:w-full mx-auto text-xl sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-gray-100 pb-2">
             {article.userPhotoCard?.photoCard?.title || "포토카드"}
           </h1>
@@ -115,10 +115,8 @@ export default function SellerPage() {
               }}
             />
           </div>
+          <ExchangeCard type="seller" cardArticle={article} />
         </div>
-        <br />
-        <br />
-        <ExchangeCard type="buyer" />
       </div>
     </>
   );
