@@ -82,7 +82,12 @@ export default function LoginForm() {
             label={isLoading ? "로그인 중..." : "로그인"}
             isDisabled={!isFormValid || isLoading}
           />
-          <GoogleAuthButton label="Google로 시작하기" />
+          <GoogleAuthButton
+            label="Google로 시작하기"
+            onClick={() => {
+              window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/google`;
+            }}
+          />
         </div>
 
         <AuthNavigation />
