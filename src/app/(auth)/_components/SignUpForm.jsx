@@ -117,17 +117,25 @@ export default function SignUpForm() {
             label={isLoading ? "회원가입 중..." : "회원가입"}
             isDisabled={!isFormValid || isLoading}
           />
-          <GoogleAuthButton
+          {/* <GoogleAuthButton
             label="Google로 시작하기"
             onClick={() => {
               console.log("🚀 SignUpForm에서 구글 클릭");
               window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
             }}
-          />
+          /> */}
         </div>
-
-        <AuthNavigation />
       </form>
+      <div className="flex flex-col items-center justify-center w-full gap-[16px] mt-4">
+        <GoogleAuthButton
+          label="Google로 시작하기"
+          onClickTwo={() => {
+            console.log("폼내에서 버튼클릭");
+          }}
+        />
+      </div>
+      {/* <AuthNavigation /> */}
+      <AuthNavigation />
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {modalMessage}
       </AuthModal>
