@@ -30,8 +30,8 @@ export default function MarketplaceHeader({
 
   return (
     <>
-      <div className="px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
-        <div className="hidden sm:flex sm:gap-[114px] md:gap-[650px]">
+      <div className="hidden sm:block px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
+        <div className="hidden sm:flex sm:gap-[114px] md:gap-[720px]">
           <Image
             src={marketplace}
             width={248}

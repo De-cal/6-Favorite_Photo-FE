@@ -6,7 +6,7 @@ import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
 import SellPhotoDetail from "./SellPhotoDetail";
 import MobileHeader from "@/components/common/MobileHeader";
-import articleApi, { postArticle } from "@/lib/api/article.api";
+import { postArticle, patchArticle } from "@/lib/api/article.api";
 import CommonModal from "@/components/common/CommonModal";
 import { useModal } from "@/providers/ModalProvider";
 
@@ -61,19 +61,23 @@ function SellPhotoCardDetailModal({
       if (type === "sell") {
         const newArticle = await postArticle({
           exchangeGenre: genre,
-          exchangeRank: rank,
+          exchangeRank: rank === "SUPER RARE" ? "SUPERRARE" : rank,
           exchangeText: description,
           totalQuantity: sellQuantity,
           userPhotoCardId: card.id,
           price,
         });
       } else {
-        const updatedArticle = await articleApi.patchArticle(article.id, {
-          exchangeGenre,
-          exchangeRank,
+        console.log("aaa");
+
+        const updatedArticle = await patchArticle(article.id, {
+          exchangeGenre: genre,
+          exchangeRank: rank === "SUPER RARE" ? "SUPERRARE" : rank,
           exchangeText: description,
           totalQuantity: sellQuantity,
+          price,
         });
+        console.log(updatedArticle);
       }
       setResult("성공");
     } catch (error) {

@@ -52,20 +52,10 @@ export const getUserArticles = async ({
     throw error;
   }
 };
+
 // 특정 아티클 판매자 상세 정보 가져오기
 export async function getArticleById(articleId) {
   try {
-    // const response = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_URL}/articles/${articleId}`,
-    // );
-
-    // if (!response.ok) {
-    //   throw new Error("Failed to fetch article");
-    // }
-
-    // const data = await response.json();
-    // return data;
-
     return await cookieFetch(`/articles/${articleId}/seller`);
   } catch (error) {
     console.error("getArticleById error:", error);
@@ -153,7 +143,7 @@ const cancelExchangeRequest = async (
 };
 
 //포토카드 교환 요청 승인 거절
-const exchangeApprove = async (articleId, exchangeId) => {
+const exchangeApprove = async (articleId, exchangeId, isApproved) => {
   try {
     return await cookieFetch(`articles/${articleId}/exchange/${exchangeId}`, {
       method: "PUT",
@@ -169,7 +159,7 @@ const exchangeApprove = async (articleId, exchangeId) => {
 };
 
 //아티클 수정
-const patchArticle = async (articleId, data) => {
+export const patchArticle = async (articleId, data) => {
   try {
     return await cookieFetch(`/articles/${articleId}`, {
       method: "PATCH",
@@ -186,5 +176,4 @@ export default {
   exchangeRequest,
   exchangeApprove,
   cancelExchangeRequest,
-  patchArticle,
 };
