@@ -14,6 +14,7 @@ export default function Dropdowns({ onSearch }) {
       <div className="pl-[30px] md:pl-[60px] gap-[25px] md:gap-[45px] items-center hidden sm:flex md:flex">
         <Dropdown
           type="등급"
+          selectedValue={selectedGrade}
           isOpen={openDropdown === "등급"}
           setOpenDropdown={setOpenDropdown}
           onSelect={(value) => {
@@ -27,6 +28,7 @@ export default function Dropdowns({ onSearch }) {
         />
         <Dropdown
           type="장르"
+          selectedValue={selectedGenre}
           isOpen={openDropdown === "장르"}
           setOpenDropdown={setOpenDropdown}
           onSelect={(value) => {
@@ -41,6 +43,7 @@ export default function Dropdowns({ onSearch }) {
 
         <Dropdown
           type="매진여부"
+          selectedValue={selectedSoldout}
           isOpen={openDropdown === "매진여부"}
           setOpenDropdown={setOpenDropdown}
           onSelect={(value) => {

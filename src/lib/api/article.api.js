@@ -143,7 +143,7 @@ const cancelExchangeRequest = async (
 };
 
 //포토카드 교환 요청 승인 거절
-const exchangeApprove = async (articleId, exchangeId) => {
+const exchangeApprove = async (articleId, exchangeId, isApproved) => {
   try {
     return await cookieFetch(`articles/${articleId}/exchange/${exchangeId}`, {
       method: "PUT",
