@@ -1,19 +1,16 @@
 "use client";
-import useRedirectIfAuthenticated from "@/hooks/useRedirectIfAuthenticated";
 import useSignUpForm from "@/hooks/useSignUpForm";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import FormInput from "./FormInput";
 import PasswordInput from "./PasswordInput";
 import AuthSubmitButton from "./AuthSubmitButton";
-import GoogleAuthButton from "./GoogleAuthButton";
 import AuthModal from "./AuthModal";
 import AuthNavigation from "./AuthNavigation";
 import { useAuth } from "@/providers/AuthProvider";
+import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function SignUpForm() {
-  // 토큰이 있는 유저는 marketplace 페이지로 리다이렉트
-  // useRedirectIfAuthenticated(); 리팩터링 해야함 쿠키토큰 방식에 맞게
   const { signUp } = useAuth();
   const {
     email,
@@ -120,11 +117,17 @@ export default function SignUpForm() {
             label={isLoading ? "회원가입 중..." : "회원가입"}
             isDisabled={!isFormValid || isLoading}
           />
-          <GoogleAuthButton label="Google로 시작하기" />
+          <GoogleAuthButton
+            label="Google로 시작하기"
+            onClick={() => {
+              window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/google`;
+            }}
+          />
         </div>
-
+        {/* <AuthNavigation /> */}
         <AuthNavigation />
       </form>
+
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {modalMessage}
       </AuthModal>
