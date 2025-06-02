@@ -120,7 +120,13 @@ export default function SignUpForm() {
             label={isLoading ? "회원가입 중..." : "회원가입"}
             isDisabled={!isFormValid || isLoading}
           />
-          <GoogleAuthButton label="Google로 시작하기" />
+          <GoogleAuthButton
+            label="Google로 시작하기"
+            onClick={() => {
+              // 백엔드의 Google OAuth 엔드포인트로 리다이렉트
+              window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+            }}
+          />
         </div>
 
         <AuthNavigation />
