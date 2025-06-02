@@ -70,7 +70,9 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
         />,
       );
     } else {
-      openModal(<ExchangeInputModal card={card} />);
+      openModal(
+        <ExchangeInputModal card={card} setIsModalOpen={setIsModalOpen} />,
+      );
     }
   };
 

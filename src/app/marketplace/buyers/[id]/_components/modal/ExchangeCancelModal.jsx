@@ -3,30 +3,27 @@ import Image from "next/image";
 import React from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import articleApi from "@/lib/api/article.api";
+import { useParams } from "next/navigation";
 
-export default function ExchangeCancelModal() {
+export default function ExchangeCancelModal({
+  exchangeId,
+  requesterCardId,
+  title,
+  rank,
+}) {
+  const articleId = useParams();
   const { closeModal } = useModal();
+  const queryClient = useQueryClient();
 
-  const cardArticle = {
-    photoCard: {
-      title: "우리집 앞마당",
-      description:
-        "우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다. 우리집 앞마당 포토카드입니다.",
-      rank: "LEGENDARY",
-      genre: "풍경",
-      imgUrl: "img_card_placeholder_1",
-    },
-    user: {
-      nickname: "미쓰손",
-    },
-    price: 4,
-    totalQuantity: 5,
-    remainingQuantity: 2,
-    exchangeText:
-      "푸릇푸릇한 여름 풍경, 눈 많이 내린 겨울 풍경 사진에 관심이 많습니다.",
-    exchangeRank: "RARE",
-    exchangeGenre: "풍경",
-  };
+  // 교환 요청 취소 API
+  const { mutate: cancelExchangeRequest } = useMutation({
+    mutationFn: ({ articleId, exchangeId, requesterCardId }) =>
+      articleApi.cancelExchangeRequest(articleId, exchangeId, requesterCardId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["articles", articleId] }),
+  });
 
   // 모달 닫기
   const handleClose = () => {
@@ -36,7 +33,7 @@ export default function ExchangeCancelModal() {
 
   // 교환 취소하기
   const handleCancel = () => {
-    // TODO: 취소하기 버튼 누르면 교환 목록에서 없어지는 로직 추가
+    cancelExchangeRequest({ articleId, exchangeId, requesterCardId });
 
     closeModal();
     document.body.style.overflow = "auto";
@@ -62,8 +59,8 @@ export default function ExchangeCancelModal() {
           <p className="font-bold text-[18px]/[26px] md:text-[20px]/[29px]">
             교환 제시 취소
           </p>
-          <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 md:whitespace-pre md:mt-[40px] md:mb-[60px] sm:text-[16px]/[23px]">
-            <span className="">{`[${cardArticle.photoCard.rank} | ${cardArticle.photoCard.title}]`}</span>
+          <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 whitespace-pre md:mt-[40px] md:mb-[60px] sm:text-[16px]/[23px]">
+            <span className="">{`[${rank} | ${title}]`}</span>
             <span className=""> 교환 제시를 취소하시겠습니까?</span>
           </div>
           <ActionButton

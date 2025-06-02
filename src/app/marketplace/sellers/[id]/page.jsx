@@ -69,6 +69,14 @@ export default function SellerPage() {
       </div>
     );
   }
+
+  const SERVER_IMAGE_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL + "/uploads/";
+
+const resolvedImgUrl =
+  article?.userPhotoCard?.photoCard?.imgUrl?.startsWith("http")
+    ? article.userPhotoCard.photoCard.imgUrl
+    : SERVER_IMAGE_BASE_URL + article.userPhotoCard.photoCard.imgUrl;
+
   return (
     <>
       <MobileHeader src="/marketplace" title="마켓플레이스" />
@@ -82,7 +90,7 @@ export default function SellerPage() {
             {/* 왼쪽 이미지 */}
             <div className="w-[345px] sm:w-full md:w-full mx-auto">
               <Image 
-                 src={article.userPhotoCard.photoCard.imgUrl}
+                src={resolvedImgUrl}
                 alt="판매 이미지" 
                 className="w-full object-cover"
                 width={345}
