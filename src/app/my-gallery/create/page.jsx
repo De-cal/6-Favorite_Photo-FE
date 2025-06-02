@@ -1,226 +1,137 @@
 "use client";
-import React, { useState } from "react";
-import { createCard } from "@/lib/api/card.api";
-import ActionButton from "@/components/ui/buttons/ActionButton";
-import Dropdown from "../_components/Dropdown";
+
+import React from "react";
+import useCardCreateForm from "@/hooks/useCardCreateForm";
+import FormInput from "./_components/FormInput";
+import FileUploadInput from "./_components/FileUploadInput";
+import Dropdown from "./_components/Dropdown";
 import TopSection from "./_components/TopSection";
-import CommonModal from "@/components/common/CommonModal";
-import { useModal } from "@/providers/ModalProvider";
-
-import clsx from "clsx";
-
+import ActionButton from "@/components/ui/buttons/ActionButton";
 
 export default function MyGalleryCreatePage() {
-  const [title, setTitle] = useState("");
-  const [rank, setRank] = useState("");
-  const [genre, setGenre] = useState("");
-  const [price, setPrice] = useState("");
-  const [totalQuantity, setTotalQuantity] = useState("");
-  const [description, setDescription] = useState("");
-  const [file, setFile] = useState(null);
-  const [priceError, setPriceError] = useState("");
-  const [quantityError, setQuantityError] = useState("");
-
-  const { openModal } = useModal();
-
-  const handlePriceChange = (e) => {
-    const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    if (e.target.value !== numericValue || numericValue === "") {
-      setPrice(e.target.value);
-      setPriceError("숫자로 입력해주세요");
-    } else if (Number(numericValue) > 999) {
-      setPrice(numericValue);
-      setPriceError("999 이하로 입력해주세요");
-    } else {
-      setPrice(numericValue);
-      setPriceError("");
-    }
-  };
-
-  const handleQuantityChange = (e) => {
-    const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    if (e.target.value !== numericValue || numericValue === "") {
-      setTotalQuantity(e.target.value);
-      setQuantityError("숫자로 입력해주세요");
-    } else if (Number(numericValue) > 10) {
-      setTotalQuantity(numericValue);
-      setQuantityError("총 발행량은 10장 이하로만 가능합니다.");
-    } else {
-      setTotalQuantity(numericValue);
-      setQuantityError("");
-    }
-  };
+  const {
+    form,
+    error,
+    set,
+    handler,
+    isValid,
+    validate,
+  } = useCardCreateForm();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!file) {
-      alert("파일을 선택해 주세요");
-      return;
-    }
+    if (!validate()) return;
 
     const formData = new FormData();
-    formData.append("file", file); 
-    formData.append("title", title);        
-    formData.append("rank", rank);         
-    formData.append("genre", genre);
-    formData.append("price", price);
-    formData.append("totalQuantity", totalQuantity);
-    formData.append("description", description);
+    formData.append("title", form.title);
+    formData.append("rank", form.rank);
+    formData.append("genre", form.genre);
+    formData.append("price", form.price);
+    formData.append("totalQuantity", form.totalQuantity);
+    formData.append("description", form.description);
+    formData.append("file", form.file);
 
     try {
-      await createCard(formData);
-      openModal(
-        <CommonModal
-          type="포토카드 생성"
-          result="성공"
-          data={{ rank, title }}
-        />
-      );
+      const res = await fetch("/api/card", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) {
+        throw new Error("카드 생성 실패");
+      }
+      //alert("카드가 성공적으로 생성되었습니다!");
     } catch (err) {
-      openModal(
-        <CommonModal
-          type="포토카드 생성"
-          result="실패"
-          data={{ rank, title }}
-        />
-      );
+      console.error(err);
+      //alert("카드 생성 중 오류가 발생했습니다.");
     }
   };
 
-
-  const isFormValid =
-    title &&
-    rank &&
-    genre &&
-    price &&
-    totalQuantity &&
-    !priceError &&
-    !quantityError &&
-    description &&
-    file;
-
   return (
-    <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
+    <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] mx-auto mb-[50px]">
       <TopSection />
-      <div className="min-h-screen bg-black text-white flex justify-center items-start p-8">
-        <form
-          onSubmit={handleSubmit}
-          className="w-[345px] sm:w-[440px] md:w-[520px] space-y-6"
-        >
-          <Input
-            label="포토카드 이름"
-            value={title}
-            setValue={setTitle}
-            placeholder="포토카드 이름을 입력해 주세요"
+      <form
+        onSubmit={handleSubmit}
+        className="w-[345px] sm:w-[440px] md:w-[520px] space-y-6"
+      >
+        <FormInput
+          id="title"
+          label="포토카드 이름"
+          value={form.title}
+          onChange={(e) => set.setTitle(e.target.value)}
+          onBlur={handler.handleTitleBlur}
+          placeholder="포토카드 이름을 입력해 주세요"
+          errorMessage={error.titleError}
+        />
+
+        <Dropdown
+          type="등급"
+          label="등급"
+          value={form.rank}
+          setValue={set.setRank}
+          onBlur={handler.handleRankBlur}
+          errorMessage={error.rankError}
+        />
+        <Dropdown
+          type="장르"
+          label="장르"
+          value={form.genre}
+          setValue={set.setGenre}
+          onBlur={handler.handleGenreBlur}
+          errorMessage={error.genreError}
+        />
+
+        <FormInput
+          id="price"
+          label="가격"
+          value={form.price}
+          onChange={handler.handlePriceChange}
+          placeholder="가격을 입력해 주세요"
+          errorMessage={error.priceError}
+        />
+
+        <FormInput
+          id="totalQuantity"
+          label="총 발행량"
+          value={form.totalQuantity}
+          onChange={handler.handleQuantityChange}
+          placeholder="총 발행량을 입력해 주세요"
+          errorMessage={error.quantityError}
+        />
+
+        <FileUploadInput 
+          file={form.file} 
+          setFile={set.setFile} 
+          onBlur={handler.handleFileBlur}
+          errorMessage={error.fileError} 
+        />
+
+        <div className="flex flex-col gap-2.5 w-full mt-[25px] sm:mt-[50px] md:mt-[50px] h-[140px] md:h-[180px]">
+          <label htmlFor="description" className="block mb-1 font-bold text-[20px] text-white">
+            설명
+          </label>
+          <textarea
+            id="description"
+            value={form.description}
+            onChange={(e) => set.setDescription(e.target.value)}
+            onBlur={handler.handleDescriptionBlur}
+            placeholder="카드 설명을 입력해 주세요"
+            rows={5}
+            className="w-full border border-gray-300 rounded-xs  py-[18px] px-[20px] resize-none bg-black placeholder:text-gray-200 text-white"
           />
-          <label className="block mb-1 font-bold text-[20px]">등급</label>
-          <Dropdown type="등급" value={rank} setValue={setRank} />
-          <label className="block mb-1 font-bold text-[20px]">장르</label>
-          <Dropdown type="장르" value={genre} setValue={setGenre} />
+          {error.descriptionError && (
+            <p className="text-red text-sm font-semibold leading-6">{error.descriptionError}</p>
+          )}
+        </div>
 
-          <div>
-            <label className="block mb-1 font-bold text-[20px]">가격</label>
-            <input
-              type="text"
-              placeholder="가격을 입력해 주세요"
-              value={price}
-              onChange={handlePriceChange}
-              className={`w-full h-[60px] bg-black border ${
-                priceError ? "border-red-500" : "border-gray-400"
-              } px-4 py-2 placeholder-gray-200`}
-            />
-            {priceError && (
-              <p className="text-red-500 text-sm mt-1">{priceError}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block mb-1 font-bold text-[20px]">
-              총 발행량
-            </label>
-            <input
-              type="text"
-              placeholder="총 발행량을 입력해 주세요"
-              value={totalQuantity}
-              onChange={handleQuantityChange}
-              className={`w-full h-[60px] bg-black border ${
-                quantityError ? "border-red-500" : "border-gray-400"
-              } px-4 py-2 placeholder-gray-200`}
-            />
-            {quantityError && (
-              <p className="text-red-500 text-sm mt-1">{quantityError}</p>
-            )}
-          </div>
-
-          {/* 파일 업로드 */}
-          <div>
-            <label className="block mb-1 font-bold text-[20px]">
-              사진 업로드
-            </label>
-            <div className="flex items-center">
-              <input
-                type="text"
-                readOnly
-                placeholder="사진 업로드"
-                value={file?.name || ""}
-                className="w-full min-h-[60px] bg-black border border-gray-400 px-4 py-2 placeholder-gray-200"
-              />
-              <label htmlFor="file-upload" className="ml-2 cursor-pointer">
-                <div
-                  className={clsx(
-                    "w-[120px] h-[60px] flex justify-center items-center",
-                    "border border-main text-main",
-                  )}
-                >
-                  파일 선택
-                </div>
-              </label>
-              <input
-                type="file"
-                id="file-upload"
-                onChange={(e) => setFile(e.target.files[0])}
-                className="hidden"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block mb-1 font-bold text-[20px]">
-              포토카드 설명
-            </label>
-            <textarea
-              placeholder="설명을 입력해 주세요"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-              className="w-full bg-black border border-gray-400 px-4 py-2 placeholder-gray-200"
-            />
-          </div>
-
-          <ActionButton
-            type="submit"
-            variant="primary"
-            disabled={!isFormValid}
-            className="w-full py-3 text-lg"
-          >
-            생성하기
-          </ActionButton>
-        </form>
-      </div>
+        <ActionButton
+          type="submit"
+          variant="primary"
+          disabled={!isValid}
+          className="w-full py-3 text-lg"
+        >
+          생성하기
+        </ActionButton>
+      </form>
     </div>
   );
 }
-
-const Input = ({ label, value, setValue, placeholder }) => (
-  <div>
-    <label className="block mb-1 font-bold text-[20px]">{label}</label>
-    <input
-      type="text"
-      placeholder={placeholder}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      className="w-full h-[60px] bg-black border border-gray-400 px-4 py-2 placeholder-gray-200"
-    />
-  </div>
-);
