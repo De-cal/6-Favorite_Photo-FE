@@ -88,7 +88,7 @@ export default function MobileProfileModal() {
               </div>
               <button
                 onClick={handleLogoutAndClose}
-                className="font-notoSans font-normal text-[14px]/[17px] text-gray-400"
+                className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 cursor-pointer"
               >
                 로그아웃
               </button>
