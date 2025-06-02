@@ -159,7 +159,7 @@ const exchangeApprove = async (articleId, exchangeId, isApproved) => {
 };
 
 //아티클 수정
-const patchArticle = async (articleId, data) => {
+export const patchArticle = async (articleId, data) => {
   try {
     return await cookieFetch(`/articles/${articleId}`, {
       method: "PATCH",
@@ -176,5 +176,4 @@ export default {
   exchangeRequest,
   exchangeApprove,
   cancelExchangeRequest,
-  patchArticle,
 };

@@ -8,25 +8,51 @@ import exchange from "@/assets/icons/ic-exchange.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import DeletePhotoCardModal from "./DeletePhotoCardModal";
 import { deleteArticle } from "@/lib/api/article.api";
+import { useModal } from "@/providers/ModalProvider";
+import SellPhotoCardDetailModal from "@/app/marketplace/_components/SellPhotoCardDetailModal";
 
 export default function SellerCardInfo({ cardArticle, onUpdate }) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { openModal } = useModal();
 
   const handleEdit = () => {
-    // 수정 페이지로 이동 (예: /marketplace/edit/[articleId])
-    router.push(`/marketplace/edit/${cardArticle.id}`);
+    console.log(cardArticle);
+    openModal(
+      <SellPhotoCardDetailModal
+        card={{
+          photoCard: {
+            title: cardArticle.photoCard?.title,
+            rank: cardArticle.photoCard?.rank,
+            genre: cardArticle.photoCard?.genre,
+            creator: {
+              nickname: cardArticle.user?.nickname,
+            },
+          },
+          quantity: cardArticle.remainingQuantity,
+        }}
+        article={{
+          id: cardArticle.id,
+          price: cardArticle.price,
+          totalQuantity: cardArticle.remainingQuantity,
+          description: cardArticle.exchangeText,
+          exchangeGenre: cardArticle.exchangeGenre,
+          exchangeRank: cardArticle.exchangeRank,
+        }}
+        type="edit"
+      />,
+    );
   };
 
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
       await deleteArticle(cardArticle.id);
-      
+
       // 삭제 성공 시 마켓플레이스로 이동
       router.push("/marketplace");
-      
+
       // 성공 메시지 표시 (토스트 등)
       alert("판매가 취소되었습니다.");
     } catch (error) {
@@ -112,8 +138,8 @@ export default function SellerCardInfo({ cardArticle, onUpdate }) {
         >
           수정하기
         </ActionButton>
-        <ActionButton 
-          onClick={() => setIsDeleteModalOpen(true)} 
+        <ActionButton
+          onClick={() => setIsDeleteModalOpen(true)}
           variant="secondary"
         >
           판매 내리기

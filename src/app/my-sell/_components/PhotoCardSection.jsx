@@ -15,11 +15,11 @@ export default function PhotoCardSection({ dataLists }) {
         else if (i % 3 === 2) mdJustify = "md:justify-end";
 
         const cardType =
-          dataList.remainingQuantity === 0 ? "soldout" : "for_sale";
+          dataList.remainingQuantity === 0 ? "for_sale_soldout" : "for_sale";
 
         return (
           <div
-            key={dataList.userPhotoCard.photoCard.title}
+            key={dataList.userPhotoCard.id}
             className={`w-full flex ${
               i % 2 === 1 ? "justify-start" : "justify-end"
             } ${mdJustify}`}
