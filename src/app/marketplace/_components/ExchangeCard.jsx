@@ -25,31 +25,17 @@ export default function ExchangeCard({ type }) {
     return <div>로딩 중...</div>;
   }
 
-  let exchangeId,
-    description,
-    requesterCardId,
-    price,
-    nickname,
-    title,
-    rank,
-    genre,
-    imgUrl;
-
-  const exchange = cardArticle.exchange?.[0];
-
   // 포토카드 상세 교환 목록 데이터 구조분해
-  if (exchange) {
-    ({
-      id: exchangeId,
-      description,
-      requesterCard: {
-        id: requesterCardId,
-        price,
-        user: { nickname },
-        photoCard: { title, rank, genre, imgUrl },
-      },
-    } = exchange);
-  }
+  const {
+    id: exchangeId,
+    description,
+    requesterCard: {
+      id: requesterCardId,
+      price,
+      user: { nickname } = {},
+      photoCard: { title, rank, genre, imgUrl } = {},
+    } = {},
+  } = cardArticle.exchange?.[0] || {};
 
   // 교환 취소하기
   const handleExchangeCancel = () => {

@@ -52,7 +52,7 @@ export const getUserArticles = async ({
     throw error;
   }
 };
-// 특정 아티클 상세 정보 가져오기
+// 특정 아티클 판매자 상세 정보 가져오기
 export async function getArticleById(articleId) {
   try {
     // const response = await fetch(
@@ -65,6 +65,7 @@ export async function getArticleById(articleId) {
 
     // const data = await response.json();
     // return data;
+
     return await cookieFetch(`/articles/${articleId}/seller`);
   } catch (error) {
     console.error("getArticleById error:", error);
