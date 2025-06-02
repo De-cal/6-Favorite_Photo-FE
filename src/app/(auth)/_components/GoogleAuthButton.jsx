@@ -3,7 +3,6 @@ import React from "react";
 import googleIcon from "@/assets/icons/ic-google.svg";
 
 export default function GoogleAuthButton({ label = "", onClick }) {
-  console.log("프롭스로 넘어온 값", onClick);
   return (
     <>
       <button
