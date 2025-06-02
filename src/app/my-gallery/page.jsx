@@ -5,7 +5,7 @@ import Loading from "@/components/common/Loading";
 export default function MyGalleryPage() {
   return (
     <Suspense fallback={<Loading />}>
-      <MyGallery />;
+      <MyGallery />
     </Suspense>
   );
 }

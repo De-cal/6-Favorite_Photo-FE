@@ -21,7 +21,7 @@ export default function Dropdown({
       case "판매방법":
         return [
           ["SELLING", "판매 중"],
-          ["WAITING_EXCHANGE", "교환 대기 중"],
+          ["EXCHANGE_REQUESTED", "교환 대기 중"],
         ];
       case "매진여부":
         return [

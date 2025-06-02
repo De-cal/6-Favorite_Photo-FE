@@ -19,7 +19,7 @@ export default function PhotoCardSection({ dataLists }) {
 
         return (
           <div
-            key={dataList.userPhotoCard.id}
+            key={dataList.id}
             className={`w-full flex ${
               i % 2 === 1 ? "justify-start" : "justify-end"
             } ${mdJustify}`}

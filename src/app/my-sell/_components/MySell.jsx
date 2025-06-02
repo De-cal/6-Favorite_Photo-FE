@@ -9,9 +9,14 @@ import SortAndSearchSection from "./SortAndSearchSection";
 import PhotoCardSection from "./PhotoCardSection";
 import PageNation from "./PageNation";
 import { getUserArticles } from "@/lib/api/article.api.js";
-import Loading from "@/components/common/Loading";
 import { useAuth } from "@/providers/AuthProvider";
-import TsetModal from "@/app/modal-test/TsetModal";
+import LoginNeed from "@/app/marketplace/_components/marketplace/LoginNeed";
+import RankSectionSkeleton from "./RankSectionSkeleton";
+import SortAndSearchSectionSkeleton from "./SortAndSearchSectionSkeleton";
+import PageNationSkeleton from "./PageNationSkeleton";
+import PhotoCardSkeleton from "./PhotoCardSkeleton";
+import Search from "@/app/marketplace/_components/marketplace/Search";
+import CardSkeleton from "./CardSkeleton";
 
 export default function MySell() {
   const { user } = useAuth();
@@ -24,6 +29,7 @@ export default function MySell() {
 
   useEffect(() => {
     const keyword = searchParams.get("keyword") ?? "";
+
     const rank = searchParams.get("rank")?.replace(/\s+/g, "") ?? null;
     const genre = searchParams.get("genre") ?? null;
     const sellingType = searchParams.get("sellingType") ?? null;
@@ -54,76 +60,56 @@ export default function MySell() {
     enabled: !!searchFilter && !!user, // 필터 초기화될 때까지 API 호출 막음
   });
 
-  if (!user) return <TsetModal />;
-  if (!searchFilter || isPending) return <Loading />;
+  if (!user) return <LoginNeed />;
+  // if (!searchFilter || isPending) return <Loading />
   if (isError) return <div>에러 발생</div>;
-
-  const cards = data.list;
-  const articleCount = data.totalCount.articleCount;
-  const ranks = data.rankCounts;
-
-  const filteredCards = cards.filter((card) => {
-    const photoCard = card.userPhotoCard?.photoCard;
-    if (!photoCard) return false;
-
-    const matchesKeyword =
-      !searchFilter.keyword ||
-      photoCard.title
-        .toLowerCase()
-        .includes(searchFilter.keyword.toLowerCase());
-
-    const matchesGrade =
-      !searchFilter.rank || photoCard.rank === searchFilter.rank;
-
-    const matchesGenre =
-      !searchFilter.genre || photoCard.genre === searchFilter.genre;
-
-    const matchesSellingType =
-      !searchFilter.sellingType || card.status === searchFilter.sellingType;
-
-    const matchesSoldout =
-      !searchFilter.soldout ||
-      (searchFilter.soldout === "SELLING"
-        ? card.remainingQuantity > 0
-        : card.remainingQuantity === 0);
-
-    return (
-      matchesKeyword &&
-      matchesGrade &&
-      matchesGenre &&
-      matchesSellingType &&
-      matchesSoldout
-    );
-  });
 
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection />
-        <RankSection
-          totalCount={data.totalCount.totalCount}
-          rankCounts={ranks}
-        />
 
-        {/* 서스팬스로 감싸기 */}
-        <SortAndSearchSection
-          onSearch={setSearchFilter}
-          data={data}
-          selectedFilter={searchFilter}
-        />
-        {/* 서스팬스로 감싸기 */}
-        {/* 서스팬스로 감싸기 */}
-        <PhotoCardSection dataLists={filteredCards} />
-        <PageNation
-          count={Math.ceil(articleCount / pageSize)}
-          currentPage={page}
-          onClick={(newPage) => {
-            const params = new URLSearchParams(searchParams.toString());
-            params.set("page", newPage);
-            router.push(`?${params.toString()}`);
-            setPage(newPage);
-          }}
-        />
+        {isPending ? (
+          <RankSectionSkeleton />
+        ) : (
+          <RankSection
+            totalCount={data.totalCount.totalCount}
+            rankCounts={data.rankCounts}
+            user={user.nickname}
+          />
+        )}
+        {isPending ? (
+          <SortAndSearchSectionSkeleton />
+        ) : (
+          <SortAndSearchSection
+            onSearch={setSearchFilter}
+            data={data}
+            selectedFilter={searchFilter}
+          />
+        )}
+        {isPending ? (
+          <PhotoCardSkeleton />
+        ) : (
+          <PhotoCardSection dataLists={data.list} />
+        )}
+        {isPending ? (
+          <PageNationSkeleton />
+        ) : (
+          <PageNation
+            count={Math.ceil(data.totalCount.articleCount / pageSize)}
+            currentPage={page}
+            onClick={(newPage) => {
+              const params = new URLSearchParams(searchParams.toString());
+              params.set("page", newPage);
+              router.push(`?${params.toString()}`);
+              setPage(newPage);
+            }}
+          />
+        )}
+        {/* 
+        <RankSectionSkeleton />
+        <SortAndSearchSectionSkeleton />
+        <PhotoCardSkeleton /> */}
       </div>
     </div>
   );

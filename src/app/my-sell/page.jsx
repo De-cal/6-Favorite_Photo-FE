@@ -5,7 +5,7 @@ import Loading from "@/components/common/Loading";
 export default function MySellPage() {
   return (
     <Suspense fallback={<Loading />}>
-      <MySell />;
+      <MySell />
     </Suspense>
   );
 }
