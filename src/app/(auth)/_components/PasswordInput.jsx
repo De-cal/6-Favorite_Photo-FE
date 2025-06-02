@@ -80,7 +80,7 @@ export default function PasswordInput({
         <button
           type="button"
           onClick={() => setVisible((prev) => !prev)}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary-400"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary-400 cursor-pointer"
         >
           {visible ? (
             <div className="relative w-[22px] h-[22px] md:w-[24px] md:h-[24px]">
