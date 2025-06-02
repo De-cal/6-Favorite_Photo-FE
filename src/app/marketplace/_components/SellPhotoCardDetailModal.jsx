@@ -27,6 +27,7 @@ function SellPhotoCardDetailModal({
     id: "default",
     exchangeGenre: "장르를 선택해 주세요",
     exchangeRank: "등급을 선택해 주세요",
+    price: "",
     description: "",
     totalQuantity: 0,
   },
@@ -56,22 +57,6 @@ function SellPhotoCardDetailModal({
     description === "";
 
   const handleClickSubmit = async () => {
-    // if (genre === "장르를 선택해 주세요") {
-    //   alert("장르를 선택해주세요.");
-    //   return;
-    // }
-    // if (rank === "등급을 선택해 주세요") {
-    //   alert("등급을 선택해주세요 ");
-    //   return;
-    // }
-    // if (price <= 0) {
-    //   alert("가격을 입력해주세요");
-    //   return;
-    // }
-    // if (sellQuantity <= 0) {
-    //   alert("판매 수량을 입력해주세요");
-    //   return;
-    // }
     try {
       if (type === "sell") {
         const newArticle = await postArticle({
@@ -82,7 +67,6 @@ function SellPhotoCardDetailModal({
           userPhotoCardId: card.id,
           price,
         });
-        setResult("성공");
       } else {
         const updatedArticle = await articleApi.patchArticle(article.id, {
           exchangeGenre,
@@ -91,6 +75,7 @@ function SellPhotoCardDetailModal({
           totalQuantity: sellQuantity,
         });
       }
+      setResult("성공");
     } catch (error) {
       //수정 성공/실패 모달?
       setResult("실패");

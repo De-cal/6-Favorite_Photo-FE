@@ -138,14 +138,9 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
               ))
             )}
 
-            {isLoading && (
-              <div className="text-white mt-4 w-full flex items-center">
-                로딩 중...
-              </div>
-            )}
-            {isFetchingNextPage && (
-              <div className="text-white mt-4 w-full flex justify-center">
-                로딩 중...
+            {(isLoading || isFetchingNextPage) && (
+              <div className="w-full flex justify-center items-center col-span-2 mt-[40px]">
+                <div className="loader" />
               </div>
             )}
           </div>
