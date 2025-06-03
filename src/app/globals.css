@@ -23,6 +23,18 @@
   /* 폰트 정의 */
   --font-baskinRobbins: var(--font-baskinRobbins);
   --font-notoSans: var(--font-notoSans);
+
+  /* 배경 이미지 정의  */
+  --bg-img-landing-hero: url("../assets/images/img-hero-bg.png");
+  --bg-img-landing-feat1: url("../assets/images/img-feat1.png");
+  --bg-img-landing-feat1-sm: url("../assets/images/img-feat1-sm.png");
+  --bg-img-landing-feat1-md: url("../assets/images/img-feat1-md.png");
+  --bg-img-landing-feat2: url("../assets/images/img-feat2.png");
+  --bg-img-landing-feat2-sm: url("../assets/images/img-feat2-sm.png");
+  --bg-img-landing-feat2-md: url("../assets/images/img-feat2-md.png");
+  --bg-img-landing-feat3: url("../assets/images/img-feat3.png");
+  --bg-img-landing-feat3-sm: url("../assets/images/img-feat3-sm.png");
+  --bg-img-landing-feat3-md: url("../assets/images/img-feat3-md.png");
 }
 
 html {
@@ -106,5 +118,56 @@ html {
 
   .animate-custom-pulse {
     animation: custom-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+.bg-landing-hero {
+  background-image: var(--bg-img-landing-hero);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-landing-feat1 {
+  background-image: var(--bg-img-landing-feat1);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-landing-feat2 {
+  background-image: var(--bg-img-landing-feat2);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-landing-feat3 {
+  background-image: var(--bg-img-landing-feat3);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (min-width: 744px) {
+  .bg-landing-feat1 {
+    background-image: var(--bg-img-landing-feat1-sm);
+  }
+  .bg-landing-feat2 {
+    background-image: var(--bg-img-landing-feat2-sm);
+  }
+  .bg-landing-feat3 {
+    background-image: var(--bg-img-landing-feat3-sm);
+  }
+}
+@media (min-width: 1480px) {
+  .bg-landing-feat1 {
+    background-image: var(--bg-img-landing-feat1-md);
+  }
+  .bg-landing-feat2 {
+    background-image: var(--bg-img-landing-feat2-md);
+  }
+  .bg-landing-feat3 {
+    background-image: var(--bg-img-landing-feat3-md);
   }
 }
