@@ -68,8 +68,6 @@ function SellPhotoCardDetailModal({
           price,
         });
       } else {
-        console.log("aaa");
-
         const updatedArticle = await patchArticle(article.id, {
           exchangeGenre: genre,
           exchangeRank: rank === "SUPER RARE" ? "SUPERRARE" : rank,
@@ -77,7 +75,6 @@ function SellPhotoCardDetailModal({
           totalQuantity: sellQuantity,
           price,
         });
-        console.log(updatedArticle);
       }
       setResult("성공");
     } catch (error) {

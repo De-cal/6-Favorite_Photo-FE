@@ -137,19 +137,15 @@ const cancelExchangeRequest = async (articleId, exchangeId) => {
   }
 };
 
-//포토카드 교환 요청 승인 거절
-const exchangeApprove = async (articleId, exchangeId, isApproved) => {
+//포토카드 교환 요청 승인
+const approveExchangeRequest = async (articleId, exchangeId) => {
   try {
-    return await cookieFetch(`articles/${articleId}/exchange/${exchangeId}`, {
+    console.log({ articleId, exchangeId });
+    return await cookieFetch(`/articles/${articleId}/exchange/${exchangeId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ isApproved }),
     });
   } catch (e) {
     console.error(e.message);
-    throw e;
   }
 };
 
@@ -169,6 +165,6 @@ export default {
   getArticle,
   purchaseArticle,
   exchangeRequest,
-  exchangeApprove,
+  approveExchangeRequest,
   cancelExchangeRequest,
 };

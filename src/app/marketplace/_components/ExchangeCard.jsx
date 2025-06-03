@@ -7,6 +7,7 @@ import GradeDetail from "@/components/common/GradeDetail";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import ExchangeCancelModal from "../[id]/buyer/_components/modal/ExchangeCancelModal";
 import { useModal } from "@/providers/ModalProvider";
+import ExchangeApproveModal from "../[id]/seller/_components/ExchangeApproveModal";
 
 export default function ExchangeCard({ type, cardArticle }) {
   const { openModal } = useModal();
@@ -28,6 +29,18 @@ export default function ExchangeCard({ type, cardArticle }) {
   const handleExchangeCancel = (exchange) => {
     openModal(
       <ExchangeCancelModal
+        exchangeId={exchange.exchangeId}
+        title={exchange.title}
+        rank={exchange.rank}
+      />,
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  //교환 승인하기
+  const handleExchangeApprove = (exchange) => {
+    openModal(
+      <ExchangeApproveModal
         exchangeId={exchange.exchangeId}
         title={exchange.title}
         rank={exchange.rank}
@@ -112,6 +125,7 @@ export default function ExchangeCard({ type, cardArticle }) {
                     <ActionButton
                       variant="primary"
                       className="w-full h-[40px] mt-[20px] font-bold text-[12px]/[14px] sm:h-[55px] sm:mt-[25px] sm:font-medium sm:text-[16px]/[19px] md:h-[60px] md:mt-[40px] md:text-[18px]/[22px]"
+                      onClick={() => handleExchangeApprove(exchange)}
                     >
                       승인
                       <div className="hidden sm:block">하기</div>
