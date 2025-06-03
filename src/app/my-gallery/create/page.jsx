@@ -15,7 +15,7 @@ import { useAuth } from "@/providers/AuthProvider";
 export default function MyGalleryCreatePage() {
   const { form, error, set, handler, isValid, validate } = useCardCreateForm();
 
-  const { openModal } = useModal(); 
+  const { openModal, closeModal } = useModal();
   const { user, refreshUser } = useAuth();
   const [showNotice, setShowNotice] = useState(false);
 
@@ -59,7 +59,8 @@ export default function MyGalleryCreatePage() {
       const result = await createCard(formData);
       console.log("카드 생성 성공:", result);
 
-      await refreshUser();
+      // refreshUser를 제거하고 모달에서만 처리
+      // await refreshUser();
       
       // 성공 모달 열기
       openModal(
@@ -74,7 +75,7 @@ export default function MyGalleryCreatePage() {
       );
       
     } catch (err) {
-      //console.error("카드 생성 오류:", err);
+      console.error("카드 생성 오류:", err);
       
       // 실패 모달 열기
       openModal(
