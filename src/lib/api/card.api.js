@@ -37,6 +37,7 @@ export const getAllCards = async ({
   }
 };
 
+
 export const createCard = async (formData) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {

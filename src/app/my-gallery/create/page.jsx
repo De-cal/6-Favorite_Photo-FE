@@ -1,19 +1,50 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import useCardCreateForm from "@/hooks/useCardCreateForm";
 import FormInput from "./_components/FormInput";
 import FileUploadInput from "./_components/FileUploadInput";
 import Dropdown from "./_components/Dropdown";
 import TopSection from "./_components/TopSection";
 import ActionButton from "@/components/ui/buttons/ActionButton";
+import CommonModal from "@/components/common/CommonModal";
+import { createCard } from "@/lib/api/card.api";
+import { useModal } from "@/providers/ModalProvider";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function MyGalleryCreatePage() {
   const { form, error, set, handler, isValid, validate } = useCardCreateForm();
 
+  const { openModal, closeModal } = useModal();
+  const { user, refreshUser } = useAuth();
+  const [showNotice, setShowNotice] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+
+    if (user.createCount === 0) {
+      // 알림 표시
+      setShowNotice(true);
+      
+      // 3초 후 알림 숨기기 (선택사항)
+      setTimeout(() => {
+        setShowNotice(false);
+      }, 3000);
+
+      openModal(
+        <CommonModal
+          type="포토카드 생성"
+          result="실패"
+          data={{
+            rank: form.rank,
+            title: form.title,
+            message: "이번달 모든 생성 기회를 소진했어요.",
+          }}
+        />
+      );
+      return;
+    }
 
     const formData = new FormData();
     formData.append("title", form.title);
@@ -25,23 +56,48 @@ export default function MyGalleryCreatePage() {
     formData.append("file", form.file);
 
     try {
-      const res = await fetch("/api/card", {
-        method: "POST",
-        body: formData,
-      });
-      if (!res.ok) {
-        throw new Error("카드 생성 실패");
-      }
-      //alert("카드가 성공적으로 생성되었습니다!");
+      const result = await createCard(formData);
+      console.log("카드 생성 성공:", result);
+
+      // refreshUser를 제거하고 모달에서만 처리
+      // await refreshUser();
+      
+      // 성공 모달 열기
+      openModal(
+        <CommonModal 
+          type="포토카드 생성" 
+          result="성공" 
+          data={{
+            rank: form.rank,
+            title: form.title
+          }}
+        />
+      );
+      
     } catch (err) {
-      console.error(err);
-      //alert("카드 생성 중 오류가 발생했습니다.");
+      console.error("카드 생성 오류:", err);
+      
+      // 실패 모달 열기
+      openModal(
+        <CommonModal 
+          type="포토카드 생성" 
+          result="실패" 
+          data={{
+            rank: form.rank,
+            title: form.title
+          }}
+        />
+      );
     }
   };
 
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] mx-auto mb-[50px]">
-      <TopSection />
+      <TopSection 
+        user={user} 
+        showNotice={showNotice} 
+        setShowNotice={setShowNotice} 
+      />
       <form
         onSubmit={handleSubmit}
         className="w-[345px] sm:w-[440px] md:w-[520px] space-y-6"
