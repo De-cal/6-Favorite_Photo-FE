@@ -33,15 +33,6 @@ export default function LandingHero() {
             </ActionButton>
           </Link>
         </div>
-        {/* 히어로 메인 이미지 */}
-        {/* <div className="relative min-w-[375px] h-[199] sm:w-[744px] sm:h-[352px] md:w-[1917px] md:h-[765px] overflow-visible ">
-          <Image
-            src={heroImg}
-            alt="히어로 메인 이미지"
-            fill
-            className="object-contain"
-          />
-        </div> */}
         <div
           className="relative overflow-visible"
           style={{
