@@ -10,6 +10,7 @@ import { getAllArticles } from "@/lib/api/article.api";
 
 import LoginNeed from "./_components/marketplace/LoginNeed";
 import MyCardSellBtn from "./_components/marketplace/MyCardSellBtn";
+import PhotoCardSkeleton from "../my-sell/_components/PhotoCardSkeleton";
 
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
@@ -120,13 +121,19 @@ export default function MarketplacePage() {
           sortOpen={sortOpen}
           setSortOpen={setSortOpen}
         />
-        <ArticleGrid
-          articles={articles}
-          searchKeyWord={searchKeyWord}
-          filterSettings={filterSettings}
-          sortOption={sortOption}
-          onRequireLogin={() => setLoginModalOpen(true)}
-        />
+        {/* 세빈님 스켈레톤 적용해놧는데 나중에 리액트쿼리로 바꾸시면
+        여기 isPending일때로 해주시면 됩니다 */}
+        {loading ? (
+          <PhotoCardSkeleton />
+        ) : (
+          <ArticleGrid
+            articles={articles}
+            searchKeyWord={searchKeyWord}
+            filterSettings={filterSettings}
+            sortOption={sortOption}
+            onRequireLogin={() => setLoginModalOpen(true)}
+          />
+        )}
       </div>
 
       {showFilter && (
