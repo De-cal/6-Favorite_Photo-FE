@@ -31,7 +31,7 @@ export default function MarketplacePage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
+    isPending,
     refetch,
   } = useInfiniteQuery({
     queryKey: ["articles", searchKeyWord],
@@ -92,9 +92,9 @@ export default function MarketplacePage() {
           setSortOpen={setSortOpen}
         />
 
-        {isLoading && <PhotoCardSkeleton />}
+        {isPending && <PhotoCardSkeleton />}
 
-        {!isLoading && (
+        {!isPending && (
           <ArticleGrid
             articles={allArticles}
             searchKeyWord={searchKeyWord}
@@ -107,7 +107,9 @@ export default function MarketplacePage() {
         <div ref={ref} className="h-10" />
 
         {isFetchingNextPage && (
-          <div className="text-center py-4 text-gray-500">로딩 중...</div>
+          <div className="w-full flex justify-center items-center col-span-2 mt-[40px]">
+            <div className="loader" />
+          </div>
         )}
       </div>
 
