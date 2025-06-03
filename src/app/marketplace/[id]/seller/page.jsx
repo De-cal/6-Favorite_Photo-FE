@@ -70,10 +70,16 @@ export default function SellerPage() {
   }
   return (
     <>
-      <MobileHeader src="/marketplace" title="마켓플레이스" />
-      <div className="min-h-screen flex flex-col items-center bg-black text-white p-4 sm:p-6 md:p-8">
+      <div className="flex justify-center items-center">
+      <div className="max-w-[1920px] w-[345px]pb-[20px] sm:w-full sm:mx-0 sm:px-[20px] sm:pt-0 md:px-[220px]">
+       <p className="hidden font-baskinRobbins font-normal text-[16px]/[16px] text-gray-300 py-[40px] sm:block md:text-[24px]/[25px] md:py-[60px]">
+        마켓플레이스
+      </p>
+        <MobileHeader title={"마켓플레이스"} src="/" />
+      
+      <div className="min-h-screen flex flex-col items-center bg-black text-white ">
         <div className="w-[345px] sm:w-full sm:max-w-[1480px]">
-          <h1 className="w-[345px] sm:w-full md:w-full mx-auto text-xl sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-gray-100 pb-2">
+          <h1 className="w-[345px] sm:w-full md:w-full mx-auto text-[24px] sm:text-[32px] md:text-[40px] sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-gray-100 pb-2">
             {article.userPhotoCard?.photoCard?.title || "포토카드"}
           </h1>
 
@@ -98,6 +104,9 @@ export default function SellerPage() {
                   description: article.userPhotoCard?.photoCard?.description,
                   rank: article.userPhotoCard?.photoCard?.rank,
                   genre: article.userPhotoCard?.photoCard?.genre,
+                  creator: {
+                    nickname: article.userPhotoCard?.photoCard?.creator?.nickname,
+                  },
                 },
                 user: {
                   nickname: article.userPhotoCard?.user?.nickname,
@@ -117,6 +126,8 @@ export default function SellerPage() {
           </div>
           <ExchangeCard type="seller" cardArticle={article} />
         </div>
+      </div>
+      </div>
       </div>
     </>
   );

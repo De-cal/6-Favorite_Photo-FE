@@ -10,6 +10,7 @@ import DeletePhotoCardModal from "./DeletePhotoCardModal";
 import { deleteArticle } from "@/lib/api/article.api";
 import { useModal } from "@/providers/ModalProvider";
 import SellPhotoCardDetailModal from "@/app/marketplace/_components/SellPhotoCardDetailModal";
+import { genreChange } from "@/lib/utils/genreChange";
 
 export default function SellerCardInfo({ cardArticle, onUpdate }) {
   const router = useRouter();
@@ -65,18 +66,20 @@ export default function SellerCardInfo({ cardArticle, onUpdate }) {
   };
 
   return (
-    <div className="flex flex-col justify-between w-[345px] md:w-[440px] sm:w-[342px] m-auto">
+    <div className="flex flex-col w-[345px] md:w-[440px] sm:w-[342px]">
       <div>
         {/* 등급/카테고리/작가 */}
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
-            <GradeDetail grade={cardArticle.photoCard.rank} />
-            <span className="text-gray-300 text-sm md:text-[24px]">
-              | {cardArticle.photoCard.genre}
+            <GradeDetail className="text-[18px] md:text-[24px]" grade={cardArticle.photoCard.rank} />
+            <span className="text-gray-300 text-[18px] md:text-[24px]">
+              | {genreChange(cardArticle.photoCard.genre)}
             </span>
           </div>
           <div className="text-white text-sm md:text-[24px] underline">
-            {cardArticle.user.nickname}
+            <div className="text-white text-[18px] md:text-[24px] underline">
+            {cardArticle.photoCard.creator.nickname}
+          </div>
           </div>
         </div>
 
@@ -85,11 +88,11 @@ export default function SellerCardInfo({ cardArticle, onUpdate }) {
           {cardArticle.photoCard.description}
         </p>
 
-        {/* 가격/잔여 */}
-        <div className="flex flex-col mb-6">
+        {/* 가격/잔여 - gap-y-[10px] 적용 */}
+        <div className="flex flex-col mb-6 gap-y-[10px]">
           <div className="flex justify-between">
             <span className="text-[20px] text-gray-300">가격 </span>
-            <span className=" text-lg font-bold">{cardArticle.price}P</span>
+            <span className=" text-lg font-bold">{cardArticle.price} P</span>
           </div>
           <div className="flex justify-between">
             <span className="text-[20px] text-gray-300">잔여 </span>
@@ -113,17 +116,17 @@ export default function SellerCardInfo({ cardArticle, onUpdate }) {
               alt="exchange"
               className="mr-2 w-[25px] h-[25px]"
             />
-            <div className="text-[22px] text-white  md:text-[28px] mb-1">
+            <div className="text-[22px] text-white font-bold md:text-[28px] mb-1">
               교환 희망 정보
             </div>
           </div>
-          <div className="border-t border-gray-100 flex items-center gap-2 mb-8 pt-8">
-            <GradeDetail grade={cardArticle.exchangeRank} />
-            <span className="text-gray-300 text-sm md:text-[24px]">
-              | {cardArticle.exchangeGenre}
+          <div className="border-t border-gray-100 text-[18px] md:text-[24px] flex items-center gap-2 mb-10 pt-10">
+            <GradeDetail className="text-[18px] md:text-[24px]" grade={cardArticle.exchangeRank} />
+            <span className="text-gray-300 font-bold">
+              | {genreChange(cardArticle.exchangeGenre)}
             </span>
           </div>
-          <p className="border-t border-gray-400 text-white text-[16px] md:text-[18px] pt-4">
+          <p className="border-t border-gray-400 text-white text-[16px] md:text-[18px] pt-7 mb-10">
             {cardArticle.exchangeText}
           </p>
         </div>
@@ -133,7 +136,7 @@ export default function SellerCardInfo({ cardArticle, onUpdate }) {
       <div className="flex flex-col gap-3 mt-6">
         <ActionButton
           variant="primary"
-          className="w-[345px] h-[75px] text-lg md:text-xl md:w-[440px] md:h-[80px]"
+          className="w-[345px] h-[75px] text-lg md:text-xl md:w-[440px] md:h-[80px] mb-3"
           onClick={handleEdit}
         >
           수정하기
