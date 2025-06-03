@@ -4,28 +4,17 @@ import React, { useState } from "react";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import GradeDetail from "@/components/common/GradeDetail";
 import SelectPhotoCardsModal from "@/app/marketplace/_components/SelectPhotoCardsModal";
-import { useQuery } from "@tanstack/react-query";
-import articleApi from "@/lib/api/article.api";
-import { useParams } from "next/navigation";
+import { useBuyer } from "@/contexts/BuyerContext";
 
 export default function SellerExchangeInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { id: articleId } = useParams();
-
-  const { data: cardArticle, isPending } = useQuery({
-    queryKey: ["articles", articleId],
-    queryFn: () => articleApi.getArticle(articleId),
-  });
+  const { cardArticle } = useBuyer();
 
   // 교환하기
   const handleExchange = () => {
     setIsModalOpen(true);
     document.body.style.overflow = "hidden";
   };
-
-  if (isPending) {
-    return <div>로딩 중...</div>;
-  }
 
   return (
     <div className="relative">

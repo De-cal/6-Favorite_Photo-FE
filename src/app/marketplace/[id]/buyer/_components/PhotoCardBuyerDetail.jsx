@@ -2,27 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import img_card_placeholder_1 from "@/assets/images/img-card-placeholder-1.svg";
 import ic_plus from "@/assets/icons/ic-plus.svg";
 import ic_minus from "@/assets/icons/ic-minus.svg";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import GradeDetail from "@/components/common/GradeDetail";
 import { useModal } from "@/providers/ModalProvider";
 import BuyPhotoCardModal from "./modal/BuyPhotoCardModal";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import articleApi from "@/lib/api/article.api";
+import { useBuyer } from "@/contexts/BuyerContext";
 
 export default function PhotoCardBuyerDetail() {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(null);
-  const { id: articleId } = useParams();
   const { openModal } = useModal();
-
-  const { data: cardArticle, isPending } = useQuery({
-    queryKey: ["articles", articleId],
-    queryFn: () => articleApi.getArticle(articleId),
-  });
+  const { cardArticle, isPending } = useBuyer();
 
   useEffect(() => {
     if (isPending) return;
@@ -64,11 +56,6 @@ export default function PhotoCardBuyerDetail() {
     document.body.style.overflow = "hidden";
   };
 
-  // @De-cal TODO: 로딩 인디케이터 퀄리티 높이기
-  if (isPending) {
-    return <div>로딩 중...</div>;
-  }
-
   // 포토카드 상세 데이터 구조분해
   const {
     price,
@@ -96,14 +83,7 @@ export default function PhotoCardBuyerDetail() {
       </div>
       <div className="flex flex-col justify-center items-start gap-y-[20px] sm:flex-row sm:gap-[20px] md:gap-[80px]">
         <div className="relative w-[345px] min-h-[258.75px] max-w-[960px] max-h-[720px] aspect-[345/258.75] mt-[26px] sm:w-full sm:min-w-[342px] sm:mt-[48px] md:mt-[70px]">
-          <img src={imgUrl} alt={title} />
-          {/* @De-cal TODO: 외부 이미지 사용 가능하도록 next.config에 설정해줘야 함. */}
-          {/* <Image
-            src={imgUrl}
-            alt={title}
-            fill
-            className="object-cover"
-          /> */}
+          <Image src={imgUrl} alt={title} fill className="object-cover" />
         </div>
         <div className="max-w-[440px] sm:min-w-[342px] sm:mt-[48px] md:mt-[70px] w-full">
           <div className="flex justify-between items-center pb-[30px] border-b-[1px] border-gray-400">
