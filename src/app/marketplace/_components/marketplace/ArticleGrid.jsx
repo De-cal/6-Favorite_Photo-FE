@@ -11,7 +11,6 @@ export default function ArticleGrid({
 }) {
   const router = useRouter();
   const { user } = useAuth();
-
   const handleCardClick = async (articleId, article) => {
     if (user) {
       router.push(
@@ -19,10 +18,8 @@ export default function ArticleGrid({
           ? `/marketplace/${articleId}/seller`
           : `/marketplace/${articleId}/buyer`,
       );
-
-      console.log("아티클 작성자", article.userPhotoCard.user);
     } else {
-      onRequireLogin?.(); // 로그인 필요 모달 띄우기
+      onRequireLogin?.();
     }
   };
   const filtered = articles
