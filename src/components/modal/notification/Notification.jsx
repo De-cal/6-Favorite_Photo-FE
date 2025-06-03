@@ -9,6 +9,7 @@ import NotificationsModal from "./NotificationsModal";
 import NotificationsModalMobile from "./NotificationsModalMobile";
 import { useQuery } from "@tanstack/react-query";
 import { getMyNotifications } from "@/lib/api/notification.api";
+import { usePathname } from "next/navigation";
 
 export default function Notification({
   isNotificationModalOpen,
@@ -16,7 +17,8 @@ export default function Notification({
   handleTabletAndDesktopModalClose,
 }) {
   const [isMobile, setIsMobile] = useState(false);
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
+  const pathname = usePathname();
 
   const {
     data,
@@ -48,6 +50,23 @@ export default function Notification({
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  useEffect(() => {
+    if (isMobile && isNotificationModalOpen) {
+      setIsNotificationModalOpen(false); 
+    }
+  }, [isMobile, isNotificationModalOpen]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      closeModal(); 
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    setIsNotificationModalOpen(false);
+    closeModal();
+  }, [pathname]);
+
   return (
     <div className="relative">
       <button
@@ -63,7 +82,7 @@ export default function Notification({
 
       {!isMobile && isNotificationModalOpen && (
         <div className="hidden sm:block absolute right-0 top-full w-[300px] h-auto z-50">
-          <div className="flex flex-col p-4">
+          <div className="flex flex-col">
             <NotificationsModal refetchNotificationCount={refetchCount} />
           </div>
         </div>
