@@ -15,9 +15,7 @@ export async function getAllArticles(page = 1, limit = 12, keyword = "") {
     if (!response.ok) {
       throw new Error("Failed to fetch articles");
     }
-
-    const data = await response.json(); // { articles: [], totalPages, currentPage }
-    console.log(data);
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("getAllArticles error:", error);
