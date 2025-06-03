@@ -25,6 +25,26 @@ export function validatePassword(password) {
   if (!password || password.trim().length < 8) {
     return { isValid: false, message: "비밀번호를 8자 이상 입력해주세요." };
   }
+  // 한글 포함 여부 검사
+  const koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  if (koreanRegex.test(password)) {
+    return {
+      isValid: false,
+      message: "비밀번호에 한글을 입력할 수 없습니다.",
+    };
+  }
+  // 영문, 숫자, 특수문자 포함 요구
+  if (
+    !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/.test(
+      password,
+    )
+  ) {
+    return {
+      isValid: false,
+      message: "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.",
+    };
+  }
+
   return { isValid: true };
 }
 

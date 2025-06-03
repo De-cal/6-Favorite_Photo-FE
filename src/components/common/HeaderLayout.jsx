@@ -114,7 +114,7 @@ export default function HeaderLayout() {
                 <div className="border-l-[1.5px] border-gray-400 h-[17px] hidden sm:block"></div>
                 <button
                   onClick={logout}
-                  className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 hidden sm:block"
+                  className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 hidden sm:block cursor-pointer"
                 >
                   로그아웃
                 </button>
