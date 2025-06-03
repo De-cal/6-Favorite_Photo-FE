@@ -1,6 +1,7 @@
 import Card from "@/components/common/Card";
 import Link from "next/link";
 import React from "react";
+import CardSkeleton from "./CardSkeleton";
 
 export default function PhotoCardSection({ dataLists }) {
   console.log(dataLists);
@@ -26,7 +27,8 @@ export default function PhotoCardSection({ dataLists }) {
             } ${mdJustify}`}
           >
             <Link href={`/marketplace/${dataList.id}/seller`}>
-              <Card card={dataList.userPhotoCard} type={cardType} />
+              {/* <Card card={dataList.userPhotoCard} type={cardType} /> */}
+              <CardSkeleton />
             </Link>
           </div>
         );
