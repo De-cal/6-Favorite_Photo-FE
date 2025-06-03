@@ -27,8 +27,8 @@ export default function PhotoCardSection({ dataLists }) {
             } ${mdJustify}`}
           >
             <Link href={`/marketplace/${dataList.id}/seller`}>
-              {/* <Card card={dataList.userPhotoCard} type={cardType} /> */}
-              <CardSkeleton />
+              <Card card={dataList.userPhotoCard} type={cardType} />
+              {/* <CardSkeleton /> */}
             </Link>
           </div>
         );
