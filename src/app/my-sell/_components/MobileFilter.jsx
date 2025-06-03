@@ -10,7 +10,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function MobileFilter({ datas, onSelectFilter, where, close }) {
   const { closeModal } = useModal();
   const [option, setOption] = useState("등급");
-
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -246,7 +245,12 @@ export default function MobileFilter({ datas, onSelectFilter, where, close }) {
           </button>
 
           <button
-            className="cursor-pointer rounded-[2px] w-[272px] h-[55px] bg-[#EFFF04] text-[#0F0F0F] font-noto-sans-kr font-bold text-[16px] text-center"
+            disabled={selectedCount === 0}
+            className={`rounded-[2px] w-[272px] h-[55px] text-[16px] font-noto-sans-kr font-bold text-center ${
+              selectedCount === 0
+                ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                : "bg-main text-gray-500 cursor-pointer"
+            }`}
             onClick={() => {
               const transformed = {
                 rank: selectedValues["등급"]?.replace(/\s+/g, ""),
@@ -276,7 +280,7 @@ export default function MobileFilter({ datas, onSelectFilter, where, close }) {
               closeModal();
             }}
           >
-            {`${selectedCount ? selectedCount : totalCount}장 포토보기`}
+            {`${selectedCount}장 포토보기`}
           </button>
         </div>
       </div>

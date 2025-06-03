@@ -29,7 +29,6 @@ export const getAllCards = async ({
 
     // 쿠키에 있는 accessToken 자동 전송
     const data = await cookieFetch(`/cards?${queryParams.toString()}`);
-    console.log("data", data);
 
     return data;
   } catch (error) {

@@ -1,8 +1,10 @@
 import Card from "@/components/common/Card";
 import Link from "next/link";
 import React from "react";
+import CardSkeleton from "./CardSkeleton";
 
 export default function PhotoCardSection({ dataLists }) {
+  console.log(dataLists);
   return dataLists.length === 0 ? (
     <div className="font-baskinRobbins text-xl text-main pt-20">
       검색 및 필터링을 적용한 카드가 존재하지 않습니다.
@@ -24,8 +26,9 @@ export default function PhotoCardSection({ dataLists }) {
               i % 2 === 1 ? "justify-start" : "justify-end"
             } ${mdJustify}`}
           >
-            <Link href={"/marketplace/sellers/1"}>
+            <Link href={`/marketplace/${dataList.id}/seller`}>
               <Card card={dataList.userPhotoCard} type={cardType} />
+              {/* <CardSkeleton /> */}
             </Link>
           </div>
         );

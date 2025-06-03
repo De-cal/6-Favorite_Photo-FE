@@ -15,11 +15,9 @@ import RankSectionSkeleton from "./RankSectionSkeleton";
 import SortAndSearchSectionSkeleton from "./SortAndSearchSectionSkeleton";
 import PageNationSkeleton from "./PageNationSkeleton";
 import PhotoCardSkeleton from "./PhotoCardSkeleton";
-import Search from "@/app/marketplace/_components/marketplace/Search";
-import CardSkeleton from "./CardSkeleton";
 
 export default function MySell() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -39,6 +37,9 @@ export default function MySell() {
     setSearchFilter({ keyword, rank, genre, sellingType, soldout });
     setPage(curruntPage);
   }, [searchParams.toString()]);
+  //리렌더링 4회 수정하기
+  //유즈이펙트 대신 유즈메모 사용법
+  //라우터점 푸시 대신 라우터.replace사용하기.
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["my-user-articles", page, searchFilter],
@@ -57,8 +58,20 @@ export default function MySell() {
             ? false
             : undefined,
       }),
-    enabled: !!searchFilter && !!user, // 필터 초기화될 때까지 API 호출 막음
+    // enabled: !!searchFilter && !!user, // 필터 초기화될 때까지 API 호출 막음
   });
+
+  // 1. 인증 정보 로딩 중일 때는 로딩 스켈레톤을 보여줍니다.
+  if (isLoading) {
+    return (
+      <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
+        <RankSectionSkeleton />
+        <SortAndSearchSectionSkeleton />
+        <PhotoCardSkeleton /> {/* 또는 CardSkeleton으로 변경 */}
+        <PageNationSkeleton />
+      </div>
+    );
+  }
 
   if (!user) return <LoginNeed />;
   // if (!searchFilter || isPending) return <Loading />
