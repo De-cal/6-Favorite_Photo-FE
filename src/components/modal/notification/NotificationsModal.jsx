@@ -1,12 +1,50 @@
-import { readNotification } from "@/lib/api/notification.api";
-import NotificationCard from "./NotificationCard";
-import { useMutation } from "@tanstack/react-query";
+"use client";
 
-function NotificationsModal({ notifications, lastItemRef, isFetchingNextPage, refetchNotifications }) {
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { getMyNotifications, readNotification } from "@/lib/api/notification.api";
+import NotificationCard from "./NotificationCard";
+import { useRef, useCallback } from "react";
+
+const LIMIT = 10;
+
+function NotificationsModal({ refetchNotificationCount }) {
+  const observerRef = useRef(null);
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["notifications"],
+    queryFn: ({ pageParam = 0 }) => getMyNotifications({ pageParam, limit: LIMIT }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.notifications.length < LIMIT ? undefined : allPages.length;
+    },
+    staleTime: 1000 * 60,
+  });
+
+  const notifications = data?.pages.flatMap((page) => page.notifications) || [];
+
+  const lastItemRef = useCallback(
+    (node) => {
+      if (observerRef.current) observerRef.current.disconnect();
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !isFetchingNextPage && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+      if (node) observerRef.current.observe(node);
+    },
+    [isFetchingNextPage, hasNextPage, fetchNextPage]
+  );
+
   const { mutate: mutateReadNotification } = useMutation({
     mutationFn: readNotification,
     onSuccess: () => {
-      if (refetchNotifications) refetchNotifications();
+      refetch();
+      if (refetchNotificationCount) refetchNotificationCount();
     },
   });
 
@@ -34,4 +72,5 @@ function NotificationsModal({ notifications, lastItemRef, isFetchingNextPage, re
     </div>
   );
 }
+
 export default NotificationsModal;
