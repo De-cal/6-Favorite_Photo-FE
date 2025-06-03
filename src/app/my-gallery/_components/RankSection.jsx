@@ -9,7 +9,7 @@ export default function RankSection({ totalCount, rankCounts, user }) {
           {user ? `${user}님이 보유한 포토카드` : "유디 님이 보유한 포토카드"}
         </span>
         <span className="text-[14px] text-gray-300">
-          {totalCount ? `총 ${totalCount}장` : "(총 ???장)"}
+          {`총 ${totalCount}장`}
         </span>
       </div>
 
