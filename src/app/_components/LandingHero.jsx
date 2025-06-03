@@ -1,4 +1,3 @@
-import heroBgImg from "@/assets/images/img-hero-bg.png";
 import heroImg from "@/assets/images/img-hero-md.png";
 import logoImg from "@/assets/images/img-logo.png";
 import Link from "next/link";
@@ -34,7 +33,7 @@ export default function LandingHero() {
           </Link>
         </div>
         <div
-          className="relative overflow-visible"
+          className="relative"
           style={{
             width: "clamp(375px, 100vw + 20px, 1917px)",
             height: "clamp(199px, 48vw, 765px)",

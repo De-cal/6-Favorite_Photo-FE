@@ -32,6 +32,9 @@
   --bg-img-landing-feat2: url("../assets/images/img-feat2.png");
   --bg-img-landing-feat2-sm: url("../assets/images/img-feat2-sm.png");
   --bg-img-landing-feat2-md: url("../assets/images/img-feat2-md.png");
+  --bg-img-landing-feat3: url("../assets/images/img-feat3.png");
+  --bg-img-landing-feat3-sm: url("../assets/images/img-feat3-sm.png");
+  --bg-img-landing-feat3-md: url("../assets/images/img-feat3-md.png");
 }
 
 html {
@@ -139,12 +142,22 @@ html {
   background-position: center;
 }
 
+.bg-landing-feat3 {
+  background-image: var(--bg-img-landing-feat3);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 @media (min-width: 744px) {
   .bg-landing-feat1 {
     background-image: var(--bg-img-landing-feat1-sm);
   }
   .bg-landing-feat2 {
     background-image: var(--bg-img-landing-feat2-sm);
+  }
+  .bg-landing-feat3 {
+    background-image: var(--bg-img-landing-feat3-sm);
   }
 }
 @media (min-width: 1480px) {
@@ -153,5 +166,8 @@ html {
   }
   .bg-landing-feat2 {
     background-image: var(--bg-img-landing-feat2-md);
+  }
+  .bg-landing-feat3 {
+    background-image: var(--bg-img-landing-feat3-md);
   }
 }
