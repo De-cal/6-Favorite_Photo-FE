@@ -8,15 +8,25 @@ import articleApi from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
 import GradeDetail from "@/components/common/GradeDetail";
 
-export default function ExchangeApproveModal({ exchangeId, title, rank }) {
+export default function ExchangeModal({
+  exchangeId,
+  title,
+  rank,
+  type = "취소",
+}) {
   const { id: articleId } = useParams();
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
-  // 교환 요청 승인인 API
-  const { mutate: approveExchangeRequest } = useMutation({
-    mutationFn: ({ articleId, exchangeId }) =>
-      articleApi.approveExchangeRequest(articleId, exchangeId),
+  // 교환 요청 API
+  const { mutate: ExchangeRequest } = useMutation({
+    mutationFn: ({ articleId, exchangeId }) => {
+      if (type === "취소" || type === "거절")
+        return articleApi.cancelExchangeRequest(articleId, exchangeId);
+      else if (type === "승인")
+        return articleApi.approveExchangeRequest(articleId, exchangeId);
+    },
+
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["articles", articleId] });
     },
@@ -28,11 +38,9 @@ export default function ExchangeApproveModal({ exchangeId, title, rank }) {
     document.body.style.overflow = "auto";
   };
 
-  // 교환 승인하기
-  const handleApprove = () => {
-    console.log("articleId:", articleId);
-    console.log("exchangeId:", exchangeId);
-    approveExchangeRequest({ articleId, exchangeId });
+  // 교환 취소/거절/승인
+  const handleClick = () => {
+    ExchangeRequest({ articleId, exchangeId });
 
     closeModal();
     document.body.style.overflow = "auto";
@@ -56,7 +64,7 @@ export default function ExchangeApproveModal({ exchangeId, title, rank }) {
         </div>
         <div className="flex flex-col justify-center items-center">
           <p className="font-bold text-[18px]/[26px] md:text-[20px]/[29px]">
-            교환 제시 승인
+            교환 제시 {type}
           </p>
           <div className="flex flex-wrap justify-center items-center mt-[30px] mb-[40px] font-normal text-[14px]/[20px] text-gray-300 whitespace-pre md:mt-[40px] md:mb-[60px] md:text-[16px]/[23px]">
             <span>
@@ -67,13 +75,13 @@ export default function ExchangeApproveModal({ exchangeId, title, rank }) {
               />{" "}
               | {title}]
             </span>
-            <span> 교환 제시를 승인하시겠습니까?</span>
+            <span> 교환 제시를 {type}하시겠습니까?</span>
           </div>
           <ActionButton
-            onClick={handleApprove}
+            onClick={handleClick}
             className="w-[120px] h-[55px] sm:w-[140px] md:w-[170px] md:h-[60px]"
           >
-            승인하기
+            {type}하기
           </ActionButton>
         </div>
       </div>
