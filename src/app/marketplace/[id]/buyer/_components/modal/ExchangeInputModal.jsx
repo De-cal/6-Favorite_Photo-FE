@@ -5,7 +5,7 @@ import MobileHeader from "@/components/common/MobileHeader";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import { useModal } from "@/providers/ModalProvider";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
@@ -15,6 +15,7 @@ import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CommonModal from "@/components/common/CommonModal";
 import clsx from "clsx";
+import { motion, useMotionValue, useTransform } from "motion/react";
 
 export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const [isModalUp, setIsModalUp] = useState(false);
@@ -89,8 +90,24 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
     }
   }, [description]);
 
+  const y = useMotionValue(0);
+  const constraintsRef = useRef(null);
+
+  const handleDragEnd = () => {
+    // if (y.get() > 200) {
+    //   closeModal();
+    //   setIsModalOpen(true);
+    // }
+  };
+
   return (
-    <div
+    <motion.div
+      // ref={constraintsRef}
+      drag="y"
+      dragConstraints={constraintsRef}
+      dragMomentum={false}
+      onDragEnd={handleDragEnd}
+      style={{ y }}
       className={clsx(
         isModalUp
           ? "sm:translate-y-0 md:translate-none"
@@ -173,6 +190,6 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
