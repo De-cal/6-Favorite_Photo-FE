@@ -5,7 +5,7 @@ import Image from "next/image";
 import { genreChange } from "@/lib/utils/genreChange";
 import GradeDetail from "@/components/common/GradeDetail";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import ExchangeCancelModal from "../[id]/buyer/_components/modal/ExchangeCancelModal";
+import ExchangeModal from "../[id]/_components/ExchangeModal";
 import { useModal } from "@/providers/ModalProvider";
 
 export default function ExchangeCard({ type, cardArticle }) {
@@ -27,10 +27,37 @@ export default function ExchangeCard({ type, cardArticle }) {
   // 교환 취소하기
   const handleExchangeCancel = (exchange) => {
     openModal(
-      <ExchangeCancelModal
+      <ExchangeModal
         exchangeId={exchange.exchangeId}
         title={exchange.title}
         rank={exchange.rank}
+        type="취소"
+      />,
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  // 교환 거절하기
+  const handleExchangeReject = (exchange) => {
+    openModal(
+      <ExchangeModal
+        exchangeId={exchange.exchangeId}
+        title={exchange.title}
+        rank={exchange.rank}
+        type="거절"
+      />,
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  //교환 승인하기
+  const handleExchangeApprove = (exchange) => {
+    openModal(
+      <ExchangeModal
+        exchangeId={exchange.exchangeId}
+        title={exchange.title}
+        rank={exchange.rank}
+        type="승인"
       />,
     );
     document.body.style.overflow = "hidden";
@@ -105,6 +132,7 @@ export default function ExchangeCard({ type, cardArticle }) {
                     <ActionButton
                       variant="secondary"
                       className="w-full h-[40px] mt-[20px] font-bold text-[12px]/[14px] sm:h-[55px] sm:mt-[25px] sm:font-medium sm:text-[16px]/[19px] md:h-[60px] md:mt-[40px] md:text-[18px]/[22px]"
+                      onClick={() => handleExchangeReject(exchange)}
                     >
                       거절
                       <div className="hidden sm:block">하기</div>
@@ -112,6 +140,7 @@ export default function ExchangeCard({ type, cardArticle }) {
                     <ActionButton
                       variant="primary"
                       className="w-full h-[40px] mt-[20px] font-bold text-[12px]/[14px] sm:h-[55px] sm:mt-[25px] sm:font-medium sm:text-[16px]/[19px] md:h-[60px] md:mt-[40px] md:text-[18px]/[22px]"
+                      onClick={() => handleExchangeApprove(exchange)}
                     >
                       승인
                       <div className="hidden sm:block">하기</div>
