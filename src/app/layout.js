@@ -2,6 +2,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import HeaderLayout from "@/components/common/HeaderLayout";
 import Providers from "./Providers";
+import BuyerProvider from "@/contexts/BuyerContext";
 
 const baskinRobbins = localFont({
   src: "../assets/fonts/br-font-bold.woff2",
@@ -28,7 +29,9 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <HeaderLayout />
-          <main className="relative flex-1 font-notoSans">{children}</main>
+          <BuyerProvider>
+            <main className="relative flex-1 font-notoSans">{children}</main>
+          </BuyerProvider>
         </Providers>
       </body>
     </html>

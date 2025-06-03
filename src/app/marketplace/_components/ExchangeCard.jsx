@@ -5,7 +5,7 @@ import Image from "next/image";
 import { genreChange } from "@/lib/utils/genreChange";
 import GradeDetail from "@/components/common/GradeDetail";
 import ActionButton from "@/components/ui/buttons/ActionButton";
-import ExchangeCancelModal from "../buyers/[id]/_components/modal/ExchangeCancelModal";
+import ExchangeCancelModal from "../[id]/buyer/_components/modal/ExchangeCancelModal";
 import { useModal } from "@/providers/ModalProvider";
 
 export default function ExchangeCard({ type, cardArticle }) {
@@ -25,13 +25,12 @@ export default function ExchangeCard({ type, cardArticle }) {
   }));
 
   // 교환 취소하기
-  const handleExchangeCancel = () => {
+  const handleExchangeCancel = (exchange) => {
     openModal(
       <ExchangeCancelModal
-        exchangeId={exchangeId}
-        requesterCardId={requesterCardId}
-        title={title}
-        rank={rank}
+        exchangeId={exchange.exchangeId}
+        title={exchange.title}
+        rank={exchange.rank}
       />,
     );
     document.body.style.overflow = "hidden";
@@ -47,51 +46,32 @@ export default function ExchangeCard({ type, cardArticle }) {
           {exchanges?.map((exchange, i) => (
             <div
               key={`${exchange.id}_${i}`}
-              className={
-                "bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-start font-light md:w-[440px] md:max-h-[626px] md:p-[40px] w-[170px] h-auto p-[10px] text-[10px] sm:w-[342px] sm:max-h-[561px] sm:p-[20px] sm:text-[16px]"
-              }
+              className="bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-start font-light md:w-[440px] md:max-h-[626px] md:p-[40px] w-[170px] h-auto p-[10px] text-[10px] sm:w-[342px] sm:max-h-[561px] sm:p-[20px] sm:text-[16px]"
             >
-              <div className={"relative mb-[10px] sm:mb-[25px]"}>
-                <img src={exchange.imgUrl} alt={exchange.title} />
-                {/* @De-cal TODO: Image 컴포넌트 사용하기 위해서 next.config에 설정하기 */}
-                {/* <Image
-          src={imgUrl}
-          alt={title}
-          className={
-            "md:w-[360px] md:h-[270px] w-[150px] h-[112px] sm:w-[302px] sm:h-[226px]"
-          }
-        /> */}
+              <div className="relative w-[150px] h-[112px] sm:w-[302px] sm:h-[226px] md:w-[360px] md:h-[270px] mb-[10px] sm:mb-[25px]">
+                <Image
+                  src={exchange.imgUrl}
+                  alt={exchange.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <div
-                className={"w-full flex flex-col text-[10px] sm:text-[16px]"}
-              >
+              <div className="w-full flex flex-col text-[10px] sm:text-[16px]">
                 <div className="flex flex-col justify-center items-start gap-y-[5px] sm:gap-y-[10px]">
-                  <p
-                    className={
-                      "text-white truncate overflow-hidden whitespace-nowrap w-full font-bold text-[14px]/[17px] sm:text-[22px]/[26px]"
-                    }
-                  >
+                  <p className="text-white truncate overflow-hidden whitespace-nowrap w-full font-bold text-[14px]/[17px] sm:text-[22px]/[26px]">
                     {exchange.title}
                   </p>
                   <div className="flex flex-col w-full gap-y-[5px] sm:gap-y-[10px] md:flex-row">
                     <div className="flex gap-[4px] justify-start items-center">
                       <GradeDetail
                         grade={exchange.rank}
-                        className={"text-[10px]/[12px] sm:text-[16px]/[19px]"}
+                        className="text-[10px]/[12px] sm:text-[16px]/[19px]"
                       />
-                      <div
-                        className={
-                          "border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px]"
-                        }
-                      />
+                      <div className="border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px]" />
                       <p className="text-gray-300 text-[10px]/[12px] sm:text-[16px]/[19px]">
                         {genreChange(exchange.genre)}
                       </p>
-                      <div
-                        className={
-                          "hidden border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px] md:block"
-                        }
-                      />
+                      <div className="hidden border-l border-gray-400 h-3 mx-[5px] sm:mx-[10px] md:block" />
                     </div>
                     <div className="flex justify-between items-center w-full">
                       <div className="flex justify-center items-center gap-[2px]">
@@ -108,11 +88,7 @@ export default function ExchangeCard({ type, cardArticle }) {
                     </div>
                   </div>
                 </div>
-                <div
-                  className={
-                    "border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]"
-                  }
-                />
+                <div className="border-b border-gray-400 h-[1px] w-full my-[10px] sm:my-[20px]" />
                 <p className="font-normal text-[10px]/[12px] line-clamp-2 sm:text-[16px]/[19px]">
                   {exchange.description}
                 </p>
@@ -120,7 +96,7 @@ export default function ExchangeCard({ type, cardArticle }) {
                   <ActionButton
                     variant="secondary"
                     className="h-[40px] mt-[20px] font-bold text-[12px]/[14px] sm:h-[55px] sm:mt-[25px] sm:font-medium sm:text-[16px]/[19px] md:h-[60px] md:mt-[40px] md:text-[18px]/[22px]"
-                    onClick={handleExchangeCancel}
+                    onClick={() => handleExchangeCancel(exchange)}
                   >
                     취소하기
                   </ActionButton>

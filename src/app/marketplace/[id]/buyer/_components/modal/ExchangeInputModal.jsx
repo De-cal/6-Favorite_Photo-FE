@@ -62,7 +62,7 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const handleExchange = () => {
     exchangeRequest({
       articleId,
-      body: { requesterCardId: card.id, description },
+      body: { userPhotoCardId: card.id, description },
     });
     closeModal();
     document.body.style.overflow = "auto";
