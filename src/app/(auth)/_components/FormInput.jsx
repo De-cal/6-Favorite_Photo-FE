@@ -45,7 +45,11 @@ export default function FormInput({
   };
 
   const handleChange = (event) => {
-    const newValue = event.target.value;
+    let newValue = event.target.value;
+    if (id === "email") {
+      newValue = newValue.toLowerCase();
+    }
+
     setInputValue(newValue);
     const validationResult = validateInput(newValue);
     setCurrentIsValid(validationResult.isValid);

@@ -1,3 +1,4 @@
+// HeaderLayout.jsx
 "use client";
 
 import Image from "next/image";
@@ -17,7 +18,7 @@ export default function HeaderLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { openModal } = useModal();
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
 
   const path = usePathname();
 
@@ -82,58 +83,65 @@ export default function HeaderLayout() {
                 className="object-cover"
               />
             </Link>
-            {user ? (
-              <div className="flex justify-center items-center gap-[30px]">
-                <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
-                  {new Intl.NumberFormat().format(user.pointAmount)} P
-                </p>
-                <div>
-                  <Notification
-                    isNotificationModalOpen={isNotificationModalOpen}
-                    setIsNotificationModalOpen={setIsNotificationModalOpen}
-                    handleTabletAndDesktopModalClose={
-                      handleTabletAndDesktopModalClose
-                    }
-                  />
-                </div>
-                <div className="relative hidden sm:block">
-                  <button
-                    onClick={handleTabletAndDesktopModalOpen}
-                    className="font-baskinRobbins font-normal text-[18px]/[18px] tracking-[-3%] text-gray-200 cursor-pointer"
-                  >
-                    {user.nickname}
-                  </button>
-                  {isModalVisible && (
-                    <TabletAndDesktopProfileModal
-                      handleTabletAndDesktopModalClose={
-                        handleTabletAndDesktopModalClose
-                      }
-                    />
-                  )}
-                </div>
-                <div className="border-l-[1.5px] border-gray-400 h-[17px] hidden sm:block"></div>
-                <button
-                  onClick={logout}
-                  className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 hidden sm:block"
-                >
-                  로그아웃
-                </button>
-              </div>
+            {/* 로딩중일때는 유저정보는 빈공간으로 보여줌 */}
+            {isLoading ? (
+              <div className="flex justify-center items-center gap-[30px] opacity-0 pointer-events-none"></div>
             ) : (
-              <div className="flex justify-center items-center gap-[30px]">
-                <Link
-                  href="/login"
-                  className="font-medium text-[14px]/[17px] text-gray-200"
-                >
-                  로그인
-                </Link>
-                <Link
-                  href="/signup"
-                  className="font-medium text-[14px]/[17px] text-gray-200 hidden sm:block"
-                >
-                  회원가입
-                </Link>
-              </div>
+              <>
+                {user ? (
+                  <div className="flex justify-center items-center gap-[30px]">
+                    <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
+                      {new Intl.NumberFormat().format(user.pointAmount)} P
+                    </p>
+                    <div>
+                      <Notification
+                        isNotificationModalOpen={isNotificationModalOpen}
+                        setIsNotificationModalOpen={setIsNotificationModalOpen}
+                        handleTabletAndDesktopModalClose={
+                          handleTabletAndDesktopModalClose
+                        }
+                      />
+                    </div>
+                    <div className="relative hidden sm:block">
+                      <button
+                        onClick={handleTabletAndDesktopModalOpen}
+                        className="font-baskinRobbins font-normal text-[18px]/[18px] tracking-[-3%] text-gray-200 cursor-pointer"
+                      >
+                        {user.nickname}
+                      </button>
+                      {isModalVisible && (
+                        <TabletAndDesktopProfileModal
+                          handleTabletAndDesktopModalClose={
+                            handleTabletAndDesktopModalClose
+                          }
+                        />
+                      )}
+                    </div>
+                    <div className="border-l-[1.5px] border-gray-400 h-[17px] hidden sm:block"></div>
+                    <button
+                      onClick={logout}
+                      className="font-notoSans font-normal text-[14px]/[17px] text-gray-400 hidden sm:block cursor-pointer"
+                    >
+                      로그아웃
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center gap-[30px]">
+                    <Link
+                      href="/login"
+                      className="font-medium text-[14px]/[17px] text-gray-200"
+                    >
+                      로그인
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="font-medium text-[14px]/[17px] text-gray-200 hidden sm:block"
+                    >
+                      회원가입
+                    </Link>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

@@ -17,8 +17,8 @@ export default function ArticleGrid({
     if (user) {
       router.push(
         user.nickname === article.userPhotoCard.user.nickname
-          ? `/marketplace/sellers/${articleId}`
-          : `/marketplace/buyers/${articleId}`,
+          ? `/marketplace/${articleId}/seller`
+          : `/marketplace/${articleId}/buyer`,
       );
 
       console.log("아티클 작성자", article.userPhotoCard.user);
