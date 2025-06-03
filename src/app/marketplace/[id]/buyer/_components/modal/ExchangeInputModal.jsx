@@ -15,15 +15,38 @@ import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CommonModal from "@/components/common/CommonModal";
 import clsx from "clsx";
-import { motion, useMotionValue, useTransform } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 
 export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const [isModalUp, setIsModalUp] = useState(false);
+  const [isDragCloseModal, setIsDragCloseModal] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [description, setDescription] = useState("");
+
   const { id: articleId } = useParams();
   const { closeModal, openModal } = useModal();
   const queryClient = useQueryClient();
+
+  // 태블릿일 때만 드래그 디스 미스 활성화
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(min-width: 744px) and (max-width: 1479px)",
+    );
+
+    const handleMediaChange = (e) => {
+      setIsTablet(e.matches);
+      console.log("isTablet", isTablet);
+    };
+
+    setIsTablet(mediaQuery.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
 
   // 모달 열릴 때 올라오는 애니메이션
   useEffect(() => {
@@ -93,18 +116,30 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const y = useMotionValue(0);
   const constraintsRef = useRef(null);
 
+  // 일정 드래그 하게되면 모달 닫히기
   const handleDragEnd = () => {
-    // if (y.get() > 200) {
-    //   closeModal();
-    //   setIsModalOpen(true);
-    // }
+    if (y.get() > 100) {
+      setIsDragCloseModal(true);
+    }
   };
+
+  // 모달이 내려가고, 닫기
+  useEffect(() => {
+    if (isDragCloseModal) {
+      const timeout = setTimeout(() => {
+        closeModal();
+        setIsModalOpen(true);
+      }, 50);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isDragCloseModal]);
 
   return (
     <motion.div
-      // ref={constraintsRef}
-      drag="y"
-      dragConstraints={constraintsRef}
+      ref={constraintsRef}
+      drag={isTablet && "y"}
+      dragConstraints={{ top: 0, bottom: 300 }}
       dragMomentum={false}
       onDragEnd={handleDragEnd}
       style={{ y }}
@@ -112,6 +147,7 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
         isModalUp
           ? "sm:translate-y-0 md:translate-none"
           : "sm:translate-y-[100%] md:translate-none",
+        isDragCloseModal && "sm:translate-y-[100%] md:translate-none",
         "transition-transform duration-450 fixed inset-0 w-full overflow-y-auto pb-[20px] font-notoSans z-2 bg-black sm:w-full sm:max-w-[1480px] sm:px-[20px] sm:bg-gray-500 sm:fixed sm:top-auto md:static md:max-w-[1160px] md:pb-[60px] md:pt-[30px] md:px-[30px]",
       )}
     >
