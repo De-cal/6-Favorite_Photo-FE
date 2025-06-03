@@ -1,95 +1,64 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 import MarketplaceHeader from "./_components/marketplace/MarketplaceHeader";
 import ArticleGrid from "./_components/marketplace/ArticleGrid";
 import MobileSortAndFilter from "./_components/marketplace/MobileSortAndFilter";
 import MobileFilter from "../my-sell/_components/MobileFilter";
 import SelectPhotoCardsModal from "./_components/SelectPhotoCardsModal";
 import { getAllArticles } from "@/lib/api/article.api";
-
 import LoginNeed from "./_components/marketplace/LoginNeed";
 import MyCardSellBtn from "./_components/marketplace/MyCardSellBtn";
 import PhotoCardSkeleton from "../my-sell/_components/PhotoCardSkeleton";
 
+const LIMIT = 12;
+
 export default function MarketplacePage() {
   const [showFilter, setShowFilter] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [articles, setArticles] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [filterSettings, setFilterSettings] = useState(null);
   const [sortOption, setSortOption] = useState("낮은 가격순");
   const [sortOpen, setSortOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
-  const LIMIT = 12;
+  const { ref, inView } = useInView();
 
-  const getArticles = useCallback(async () => {
-    if (loading || !hasMore) return;
-    setLoading(true);
-    try {
-      const data = await getAllArticles(page, LIMIT, searchKeyWord);
-      if (data?.articles?.length) {
-        setArticles((prev) => {
-          const existingIds = new Set(prev.map((a) => a.id));
-          const newArticles = data.articles.filter(
-            (a) => !existingIds.has(a.id),
-          );
-          return [...prev, ...newArticles];
-        });
-        setHasMore(page < data.totalPages);
-      } else {
-        setHasMore(false);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["articles", searchKeyWord],
+    queryFn: ({ pageParam = 1 }) =>
+      getAllArticles(pageParam, LIMIT, searchKeyWord),
+    getNextPageParam: (lastPage) =>
+      lastPage.currentPage < lastPage.totalPages
+        ? lastPage.currentPage + 1
+        : undefined,
+  });
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
     }
-  }, [page, searchKeyWord, hasMore, loading]);
+  }, [inView, hasNextPage]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 100 &&
-        !loading &&
-        hasMore
-      ) {
-        setPage((prev) => prev + 1);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore]);
-
-  useEffect(() => {
-    setArticles([]);
-    setPage(1);
-    setHasMore(true);
+    refetch();
   }, [searchKeyWord]);
 
-  useEffect(() => {
-    getArticles();
-  }, [page, searchKeyWord]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 640) {
-        setShowFilter(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const allArticles = data?.pages.flatMap((page) => page.articles) ?? [];
 
   const handleSelectFilter = (selectedFilters) => {
     setFilterSettings(selectedFilters);
     setShowFilter(false);
   };
+
   return (
     <div className="relative">
       {showFilter && (
@@ -114,6 +83,7 @@ export default function MarketplacePage() {
           setSortOpen={setSortOpen}
           onRequireLogin={() => setLoginModalOpen(true)}
         />
+
         <MobileSortAndFilter
           sortOption={sortOption}
           setSortOption={setSortOption}
@@ -121,25 +91,30 @@ export default function MarketplacePage() {
           sortOpen={sortOpen}
           setSortOpen={setSortOpen}
         />
-        {/* 세빈님 스켈레톤 적용해놧는데 나중에 리액트쿼리로 바꾸시면
-        여기 isPending일때로 해주시면 됩니다 */}
-        {loading ? (
-          <PhotoCardSkeleton />
-        ) : (
+
+        {isLoading && <PhotoCardSkeleton />}
+
+        {!isLoading && (
           <ArticleGrid
-            articles={articles}
+            articles={allArticles}
             searchKeyWord={searchKeyWord}
             filterSettings={filterSettings}
             sortOption={sortOption}
             onRequireLogin={() => setLoginModalOpen(true)}
           />
         )}
+
+        <div ref={ref} className="h-10" />
+
+        {isFetchingNextPage && (
+          <div className="text-center py-4 text-gray-500">로딩 중...</div>
+        )}
       </div>
 
       {showFilter && (
         <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
           <MobileFilter
-            datas={articles}
+            datas={allArticles}
             onSelectFilter={handleSelectFilter}
             where="marketplace"
             close={() => setShowFilter(false)}
@@ -148,10 +123,6 @@ export default function MarketplacePage() {
       )}
 
       {isModalOpen && <SelectPhotoCardsModal setIsModalOpen={setIsModalOpen} />}
-
-      {loading && (
-        <div className="text-center py-4 text-gray-500">로딩 중...</div>
-      )}
 
       {!showFilter && !isModalOpen && (
         <MyCardSellBtn
@@ -163,10 +134,9 @@ export default function MarketplacePage() {
       {loginModalOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          onClick={() => setLoginModalOpen(false)} // 배경 클릭 시 닫힘
+          onClick={() => setLoginModalOpen(false)}
         >
           <div onClick={(e) => e.stopPropagation()}>
-            {/* 내부 클릭은 무시 */}
             <LoginNeed onClose={() => setLoginModalOpen(false)} />
           </div>
         </div>
