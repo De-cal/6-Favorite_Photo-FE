@@ -9,14 +9,7 @@ import TopSection from "./_components/TopSection";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 
 export default function MyGalleryCreatePage() {
-  const {
-    form,
-    error,
-    set,
-    handler,
-    isValid,
-    validate,
-  } = useCardCreateForm();
+  const { form, error, set, handler, isValid, validate } = useCardCreateForm();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,15 +91,18 @@ export default function MyGalleryCreatePage() {
           errorMessage={error.quantityError}
         />
 
-        <FileUploadInput 
-          file={form.file} 
-          setFile={set.setFile} 
+        <FileUploadInput
+          file={form.file}
+          setFile={set.setFile}
           onBlur={handler.handleFileBlur}
-          errorMessage={error.fileError} 
+          errorMessage={error.fileError}
         />
 
         <div className="flex flex-col gap-2.5 w-full mt-[25px] sm:mt-[50px] md:mt-[50px] h-[140px] md:h-[180px]">
-          <label htmlFor="description" className="block mb-1 font-bold text-[20px] text-white">
+          <label
+            htmlFor="description"
+            className="block mb-1 font-bold text-[20px] text-white"
+          >
             설명
           </label>
           <textarea
@@ -119,7 +115,9 @@ export default function MyGalleryCreatePage() {
             className="w-full border border-gray-300 rounded-xs  py-[18px] px-[20px] resize-none bg-black placeholder:text-gray-200 text-white"
           />
           {error.descriptionError && (
-            <p className="text-red text-sm font-semibold leading-6">{error.descriptionError}</p>
+            <p className="text-red text-sm font-semibold leading-6">
+              {error.descriptionError}
+            </p>
           )}
         </div>
 

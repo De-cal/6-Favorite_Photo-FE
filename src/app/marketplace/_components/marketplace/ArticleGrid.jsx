@@ -11,7 +11,6 @@ export default function ArticleGrid({
 }) {
   const router = useRouter();
   const { user } = useAuth();
-  console.log("getMe", user);
 
   const handleCardClick = async (articleId, article) => {
     if (user) {

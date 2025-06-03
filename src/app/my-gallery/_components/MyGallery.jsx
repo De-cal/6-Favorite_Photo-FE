@@ -8,7 +8,6 @@ import SortAndSearchSection from "../_components/SortAndSearchSection";
 import PhotoCardSection from "../_components/PhotoCardSection";
 import PageNation from "../_components/PageNation";
 import { getAllCards } from "@/lib/api/card.api";
-import Loading from "@/components/common/Loading";
 import { useAuth } from "@/providers/AuthProvider";
 
 import { useModal } from "@/providers/ModalProvider";
@@ -19,10 +18,9 @@ import PhotoCardSkeleton from "@/app/my-sell/_components/PhotoCardSkeleton";
 import PageNationSkeleton from "@/app/my-sell/_components/PageNationSkeleton";
 
 export default function MyGallery() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { openModal, closeModal } = useModal();
   const [page, setPage] = useState(1);
   const [searchFilter, setSearchFilter] = useState(null);
   const pageSize = 15;
@@ -60,15 +58,21 @@ export default function MyGallery() {
     router.push(`?${params.toString()}`);
     setPage(1);
   };
+  // 1. 인증 정보 로딩 중일 때는 로딩 스켈레톤을 보여줍니다.
+  if (isLoading) {
+    return (
+      <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
+        <RankSectionSkeleton />
+        <SortAndSearchSectionSkeleton />
+        <PhotoCardSkeleton /> {/* 또는 CardSkeleton으로 변경 */}
+        <PageNationSkeleton />
+      </div>
+    );
+  }
 
   if (!user) return <LoginNeed />;
-  if (!searchFilter || isPending) return <Loading />;
   if (isError) return <div>에러 발생</div>;
 
-  const cards = data.list;
-  const totalCount = data.totalCount.totalCount;
-  const ranks = data.rankCounts;
-  console.log("유저데이터", user);
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
       <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
@@ -78,8 +82,8 @@ export default function MyGallery() {
           <RankSectionSkeleton />
         ) : (
           <RankSection
-            totalCount={totalCount}
-            rankCounts={ranks}
+            totalCount={data.totalCount.totalCount}
+            rankCounts={data.rankCounts}
             user={user.nickname}
           />
         )}
@@ -96,7 +100,7 @@ export default function MyGallery() {
         {isPending ? (
           <PhotoCardSkeleton />
         ) : (
-          <PhotoCardSection dataLists={cards} />
+          <PhotoCardSection dataLists={data.list} />
         )}
 
         {isPending ? (
