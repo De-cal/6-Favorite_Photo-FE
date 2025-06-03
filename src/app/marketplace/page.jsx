@@ -26,15 +26,12 @@ export default function MarketplacePage() {
 
   const LIMIT = 12;
 
-  //동일한 값이면 재사용
   const getArticles = useCallback(async () => {
-    //요청중이거나 더 남아있지 않으면 종료
     if (loading || !hasMore) return;
     setLoading(true);
     try {
       const data = await getAllArticles(page, LIMIT, searchKeyWord);
       if (data?.articles?.length) {
-        //데이터의 article이 하나라도 있으면 진행
         setArticles((prev) => {
           const existingIds = new Set(prev.map((a) => a.id));
           const newArticles = data.articles.filter(
@@ -68,19 +65,16 @@ export default function MarketplacePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading, hasMore]);
 
-  //검색어가 바뀔때 각 상태 값을 초기화
   useEffect(() => {
     setArticles([]);
     setPage(1);
     setHasMore(true);
   }, [searchKeyWord]);
 
-  //검색이나 페이지가 바뀔때 데이터 불러오기
   useEffect(() => {
     getArticles();
   }, [page, searchKeyWord]);
 
-  // 화면 크기가 sm 이상으로 커질 때 showFilter 닫기
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 640) {
@@ -95,11 +89,8 @@ export default function MarketplacePage() {
     setFilterSettings(selectedFilters);
     setShowFilter(false);
   };
-  console.log("데이터", articles);
-
   return (
     <div className="relative">
-      {/* 오버레이 직접 렌더링 */}
       {showFilter && (
         <div
           className="fixed inset-0 z-40 bg-black/60"

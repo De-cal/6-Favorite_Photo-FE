@@ -7,9 +7,9 @@ export default function MyCardSellBtn({ onRequireLogin, setIsModalOpen }) {
   const handleCardClick = async () => {
     console.log("getMe", user);
     if (user) {
-      setIsModalOpen(true); // 로그인 되어 있으면 SelectPhotoCardsModal 열기
+      setIsModalOpen(true);
     } else {
-      onRequireLogin?.(); // 로그인 필요 시 로그인 모달 열기
+      onRequireLogin?.();
     }
   };
 
