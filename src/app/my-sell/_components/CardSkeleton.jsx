@@ -6,7 +6,7 @@ function CardSkeleton() {
     >
       <div className="w-[135px] h-[85px] sm:w-[300px] sm:h-[210px] md:w-[390px] md:h-[240px] flex items-center justify-center  mb-3 bg-gray-300 rounded-sm dark:bg-gray-700 sm:mb-6 md:mb-10 ">
         <svg
-          className="w-10 h-10 text-gray-200 dark:text-gray-600"
+          className="w-10 h-10 text-gray-300 dark:text-gray-600"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -17,24 +17,24 @@ function CardSkeleton() {
         </svg>
       </div>
 
-      <div className="h-2.5 sm:h-4.5 md:h-7 bg-gray-200 rounded-full dark:bg-gray-700 w-20 sm:w-30 md:w-45 mb-3 sm:mb-7 md:mb-10"></div>
+      <div className="h-2.5 sm:h-4.5 md:h-7 bg-gray-300 rounded-full dark:bg-gray-700 w-20 sm:w-30 md:w-45 mb-3 sm:mb-7 md:mb-10"></div>
       <div className="flex flex-row justify-between  border-b-1 sm:border-b-2  sm:pb-3 md:pb-5 mb-2 sm:mb-7 md:mb-10">
         <div className="flex flex-row justify-center gap-1 sm:gap-2 md:gap-3 ">
-          <div className="h-[7px] sm:h-3 md:h-4.5 bg-gray-200 rounded-full w-5 sm:w-7  md:w-10 dark:bg-gray-700 mb-2.5 border-r-1 pr-0.5"></div>
-          <div className="h-[7px] sm:h-3 md:h-4.5 bg-gray-200 rounded-full w-5 sm:w-7  md:w-10 dark:bg-gray-700 mb-2.5"></div>
+          <div className="h-[7px] sm:h-3 md:h-4.5 bg-gray-300 rounded-full w-5 sm:w-7  md:w-10 dark:bg-gray-700 mb-2.5 border-r-1 pr-0.5"></div>
+          <div className="h-[7px] sm:h-3 md:h-4.5 bg-gray-300 rounded-full w-5 sm:w-7  md:w-10 dark:bg-gray-700 mb-2.5"></div>
         </div>
-        <div className="h-[7px] sm:h-3 md:h-4.5 bg-gray-200 rounded-full w-6 sm:w-10 md:w-15 dark:bg-gray-700"></div>
+        <div className="h-[7px] sm:h-3 md:h-4.5 bg-gray-300 rounded-full w-6 sm:w-10 md:w-15 dark:bg-gray-700"></div>
       </div>
 
       <div className="flex flex-row justify-between items-center sm:mt-4 w-full">
         <div className="flex flex-col w-full sm:gap-2">
           <div className="flex flex-row justify-between w-full ">
-            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-200 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
-            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-200 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
+            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-300 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
+            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-300 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
           </div>
           <div className="flex flex-row justify-between ">
-            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-200 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
-            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-200 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
+            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-300 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
+            <div className="h-[7px] sm:h-3.5 md:h-4.5 bg-gray-300 rounded-full dark:bg-gray-700 w-6 sm:w-8 md:w-12 mb-2"></div>
           </div>
         </div>
       </div>

@@ -96,8 +96,7 @@ export default function MarketplacePage() {
     setFilterSettings(selectedFilters);
     setShowFilter(false);
   };
-  console.log("데이터", articles);
-
+  console.log(filterSettings);
   return (
     <div className="relative">
       {/* 오버레이 직접 렌더링 */}
