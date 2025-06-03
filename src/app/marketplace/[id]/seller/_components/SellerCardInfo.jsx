@@ -12,7 +12,7 @@ import { useModal } from "@/providers/ModalProvider";
 import SellPhotoCardDetailModal from "@/app/marketplace/_components/SellPhotoCardDetailModal";
 import { genreChange } from "@/lib/utils/genreChange";
 
-export default function SellerCardInfo({ cardArticle, onUpdate }) {
+export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -51,8 +51,10 @@ export default function SellerCardInfo({ cardArticle, onUpdate }) {
       setIsDeleting(true);
       await deleteArticle(cardArticle.id);
 
-      // 삭제 성공 시 마켓플레이스로 이동
-      router.push("/marketplace");
+      // 삭제 성공 시 부모 컴포넌트에 알림
+      if (onDelete) {
+        onDelete();
+      }
 
       // 성공 메시지 표시 (토스트 등)
       alert("판매가 취소되었습니다.");
