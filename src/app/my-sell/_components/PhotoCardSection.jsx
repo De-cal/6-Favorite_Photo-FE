@@ -1,6 +1,8 @@
 import Card from "@/components/common/Card";
 import Link from "next/link";
 import React from "react";
+import Card2 from "./CardSkeleton";
+import CardSkeleton from "./CardSkeleton";
 
 export default function PhotoCardSection({ dataLists }) {
   return dataLists.length === 0 ? (
