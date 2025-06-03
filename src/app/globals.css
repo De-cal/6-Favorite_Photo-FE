@@ -23,6 +23,9 @@
   /* 폰트 정의 */
   --font-baskinRobbins: var(--font-baskinRobbins);
   --font-notoSans: var(--font-notoSans);
+
+  /* 배경 이미지 정의  */
+  --bg-img-landing-hero: url("../assets/images/img-hero-bg.png");
 }
 
 html {
@@ -107,4 +110,11 @@ html {
   .animate-custom-pulse {
     animation: custom-pulse 1.5s ease-in-out infinite;
   }
+}
+
+.bg-landing-hero {
+  background-image: var(--bg-img-landing-hero);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
