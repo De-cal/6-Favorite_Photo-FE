@@ -12,6 +12,7 @@ import { getAllArticles } from "@/lib/api/article.api";
 import LoginNeed from "./_components/marketplace/LoginNeed";
 import MyCardSellBtn from "./_components/marketplace/MyCardSellBtn";
 import PhotoCardSkeleton from "../my-sell/_components/PhotoCardSkeleton";
+import useCloseFilterOnResize from "@/hooks/useCloseFilterOnResize";
 
 const LIMIT = 12;
 
@@ -53,6 +54,8 @@ export default function MarketplacePage() {
   }, [searchKeyWord]);
 
   const allArticles = data?.pages.flatMap((page) => page.articles) ?? [];
+
+  useCloseFilterOnResize(setShowFilter);
 
   const handleSelectFilter = (selectedFilters) => {
     setFilterSettings(selectedFilters);
