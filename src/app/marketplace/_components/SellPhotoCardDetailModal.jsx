@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
 import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
@@ -10,6 +10,8 @@ import { postArticle, patchArticle } from "@/lib/api/article.api";
 import CommonModal from "@/components/common/CommonModal";
 import { useModal } from "@/providers/ModalProvider";
 import { getImageUrl } from '@/lib/utils/imageUrl'
+import { motion, useMotionValue } from "motion/react";
+import clsx from "clsx";
 
 function SellPhotoCardDetailModal({
   card = {
@@ -41,13 +43,61 @@ function SellPhotoCardDetailModal({
   const [price, setPrice] = useState(article.price);
   const [sellQuantity, setSellQuantity] = useState(article.totalQuantity);
   const [result, setResult] = useState("");
+  const [isModalUp, setIsModalUp] = useState(false);
+  const [isDragCloseModal, setIsDragCloseModal] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
+  const y = useMotionValue(0);
+  const constraintsRef = useRef(null);
+
+  // 모달 열릴 때 올라오는 애니메이션
   useEffect(() => {
+    setIsModalUp(true);
     document.body.style.overflow = "hidden";
+  }, []);
+
+  // 태블릿일 때만 드래그 디스 미스 활성화
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(min-width: 744px) and (max-width: 1479px)",
+    );
+
+    const handleMediaChange = (e) => {
+      setIsTablet(e.matches);
+    };
+
+    setIsTablet(mediaQuery.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
     return () => {
-      document.body.style.overflow = "";
+      mediaQuery.removeEventListener("change", handleMediaChange);
     };
   }, []);
+
+  // 정해진 위치만큼 드래그 하게되면 모달 자동 닫힘
+  const handleDragEnd = () => {
+    if (y.get() > 100) {
+      setIsDragCloseModal(true);
+    }
+  };
+
+  // 모달 내려가는 애니메이션 후, 닫기
+  useEffect(() => {
+    if (isDragCloseModal) {
+      const timeout = setTimeout(() => {
+        closeModal();
+
+        if (type === "sell") {
+          setIsModalOpen(true);
+        } else {
+          document.body.style.overflow = "auto";
+        }
+      }, 50);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isDragCloseModal]);
 
   const isDisabled =
     !price ||
@@ -89,7 +139,21 @@ function SellPhotoCardDetailModal({
   };
 
   return (
-    <div className="max-h-[1000px] h-screen md:w-[1160px] w-full bg-black sm:bg-gray-500 px-[15px] flex flex-col items-center pb-[50px] pt-[20px] overflow-hidden">
+    <motion.div
+      ref={constraintsRef}
+      drag={isTablet && "y"}
+      dragConstraints={{ top: 0, bottom: 300 }}
+      dragMomentum={false}
+      onDragEnd={handleDragEnd}
+      style={{ y }}
+      className={clsx(
+        isModalUp
+          ? "sm:translate-y-0 md:translate-none"
+          : "sm:translate-y-[100%] md:translate-none",
+        isDragCloseModal && "sm:translate-y-[100%] md:translate-none",
+        "transition-transform duration-450 max-h-[1000px] h-screen md:w-[1160px] w-full bg-black sm:bg-gray-500 px-[15px] flex flex-col items-center pb-[50px] pt-[20px] overflow-hidden",
+      )}
+    >
       <MobileHeader
         title={type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
         onClick={handleClickCloseModal}
@@ -175,7 +239,7 @@ function SellPhotoCardDetailModal({
           />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
