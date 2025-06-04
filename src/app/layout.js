@@ -6,7 +6,7 @@ import BuyerProvider from "@/contexts/BuyerContext";
 import SurprisePointModal from "@/components/modal/randomPoint/SurprisePointModal";
 
 const baskinRobbins = localFont({
-  src: "../assets/fonts/br-font-bold.woff2",
+  src: "../assets/fonts/subset-br-font-bold.woff2",
   weight: "100 900",
   variable: "--font-baskinRobbins",
 });

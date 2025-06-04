@@ -8,7 +8,7 @@ import ActionButton from "@/components/ui/buttons/ActionButton";
 import ExchangeModal from "../[id]/_components/ExchangeModal";
 import { useModal } from "@/providers/ModalProvider";
 import { getImageUrl } from "@/lib/utils/imageUrl";
-import example from "@/assets/images/img-card-placeholder-1.svg";
+import example from "@/assets/images/img-card-placeholder-1.webp";
 
 export default function ExchangeCard({ type, cardArticle }) {
   const { openModal } = useModal();

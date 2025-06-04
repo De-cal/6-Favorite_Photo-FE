@@ -1,5 +1,5 @@
-import heroImg from "@/assets/images/img-hero-md.png";
-import logoImg from "@/assets/images/img-logo.png";
+import heroImg from "@/assets/images/img-hero-md.webp";
+import logoImg from "@/assets/images/img-logo.webp";
 import Link from "next/link";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Image from "next/image";

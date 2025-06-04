@@ -1,7 +1,7 @@
 import React from "react";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Link from "next/link";
-import ctaImg from "@/assets/images/img-cta.png";
+import ctaImg from "@/assets/images/img-cta.webp";
 import Image from "next/image";
 
 export default function LandingCTA() {
