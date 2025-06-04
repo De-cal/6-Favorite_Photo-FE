@@ -7,6 +7,7 @@ import mobileClosebt from "../../assets/icons/ic-back.svg";
 import { useModal } from "@/providers/ModalProvider";
 import { useRouter } from "next/navigation";
 import GradeDetail from "./GradeDetail";
+import { useAuth } from "@/providers/AuthProvider";
 
 function CommonModal({ type, result, data }) {
   // type => 판매 등록 , 교환 제시, 구매, 포토카드 생성 (띄어쓰기 그대로 4가지)
@@ -40,6 +41,7 @@ function CommonModal({ type, result, data }) {
     return "프롭스 타입이랑 리절트 다시 체크 부탁드려요"; // fallback
   };
 
+  const { getUser } = useAuth();
   const { closeModal } = useModal();
   return (
     <div className="fixed w-full h-screen inset-0 flex sm:items-center justify-center bg-black text-white">
@@ -49,6 +51,9 @@ function CommonModal({ type, result, data }) {
           <button
             className="absolute left-5 top-1/2 -translate-y-1/2 sm:hidden cursor-pointer"
             onClick={() => {
+              if (type === "구매" && result === "성공") {
+                getUser();
+              }
               closeModal();
               document.body.style.overflow = "auto";
             }}
@@ -65,6 +70,9 @@ function CommonModal({ type, result, data }) {
           <div className="hidden sm:flex justify-end items-start w-[90%] md:w-full mb-20 ">
             <button
               onClick={() => {
+                if (type === "구매" && result === "성공") {
+                  getUser();
+                }
                 closeModal();
                 document.body.style.overflow = "auto";
               }}
@@ -147,7 +155,9 @@ function CommonModal({ type, result, data }) {
             <button
               className="w-full max-w-[440px] h-[55px] sm:h-[60px] py-[18px] border border-white font-medium text-[16px]/[19px] text-white px-3 mt-5 sm:mt-6.5 md:text-[18px]/[22px] cursor-pointer"
               onClick={() => {
-                closeModal();
+                if (type === "구매" && result === "성공") {
+                  getUser();
+                }
                 document.body.style.overflow = "auto";
                 if (type === "포토카드 생성") router.push("/my-gallery");
                 else if (type === "교환 제시" || type === "판매 등록") {

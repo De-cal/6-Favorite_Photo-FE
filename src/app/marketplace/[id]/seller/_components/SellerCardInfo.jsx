@@ -30,6 +30,7 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
             creator: {
               nickname: cardArticle.user?.nickname,
             },
+            imgUrl: cardArticle.photoCard?.imgUrl,
           },
           quantity: cardArticle.remainingQuantity,
         }}
@@ -45,6 +46,8 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
       />,
     );
   };
+
+  console.log(cardArticle.photoCard);
 
   const handleDelete = async () => {
     try {
