@@ -107,3 +107,19 @@ export const createNotification5 = async () => {
     throw error;
   }
 };
+
+// 판매 중단 알림 테스트용 API 추가
+export const createNotification6 = async () => {
+  try {
+    const res = await cookieFetch("/notifications/create-6", {
+      method: "GET",
+    });
+    if (!res) {
+      throw new Error(data.message || "알 수 없는 서버 에러가 발생했습니다.");
+    }
+    return res;
+  } catch (error) {
+    console.error("판매 중단 알림을 생성하는데 실패했습니다:", error);
+    throw error;
+  }
+};

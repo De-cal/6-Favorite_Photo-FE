@@ -1,15 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { genreChange } from "@/lib/utils/genreChange";
 import GradeDetail from "@/components/common/GradeDetail";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import ExchangeModal from "../[id]/_components/ExchangeModal";
 import { useModal } from "@/providers/ModalProvider";
+import { getImageUrl } from "@/lib/utils/imageUrl";
+import example from "@/assets/images/img-card-placeholder-1.svg";
 
 export default function ExchangeCard({ type, cardArticle }) {
   const { openModal } = useModal();
+
+  // 각 교환 카드의 이미지 상태를 관리하는 state
+  const [imageSources, setImageSources] = useState({});
 
   // 포토카드 교환 목록 데이터 구조분해
   const exchanges = cardArticle?.exchange?.map((ex) => ({
@@ -23,6 +28,25 @@ export default function ExchangeCard({ type, cardArticle }) {
     genre: ex.requesterCard?.photoCard?.genre,
     imgUrl: ex.requesterCard?.photoCard?.imgUrl,
   }));
+
+  // 이미지 소스 가져오기 함수
+  const getImageSource = (exchangeId, imgUrl) => {
+    // 이미 설정된 이미지가 있으면 사용
+    if (imageSources[exchangeId]) {
+      return imageSources[exchangeId];
+    }
+    
+    // imgUrl이 있으면 getImageUrl 처리, 없으면 기본 이미지
+    return imgUrl ? getImageUrl(imgUrl) : example;
+  };
+
+  // 이미지 오류 처리 함수
+  const handleImageError = (exchangeId) => {
+    setImageSources(prev => ({
+      ...prev,
+      [exchangeId]: example
+    }));
+  };
 
   // 교환 취소하기
   const handleExchangeCancel = (exchange) => {
@@ -72,15 +96,16 @@ export default function ExchangeCard({ type, cardArticle }) {
         <div className="flex justify-start items-center w-full gap-[5px] sm:gap-[20px] md:gap-[80px]">
           {exchanges?.map((exchange, i) => (
             <div
-              key={`${exchange.id}_${i}`}
+              key={`${exchange.exchangeId}_${i}`}
               className="bg-gray-500 border-1 border-white/10 flex flex-col items-center justify-start font-light md:w-[440px] md:max-h-[626px] md:p-[40px] w-[170px] h-auto p-[10px] text-[10px] sm:w-[342px] sm:max-h-[561px] sm:p-[20px] sm:text-[16px]"
             >
               <div className="relative w-[150px] h-[112px] sm:w-[302px] sm:h-[226px] md:w-[360px] md:h-[270px] mb-[10px] sm:mb-[25px]">
                 <Image
-                  src={exchange.imgUrl}
+                  src={getImageSource(exchange.exchangeId, exchange.imgUrl)}
                   alt={exchange.title}
                   fill
                   className="object-cover"
+                  onError={() => handleImageError(exchange.exchangeId)}
                 />
               </div>
               <div className="w-full flex flex-col text-[10px] sm:text-[16px]">
