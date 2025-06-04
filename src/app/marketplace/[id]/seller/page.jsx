@@ -134,7 +134,9 @@ export default function SellerPage() {
                         nickname:
                           article.userPhotoCard?.photoCard?.creator?.nickname,
                       },
+                      imgUrl: imgSrc,
                     },
+
                     user: {
                       nickname: article.userPhotoCard?.user?.nickname,
                     },
