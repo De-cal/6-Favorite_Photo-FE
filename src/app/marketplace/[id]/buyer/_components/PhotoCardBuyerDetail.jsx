@@ -9,6 +9,7 @@ import GradeDetail from "@/components/common/GradeDetail";
 import { useModal } from "@/providers/ModalProvider";
 import BuyPhotoCardModal from "./modal/BuyPhotoCardModal";
 import { useBuyer } from "@/contexts/BuyerContext";
+import { getImageUrl } from "@/lib/utils/imageUrl";
 
 export default function PhotoCardBuyerDetail() {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
@@ -83,7 +84,12 @@ export default function PhotoCardBuyerDetail() {
       </div>
       <div className="flex flex-col justify-center items-start gap-y-[20px] sm:flex-row sm:gap-[20px] md:gap-[80px]">
         <div className="relative w-[345px] min-h-[258.75px] max-w-[960px] max-h-[720px] aspect-[345/258.75] mt-[26px] sm:w-full sm:min-w-[342px] sm:mt-[48px] md:mt-[70px]">
-          <Image src={imgUrl} alt={title} fill className="object-cover" />
+          <Image
+            src={getImageUrl(imgUrl)}
+            alt={title}
+            fill
+            className="object-cover"
+          />
         </div>
         <div className="max-w-[440px] sm:min-w-[342px] sm:mt-[48px] md:mt-[70px] w-full">
           <div className="flex justify-between items-center pb-[30px] border-b-[1px] border-gray-400">
