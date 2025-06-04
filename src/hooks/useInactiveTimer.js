@@ -4,10 +4,7 @@ import { useEffect, useCallback, useRef } from 'react';
 import { encryptData, decryptData } from '@/lib/utils/encryption';
 
 // 비활성 기준 시간 (20분)
-// const INACTIVE_THRESHOLD = 20 * 60 * 1000;
-
-// 비활성 기준 시간 (테스트용 5초)
-const INACTIVE_THRESHOLD = 5 * 1000;
+const INACTIVE_THRESHOLD = 20 * 60 * 1000
 
 const LAST_ACTIVE_TIME_KEY = process.env.NEXT_PUBLIC_LAST_ACTIVE_TIME_KEY;
 const events = ['mousemove', 'keypress', 'scroll', 'click']; // 유저 활동 이벤트들

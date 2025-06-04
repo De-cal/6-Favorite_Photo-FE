@@ -6,8 +6,7 @@ import { encryptData, decryptData } from '@/lib/utils/encryption';
 const POINT_TIMER_KEY = process.env.NEXT_PUBLIC_POINT_TIMER_KEY;
 const POINT_OPPORTUNITY_KEY = process.env.NEXT_PUBLIC_POINT_OPPORTUNITY_KEY;
 
-// const ONE_HOUR = 60 * 60 * 1000; // 1시간
-const ONE_HOUR = 15 * 1000; // 테스트용 15초
+const ONE_HOUR = 60 * 60 * 1000; // 1시간
 
 function useRandomPointTimer() {
   const [timeLeft, setTimeLeft] = useState(0);
