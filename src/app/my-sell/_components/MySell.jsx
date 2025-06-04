@@ -58,7 +58,7 @@ export default function MySell() {
             ? false
             : undefined,
       }),
-    // enabled: !!searchFilter && !!user, // 필터 초기화될 때까지 API 호출 막음
+    enabled: !!searchFilter && !!user, // 필터 초기화될 때까지 API 호출 막음
   });
 
   // 1. 인증 정보 로딩 중일 때는 로딩 스켈레톤을 보여줍니다.
