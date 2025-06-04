@@ -38,13 +38,13 @@ export default function LoginNeed({ onClose }) {
           <p className="mt-[3px] font-noto font-normal text-[14px] md:text-[16px] leading-[100%] tracking-[0%] text-center text-gray-300">
             다양한 서비스를 편리하게 이용하실 수 있습니다.
           </p>
-          <div className="cursor-pointer mt-[40px] md:mt-[60px] w-[120px] sm:w-[140px] h-[55px] rounded-[2px] bg-[#EFFF04] flex justify-center items-center">
-            <Link href="/login">
+          <Link href="/login">
+            <div className="cursor-pointer mt-[40px] md:mt-[60px] w-[120px] sm:w-[140px] h-[55px] rounded-[2px] bg-[#EFFF04] flex justify-center items-center">
               <p className="font-[700] text-[16px] leading-[100%] tracking-[0%] text-black text-center">
                 확인
               </p>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
