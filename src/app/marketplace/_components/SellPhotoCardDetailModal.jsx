@@ -9,6 +9,7 @@ import MobileHeader from "@/components/common/MobileHeader";
 import { postArticle, patchArticle } from "@/lib/api/article.api";
 import CommonModal from "@/components/common/CommonModal";
 import { useModal } from "@/providers/ModalProvider";
+import { getImageUrl } from '@/lib/utils/imageUrl'
 
 function SellPhotoCardDetailModal({
   card = {
@@ -117,8 +118,10 @@ function SellPhotoCardDetailModal({
           </div>
           <div className="mt-[26px] sm:mt-[48px] flex flex-col items-center sm:flex-row gap-[20px] md:gap-[40px] sm:justify-center sm:items-start w-full mb-[120px] sm:mb-[80px]">
             <Image
-              src={example}
+              src={getImageUrl(card.photoCard.imgUrl)} 
               alt="photocard"
+              width={isExchange ? 302 : 150}
+              height={isExchange ? 226 : 112}
               className="w-[345px] sm:flex-1"
             />
             <SellPhotoDetail

@@ -79,8 +79,8 @@ function Card({
         <Image
           src={getImageUrl(card.photoCard.imgUrl)} 
           alt="photocard"
-          width={isExchange ? 302 : 150} // 기본 width
-          height={isExchange ? 226 : 112} // 기본 height
+          width={isExchange ? 302 : 150}
+          height={isExchange ? 226 : 112}
           className={clsx(
             isSoldout && "brightness-50",
             "object-cover",

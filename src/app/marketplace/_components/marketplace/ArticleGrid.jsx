@@ -66,7 +66,7 @@ export default function ArticleGrid({
                 title: article.userPhotoCard.photoCard.title,
                 rank: article.userPhotoCard.photoCard.rank,
                 genre: article.userPhotoCard.photoCard.genre,
-                imgURL: article.userPhotoCard.photoCard.imgUrl,
+                imgUrl: article.userPhotoCard.photoCard.imgUrl,
                 creator: {
                   nickname: article.userPhotoCard.photoCard.creator.nickname,
                 },
