@@ -1,13 +1,13 @@
 import React from "react";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Link from "next/link";
-import ctaImg from "@/assets/images/img-landing-cta.avif";
+import ctaImg from "@/assets/images/img-cta.png";
 import Image from "next/image";
 
 export default function LandingCTA() {
   return (
     <div>
-      <section className="relative flex flex-col items-center justify-center w-full h-[390px] sm:h-[667px] md:h-[900px]">
+      <section className="relative flex flex-col items-center justify-center w-full h-[421px] sm:h-[620px] md:h-[957px]">
         <div className="flex flex-col items-center justify-center">
           {/* 이미지 */}
           <div className="relative w-[78px] h-[114px] sm:w-[130px] sm:h-[150px]">

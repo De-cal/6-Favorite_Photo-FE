@@ -69,11 +69,11 @@ export default function LandingPage() {
       </div> */}
 
       {/* 랜딩페이지 전체 */}
-      <div className="flex flex-col items-center justify-center w-full max-w-[1920px] overflow-x-hidden">
+      <div className="max-w-[744px] mx-auto overflow-x-hidden sm:max-w-[1480px] md:max-w-full">
         <LandingHero />
         <LandingFeatFirst />
-        {/* <LandingFeatSecond />
-        <LandingFeatThird /> */}
+        <LandingFeatSecond />
+        <LandingFeatThird />
         <LandingCTA />
       </div>
     </>

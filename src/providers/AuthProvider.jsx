@@ -9,6 +9,7 @@ const AuthContext = createContext({
   signUp: () => {},
   getUser: () => {},
   isLoading: true,
+  refreshUser: () => {},
 });
 
 export const useAuth = () => {
@@ -51,13 +52,24 @@ export default function AuthProvider({ children }) {
     console.log("로그아웃");
   };
 
+  const refreshUser = async () => {
+    try {
+      const updatedUser = await getUser(); // getUser 함수 재사용
+      return updatedUser;
+    } catch (error) {
+      console.error("사용자 정보 새로고침 실패:", error);
+      return null;
+    }
+  };
+
+
   useEffect(() => {
     getUser();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, signUp, getUser, isLoading }}
+      value={{ user, login, logout, signUp, getUser, isLoading, refreshUser }}
     >
       {children}
     </AuthContext.Provider>

@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react";
 import ic_alarm_default from "@/assets/icons/ic-alarm-default.svg";
 import ic_alarm_active from "@/assets/icons/ic-alarm-active.svg";
-import NotificationsModal from "./NotificationsModal";
 import Image from "next/image";
-import NotificationsModalMobile from "./NotificationsModalMobile";
 import { useModal } from "@/providers/ModalProvider";
-import { getMyNotifications } from "@/lib/api/notification.api";
+import NotificationsModal from "./NotificationsModal";
+import NotificationsModalMobile from "./NotificationsModalMobile";
 import { useQuery } from "@tanstack/react-query";
+import { getMyNotifications } from "@/lib/api/notification.api";
+import { usePathname } from "next/navigation";
 
 export default function Notification({
   isNotificationModalOpen,
@@ -16,29 +17,27 @@ export default function Notification({
   handleTabletAndDesktopModalClose,
 }) {
   const [isMobile, setIsMobile] = useState(false);
-
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
+  const pathname = usePathname();
 
   const {
-    data: notificationData,
-    isLoading,
-    refetch: refetchNotifications,
+    data,
+    refetch: refetchCount,
   } = useQuery({
-    queryKey: ["notifications"],
-    queryFn: () => getMyNotifications(),
-    staleTime: 1000,
-    cacheTime: 5 * 60 * 1000,
+    queryKey: ["notificationsCount"],
+    queryFn: () => getMyNotifications({ pageParam: 0, limit: 1 }),
+    staleTime: 1000 * 60,
   });
 
-  // 알림 모달 토글.
+  const notReadCount = data?.unreadCount || 0;
+
   const handleNotificationModal = () => {
     setIsNotificationModalOpen(!isNotificationModalOpen);
     handleTabletAndDesktopModalClose(false);
   };
 
-  // 모바일 프로필 모달 열기
   const handleMobileModalOpen = () => {
-    openModal(<NotificationsModalMobile notifications={notifications} />);
+    openModal(<NotificationsModalMobile refetchNotificationCount={refetchCount} />);
     setIsNotificationModalOpen(true);
   };
 
@@ -46,26 +45,27 @@ export default function Notification({
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 744);
     };
-
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
-
-    return () => {
-      window.removeEventListener("resize", checkIsMobile);
-    };
+    return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="relative w-[22px] h-[22px] sm:w-[24px] sm:h-[24px] cursor-pointer">
-        <Image src={ic_alarm_default} alt="알림" fill />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (isMobile && isNotificationModalOpen) {
+      setIsNotificationModalOpen(false); 
+    }
+  }, [isMobile, isNotificationModalOpen]);
 
-  const notifications = notificationData.notifications;
-  const notReadCount = notificationData.unreadCount;
-  console.log(notReadCount);
+  useEffect(() => {
+    if (!isMobile) {
+      closeModal(); 
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    setIsNotificationModalOpen(false);
+    closeModal();
+  }, [pathname]);
 
   return (
     <div className="relative">
@@ -80,17 +80,12 @@ export default function Notification({
         />
       </button>
 
-      {isNotificationModalOpen && (
-        <>
-          <div className="hidden sm:block absolute right-0 top-full w-[300px] h-auto z-50">
-            <div className="flex flex-col p-4">
-              <NotificationsModal
-                notifications={notifications}
-                refetchNotifications={refetchNotifications}
-              />
-            </div>
+      {!isMobile && isNotificationModalOpen && (
+        <div className="hidden sm:block absolute right-0 top-full w-[300px] h-auto z-50">
+          <div className="flex flex-col">
+            <NotificationsModal refetchNotificationCount={refetchCount} />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

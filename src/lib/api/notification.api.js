@@ -1,9 +1,9 @@
 import { cookieFetch } from "./fetchClient.api";
 
 // 알림 가져오기 api.
-export const getMyNotifications = async () => {
+export const getMyNotifications = async ({ pageParam  = 0, limit = 10 }) => {
   try {
-    const res = await cookieFetch("/notifications", {
+    const res = await cookieFetch(`/notifications?page=${pageParam }&limit=${limit}`, {
       method: "GET",
     });
     if (!res) {
