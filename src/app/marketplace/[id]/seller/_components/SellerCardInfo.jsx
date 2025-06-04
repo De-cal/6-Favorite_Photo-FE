@@ -19,7 +19,6 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
   const { openModal } = useModal();
 
   const handleEdit = () => {
-    console.log(cardArticle);
     openModal(
       <SellPhotoCardDetailModal
         card={{
@@ -46,8 +45,6 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
       />,
     );
   };
-
-  console.log(cardArticle.photoCard);
 
   const handleDelete = async () => {
     try {
