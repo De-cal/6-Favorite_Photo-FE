@@ -5,7 +5,7 @@ export default function PhotoCardSkeleton() {
   const dummyArray = new Array(6).fill(0); // 카드 6개 분량
 
   return (
-    <section className="grid grid-cols-2 md:gap-y-20 md:grid-cols-3 gap-4 w-full md:max-w-[1480px] mt-[20px] sm:mt-[60px]">
+    <section className="grid grid-cols-2 md:gap-y-20 md:grid-cols-3 gap-4 w-full md:max-w-[1480px] mt-[20px] sm:mt-[60px] px-[15px]">
       {dummyArray.map((_, i) => {
         let mdJustify = "md:justify-start";
         if (i % 3 === 1) mdJustify = "md:justify-center";

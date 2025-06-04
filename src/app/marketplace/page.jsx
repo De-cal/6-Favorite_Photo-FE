@@ -117,7 +117,7 @@ export default function MarketplacePage() {
       </div>
 
       {showFilter && (
-        <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up">
+        <div className="fixed bottom-0 left-0 w-full z-50 animate-slide-up flex justify-center">
           <MobileFilter
             datas={allArticles}
             onSelectFilter={handleSelectFilter}
