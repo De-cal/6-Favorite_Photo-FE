@@ -183,7 +183,7 @@ export default function MobileFilter({ datas, onSelectFilter, where, close }) {
   };
 
   return (
-    <div className="w-full pb-10 rounded-[20px] bg-[#1B1B1B]">
+    <div className="w-full max-w-[360px] pb-10 rounded-[20px] bg-[#1B1B1B]">
       <div className="w-full flex flex-col items-center">
         <div className="w-full relative py-[16.5px]">
           <p className="font-noto font-medium text-[16px] text-gray-400 text-center">
@@ -196,8 +196,8 @@ export default function MobileFilter({ datas, onSelectFilter, where, close }) {
             onClick={where === "marketplace" ? close : () => closeModal()}
           />
         </div>
-
-        <div className="flex w-full px-[24px] h-[49px] items-center gap-[24px] border-b-1 border-gray-500">
+        {/* 필터 탭 등급/장르/판매방법/매진여부 */}
+        <div className="flex w-full px-[24px] h-[49px] items-center gap-[24px] border-b-1 border-gray-500 overflow-x-auto no-scrollbar">
           {filterTabs.map((item) => (
             <button
               key={item}

@@ -17,7 +17,7 @@ function Search({ onSearch }) {
   };
   return (
     <div>
-      <div className="px-[8px] sm:px-[0px] w-[345px] h-[45px] sm:w-[200px] md:w-[320px] md:h-[50px]">
+      <div className="w-[345px] h-[45px] sm:w-[200px] md:w-[320px] md:h-[50px]">
         <div className="flex items-center justify-between h-full border border-gray-200 rounded-[2px] px-[20px]">
           <input
             type="text"

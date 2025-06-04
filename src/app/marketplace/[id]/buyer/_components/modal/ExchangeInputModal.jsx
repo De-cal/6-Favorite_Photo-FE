@@ -28,6 +28,16 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   const { closeModal, openModal } = useModal();
   const queryClient = useQueryClient();
 
+  const y = useMotionValue(0);
+  const constraintsRef = useRef(null);
+
+  // 모달 열릴 때 올라오는 애니메이션
+  useEffect(() => {
+    setIsModalUp(true);
+    // SelectPhotoCardsModal이 언마운트 되면서 클린업 함수로 스크롤이 생겨서 다시 재적용
+    document.body.style.overflow = "hidden";
+  }, []);
+
   // 태블릿일 때만 드래그 디스 미스 활성화
   useEffect(() => {
     const mediaQuery = window.matchMedia(
@@ -36,7 +46,6 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
 
     const handleMediaChange = (e) => {
       setIsTablet(e.matches);
-      console.log("isTablet", isTablet);
     };
 
     setIsTablet(mediaQuery.matches);
@@ -48,12 +57,24 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
     };
   }, []);
 
-  // 모달 열릴 때 올라오는 애니메이션
+  // 정해진 위치만큼 드래그 하게되면 모달 자동 닫힘
+  const handleDragEnd = () => {
+    if (y.get() > 100) {
+      setIsDragCloseModal(true);
+    }
+  };
+
+  // 모달 내려가는 애니메이션 후, 닫기
   useEffect(() => {
-    setIsModalUp(true);
-    // SelectPhotoCardsModal이 언마운트 되면서 클린업 함수로 스크롤이 생겨서 다시 재적용
-    document.body.style.overflow = "hidden";
-  }, []);
+    if (isDragCloseModal) {
+      const timeout = setTimeout(() => {
+        closeModal();
+        setIsModalOpen(true);
+      }, 50);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isDragCloseModal]);
 
   // 교환 요청 API
   const { mutate: exchangeRequest } = useMutation({
@@ -112,28 +133,6 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
       setIsDisabled(false);
     }
   }, [description]);
-
-  const y = useMotionValue(0);
-  const constraintsRef = useRef(null);
-
-  // 일정 드래그 하게되면 모달 닫히기
-  const handleDragEnd = () => {
-    if (y.get() > 100) {
-      setIsDragCloseModal(true);
-    }
-  };
-
-  // 모달이 내려가고, 닫기
-  useEffect(() => {
-    if (isDragCloseModal) {
-      const timeout = setTimeout(() => {
-        closeModal();
-        setIsModalOpen(true);
-      }, 50);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [isDragCloseModal]);
 
   return (
     <motion.div

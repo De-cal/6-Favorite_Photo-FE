@@ -6,10 +6,10 @@ import Image from "next/image";
 
 export default function LandingHero() {
   return (
-    <section className="flex flex-col items-center bg-landing-hero max-w-[1798px] rounded-3xl mx-[16px] mb-[12px] mt-[33px] sm:mx-[23px] sm:mb-[0px] sm:mt-[23px] md:mx-[58px] md:mt-[13px] h-[412px] sm:h-[722px] md:h-[1088px]">
+    <section className="flex flex-col items-center bg-landing-hero max-w-[1798px] rounded-3xl mx-[16px] mb-[12px] mt-[33px] sm:mx-[23px] sm:mb-[0px] sm:mt-[23px] md:mx-[58px] md:mt-[13px] min-h-[412px] sm:min-h-[722px] md:h-[1088px]">
       {/* 텍스트 & CTA 버튼 */}
       <div className="flex flex-col items-center justify-center h-full mt-[40px]">
-        <div className="flex flex-col gap-4  md:gap-10 items-center md:py-10 text-center">
+        <div className="flex flex-col items-center md:py-10 text-center">
           <div className="relative hidden sm:block sm:w-[138px] sm:h-[25px] sm:mb-[23px]">
             <Image
               src={logoImg}
