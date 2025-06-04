@@ -91,7 +91,7 @@ export default function SellerPage() {
             마켓플레이스
           </p>
           <MobileHeader title={"마켓플레이스"} src="/" />
-          
+
           <div className="min-h-screen flex flex-col items-center bg-black text-white">
             <div className="w-[345px] sm:w-full sm:max-w-[1480px]">
               <h1 className="w-[345px] sm:w-full md:w-full mx-auto text-[24px] sm:text-[32px] md:text-[40px] font-bold mb-4 sm:mb-6 border-b border-gray-100 pb-2">
@@ -121,11 +121,13 @@ export default function SellerPage() {
                     id: article.id,
                     photoCard: {
                       title: article.userPhotoCard?.photoCard?.title,
-                      description: article.userPhotoCard?.photoCard?.description,
+                      description:
+                        article.userPhotoCard?.photoCard?.description,
                       rank: article.userPhotoCard?.photoCard?.rank,
                       genre: article.userPhotoCard?.photoCard?.genre,
                       creator: {
-                        nickname: article.userPhotoCard?.photoCard?.creator?.nickname,
+                        nickname:
+                          article.userPhotoCard?.photoCard?.creator?.nickname,
                       },
                     },
                     user: {
