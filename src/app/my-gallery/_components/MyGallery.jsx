@@ -75,7 +75,7 @@ export default function MyGallery() {
 
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] mx-auto">
-      <div className="flex flex-col w-full max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
+      <div className="flex flex-col w-full max-w-[344px] sm:max-w-[700px] md:max-w-[1480px] items-center justify-center">
         <TopSection user={user} />
 
         {isPending ? (
