@@ -19,6 +19,8 @@ export default function SellerPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  // 이미지 src를 관리하는 state 추가
+  const [imgSrc, setImgSrc] = useState(example);
 
   const fetchArticleData = async () => {
     if (!articleId) return;
@@ -32,6 +34,13 @@ export default function SellerPage() {
       console.log("Fetched data:", articleData);
 
       setArticle(articleData);
+      
+      // 이미지 src 설정 - 데이터가 있으면 해당 이미지, 없으면 기본 이미지
+      setImgSrc(
+        articleData?.userPhotoCard?.photoCard?.imgUrl 
+          ? getImageUrl(articleData.userPhotoCard.photoCard.imgUrl)
+          : example
+      );
     } catch (err) {
       console.error("Failed to fetch article data:", err);
       setError("아티클을 불러오는데 실패했습니다.");
@@ -99,19 +108,15 @@ export default function SellerPage() {
               </h1>
 
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 mt-13">
-                {/* 왼쪽 이미지 - getImageUrl 사용 */}
+                {/* 왼쪽 이미지 - useState로 관리 */}
                 <div className="w-[345px] sm:w-full md:w-full mx-auto">
                   <Image
-                    src={getImageUrl(article.userPhotoCard?.photoCard?.imgUrl)}
+                    src={imgSrc}
                     alt="판매 이미지"
                     className="w-full object-cover"
                     width={345}
                     height={400}
-                    onError={(e) => {
-                      console.error("이미지 로드 실패:", e);
-                      // 이미지 로드 실패시 기본 이미지로 대체
-                      e.target.src = example.src || example;
-                    }}
+                    onError={() => setImgSrc(example)}
                   />
                 </div>
 
