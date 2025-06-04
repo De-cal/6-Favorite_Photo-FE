@@ -99,6 +99,13 @@ export const ModalProvider = ({ children }) => {
     };
   }, [modalContent, pointModalContent]);
 
+  useEffect(() => {
+    const isOpen = modalContent || pointModalContent;
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modalContent, pointModalContent]);
   return (
     <ModalContext.Provider value={{ openModal, closeModal, closePointModal }}>
       {children}

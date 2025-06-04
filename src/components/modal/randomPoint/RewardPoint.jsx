@@ -17,7 +17,7 @@ function RewardPoint() {
   const [rewardPoints, setRewardPoints] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const { formattedTime, spendOpportunity } = usePointTimer();
+  const { formattedTime, spendOpportunity, hasOpportunity } = usePointTimer();
   const { closePointModal } = useModal();
   const { getUser } = useAuth();
 
@@ -44,12 +44,13 @@ function RewardPoint() {
   };
 
   return (
+    <div className="flex flex-col ">
     <div
       className={clsx(
-        "relative flex flex-col justify-center items-center bg-gray-500 w-[345px] h-[541px]",
+        "relative flex flex-col items-center bg-gray-500 w-[345px] min-h-[441px]",
         {
-          "sm:w-150 sm:h-125 md:w-[1034px] md:h-[646px]": !isSelected,
-          "sm:w-[455px] sm:h-[658px] md:w-[455px] md:h-[678px]": isSelected,
+          "sm:w-150 sm:min-h-125 md:w-[1034px] md:min-h-[586px]": !isSelected,
+          "h-[541px] sm:w-[455px] sm:h-[658px] md:w-[455px] md:h-[678px]": isSelected,
         },
       )}
     >
@@ -59,20 +60,25 @@ function RewardPoint() {
       >
         <Image src={closeIcon} alt="closeModalButton" />
       </button>
-      <h2 className="font-baskinRobbins mb-2 text-3xl sm:text-4xl md:text-5xl  ">
+      <h2 className="font-baskinRobbins mb-2 text-3xl sm:text-4xl md:text-5xl mt-15 ">
         랜덤 <span className="text-main">포인트</span>
       </h2>
       {!isSelected ? (
         <div className="flex flex-col items-center">
-          <div className="flex flex-col items-center font-bold py-4 md:text-xl ">
+          <div className="flex flex-col items-center font-bold py-6 md:text-xl ">
             <p>1시간마다 돌아오는 기회!</p>
             <p>랜덤 상자 뽑기를 통해 포인트를 획득하세요!</p>
           </div>
-          <div className="flex flex-col items-center text-sm py-3 md:flex-row md:gap-3">
+          <div className="flex flex-col items-center text-sm py-4 md:flex-row md:gap-3">
             <p className="text-gray-300">다음 기회까지 남은 시간</p>
             <p className="text-main">{formattedTime}</p>
           </div>
-          <div className="flex py-9 md:gap-6 ">
+          <div
+            className={clsx(
+              "flex mt-12 gap-[15px] sm:gap-[25px] md:gap-15",
+              { "pointer-events-none opacity-50": !hasOpportunity }
+            )}
+          >
             <RandomBoxCard
               boxColor={"blue"}
               selectedOption={selectedOption}
@@ -89,32 +95,43 @@ function RewardPoint() {
               handleSelectOption={handleSelectOption}
             />
           </div>
-          {selectedOption !== null && (
-            <button
-              className="bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs my-3 cursor-pointer"
-              onClick={handleGetPoint}
-            >
-              선택완료
-            </button>
-          )}
-        </div>
+          </div>
       ) : (
         <div className="flex flex-col items-center">
           <Image
             src={pointImage}
             alt="getRandomPoint"
-            className="object-cover w-60 h-57 sm:w-[340px] sm:h-[324px]"
+            className="object-cover w-60 h-57 sm:w-[340px] sm:h-[324px] mt-3"
           />
-          <p className="p-3 mt-5 text-2xl sm:text-[28px] md:text-[32px] font-bold">
+          <p className="p-4 mt-3 text-2xl sm:text-[28px] md:text-[32px] font-bold">
             <span className="text-main">{rewardPoints}P</span> 획득!
           </p>
 
-          <div className="flex flex-col sm:flex-row sm:gap-2 items-center mt-5">
+          <div className="flex flex-col sm:flex-row gap-y-2 sm:gap-2 items-center mt-2">
             <p className="text-gray-300">다음 기회까지 남은 시간</p>
             <p className="text-main">{formattedTime}</p>
           </div>
         </div>
       )}
+    </div>
+      {selectedOption !== null ? 
+            (<div className="bg-gray-500 w-full flex justify-center ">
+              <button
+                className={clsx(
+                  "bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs mb-10 cursor-pointer",
+                  {
+                    "pointer-events-none opacity-50": !hasOpportunity,
+                  }
+                )}
+                onClick={handleGetPoint}
+              >
+                선택완료
+              </button>
+              </div>
+            ):(
+              <div className=" w-[300px] sm:w-110 md:w-130 h-[95px] md:h-[100px]" />
+            )}
+        
     </div>
   );
 }

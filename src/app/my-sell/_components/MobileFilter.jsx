@@ -183,7 +183,7 @@ export default function MobileFilter({ datas, onSelectFilter, where, close }) {
   };
 
   return (
-    <div className="w-full max-w-[360px] pb-10 rounded-[20px] bg-[#1B1B1B]">
+    <div className="w-full max-w-[375px] pb-10 rounded-[20px] bg-[#1B1B1B]">
       <div className="w-full flex flex-col items-center">
         <div className="w-full relative py-[16.5px]">
           <p className="font-noto font-medium text-[16px] text-gray-400 text-center">

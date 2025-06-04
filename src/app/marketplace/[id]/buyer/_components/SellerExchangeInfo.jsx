@@ -32,6 +32,7 @@ export default function SellerExchangeInfo() {
           <ActionButton
             className="mt-[120px] sm:top-0 sm:right-0 sm:h-[60px] max-w-[440px] min-w[342px] w-full text-lg md:text-xl"
             onClick={handleExchange}
+            disabled={cardArticle.remainingQuantity === 0}
           >
             포토카드 교환하기
           </ActionButton>

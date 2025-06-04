@@ -6,13 +6,14 @@ import { createContext, useContext } from "react";
 const PointTimerContext = createContext(null);
 
 export const PointTimerProvider = ({ children }) => {
-  const { hasOpportunity, formattedTime, spendOpportunity, resetTimer } = useRandomPointTimer();
+  const { hasOpportunity, formattedTime, spendOpportunity, resetTimer, checkTimerStatus } = useRandomPointTimer();
 
   const contextValue = {
     hasOpportunity,
     formattedTime,
     spendOpportunity,
     resetTimer,
+    checkTimerStatus,
   };
 
   return <PointTimerContext.Provider value={contextValue}>{children}</PointTimerContext.Provider>;
