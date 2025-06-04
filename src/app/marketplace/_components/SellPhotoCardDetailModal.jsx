@@ -137,8 +137,6 @@ function SellPhotoCardDetailModal({
     setIsModalOpen(true);
   };
 
-  console.log(card);
-
   return (
     <motion.div
       ref={constraintsRef}
