@@ -9,10 +9,59 @@ import ExchangeInputModal from "../[id]/buyer/_components/modal/ExchangeInputMod
 import { getAllCards } from "@/lib/api/card.api";
 import SortAndSearchSection from "@/app/my-gallery/_components/SortAndSearchSection";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { motion, useMotionValue } from "motion/react";
+import clsx from "clsx";
 
 function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
   const { openModal } = useModal();
   const scrollRef = useRef(null);
+  const [isModalUp, setIsModalUp] = useState(false);
+  const [isDragCloseModal, setIsDragCloseModal] = useState(false);
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
+  const y = useMotionValue(0);
+  const constraintsRef = useRef(null);
+
+  // 모달 열릴 때 올라오는 애니메이션
+  useEffect(() => {
+    setIsModalUp(true);
+    document.body.style.overflow = "hidden";
+  }, []);
+
+  // 모바일, 태블릿일 때만 드래그 디스 미스 활성화
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1479px)");
+
+    const handleMediaChange = (e) => {
+      setIsMobileOrTablet(e.matches);
+    };
+
+    setIsMobileOrTablet(mediaQuery.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
+
+  // 정해진 위치만큼 드래그 하게되면 모달 자동 닫힘
+  const handleDragEnd = () => {
+    if (y.get() > 50) {
+      setIsDragCloseModal(true);
+    }
+  };
+
+  // 모달 내려가는 애니메이션 후, 닫기
+  useEffect(() => {
+    if (isDragCloseModal) {
+      const timeout = setTimeout(() => {
+        setIsModalOpen(false);
+      }, 50);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isDragCloseModal]);
 
   const [searchFilter, setSearchFilter] = useState({
     keyword: "",
@@ -88,8 +137,20 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
       className="fixed inset-0 z-50 flex justify-center items-center bg-black/80 pt-[60px] sm:pt-[40px] md:py-[40px]"
       onClick={() => setIsModalOpen(false)}
     >
-      <div
-        className="relative w-full max-w-[1160px] bg-gray-500 h-screen max-h-[1000px] rounded-xl overflow-hidden flex flex-col px-[15px]"
+      <motion.div
+        ref={constraintsRef}
+        drag={isMobileOrTablet && "y"}
+        dragConstraints={{ top: 0, bottom: 300 }}
+        dragMomentum={false}
+        onDragEnd={handleDragEnd}
+        style={{ y }}
+        className={clsx(
+          isModalUp
+            ? "translate-y-0 md:translate-none"
+            : "translate-y-[100%] md:translate-none",
+          isDragCloseModal && "translate-y-[100%] md:translate-none",
+          "transition-transform duration-450 fixed w-full sm:bottom-0 md:max-w-[1160px] md:bottom-auto bg-gray-500 h-screen max-h-[1000px] rounded-xl overflow-hidden flex flex-col px-[15px] sm:px-[20px]",
+        )}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-center mt-[15px]">
@@ -121,7 +182,7 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
           </div>
           <div
             ref={scrollRef}
-            className="md:absolute md:left-[50%] md:translate-x-[-50%] scrollbar overflow-y-auto overflow-x-hidden md:px-[20px] md:w-[960px] h-[600px] grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]"
+            className="md:absolute md:left-[50%] md:translate-x-[-50%] scrollbar overflow-y-auto overflow-x-hidden md:px-[20px] md:w-[960px] max-h-[800px] md:h-[600px] grid grid-cols-2 mt-[20px] sm:mt-[40px] gap-y-[5px] sm:gap-y-4 place-items-center gap-x-[5px] sm:gap-x-[20px] md:gap-x-[40px]"
           >
             {allCards.length === 0 && !isLoading ? (
               <div className="col-span-2 text-white text-center mt-[80px] text-[24px]">
@@ -145,7 +206,7 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
