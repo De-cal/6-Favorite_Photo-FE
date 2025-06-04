@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import example from "@/assets/images/img-card-placeholder-1.svg";
+import example from "@/assets/images/img-card-placeholder-1.webp";
 import Image from "next/image";
 import SellerCardInfo from "./_components/SellerCardInfo";
 import MobileHeader from "@/components/common/MobileHeader";

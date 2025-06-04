@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import logo from "@/assets/images/img-logo.avif";
+import logo from "@/assets/images/img-logo.webp";
 import soldout from "@/assets/icons/ic-soldout.svg";
-import example from "@/assets/images/img-card-placeholder-1.svg";
+import example from "@/assets/images/img-card-placeholder-1.webp";
 import clsx from "clsx";
 import { genreChange } from "@/lib/utils/genreChange";
 import ExchangeCards from "./ExchangeCards";
-import { getImageUrl } from '@/lib/utils/imageUrl'
+import { getImageUrl } from "@/lib/utils/imageUrl";
 
 function DetailCard({
   onClick,
@@ -62,7 +62,7 @@ function DetailCard({
           />
         )}
         <Image
-          src={getImageUrl(card.photoCard.imgUrl)} 
+          src={getImageUrl(card.photoCard.imgUrl)}
           alt="photocard"
           width={isExchange ? 302 : 150}
           height={isExchange ? 226 : 112}

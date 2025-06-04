@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ic_menu from "@/assets/icons/ic-menu.svg";
-import img_logo from "@/assets/images/img-logo.avif";
+import img_logo from "@/assets/images/img-logo.webp";
 import MobileProfileModal from "./MobileProfileModal";
 import TabletAndDesktopProfileModal from "./TabletAndDesktopProfileModal";
 import { useModal } from "@/providers/ModalProvider";
@@ -20,7 +20,6 @@ export default function HeaderLayout() {
   const { openModal } = useModal();
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const { user, logout, isLoading } = useAuth();
-  
 
   const handleTimerModalOpen = () => {
     openModal(() => <RewardPoint />, "center", "center", true);
@@ -96,7 +95,10 @@ export default function HeaderLayout() {
               <>
                 {user ? (
                   <div className="flex justify-center items-center gap-[30px]">
-                    <p onClick={handleTimerModalOpen} className="cursor-pointer font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
+                    <p
+                      onClick={handleTimerModalOpen}
+                      className="cursor-pointer font-bold text-[14px]/[17px] text-gray-200 hidden sm:block"
+                    >
                       {new Intl.NumberFormat().format(user.pointAmount)} P
                     </p>
                     <div>

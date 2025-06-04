@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../../assets/images/img-logo.avif";
+import logo from "../../assets/images/img-logo.webp";
 import soldout from "../../assets/icons/ic-soldout.svg";
-import example from "../../assets/images/img-card-placeholder-1.svg";
+import example from "../../assets/images/img-card-placeholder-1.webp";
 import clsx from "clsx";
 import GradeDetail from "./GradeDetail";
 import { genreChange } from "@/lib/utils/genreChange";
