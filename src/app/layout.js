@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import HeaderLayout from "@/components/common/HeaderLayout";
 import Providers from "./Providers";
 import BuyerProvider from "@/contexts/BuyerContext";
+import SurprisePointModal from "@/components/modal/randomPoint/SurprisePointModal";
 
 const baskinRobbins = localFont({
   src: "../assets/fonts/br-font-bold.woff2",
@@ -30,7 +31,10 @@ export default function RootLayout({ children }) {
         <Providers>
           <HeaderLayout />
           <BuyerProvider>
-            <main className="relative flex-1 font-notoSans">{children}</main>
+            <main className="relative flex-1 font-notoSans">
+              <SurprisePointModal />
+              {children}
+            </main>
           </BuyerProvider>
         </Providers>
       </body>
