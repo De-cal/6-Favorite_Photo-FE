@@ -9,13 +9,7 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function makeQueryClient() {
-  const queryCache = new QueryCache({
-    onError: (error, query) => {
-      console.log("❗쿼리 실패 발생");
-      console.log("에러 객체:", error);
-      console.log("쿼리 객체:", query);
-    },
-  });
+  const queryCache = new QueryCache();
 
   return new QueryClient({
     queryCache,

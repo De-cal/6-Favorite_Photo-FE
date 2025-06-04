@@ -25,16 +25,16 @@
   --font-notoSans: var(--font-notoSans);
 
   /* 배경 이미지 정의  */
-  --bg-img-landing-hero: url("../assets/images/img-hero-bg.png");
-  --bg-img-landing-feat1: url("../assets/images/img-feat1.png");
-  --bg-img-landing-feat1-sm: url("../assets/images/img-feat1-sm.png");
-  --bg-img-landing-feat1-md: url("../assets/images/img-feat1-md.png");
-  --bg-img-landing-feat2: url("../assets/images/img-feat2.png");
-  --bg-img-landing-feat2-sm: url("../assets/images/img-feat2-sm.png");
-  --bg-img-landing-feat2-md: url("../assets/images/img-feat2-md.png");
-  --bg-img-landing-feat3: url("../assets/images/img-feat3.png");
-  --bg-img-landing-feat3-sm: url("../assets/images/img-feat3-sm.png");
-  --bg-img-landing-feat3-md: url("../assets/images/img-feat3-md.png");
+  --bg-img-landing-hero: url("../assets/images/img-hero-bg.webp");
+  --bg-img-landing-feat1: url("../assets/images/img-feat1.webp");
+  --bg-img-landing-feat1-sm: url("../assets/images/img-feat1-sm.webp");
+  --bg-img-landing-feat1-md: url("../assets/images/img-feat1-md.webp");
+  --bg-img-landing-feat2: url("../assets/images/img-feat2.webp");
+  --bg-img-landing-feat2-sm: url("../assets/images/img-feat2-sm.webp");
+  --bg-img-landing-feat2-md: url("../assets/images/img-feat2-md.webp");
+  --bg-img-landing-feat3: url("../assets/images/img-feat3.webp");
+  --bg-img-landing-feat3-sm: url("../assets/images/img-feat3-sm.webp");
+  --bg-img-landing-feat3-md: url("../assets/images/img-feat3-md.webp");
 }
 
 html {

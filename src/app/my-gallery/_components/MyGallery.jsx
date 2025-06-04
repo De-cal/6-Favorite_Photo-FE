@@ -13,9 +13,10 @@ import { useAuth } from "@/providers/AuthProvider";
 import { useModal } from "@/providers/ModalProvider";
 import LoginNeed from "@/app/marketplace/_components/marketplace/LoginNeed";
 import RankSectionSkeleton from "@/app/my-sell/_components/RankSectionSkeleton";
-import SortAndSearchSectionSkeleton from "@/app/my-sell/_components/SortAndSearchSectionSkeleton";
+
 import PhotoCardSkeleton from "@/app/my-sell/_components/PhotoCardSkeleton";
 import PageNationSkeleton from "@/app/my-sell/_components/PageNationSkeleton";
+import SortAndSearchSectionSkeleton from "./SortAndSearchSectionSkeleton";
 
 export default function MyGallery() {
   const { user, isLoading } = useAuth();

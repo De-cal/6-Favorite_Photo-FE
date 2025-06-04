@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../../assets/images/img-logo.avif";
+import logo from "../../assets/images/img-logo.webp";
 import soldout from "../../assets/icons/ic-soldout.svg";
-import example from "../../assets/images/img-card-placeholder-1.svg";
+import example from "../../assets/images/img-card-placeholder-1.webp";
 import clsx from "clsx";
 import GradeDetail from "./GradeDetail";
 import { genreChange } from "@/lib/utils/genreChange";
-import { getImageUrl } from '@/lib/utils/imageUrl';
+import { getImageUrl } from "@/lib/utils/imageUrl";
 
 function Card({
   onClick,
@@ -30,9 +30,10 @@ function Card({
 }) {
   const StatusChange = (status) => {
     if (status === "SELLING") return "판매 중";
-    if (status === "WAITING_EXCHANGE") return "교환 제시 대기 중";
+    if (status === "EXCHANGE_REQUESTED") return "교환 제시 대기 중";
   };
 
+  // console.log("포토카드 컴포넌트에서", state);
   const isSoldout = type.endsWith("soldout");
   const isTotalQuantity = type === "original" || type === "soldout";
   const isExchange = type === "exchange";
@@ -61,7 +62,7 @@ function Card({
               isExchange ? "text-[14px]" : "text-[10px] sm:text-[14px]",
               {
                 "text-white": card.status === "SELLING",
-                "text-main": card.status === "WAITING_EXCHANGE",
+                "text-main": card.status === "EXCHANGE_REQUESTED",
               },
             )}
           >
@@ -77,7 +78,7 @@ function Card({
           />
         )}
         <Image
-          src={getImageUrl(card.photoCard.imgUrl)} 
+          src={getImageUrl(card.photoCard.imgUrl)}
           alt="photocard"
           width={isExchange ? 302 : 150}
           height={isExchange ? 226 : 112}
