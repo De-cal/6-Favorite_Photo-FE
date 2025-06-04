@@ -1,43 +1,59 @@
 import { NextResponse } from "next/server";
 
 const authRoutes = ["/login", "/signup"];
-// 유저 인증이 필요한 페이지 체크하는 함수
+
 function isProtectedRoute(pathname) {
-  // 나의 판매 포토카드 페이지
-  if (pathname.startsWith("/my-sell")) {
+  if (pathname.startsWith("/my-sell")) return true;
+  if (pathname === "/my-gallery" || pathname.startsWith("/my-gallery/"))
     return true;
-  }
-
-  // 마이 갤러리 페이지
-  if (pathname === "/my-gallery" || pathname.startsWith("/my-gallery/")) {
-    return true;
-  }
-
-  // 마켓플레이스 페이지 하위경로 (/marketplace는 제외)
-  if (pathname.startsWith("/marketplace/")) {
-    return true;
-  }
+  if (pathname.startsWith("/marketplace/")) return true;
   return false;
 }
+
 export function middleware(request) {
   const { pathname } = request.nextUrl;
+
+  // 정적 요청 무시
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.endsWith(".ico") ||
+    pathname.endsWith(".js") ||
+    pathname.endsWith(".css") ||
+    pathname.endsWith(".png") ||
+    pathname.endsWith(".jpg") ||
+    pathname.endsWith(".webp")
+  ) {
+    console.log("[MIDDLEWARE] Static resource bypass:", pathname);
+    return NextResponse.next();
+  }
+
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
   const isAuthenticated = Boolean(accessToken || refreshToken);
 
-  // 로그인한 사용자가 auth 라우트에 접근하려고 할 때
+  console.log("[MIDDLEWARE] pathname:", pathname);
+  console.log("[MIDDLEWARE] accessToken exists:", !!accessToken);
+  console.log("[MIDDLEWARE] refreshToken exists:", !!refreshToken);
+  console.log("[MIDDLEWARE] isAuthenticated:", isAuthenticated);
+
   if (isAuthenticated && authRoutes.includes(pathname)) {
+    console.log(
+      "[MIDDLEWARE] Authenticated user tried to access auth page, redirecting to /marketplace",
+    );
     return NextResponse.redirect(new URL("/marketplace", request.url));
   }
 
-  // 인증되지 않은 사용자가 보호된 라우트에 접근하려고 할 때
   if (!isAuthenticated && isProtectedRoute(pathname)) {
+    console.log(
+      "[MIDDLEWARE] Unauthenticated user tried to access protected route, redirecting to /login",
+    );
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  console.log("[MIDDLEWARE] Allowing request to proceed");
   return NextResponse.next();
 }
 
-// 미들웨어가 적용될 경로 설정
 export const config = {
   matcher: [
     "/login",
