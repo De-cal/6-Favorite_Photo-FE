@@ -118,7 +118,7 @@ function RewardPoint() {
             (<div className="bg-gray-500 w-full flex justify-center ">
               <button
                 className={clsx(
-                  "bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs mb-10",
+                  "bg-main text-black w-[300px] sm:w-110 md:w-130 h-[55px] md:h-[60px] font-bold rounded-xs mb-10 cursor-pointer",
                   {
                     "pointer-events-none opacity-50": !hasOpportunity,
                   }
