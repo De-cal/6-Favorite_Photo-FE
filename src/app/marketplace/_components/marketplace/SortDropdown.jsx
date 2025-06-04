@@ -2,8 +2,8 @@
 
 import React from "react";
 import downIcon from "@/assets/icons/ic-down.svg";
-import Image from "next/image";
 import upIcon from "@/assets/icons/ic-up.svg";
+import Image from "next/image";
 
 export default function SortDropdown({
   className,
@@ -18,13 +18,14 @@ export default function SortDropdown({
     onSelect(choice);
     onToggle(false);
   };
+
   return (
     <div className={`${className} relative`}>
       <div
         onClick={() => onToggle(!isOpen)}
         className="cursor-pointer flex items-center justify-between rounded-[2px] border border-gray-200 w-[130px] h-[35px] px-[15px] sm:px-[20px] sm:w-[140px] sm:h-[45px] md:w-[180px] md:h-[50px]"
       >
-        <p className="font-noto text-[12px]/[14px] leading-[12px] font-normal tracking-[0px] sm:text-[14px]/[17px] md:text-[16px]/[19px]">
+        <p className="font-noto text-[12px] sm:text-[14px] md:text-[16px] leading-[1] font-normal tracking-[0px]">
           {selected}
         </p>
         <Image
@@ -35,11 +36,13 @@ export default function SortDropdown({
         />
       </div>
       {isOpen && (
-        <div className="absolute top-[40px] w-[130px] bg-black border border-gray-200 z-10 rounded-[2px]">
+        <div className="absolute top-full mt-1 w-full bg-black border border-gray-200 z-10 rounded-[2px]">
           {choiceType.map((choice) => (
             <div
               key={choice}
-              className="px-4 py-2 text-[12px] cursor-pointer hover:bg-gray-800"
+              className="px-[15px] sm:px-[20px] py-2 
+             text-[12px] sm:text-[14px] md:text-[16px] 
+             cursor-pointer hover:bg-gray-800"
               onClick={() => handleSelect(choice)}
             >
               {choice}
