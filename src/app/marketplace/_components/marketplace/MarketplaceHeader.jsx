@@ -59,7 +59,7 @@ export default function MarketplaceHeader({
       </div>
       <div className="w-[345px] sm:w-[704px] md:w-[1480px] mt-[20px]">
         <div className="flex justify-center sm:justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center w-full max-w-[345px]">
             <Search onSearch={setSearchKeyWord} />
             <Dropdowns onSearch={setFilterSettings} />
           </div>
