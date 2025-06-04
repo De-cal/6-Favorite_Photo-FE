@@ -5,7 +5,6 @@ import { useAuth } from "@/providers/AuthProvider";
 export default function MyCardSellBtn({ onRequireLogin, setIsModalOpen }) {
   const { user } = useAuth();
   const handleCardClick = async () => {
-    console.log("getMe", user);
     if (user) {
       setIsModalOpen(true);
     } else {

@@ -30,8 +30,6 @@ export default function SellerPage() {
 
       // 아티클 상세 정보
       const [articleData] = await Promise.all([getArticleById(articleId)]);
-      console.log("imgUrl:", articleData?.userPhotoCard?.photoCard?.imgUrl);
-      console.log("Fetched data:", articleData);
 
       setArticle(articleData);
 

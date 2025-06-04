@@ -19,7 +19,6 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
   const { openModal } = useModal();
 
   const handleEdit = () => {
-    console.log(cardArticle);
     openModal(
       <SellPhotoCardDetailModal
         card={{
@@ -47,8 +46,6 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
     );
   };
 
-  console.log(cardArticle.photoCard);
-
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
@@ -60,10 +57,10 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
       }
 
       // 성공 메시지 표시 (토스트 등)
-      alert("판매가 취소되었습니다.");
+      // alert("판매가 취소되었습니다.");
     } catch (error) {
       console.error("삭제 실패:", error);
-      alert("판매 취소에 실패했습니다. 다시 시도해주세요.");
+      // alert("판매 취소에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsDeleting(false);
       setIsDeleteModalOpen(false);

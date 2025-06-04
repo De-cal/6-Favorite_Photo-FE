@@ -37,7 +37,6 @@ export const getAllCards = async ({
   }
 };
 
-
 export const createCard = async (formData) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {
@@ -51,7 +50,6 @@ export const createCard = async (formData) => {
     }
 
     const data = await response.json();
-    console.log("카드 생성 성공:", data);
     return data;
   } catch (error) {
     console.error("카드 생성 오류:", error);
