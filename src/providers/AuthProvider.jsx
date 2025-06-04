@@ -49,7 +49,6 @@ export default function AuthProvider({ children }) {
   const logout = async () => {
     await authService.logout();
     setUser(null);
-    console.log("로그아웃");
   };
 
   const refreshUser = async () => {
@@ -61,7 +60,6 @@ export default function AuthProvider({ children }) {
       return null;
     }
   };
-
 
   useEffect(() => {
     getUser();
