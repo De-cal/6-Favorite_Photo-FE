@@ -6,6 +6,7 @@ import example from "@/assets/images/img-card-placeholder-1.svg";
 import clsx from "clsx";
 import { genreChange } from "@/lib/utils/genreChange";
 import ExchangeCards from "./ExchangeCards";
+import { getImageUrl } from '@/lib/utils/imageUrl'
 
 function DetailCard({
   onClick,
@@ -61,8 +62,10 @@ function DetailCard({
           />
         )}
         <Image
-          src={example} //card.image로 수정
+          src={getImageUrl(card.photoCard.imgUrl)} 
           alt="photocard"
+          width={isExchange ? 302 : 150}
+          height={isExchange ? 226 : 112}
           className={`w-[150px] h-[112px]  sm:w-[302px] sm:h-[226px] md:w-[360px] md:h-[270px] ${
             isSoldout && "brightness-50"
           }`}
