@@ -2,14 +2,13 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import close from "@/assets/icons/ic-close.svg";
-import example from "@/assets/images/img-card-placeholder-1.svg";
 import ExchangeInfo from "./ExchangeInfo";
 import SellPhotoDetail from "./SellPhotoDetail";
 import MobileHeader from "@/components/common/MobileHeader";
 import { postArticle, patchArticle } from "@/lib/api/article.api";
 import CommonModal from "@/components/common/CommonModal";
 import { useModal } from "@/providers/ModalProvider";
-import { getImageUrl } from '@/lib/utils/imageUrl'
+import { getImageUrl } from "@/lib/utils/imageUrl";
 import { motion, useMotionValue } from "motion/react";
 import clsx from "clsx";
 
@@ -169,8 +168,8 @@ function SellPhotoCardDetailModal({
           <Image src={close} alt="close" className="h-[32px] hidden sm:block" />
         </button>
       </div>
-      <div className="overflow-y-auto scrollbar w-full">
-        <div className="max-w-[920px] sm:w-full w-[345px] mx-auto">
+      <div className="overflow-y-auto scrollbar w-[calc(100%-80px)] px-[40px] ">
+        <div className="max-w-[920px] w-full mx-auto ">
           <div className="text-gray-300 font-baskinRobbins text-[16px] md:text-[24px] hidden sm:block">
             {type === "sell" ? "나의 포토카드 판매하기" : "수정하기"}
           </div>
@@ -182,10 +181,10 @@ function SellPhotoCardDetailModal({
           </div>
           <div className="mt-[26px] sm:mt-[48px] flex flex-col items-center sm:flex-row gap-[20px] md:gap-[40px] sm:justify-center sm:items-start w-full mb-[120px] sm:mb-[80px]">
             <Image
-              src={getImageUrl(card.photoCard.imgUrl)} 
+              src={getImageUrl(card.photoCard.imgUrl)}
               alt="photocard"
-              width={isExchange ? 302 : 150}
-              height={isExchange ? 226 : 112}
+              width={302}
+              height={226}
               className="w-[345px] sm:flex-1"
             />
             <SellPhotoDetail

@@ -138,7 +138,6 @@ const cancelExchangeRequest = async (articleId, exchangeId) => {
 //포토카드 교환 요청 승인
 const approveExchangeRequest = async (articleId, exchangeId) => {
   try {
-    console.log({ articleId, exchangeId });
     return await cookieFetch(`/articles/${articleId}/exchange/${exchangeId}`, {
       method: "PUT",
     });
