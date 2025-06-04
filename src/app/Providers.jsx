@@ -8,7 +8,9 @@ export default function Providers({ children }) {
     <QueryProvider>
       <AuthProvider>
         <PointTimerProvider>
-          <ModalProvider>{children}</ModalProvider>
+          <RouteGuard>
+            <ModalProvider>{children}</ModalProvider>
+          </RouteGuard>
         </PointTimerProvider>
       </AuthProvider>
     </QueryProvider>
