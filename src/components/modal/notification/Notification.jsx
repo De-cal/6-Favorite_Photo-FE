@@ -20,10 +20,7 @@ export default function Notification({
   const { openModal, closeModal } = useModal();
   const pathname = usePathname();
 
-  const {
-    data,
-    refetch: refetchCount,
-  } = useQuery({
+  const { data, refetch: refetchCount } = useQuery({
     queryKey: ["notificationsCount"],
     queryFn: () => getMyNotifications({ pageParam: 0, limit: 1 }),
     staleTime: 1000 * 60,
@@ -37,28 +34,37 @@ export default function Notification({
   };
 
   const handleMobileModalOpen = () => {
-    openModal(<NotificationsModalMobile refetchNotificationCount={refetchCount} />);
+    openModal(
+      <NotificationsModalMobile refetchNotificationCount={refetchCount} />,
+    );
     setIsNotificationModalOpen(true);
   };
 
   useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 744);
+    const mediaQuery = window.matchMedia("(max-width: 744px)");
+
+    const handleMediaChange = (e) => {
+      if (e.matches) {
+        setIsMobile(true);
+      }
     };
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-    return () => window.removeEventListener("resize", checkIsMobile);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
   }, []);
 
   useEffect(() => {
     if (isMobile && isNotificationModalOpen) {
-      setIsNotificationModalOpen(false); 
+      setIsNotificationModalOpen(false);
     }
   }, [isMobile, isNotificationModalOpen]);
 
   useEffect(() => {
     if (!isMobile) {
-      closeModal(); 
+      closeModal();
     }
   }, [isMobile]);
 
