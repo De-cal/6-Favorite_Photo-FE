@@ -17,8 +17,12 @@ export default function PhotoCardSection({ dataLists }) {
         else if (i % 3 === 2) mdJustify = "md:justify-end";
 
         const cardType =
-          dataList.remainingQuantity === 0 ? "for_sale_soldout" : "for_sale";
-
+          dataList.userPhotoCard.status === "EXCHANGE_REQUESTED"
+            ? "for_sale"
+            : dataList.remainingQuantity === 0
+            ? "for_sale_soldout"
+            : "for_sale";
+        console.log("넘겨주는 카드 값:", dataList.userPhotoCard);
         return (
           <div
             key={dataList.id}

@@ -76,7 +76,6 @@ export default function MySell() {
   if (!user) return <LoginNeed />;
   // if (!searchFilter || isPending) return <Loading />
   if (isError) return <div>에러 발생</div>;
-
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[1480px] w-full mx-auto">
       <div className="flex flex-col max-w-[344px] sm:max-w-[700px] md:max-w-[1480px] w-full items-center justify-center">
