@@ -13,12 +13,18 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Notification from "../modal/notification/Notification";
 import { useAuth } from "@/providers/AuthProvider";
+import RewardPoint from "../modal/randomPoint/RewardPoint";
 
 export default function HeaderLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { openModal } = useModal();
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const { user, logout, isLoading } = useAuth();
+  
+
+  const handleTimerModalOpen = () => {
+    openModal(() => <RewardPoint />, "center", "center", true);
+  };
 
   const path = usePathname();
 
@@ -90,7 +96,7 @@ export default function HeaderLayout() {
               <>
                 {user ? (
                   <div className="flex justify-center items-center gap-[30px]">
-                    <p className="font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
+                    <p onClick={handleTimerModalOpen} className="cursor-pointer font-bold text-[14px]/[17px] text-gray-200 hidden sm:block">
                       {new Intl.NumberFormat().format(user.pointAmount)} P
                     </p>
                     <div>
