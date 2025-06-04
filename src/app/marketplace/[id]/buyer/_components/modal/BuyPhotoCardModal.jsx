@@ -19,7 +19,6 @@ export default function BuyPhotoCardModal({
   const { id: articleId } = useParams();
   const { openModal, closeModal } = useModal();
   const queryClient = useQueryClient();
-  const { getUser } = useAuth();
 
   // 포토카드 구매 API
   const { mutate: purchaseArticle } = useMutation({
@@ -35,7 +34,6 @@ export default function BuyPhotoCardModal({
         />,
       );
       queryClient.invalidateQueries({ queryKey: ["articles", articleId] });
-      getUser();
     },
     onError: () => {
       document.body.style.overflow = "hidden";
