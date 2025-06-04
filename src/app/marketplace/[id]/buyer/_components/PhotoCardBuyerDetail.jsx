@@ -175,6 +175,7 @@ export default function PhotoCardBuyerDetail() {
           <ActionButton
             className="mt-[40px] md:mt-[80px] max-w-[440px] min-w-[342px] w-full"
             onClick={openBuyConfirmModal}
+            disabled={remainingQuantity === 0}
           >
             포토카드 구매하기
           </ActionButton>
