@@ -35,16 +35,16 @@ export default function ExchangeCard({ type, cardArticle }) {
     if (imageSources[exchangeId]) {
       return imageSources[exchangeId];
     }
-    
+
     // imgUrl이 있으면 getImageUrl 처리, 없으면 기본 이미지
     return imgUrl ? getImageUrl(imgUrl) : example;
   };
 
   // 이미지 오류 처리 함수
   const handleImageError = (exchangeId) => {
-    setImageSources(prev => ({
+    setImageSources((prev) => ({
       ...prev,
-      [exchangeId]: example
+      [exchangeId]: example,
     }));
   };
 

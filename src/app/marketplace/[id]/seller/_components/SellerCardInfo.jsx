@@ -73,15 +73,18 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
         {/* 등급/카테고리/작가 */}
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
-            <GradeDetail className="text-[18px] md:text-[24px]" grade={cardArticle.photoCard.rank} />
+            <GradeDetail
+              className="text-[18px] md:text-[24px]"
+              grade={cardArticle.photoCard.rank}
+            />
             <span className="text-gray-300 text-[18px] md:text-[24px]">
               | {genreChange(cardArticle.photoCard.genre)}
             </span>
           </div>
           <div className="text-white text-sm md:text-[24px] underline">
             <div className="text-white text-[18px] md:text-[24px] underline">
-            {cardArticle.photoCard.creator.nickname}
-          </div>
+              {cardArticle.photoCard.creator.nickname}
+            </div>
           </div>
         </div>
 
@@ -123,7 +126,10 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
             </div>
           </div>
           <div className="border-t border-gray-100 text-[18px] md:text-[24px] flex items-center gap-2 mb-10 pt-10">
-            <GradeDetail className="text-[18px] md:text-[24px]" grade={cardArticle.exchangeRank} />
+            <GradeDetail
+              className="text-[18px] md:text-[24px]"
+              grade={cardArticle.exchangeRank}
+            />
             <span className="text-gray-300 font-bold">
               | {genreChange(cardArticle.exchangeGenre)}
             </span>
@@ -140,12 +146,14 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
           variant="primary"
           className="w-[345px] h-[75px] text-lg md:text-xl md:w-[440px] md:h-[80px] mb-3"
           onClick={handleEdit}
+          disabled={cardArticle.remainingQuantity === 0}
         >
           수정하기
         </ActionButton>
         <ActionButton
           onClick={() => setIsDeleteModalOpen(true)}
           variant="secondary"
+          disabled={cardArticle.remainingQuantity === 0}
         >
           판매 내리기
         </ActionButton>

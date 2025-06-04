@@ -34,12 +34,12 @@ export default function SellerPage() {
       console.log("Fetched data:", articleData);
 
       setArticle(articleData);
-      
+
       // 이미지 src 설정 - 데이터가 있으면 해당 이미지, 없으면 기본 이미지
       setImgSrc(
-        articleData?.userPhotoCard?.photoCard?.imgUrl 
+        articleData?.userPhotoCard?.photoCard?.imgUrl
           ? getImageUrl(articleData.userPhotoCard.photoCard.imgUrl)
-          : example
+          : example,
       );
     } catch (err) {
       console.error("Failed to fetch article data:", err);
