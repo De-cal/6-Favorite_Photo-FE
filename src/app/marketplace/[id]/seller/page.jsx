@@ -9,7 +9,6 @@ import MobileHeader from "@/components/common/MobileHeader";
 import { getArticleById } from "@/lib/api/article.api";
 import ExchangeCard from "../../_components/ExchangeCard";
 import { getImageUrl } from "@/lib/utils/imageUrl";
-import { useSeller } from "@/contexts/SellerContext";
 
 export default function SellerPage() {
   const params = useParams();
@@ -22,7 +21,6 @@ export default function SellerPage() {
   const [isDeleted, setIsDeleted] = useState(false);
   // 이미지 src를 관리하는 state 추가
   const [imgSrc, setImgSrc] = useState(example);
-  const { cardArticle } = useSeller();
 
   const fetchArticleData = async () => {
     if (!articleId) return;
@@ -151,7 +149,7 @@ export default function SellerPage() {
                   onDelete={handleDelete}
                 />
               </div>
-              <ExchangeCard type="seller" cardArticle={cardArticle} />
+              <ExchangeCard type="seller" cardArticle={article} />
             </div>
           </div>
         </div>

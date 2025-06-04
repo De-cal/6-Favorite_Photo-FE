@@ -31,14 +31,10 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <HeaderLayout />
-          <BuyerProvider>
-            <SellerProvider>
-              <main className="relative flex-1 font-notoSans">
-                <SurprisePointModal />
-                {children}
-              </main>
-            </SellerProvider>
-          </BuyerProvider>
+          <main className="relative flex-1 font-notoSans">
+            <SurprisePointModal />
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
