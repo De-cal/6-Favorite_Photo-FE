@@ -33,7 +33,7 @@ export default function Dropdown({
         return [
           ["COMMON", "COMMON"],
           ["RARE", "RARE"],
-          ["SUPER RARE", "SUPER RARE"],
+          ["SUPERRARE", "SUPER RARE"],
           ["LEGENDARY", "LEGENDARY"],
         ];
     }
