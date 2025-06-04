@@ -52,7 +52,7 @@ export default function ArticleGrid({
     });
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] justify-items-center">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-[5px] sm:gap-[20px] md:gap-[80px] mt-[20px] sm:mt-[40px] md:mt-[60px] justify-items-center">
       {filtered.map((article) => (
         <div
           key={article.id}

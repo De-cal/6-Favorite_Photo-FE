@@ -22,11 +22,9 @@ export default function SortDropdown({
     <div className={`${className} relative`}>
       <div
         onClick={() => onToggle(!isOpen)}
-        className="cursor-pointer flex items-center justify-around
-        rounded-[2px] border border-gray-200 w-[130px] h-[35px]
-        "
+        className="cursor-pointer flex items-center justify-between rounded-[2px] border border-gray-200 w-[130px] h-[35px] px-[15px] sm:px-[20px] sm:w-[140px] sm:h-[45px] md:w-[180px] md:h-[50px]"
       >
-        <p className="font-noto text-[12px] leading-[12px] font-normal tracking-[0px]">
+        <p className="font-noto text-[12px]/[14px] leading-[12px] font-normal tracking-[0px] sm:text-[14px]/[17px] md:text-[16px]/[19px]">
           {selected}
         </p>
         <Image
