@@ -69,7 +69,7 @@ export default function LandingPage() {
       </div> */}
 
       {/* 랜딩페이지 전체 */}
-      <div className="max-w-[744px] mx-auto overflow-x-hidden sm:max-w-[1480px] md:max-w-full">
+      <div className="mx-auto overflow-x-hidden max-w-[1798px] md:px-[32.5px]">
         <LandingHero />
         <LandingFeatFirst />
         <LandingFeatSecond />

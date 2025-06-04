@@ -23,7 +23,7 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
-  const isAuthenticated = Boolean(accessToken && refreshToken);
+  const isAuthenticated = Boolean(accessToken || refreshToken);
 
   // 로그인한 사용자가 auth 라우트에 접근하려고 할 때
   if (isAuthenticated && authRoutes.includes(pathname)) {
