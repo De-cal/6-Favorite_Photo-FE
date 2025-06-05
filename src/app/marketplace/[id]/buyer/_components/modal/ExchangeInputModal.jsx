@@ -10,7 +10,7 @@ import ic_modal_close from "@/assets/icons/ic-modal-close.svg";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import Desktop from "@/components/common/Desktop";
 import Tablet from "@/components/common/Tablet";
-import articleApi from "@/lib/api/article.api";
+import { exchangeRequest } from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CommonModal from "@/components/common/CommonModal";
@@ -77,9 +77,9 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
   }, [isDragCloseModal]);
 
   // 교환 요청 API
-  const { mutate: exchangeRequest } = useMutation({
+  const { mutate: exchangeRequestMutate } = useMutation({
     mutationFn: ({ articleId, body }) =>
-      articleApi.exchangeRequest(articleId, body),
+      exchangeRequest(articleId, body),
     onSuccess: () => {
       document.body.style.overflow = "hidden";
       openModal(
@@ -105,7 +105,7 @@ export default function ExchangeInputModal({ card, setIsModalOpen }) {
 
   // 교환 요청하기
   const handleExchange = () => {
-    exchangeRequest({
+    exchangeRequestMutate({
       articleId,
       body: { userPhotoCardId: card.id, description },
     });

@@ -4,7 +4,8 @@ const API_BASE_URL =
 let isRefreshing = false;
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-export async function cookieFetch(path, options = {}, retry = true) {
+
+export const cookieFetch = async (path, options = {}, retry = true) => {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: "include",
     cache: "no-store",
@@ -69,7 +70,7 @@ export async function cookieFetch(path, options = {}, retry = true) {
   return response.json();
 }
 
-export async function defaultFetch(path, options = {}) {
+export const defaultFetch = async(path, options = {}) => {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     headers: {
       "Content-Type": "application/json",

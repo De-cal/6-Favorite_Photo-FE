@@ -2,14 +2,14 @@ import { cookieFetch, defaultFetch } from "./fetchClient.api";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export async function getAllArticles(page = 1, limit = 12, keyword = "") {
+export const getAllArticles = async (page = 1, limit = 12, keyword = "") => {
   try {
     const query =
       `?page=${page}&limit=${limit}` +
       (keyword ? `&keyword=${encodeURIComponent(keyword)}` : "");
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/articles${query}`,
+      `${BASE_URL}/articles${query}`,
     );
 
     if (!response.ok) {
@@ -52,7 +52,7 @@ export const getUserArticles = async ({
 };
 
 // 특정 아티클 판매자 상세 정보 가져오기
-export async function getArticleById(articleId) {
+export const getArticleById = async (articleId) => {
   try {
     return await cookieFetch(`/articles/${articleId}/seller`);
   } catch (error) {
@@ -62,7 +62,7 @@ export async function getArticleById(articleId) {
 }
 
 // 아티클 삭제 (판매 내리기)
-export async function deleteArticle(articleId) {
+export const deleteArticle = async (articleId) => {
   try {
     const data = await cookieFetch(`/articles/${articleId}`, {
       method: "DELETE",
@@ -90,7 +90,7 @@ export const postArticle = async (articleData) => {
 };
 
 // 포토카드 구매자 상세 불러오기
-const getArticle = async (articleId) => {
+export const getArticle = async (articleId) => {
   try {
     return await cookieFetch(`/articles/${articleId}/buyer`);
   } catch (e) {
@@ -99,7 +99,7 @@ const getArticle = async (articleId) => {
 };
 
 // 포토카드 구매
-const purchaseArticle = async (articleId, body) => {
+export const purchaseArticle = async (articleId, body) => {
   try {
     return await cookieFetch(`/articles/${articleId}`, {
       method: "POST",
@@ -112,7 +112,7 @@ const purchaseArticle = async (articleId, body) => {
 };
 
 // 포토카드 교환 요청
-const exchangeRequest = async (articleId, body) => {
+export const exchangeRequest = async (articleId, body) => {
   try {
     return await cookieFetch(`/articles/${articleId}/exchange`, {
       method: "POST",
@@ -125,7 +125,7 @@ const exchangeRequest = async (articleId, body) => {
 };
 
 // 포토카드 교환 요청 취소
-const cancelExchangeRequest = async (articleId, exchangeId) => {
+export const cancelExchangeRequest = async (articleId, exchangeId) => {
   try {
     return await cookieFetch(`/articles/${articleId}/exchange/${exchangeId}`, {
       method: "DELETE",
@@ -136,7 +136,7 @@ const cancelExchangeRequest = async (articleId, exchangeId) => {
 };
 
 //포토카드 교환 요청 승인
-const approveExchangeRequest = async (articleId, exchangeId) => {
+export const approveExchangeRequest = async (articleId, exchangeId) => {
   try {
     return await cookieFetch(`/articles/${articleId}/exchange/${exchangeId}`, {
       method: "PUT",
@@ -158,10 +158,3 @@ export const patchArticle = async (articleId, data) => {
   }
 };
 
-export default {
-  getArticle,
-  purchaseArticle,
-  exchangeRequest,
-  approveExchangeRequest,
-  cancelExchangeRequest,
-};

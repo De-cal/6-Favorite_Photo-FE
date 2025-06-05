@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext } from "react";
 import { useParams } from "next/navigation";
-import articleApi from "../lib/api/article.api";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/common/Loading";
+import { getArticle } from "@/lib/api/article.api";
 
 const BuyerContext = createContext();
 
@@ -23,7 +23,7 @@ export default function BuyerProvider({ children }) {
 
   const { data: cardArticle, isPending } = useQuery({
     queryKey: ["articles", articleId],
-    queryFn: () => articleApi.getArticle(articleId),
+    queryFn: () => getArticle(articleId),
   });
 
   if (isPending) {
