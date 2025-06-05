@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import marketplace from "@/assets/images/img-marketplace.svg";
+import marketplace from "@/assets/images/img-marketplace.webp";
 import ActionButton from "@/components/ui/buttons/ActionButton";
 import Search from "./Search";
 import Dropdowns from "./Dropdowns";

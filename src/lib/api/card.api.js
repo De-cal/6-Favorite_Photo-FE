@@ -1,15 +1,5 @@
 import { cookieFetch } from "@/lib/api/fetchClient.api";
 
-function parseJwt(token) {
-  if (!token) return null;
-  try {
-    return JSON.parse(atob(token.split(".")[1]));
-  } catch (e) {
-    console.error("JWT 파싱 실패:", e);
-    return null;
-  }
-}
-
 export const getAllCards = async ({
   page,
   pageSize,
@@ -37,7 +27,6 @@ export const getAllCards = async ({
   }
 };
 
-
 export const createCard = async (formData) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {
@@ -51,7 +40,6 @@ export const createCard = async (formData) => {
     }
 
     const data = await response.json();
-    console.log("카드 생성 성공:", data);
     return data;
   } catch (error) {
     console.error("카드 생성 오류:", error);

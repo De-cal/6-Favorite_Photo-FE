@@ -8,7 +8,7 @@ const POINT_OPPORTUNITY_KEY = process.env.NEXT_PUBLIC_POINT_OPPORTUNITY_KEY;
 
 const ONE_HOUR = 60 * 60 * 1000; // 1시간
 
-function useRandomPointTimer() {
+export default function useRandomPointTimer() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [hasOpportunity, setHasOpportunity] = useState(false);
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -149,5 +149,3 @@ function useRandomPointTimer() {
     checkTimerStatus,
   };
 }
-
-export default useRandomPointTimer;

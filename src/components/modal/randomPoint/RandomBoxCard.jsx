@@ -1,11 +1,15 @@
 import React from "react";
-import blueBox from "@/assets/images/img-box-blue-ribbon.avif";
-import purpleBox from "@/assets/images/img-box-purple-ribbon.avif";
-import redBox from "@/assets/images/img-box-red-ribbon.avif";
+import blueBox from "@/assets/images/img-box-blue-ribbon.webp";
+import purpleBox from "@/assets/images/img-box-purple-ribbon.webp";
+import redBox from "@/assets/images/img-box-red-ribbon.webp";
 import Image from "next/image";
 import clsx from "clsx";
 
-function RandomBoxCard({ boxColor, selectedOption, handleSelectOption }) {
+export default function RandomBoxCard({
+  boxColor,
+  selectedOption,
+  handleSelectOption,
+}) {
   const colorToBox = {
     blue: blueBox,
     red: redBox,
@@ -37,5 +41,3 @@ function RandomBoxCard({ boxColor, selectedOption, handleSelectOption }) {
     </div>
   );
 }
-
-export default RandomBoxCard;

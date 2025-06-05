@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import GradeDetail from "./GradeDetail";
 import { useAuth } from "@/providers/AuthProvider";
 
-function CommonModal({ type, result, data }) {
+export default function CommonModal({ type, result, data }) {
   // type => 판매 등록 , 교환 제시, 구매, 포토카드 생성 (띄어쓰기 그대로 4가지)
   // result => 성공 실패 (한글로 2가지 뿐)
   // data => 교환 제시, 포토카드 생성 => rank, title 필요
@@ -177,5 +177,3 @@ function CommonModal({ type, result, data }) {
     </div>
   );
 }
-
-export default CommonModal;

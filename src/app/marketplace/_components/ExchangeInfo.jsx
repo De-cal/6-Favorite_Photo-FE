@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "./marketplace/Dropdown";
 
-function ExchangeInfo({
+export default function ExchangeInfo({
   genre,
   setGenre,
   rank,
@@ -33,5 +33,3 @@ function ExchangeInfo({
     </div>
   );
 }
-
-export default ExchangeInfo;

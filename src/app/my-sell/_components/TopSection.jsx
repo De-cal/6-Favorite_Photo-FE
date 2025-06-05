@@ -1,5 +1,3 @@
-import ActionButton from "@/components/ui/buttons/ActionButton";
-import Link from "next/link";
 import MobileHeader from "@/components/common/MobileHeader";
 
 export default function TopSection() {

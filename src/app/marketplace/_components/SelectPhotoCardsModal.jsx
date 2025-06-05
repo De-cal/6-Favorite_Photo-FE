@@ -12,7 +12,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion, useMotionValue } from "motion/react";
 import clsx from "clsx";
 
-function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
+export default function SelectPhotoCardsModal({
+  type = "판매",
+  setIsModalOpen,
+}) {
   const { openModal } = useModal();
   const scrollRef = useRef(null);
   const [isModalUp, setIsModalUp] = useState(false);
@@ -210,5 +213,3 @@ function SelectPhotoCardsModal({ type = "판매", setIsModalOpen }) {
     </div>
   );
 }
-
-export default SelectPhotoCardsModal;
