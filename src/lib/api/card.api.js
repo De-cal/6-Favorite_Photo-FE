@@ -27,6 +27,17 @@ export const getAllCards = async ({
   }
 };
 
+// 사용자 생성 상태 조회
+export const getUserCreateStatus = async () => {
+  try {
+    const data = await cookieFetch('/cards/user/create-status');
+    return data;
+  } catch (error) {
+    console.error('생성 상태 조회 실패:', error);
+    throw error;
+  }
+};
+
 export const createCard = async (formData) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cards`, {

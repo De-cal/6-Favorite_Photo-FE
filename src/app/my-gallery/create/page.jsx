@@ -11,27 +11,21 @@ import CommonModal from "@/components/common/CommonModal";
 import { createCard } from "@/lib/api/card.api";
 import { useModal } from "@/providers/ModalProvider";
 import { useAuth } from "@/providers/AuthProvider";
+import { useCreateStatus } from "@/hooks/useCreateStatus";
 
-export default function MyGalleryCreatePage() {
+  export default function MyGalleryCreatePage() {
   const { form, error, set, handler, isValid, validate } = useCardCreateForm();
-
-  const { openModal, closeModal } = useModal();
-  const { user, refreshUser } = useAuth();
-  const [showNotice, setShowNotice] = useState(false);
+  const { openModal } = useModal();
+  const { createStatus, decrementCreateCount, refreshCreateStatus } = useCreateStatus();
+  //const { user, refreshUser } = useAuth();
+  //const [showNotice, setShowNotice] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    if (user.createCount === 0) {
-      // 알림 표시
-      setShowNotice(true);
-
-      // 3초 후 알림 숨기기 (선택사항)
-      setTimeout(() => {
-        setShowNotice(false);
-      }, 3000);
-
+    // 생성 가능 여부 체크
+    if (!createStatus.canCreate || createStatus.createCount === 0) {
       openModal(
         <CommonModal
           type="포토카드 생성"
@@ -41,7 +35,7 @@ export default function MyGalleryCreatePage() {
             title: form.title,
             message: "이번달 모든 생성 기회를 소진했어요.",
           }}
-        />,
+        />
       );
       return;
     }
@@ -61,6 +55,9 @@ export default function MyGalleryCreatePage() {
       // refreshUser를 제거하고 모달에서만 처리
       // await refreshUser();
 
+      // 성공 시 상태 업데이트 (optimistic update)
+      decrementCreateCount();
+
       // 성공 모달 열기
       openModal(
         <CommonModal
@@ -69,6 +66,7 @@ export default function MyGalleryCreatePage() {
           data={{
             rank: form.rank,
             title: form.title,
+            remainingCount: result.data?.userInfo?.remainingCreateCount
           }}
         />,
       );
@@ -91,11 +89,7 @@ export default function MyGalleryCreatePage() {
 
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] mx-auto mb-[50px]">
-      <TopSection
-        user={user}
-        showNotice={showNotice}
-        setShowNotice={setShowNotice}
-      />
+      <TopSection />
       <form
         onSubmit={handleSubmit}
         className="w-[345px] sm:w-[440px] md:w-[520px] space-y-6"
