@@ -8,7 +8,7 @@ import { genreChange } from "@/lib/utils/genreChange";
 import ExchangeCards from "./ExchangeCards";
 import { getImageUrl } from "@/lib/utils/imageUrl";
 
-function DetailCard({
+export default function DetailCard({
   onClick,
   type = "for_sale",
   card = {
@@ -130,5 +130,3 @@ function DetailCard({
     </div>
   );
 }
-
-export default DetailCard;

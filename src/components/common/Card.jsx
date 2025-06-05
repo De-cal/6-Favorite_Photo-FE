@@ -8,7 +8,7 @@ import GradeDetail from "./GradeDetail";
 import { genreChange } from "@/lib/utils/genreChange";
 import { getImageUrl } from "@/lib/utils/imageUrl";
 
-function Card({
+export default function Card({
   onClick,
   type = "original",
   card = {
@@ -175,5 +175,3 @@ function Card({
     </div>
   );
 }
-
-export default Card;
