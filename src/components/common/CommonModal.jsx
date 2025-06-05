@@ -41,8 +41,27 @@ export default function CommonModal({ type, result, data }) {
     return "프롭스 타입이랑 리절트 다시 체크 부탁드려요"; // fallback
   };
 
-  const { getUser } = useAuth();
+  const { getUser, refreshUser } = useAuth();
   const { closeModal } = useModal();
+
+   const shouldRefreshUser = () => {
+    return (
+      (type === "포토카드 생성" && result === "성공")
+    );
+  };
+
+  const handleUserRefresh = () => {
+    if (shouldRefreshUser()) {
+      // getUser 또는 refreshUser 중 하나 선택 (둘 다 있다면 refreshUser 권장)
+      if (refreshUser) {
+        refreshUser();
+      } else {
+        getUser();
+      }
+    }
+  };
+
+
   return (
     <div className="fixed w-full h-screen inset-0 flex sm:items-center justify-center bg-black text-white">
       <div className="w-full max-w-[920px]">
@@ -158,6 +177,7 @@ export default function CommonModal({ type, result, data }) {
                 if (type === "구매" && result === "성공") {
                   getUser();
                 }
+                handleUserRefresh();
                 document.body.style.overflow = "auto";
                 if (type === "포토카드 생성") router.push("/my-gallery");
                 else if (type === "교환 제시" || type === "판매 등록") {

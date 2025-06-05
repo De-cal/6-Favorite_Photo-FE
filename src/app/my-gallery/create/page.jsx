@@ -18,7 +18,6 @@ import { useCreateStatus } from "@/hooks/useCreateStatus";
   const { openModal } = useModal();
   const { createStatus, decrementCreateCount, refreshCreateStatus } = useCreateStatus();
   //const { user, refreshUser } = useAuth();
-  //const { user, refreshUser } = useAuth();
   //const [showNotice, setShowNotice] = useState(false);
 
   const handleSubmit = async (e) => {
