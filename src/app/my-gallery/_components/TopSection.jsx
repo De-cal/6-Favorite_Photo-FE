@@ -5,8 +5,10 @@ import MobileHeader from "@/components/common/MobileHeader";
 import { useState } from "react";
 import Image from "next/image";
 import alert from "@/assets/icons/ic-alert.svg";
+import { useCreateStatus } from "@/hooks/useCreateStatus";
 
 export default function TopSection({ user }) {
+  const { createStatus } = useCreateStatus();
   const [showNotice, setShowNotice] = useState(false);
 
   const isDisabled = user.createCount === 0;
@@ -53,7 +55,9 @@ export default function TopSection({ user }) {
 
       {/* ✅ 데스크탑 우측 버튼 */}
       <div className="hidden sm:flex flex-row items-end gap-3">
-        <span className="text-[14px] text-gray-300">2025년 5월</span>
+        <span className="text-[14px] text-gray-300">
+          {createStatus.currentMonth}
+        </span>
         <Link href="/my-gallery/create" onClick={handleClick}>
           <ActionButton
             variant={isDisabled ? "disabled" : "primary"}
