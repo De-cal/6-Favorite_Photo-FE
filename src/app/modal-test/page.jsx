@@ -21,7 +21,6 @@ function modalTestPage() {
   const { openModal } = useModal();
 
   const data = { rank: "SuperRare", title: "스페인풍경", quantity: 2 };
-  console.log("마켓플레이스 데이터: ", data);
   return (
     <div className="flex flex-col items-center justify-center gap-15">
       <MobileHeader title="나의 포토카드 판매 상세 페이지" />

@@ -26,7 +26,7 @@ export default function MyGalleryCreatePage() {
     if (user.createCount === 0) {
       // 알림 표시
       setShowNotice(true);
-      
+
       // 3초 후 알림 숨기기 (선택사항)
       setTimeout(() => {
         setShowNotice(false);
@@ -41,7 +41,7 @@ export default function MyGalleryCreatePage() {
             title: form.title,
             message: "이번달 모든 생성 기회를 소진했어요.",
           }}
-        />
+        />,
       );
       return;
     }
@@ -57,46 +57,44 @@ export default function MyGalleryCreatePage() {
 
     try {
       const result = await createCard(formData);
-      console.log("카드 생성 성공:", result);
 
       // refreshUser를 제거하고 모달에서만 처리
       // await refreshUser();
-      
+
       // 성공 모달 열기
       openModal(
-        <CommonModal 
-          type="포토카드 생성" 
-          result="성공" 
+        <CommonModal
+          type="포토카드 생성"
+          result="성공"
           data={{
             rank: form.rank,
-            title: form.title
+            title: form.title,
           }}
-        />
+        />,
       );
-      
     } catch (err) {
       console.error("카드 생성 오류:", err);
-      
+
       // 실패 모달 열기
       openModal(
-        <CommonModal 
-          type="포토카드 생성" 
-          result="실패" 
+        <CommonModal
+          type="포토카드 생성"
+          result="실패"
           data={{
             rank: form.rank,
-            title: form.title
+            title: form.title,
           }}
-        />
+        />,
       );
     }
   };
 
   return (
     <div className="flex flex-col px-[15px] sm:px-[20px] items-center justify-center max-w-[356px] sm:max-w-[700px] md:max-w-[1480px] mx-auto mb-[50px]">
-      <TopSection 
-        user={user} 
-        showNotice={showNotice} 
-        setShowNotice={setShowNotice} 
+      <TopSection
+        user={user}
+        showNotice={showNotice}
+        setShowNotice={setShowNotice}
       />
       <form
         onSubmit={handleSubmit}
