@@ -36,7 +36,7 @@ export default function SortDropdown({
         />
       </div>
       {isOpen && (
-        <div className="absolute top-full mt-1 w-full bg-black border border-gray-200 z-10 rounded-[2px]">
+        <div className="absolute top-full mt-1 w-full bg-black border border-gray-200 z-20 rounded-[2px]">
           {choiceType.map((choice) => (
             <div
               key={choice}
