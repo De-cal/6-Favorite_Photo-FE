@@ -12,7 +12,7 @@ import NotificationCard from "./NotificationCard";
 
 const LIMIT = 10;
 
-function NotificationsModalMobile({ refetchNotificationCount }) {
+export default function NotificationsModalMobile({ refetchNotificationCount }) {
   const { closeModal } = useModal();
   const observerRef = useRef(null);
 
@@ -104,5 +104,3 @@ function NotificationsModalMobile({ refetchNotificationCount }) {
     </div>
   );
 }
-
-export default NotificationsModalMobile;

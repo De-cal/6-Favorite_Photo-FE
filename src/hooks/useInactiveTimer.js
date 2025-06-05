@@ -1,15 +1,19 @@
 "use client";
 
-import { useEffect, useCallback, useRef } from 'react';
-import { encryptData, decryptData } from '@/lib/utils/encryption';
+import { useEffect, useCallback, useRef } from "react";
+import { encryptData, decryptData } from "@/lib/utils/encryption";
 
 // 비활성 기준 시간 (20분)
-const INACTIVE_THRESHOLD = 20 * 60 * 1000
+const INACTIVE_THRESHOLD = 20 * 60 * 1000;
 
 const LAST_ACTIVE_TIME_KEY = process.env.NEXT_PUBLIC_LAST_ACTIVE_TIME_KEY;
-const events = ['mousemove', 'keypress', 'scroll', 'click']; // 유저 활동 이벤트들
+const events = ["mousemove", "keypress", "scroll", "click"]; // 유저 활동 이벤트들
 
-function useInactiveTimer(onInactiveCallback, checkTimerStatus, isLoggedIn) {
+export default function useInactiveTimer(
+  onInactiveCallback,
+  checkTimerStatus,
+  isLoggedIn,
+) {
   const lastActivityTimeRef = useRef(null); // 마지막 활동 시간
   const intervalIdRef = useRef(null); // setInterval ID 저장
   const onInactiveCallbackRef = useRef(onInactiveCallback); // 콜백 최신값 저장
@@ -23,7 +27,7 @@ function useInactiveTimer(onInactiveCallback, checkTimerStatus, isLoggedIn) {
   const updateLastActivityTimeSilently = useCallback(() => {
     const now = Date.now();
     lastActivityTimeRef.current = now;
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       localStorage.setItem(LAST_ACTIVE_TIME_KEY, encryptData(now.toString()));
     }
   }, []);
@@ -72,21 +76,23 @@ function useInactiveTimer(onInactiveCallback, checkTimerStatus, isLoggedIn) {
         clearInterval(intervalIdRef.current);
         intervalIdRef.current = null;
       }
-      events.forEach(event => window.removeEventListener(event, updateLastActivityTimeWithTimerCheck));
+      events.forEach((event) =>
+        window.removeEventListener(event, updateLastActivityTimeWithTimerCheck),
+      );
       return;
     }
 
     updateLastActivityTimeWithTimerCheck(); // 초기화 및 타이머 시작
 
-    events.forEach(event =>
-      window.addEventListener(event, updateLastActivityTimeWithTimerCheck)
+    events.forEach((event) =>
+      window.addEventListener(event, updateLastActivityTimeWithTimerCheck),
     );
 
     intervalIdRef.current = setInterval(checkInactive, 5000);
 
     return () => {
-      events.forEach(event =>
-        window.removeEventListener(event, updateLastActivityTimeWithTimerCheck)
+      events.forEach((event) =>
+        window.removeEventListener(event, updateLastActivityTimeWithTimerCheck),
       );
       if (intervalIdRef.current) {
         clearInterval(intervalIdRef.current);
@@ -97,5 +103,3 @@ function useInactiveTimer(onInactiveCallback, checkTimerStatus, isLoggedIn) {
   // 외부에서 수동 초기화 시에는 타이머도 재확인
   return { resetInactiveTimer: updateLastActivityTimeWithTimerCheck };
 }
-
-export default useInactiveTimer;

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import down from "@/assets/icons/ic-down.svg";
 import Image from "next/image";
 
-function Dropdown({ type, value, onChange }) {
+export default function Dropdown({ type, value, onChange }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef(null);
   const GENRES = ["PORTRAIT", "LANDSCAPE", "ANIMAL", "OBJECT", "FOOD", "ETC"];
@@ -51,5 +51,3 @@ function Dropdown({ type, value, onChange }) {
     </div>
   );
 }
-
-export default Dropdown;

@@ -5,7 +5,7 @@ import Image from "next/image";
 import GradeDetail from "@/components/common/GradeDetail";
 import { genreChange } from "@/lib/utils/genreChange";
 
-function SellPhotoDetail({
+export default function SellPhotoDetail({
   photoCard = {
     title: "우리집 앞마당",
     rank: "LEGENDARY",
@@ -86,5 +86,3 @@ function SellPhotoDetail({
     </div>
   );
 }
-
-export default SellPhotoDetail;

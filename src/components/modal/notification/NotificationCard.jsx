@@ -1,6 +1,6 @@
 import dateFormat from "@/lib/utils/dateFormat";
 
-function NotificationCard({ notification }) {
+export default function NotificationCard({ notification }) {
   return (
     <div
       className={`flex flex-col border-b-1  bg-gray-500 p-5 gap-y-2 ${
@@ -18,5 +18,3 @@ function NotificationCard({ notification }) {
     </div>
   );
 }
-
-export default NotificationCard;
