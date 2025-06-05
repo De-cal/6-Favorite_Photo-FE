@@ -12,7 +12,7 @@ import { getImageUrl } from "@/lib/utils/imageUrl";
 import { motion, useMotionValue } from "motion/react";
 import clsx from "clsx";
 
-function SellPhotoCardDetailModal({
+export default function SellPhotoCardDetailModal({
   card = {
     photoCard: {
       title: "How Far I'll Go",
@@ -241,5 +241,3 @@ function SellPhotoCardDetailModal({
     </motion.div>
   );
 }
-
-export default SellPhotoCardDetailModal;

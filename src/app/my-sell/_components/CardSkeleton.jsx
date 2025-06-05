@@ -1,4 +1,4 @@
-function CardSkeleton() {
+export default function CardSkeleton() {
   return (
     <div
       role="status"
@@ -54,5 +54,3 @@ function CardSkeleton() {
     </div>
   );
 }
-
-export default CardSkeleton;

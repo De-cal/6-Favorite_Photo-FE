@@ -30,31 +30,18 @@ export default function MarketplaceHeader({
 
   return (
     <>
-      <div className="hidden sm:block px-[15px] sm:px-[20px] md:px-[0px] mt-[40px]">
-        <div className="hidden sm:flex sm:gap-[114px] md:gap-[720px]">
-          <Image
-            src={marketplace}
-            width={248}
-            height={49}
-            alt="marketplace"
-            className="md:hidden"
-          />
-          <Image
-            src={marketplace}
-            width={320}
-            height={63}
-            alt="marketplace"
-            className="hidden md:block"
-          />
-          <ActionButton
-            className="w-[342px] h-[60px] md:w-[440px]"
-            onClick={handleCardClick}
-          >
-            나의 포토카드 판매하기
-          </ActionButton>
-        </div>
+      <div className="hidden sm:flex sm:w-full sm:max-w-[704px] sm:justify-between sm:items-center md:max-w-[1480px] mt-[40px]">
+        <p className="font-baskinRobbins font-normal text-[48px]/[49px] min-w-[248px] tracking-[-3%] md:text-[62px]/[63px]">
+          마켓플레이스
+        </p>
+        <ActionButton
+          className="w-[342px] h-[60px] md:w-[440px]"
+          onClick={handleCardClick}
+        >
+          나의 포토카드 판매하기
+        </ActionButton>
       </div>
-      <div className="w-[704px] md:w-[1490px] mt-[15px] hidden sm:block">
+      <div className="w-[704px] md:w-[1480px] mt-[15px] hidden sm:block">
         <div className="w-full h-[1px] border-b border-gray-400 sm:border-gray-100 sm:h-[2px]" />
       </div>
       <div className="w-[345px] sm:w-[704px] md:w-[1480px] mt-[20px]">

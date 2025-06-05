@@ -7,7 +7,7 @@ import { useModal } from "@/providers/ModalProvider";
 import { usePointTimer } from "@/providers/PointTimerProvider";
 import useInactiveTimer from "@/hooks/useInactiveTimer";
 
-function SurprisePointModal() {
+export default function SurprisePointModal() {
   const { user } = useAuth();
   const { hasOpportunity, resetTimer, checkTimerStatus } = usePointTimer();
   const { openModal } = useModal();
@@ -24,5 +24,3 @@ function SurprisePointModal() {
 
   return;
 }
-
-export default SurprisePointModal;

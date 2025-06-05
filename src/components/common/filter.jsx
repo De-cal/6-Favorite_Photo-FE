@@ -2,7 +2,7 @@ import React from "react";
 import deleteIcon from "@/assets/icons/ic-close-gray.svg";
 import exchange from "@/assets/icons/ic-exchange-gray.svg";
 import Image from "next/image";
-function Filter() {
+export default function Filter() {
   return (
     <>
       <div className="w-full h-[480px] rounded-[20px] bg-[#1B1B1B]">
@@ -75,5 +75,3 @@ function Filter() {
     </>
   );
 }
-
-export default Filter;

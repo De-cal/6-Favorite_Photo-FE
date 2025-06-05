@@ -4,11 +4,10 @@ import React from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
 import { useParams } from "next/navigation";
-import articleApi from "@/lib/api/article.api";
+import { purchaseArticle } from "@/lib/api/article.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CommonModal from "@/components/common/CommonModal";
 import GradeDetail from "@/components/common/GradeDetail";
-import { useAuth } from "@/providers/AuthProvider";
 
 export default function BuyPhotoCardModal({
   title,
@@ -21,9 +20,9 @@ export default function BuyPhotoCardModal({
   const queryClient = useQueryClient();
 
   // 포토카드 구매 API
-  const { mutate: purchaseArticle } = useMutation({
+  const { mutate: purchaseArticleMutate } = useMutation({
     mutationFn: ({ articleId, body }) =>
-      articleApi.purchaseArticle(articleId, body),
+      purchaseArticle(articleId, body),
     onSuccess: () => {
       document.body.style.overflow = "hidden";
       openModal(
@@ -55,7 +54,7 @@ export default function BuyPhotoCardModal({
 
   // 구매하기
   const handleBuyPhotoCard = () => {
-    purchaseArticle({ articleId, body: { purchaseQuantity, totalPrice } });
+    purchaseArticleMutate({ articleId, body: { purchaseQuantity, totalPrice } });
 
     closeModal();
     document.body.style.overflow = "auto";

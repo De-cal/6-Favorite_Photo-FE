@@ -12,7 +12,7 @@ import { postPoint } from "@/lib/api/point.api";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/providers/AuthProvider";
 
-function RewardPoint() {
+export default function RewardPoint() {
   const [isSelected, setIsSelected] = useState(false);
   const [rewardPoints, setRewardPoints] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -134,5 +134,3 @@ function RewardPoint() {
     </div>
   );
 }
-
-export default RewardPoint;

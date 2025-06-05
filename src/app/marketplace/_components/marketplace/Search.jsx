@@ -3,7 +3,7 @@ import searchIcon from "@/assets/icons/ic-search.svg";
 import Image from "next/image";
 import { useState } from "react";
 
-function Search({ onSearch }) {
+export default function Search({ onSearch }) {
   const [input, setInput] = useState("");
   const handleSearch = () => {
     onSearch(input);
@@ -45,5 +45,3 @@ function Search({ onSearch }) {
     </div>
   );
 }
-
-export default Search;

@@ -1,7 +1,6 @@
 import Card from "@/components/common/Card";
 import Link from "next/link";
 import React from "react";
-import CardSkeleton from "./CardSkeleton";
 
 export default function PhotoCardSection({ dataLists }) {
   return dataLists.length === 0 ? (
@@ -31,7 +30,6 @@ export default function PhotoCardSection({ dataLists }) {
           >
             <Link href={`/marketplace/${dataList.id}/seller`}>
               <Card card={dataList.userPhotoCard} type={cardType} />
-              {/* <CardSkeleton /> */}
             </Link>
           </div>
         );

@@ -4,7 +4,7 @@ import search from "../../../assets/icons/ic-search.svg";
 import filter from "../../../assets/icons/ic-filter.svg";
 import Dropdown from "@/app/my-sell/_components/Dropdown";
 
-function SortAndSearchSectionSkeleton() {
+export default function SortAndSearchSectionSkeleton() {
   return (
     <>
       {/* ✅ 모바일 */}
@@ -49,5 +49,3 @@ function SortAndSearchSectionSkeleton() {
     </>
   );
 }
-
-export default SortAndSearchSectionSkeleton;
