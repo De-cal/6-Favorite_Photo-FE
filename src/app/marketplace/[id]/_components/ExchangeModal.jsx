@@ -4,7 +4,7 @@ import React from "react";
 import ic_close_gray from "@/assets/icons/ic-close-gray.svg";
 import { useModal } from "@/providers/ModalProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import articleApi from "@/lib/api/article.api";
+import { approveExchangeRequest, cancelExchangeRequest } from "@/lib/api/article.api";
 import { useParams } from "next/navigation";
 import GradeDetail from "@/components/common/GradeDetail";
 
@@ -19,12 +19,12 @@ export default function ExchangeModal({
   const queryClient = useQueryClient();
 
   // 교환 요청 API
-  const { mutate: ExchangeRequest } = useMutation({
+  const { mutate: ExchangeRequestMutate } = useMutation({
     mutationFn: ({ articleId, exchangeId }) => {
       if (type === "취소" || type === "거절")
-        return articleApi.cancelExchangeRequest(articleId, exchangeId);
+        return cancelExchangeRequest(articleId, exchangeId);
       else if (type === "승인")
-        return articleApi.approveExchangeRequest(articleId, exchangeId);
+        return approveExchangeRequest(articleId, exchangeId);
     },
 
     onSuccess: () => {
@@ -40,7 +40,7 @@ export default function ExchangeModal({
 
   // 교환 취소/거절/승인
   const handleClick = () => {
-    ExchangeRequest({ articleId, exchangeId });
+    ExchangeRequestMutate({ articleId, exchangeId });
 
     closeModal();
     document.body.style.overflow = "auto";

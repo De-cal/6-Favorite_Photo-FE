@@ -6,7 +6,7 @@ import {
   validateConfirmPassword,
 } from "@/lib/utils/authValidators";
 
-export async function signUp({ email, nickname, password, passwordConfirm }) {
+export const signUpApi = async ({ email, nickname, password, passwordConfirm }) => {
   // 유효성 검사
   const emailValidationResult = validateEmail(email);
   if (!emailValidationResult.isValid)
@@ -38,7 +38,7 @@ export async function signUp({ email, nickname, password, passwordConfirm }) {
     }),
   });
 }
-export async function login({ email, password }) {
+export const loginApi = async ({ email, password }) => {
   const emailValidationResult = validateEmail(email);
   if (!emailValidationResult.isValid)
     throw new Error(emailValidationResult.message);
@@ -53,21 +53,14 @@ export async function login({ email, password }) {
   });
 }
 
-export async function logout() {
+export const logoutApi = async () => {
   return cookieFetch("/auth/logout", {
     method: "POST",
   });
 }
 
-export async function getMe() {
+export const getMeApi= async () => {
   return cookieFetch("/auth/me", {
     method: "GET",
   });
 }
-
-export default {
-  signUp,
-  login,
-  logout,
-  getMe,
-};

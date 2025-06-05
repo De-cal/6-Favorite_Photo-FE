@@ -1,15 +1,5 @@
 import { cookieFetch } from "@/lib/api/fetchClient.api";
 
-function parseJwt(token) {
-  if (!token) return null;
-  try {
-    return JSON.parse(atob(token.split(".")[1]));
-  } catch (e) {
-    console.error("JWT 파싱 실패:", e);
-    return null;
-  }
-}
-
 export const getAllCards = async ({
   page,
   pageSize,

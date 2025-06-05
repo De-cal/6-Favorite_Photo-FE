@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import authService from "@/lib/api/auth.api.js";
+import { getMeApi, loginApi, logoutApi, signUpApi } from "@/lib/api/auth.api.js";
 
 const AuthContext = createContext({
   login: () => {},
@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
   const getUser = async () => {
     try {
       setIsLoading(true);
-      const { data: userData } = await authService.getMe();
+      const { data: userData } = await getMeApi();
       setUser(userData);
     } catch (error) {
       console.error("사용자 정보를 가져오는데 실패했습니다:", error);
@@ -37,17 +37,17 @@ export default function AuthProvider({ children }) {
   };
 
   const signUp = async (email, nickname, password, passwordConfirm) => {
-    await authService.signUp(email, nickname, password, passwordConfirm);
+    await signUpApi(email, nickname, password, passwordConfirm);
     await getUser();
   };
 
   const login = async (email, password) => {
-    await authService.login(email, password);
+    await loginApi(email, password);
     await getUser();
   };
 
   const logout = async () => {
-    await authService.logout();
+    await logoutApi();
     setUser(null);
   };
 
