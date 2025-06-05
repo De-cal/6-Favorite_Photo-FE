@@ -44,10 +44,10 @@ export default function Notification({
     const mediaQuery = window.matchMedia("(max-width: 744px)");
 
     const handleMediaChange = (e) => {
-      if (e.matches) {
-        setIsMobile(true);
-      }
+      setIsMobile(e.matches);
     };
+
+    setIsMobile(mediaQuery.matches);
 
     mediaQuery.addEventListener("change", handleMediaChange);
 

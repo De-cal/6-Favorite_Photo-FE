@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
-import { getMyNotifications, readNotification } from "@/lib/api/notification.api";
+import {
+  getMyNotifications,
+  readNotification,
+} from "@/lib/api/notification.api";
 import { useModal } from "@/providers/ModalProvider";
 import MobileHeader from "@/components/common/MobileHeader";
 import NotificationCard from "./NotificationCard";
@@ -13,20 +16,18 @@ function NotificationsModalMobile({ refetchNotificationCount }) {
   const { closeModal } = useModal();
   const observerRef = useRef(null);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    refetch,
-  } = useInfiniteQuery({
-    queryKey: ["notifications"],
-    queryFn: ({ pageParam = 0 }) => getMyNotifications({ pageParam, limit: LIMIT }),
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.notifications.length < LIMIT ? undefined : allPages.length;
-    },
-    staleTime: 1000 * 60,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+    useInfiniteQuery({
+      queryKey: ["notifications"],
+      queryFn: ({ pageParam = 0 }) =>
+        getMyNotifications({ pageParam, limit: LIMIT }),
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.notifications.length < LIMIT
+          ? undefined
+          : allPages.length;
+      },
+      staleTime: 1000 * 60,
+    });
 
   const notifications = data?.pages.flatMap((page) => page.notifications) || [];
 
@@ -40,15 +41,15 @@ function NotificationsModalMobile({ refetchNotificationCount }) {
       });
       if (node) observerRef.current.observe(node);
     },
-    [isFetchingNextPage, hasNextPage, fetchNextPage]
+    [isFetchingNextPage, hasNextPage, fetchNextPage],
   );
 
   const { mutate: mutateReadNotification } = useMutation({
     mutationFn: readNotification,
     onSuccess: () => {
-      refetch()
+      refetch();
       if (refetchNotificationCount) refetchNotificationCount();
-    }, 
+    },
   });
 
   const handleReadNotification = (notificationId) => {
@@ -61,6 +62,23 @@ function NotificationsModalMobile({ refetchNotificationCount }) {
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  // 모바일 -> 태블릿 이상으로 가면 모달 자동 닫기
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 744px)");
+
+    const handleMediaChange = (e) => {
+      if (e.matches) {
+        closeModal();
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, [closeModal]);
 
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 z-50 bg-black overflow-y-scroll">
@@ -79,7 +97,9 @@ function NotificationsModalMobile({ refetchNotificationCount }) {
         ))}
       </div>
       {isFetchingNextPage && (
-        <div className="text-center py-2 text-sm text-gray-400">불러오는 중...</div>
+        <div className="text-center py-2 text-sm text-gray-400">
+          불러오는 중...
+        </div>
       )}
     </div>
   );
