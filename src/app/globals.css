@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* 브레이크포인트 정의: 기본 반응형 브레이크 포인트를 디자인 요구사항에 따라 변경가능. */
+  /* className="text-sm md:text-2xl" 면 화면너비 기본 text-sm, 768px부터 text-2xl 의미 */
+  --breakpoint-sm: 744px; /* 태블릿 사이즈 */
+  --breakpoint-md: 1480px; /* 데스크탑 사이즈 */
+
+  /* 색상 정의: 디자인 내용에 따라 정의. 실사용 시 className="text-primary-50" */
+  --color-gray-100: #eeeeee;
+  --color-gray-200: #dddddd;
+  --color-gray-300: #a4a4a4;
+  --color-gray-400: #5a5a5a;
+  --color-gray-500: #161616;
+  --color-black: #0f0f0f;
+  --color-white: #ffffff;
+  --color-red: #ff483d;
+  --color-blue: #29c9f9;
+  --color-purple: #a77eff;
+  --color-pink: #ff2a6a;
+  --color-main: #efff04;
+
+  /* 폰트 정의 */
+  --font-baskinRobbins: var(--font-baskinRobbins);
+  --font-notoSans: var(--font-notoSans);
+
+  /* 배경 이미지 정의  */
+  --bg-img-landing-hero: url("../assets/images/img-hero-bg.webp");
+  --bg-img-landing-feat1: url("../assets/images/img-feat1.webp");
+  --bg-img-landing-feat1-sm: url("../assets/images/img-feat1-sm.webp");
+  --bg-img-landing-feat1-md: url("../assets/images/img-feat1-md.webp");
+  --bg-img-landing-feat2: url("../assets/images/img-feat2.webp");
+  --bg-img-landing-feat2-sm: url("../assets/images/img-feat2-sm.webp");
+  --bg-img-landing-feat2-md: url("../assets/images/img-feat2-md.webp");
+  --bg-img-landing-feat3: url("../assets/images/img-feat3.webp");
+  --bg-img-landing-feat3-sm: url("../assets/images/img-feat3-sm.webp");
+  --bg-img-landing-feat3-md: url("../assets/images/img-feat3-md.webp");
+}
+
+html {
+  /* Tailwind CSS의 기본 폰트 설정을 사용하기 위해 font-family를 설정합니다. */
+  font-family: var(--font-notoSans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* 스크롤바  숨기기 */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #efff04;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (min-width: 1480px) {
+  .scrollbar::-webkit-scrollbar {
+    display: block;
+    width: 8px; /* Chrome, Safari, Opera */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #5a5a5a;
+    border-radius: 2px;
+  }
+}
+
+@keyframes grade-loop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200rem); /* 4등급 x 2.5rem x 20회 = 200rem */
+  }
+}
+
+.grade-roller-loop {
+  display: flex;
+  flex-direction: column;
+  animation: grade-loop 55s linear infinite;
+  will-change: transform;
+}
+
+@layer utilities {
+  @keyframes custom-pulse {
+    0%,
+    100% {
+      opacity: 0.4; /* 시작 / 끝 밝기 */
+    }
+    50% {
+      opacity: 0.2; /* 중간 밝기 */
+    }
+  }
+
+  .animate-custom-pulse {
+    animation: custom-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+.bg-landing-hero {
+  background-image: var(--bg-img-landing-hero);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-landing-feat1 {
+  background-image: var(--bg-img-landing-feat1);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-landing-feat2 {
+  background-image: var(--bg-img-landing-feat2);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-landing-feat3 {
+  background-image: var(--bg-img-landing-feat3);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (min-width: 744px) {
+  .bg-landing-feat1 {
+    background-image: var(--bg-img-landing-feat1-sm);
+  }
+  .bg-landing-feat2 {
+    background-image: var(--bg-img-landing-feat2-sm);
+  }
+  .bg-landing-feat3 {
+    background-image: var(--bg-img-landing-feat3-sm);
+  }
+}
+@media (min-width: 1480px) {
+  .bg-landing-feat1 {
+    background-image: var(--bg-img-landing-feat1-md);
+  }
+  .bg-landing-feat2 {
+    background-image: var(--bg-img-landing-feat2-md);
+  }
+  .bg-landing-feat3 {
+    background-image: var(--bg-img-landing-feat3-md);
+  }
+}
