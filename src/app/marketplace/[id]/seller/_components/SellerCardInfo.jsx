@@ -69,7 +69,7 @@ export default function SellerCardInfo({ cardArticle, onUpdate, onDelete }) {
 
   return (
     <div className="flex flex-col w-[345px] md:w-[440px] sm:w-[342px]">
-      <div>
+      <div className="max-w-[440px] sm:min-w-[342px] sm:mt-[48px] md:mt-[70px] w-full">
         {/* 등급/카테고리/작가 */}
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
