@@ -16,18 +16,21 @@ const protectedPathPrefixes = [
 const publicExactPaths = ["/login", "/signup", "/", "/marketplace"];
 
 export default function RouteGuard({ children }) {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth(); // AuthProvider의 isLoading 상태를 가져옴
   const router = useRouter();
   const pathname = usePathname();
   const [isRouteGuardLoading, setIsRouteGuardLoading] = useState(true);
 
   useEffect(() => {
+    // AuthProvider가 로딩 중일 때는 아무것도 하지 않고 로딩 상태를 유지
+    if (isLoading) {
+      return;
+    }
+
+    // AuthProvider 로딩이 끝난 후, 라우팅 로직 실행
     const path = pathname.split("?")[0];
-
     const isPublicRoute = publicExactPaths.includes(path);
-
     const isProtectedRoute = protectedPathPrefixes.some((prefix) =>
-      // prefix가 "/"로 끝나는 경우에는 해당 prefix로 시작하는 모든 하위 경로 포함
       prefix.endsWith("/")
         ? path.startsWith(prefix) && path !== prefix.slice(0, -1)
         : path === prefix,
@@ -40,9 +43,10 @@ export default function RouteGuard({ children }) {
     } else {
       setIsRouteGuardLoading(false);
     }
-  }, [user, pathname, router]);
+  }, [user, pathname, router, isLoading]); // isLoading을 의존성 배열에 추가
 
-  if (isRouteGuardLoading) {
+  // AuthProvider가 로딩 중이거나 RouteGuard가 아직 로딩 중이면 Loading 컴포넌트 표시
+  if (isLoading || isRouteGuardLoading) {
     return <Loading />;
   }
 
