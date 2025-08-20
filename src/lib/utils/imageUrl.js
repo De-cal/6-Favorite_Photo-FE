@@ -19,7 +19,6 @@ export const getImageUrl = (imgUrl) => {
   return `${process.env.NEXT_PUBLIC_BASE_URL}/uploads/${encodedFileName}`;
 };
 
-
 // 카드 컴포넌트에서 사용 예시:
 // import { getImageUrl } from '@/utils/imageUrl';
 //
