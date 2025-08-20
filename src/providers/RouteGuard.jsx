@@ -38,8 +38,10 @@ export default function RouteGuard({ children }) {
 
     if (isProtectedRoute && !user) {
       router.push("/login");
+      setIsRouteGuardLoading(false);
     } else if (isPublicRoute && user) {
       router.push("/marketplace");
+      setIsRouteGuardLoading(false);
     } else {
       setIsRouteGuardLoading(false);
     }
