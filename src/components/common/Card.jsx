@@ -38,10 +38,6 @@ export default function Card({
   const isTotalQuantity = type === "original" || type === "soldout";
   const isExchange = type === "exchange";
 
-  console.log(
-    "getImageUrl(card.photoCard.imgUrl)",
-    getImageUrl(card.photoCard.imgUrl),
-  );
   return (
     <div
       className={clsx(
