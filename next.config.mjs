@@ -9,7 +9,8 @@ const nextConfig = {
         port: "5050",
       },
       {
-        hostname: "six-favorite-photo-team1-server.onrender.com",
+        protocol: "https",
+        hostname: "favorite-photo-server.onrender.com",
       },
     ],
   },

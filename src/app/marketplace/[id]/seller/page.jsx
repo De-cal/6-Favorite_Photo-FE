@@ -101,19 +101,18 @@ export default function SellerPage() {
 
           <div className="min-h-screen flex flex-col items-center bg-black text-white">
             <div className="w-[345px] sm:w-full sm:max-w-[1480px]">
-              <h1 className="w-[345px] sm:w-full md:w-full mx-auto text-[24px] sm:text-[32px] md:text-[40px] font-bold mb-4 sm:mb-6 border-b border-gray-100 pb-2">
+              <h1 className="w-[345px] sm:w-full md:w-full mx-auto text-[24px] sm:text-[32px] md:text-[40px] font-bold border-b border-gray-100 pb-2">
                 {article.userPhotoCard?.photoCard?.title || "포토카드"}
               </h1>
 
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 mt-13">
+              <div className="flex flex-col justify-center items-start gap-y-[20px] sm:flex-row sm:gap-[20px] md:gap-[80px]">
                 {/* 왼쪽 이미지 - useState로 관리 */}
-                <div className="w-[345px] sm:w-full md:w-full mx-auto">
+                <div className="relative w-[345px] min-h-[258.75px] max-w-[960px] max-h-[720px] aspect-[345/258.75] mt-[26px] sm:w-full sm:min-w-[342px] sm:mt-[48px] md:mt-[70px]">
                   <Image
                     src={imgSrc}
-                    alt="판매 이미지"
-                    className="w-full object-cover"
-                    width={345}
-                    height={400}
+                    alt={article.userPhotoCard?.photoCard?.title}
+                    fill
+                    className="object-cover"
                     onError={() => setImgSrc(example)}
                   />
                 </div>
