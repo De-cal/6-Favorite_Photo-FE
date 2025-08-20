@@ -1,6 +1,12 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { getMeApi, loginApi, logoutApi, signUpApi } from "@/lib/api/auth.api.js";
+import { usePathname } from "next/navigation";
+import {
+  getMeApi,
+  loginApi,
+  logoutApi,
+  signUpApi,
+} from "@/lib/api/auth.api.js";
 
 const AuthContext = createContext({
   login: () => {},
@@ -23,6 +29,8 @@ export const useAuth = () => {
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const pathname = usePathname();
+
   const getUser = async () => {
     try {
       setIsLoading(true);
@@ -53,7 +61,7 @@ export default function AuthProvider({ children }) {
 
   const refreshUser = async () => {
     try {
-      const updatedUser = await getUser(); // getUser 함수 재사용
+      const updatedUser = await getUser();
       return updatedUser;
     } catch (error) {
       console.error("사용자 정보 새로고침 실패:", error);
@@ -62,8 +70,13 @@ export default function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    // 랜딩페이지와 로그인/회원가입 페이지에서는 인증 체크 안함
+    if (!["/", "/login", "/signup"].includes(pathname)) {
+      getUser();
+    } else {
+      setIsLoading(false);
+    }
+  }, [pathname]);
 
   return (
     <AuthContext.Provider
